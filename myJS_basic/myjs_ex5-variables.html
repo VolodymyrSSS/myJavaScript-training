@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: work with variables</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">Основы JS: работа с переменными</h2>
+
+    <h4 class="task">1. Объявите две переменные: admin и name.<br>
+        2. Запишите в name строку 'Василий'.<br>
+        3. Скопируйте значение из name в admin.<br>
+        4. Выведите в консоль admin (должно вывести «Василий»).<br>
+        5. Проверте являются ли такими же обычными символами, как буквы: знак доллар '$' и знак подчеркивания '_' ?;
+    </h4>
+
+    <p><b>Решение 1-4:</b></p>
+
+    <p>Каждая строчка решения соответствует одному шагу задачи:</p>
+    <br>
+
+    <p class="code-ex"><br>
+        <code>
+            var admin, name; //две переменных через запятую <br>
+            name='Василий'; // присвоили значение 'Василий' <br>
+            admin=name; // скопировали значение в другую переменную <br>
+            console.log(admin); // 'Василий' <br>
+            <br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        var admin, name;
+        name='Василий';
+        admin=name;
+        console.log(admin);
+    </script>
+
+    <p><b>Решение 5:</b></p>
+    <p>С этой целью объявим переменную с именем '$' и переменную с именем '_' и сделаем простое вычесление:</p>
+
+    <p class="code-ex"><br>
+        <code>
+            var $ = 1; //объявили переменную с именем '$' <br>
+            var _ = 2; // переменная с именем '_'<br>
+            console.log( $ + _ ); // 3 <br> 
+
+            <br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        var $ = 1;
+        var _ = 2;
+        console.log( $ + _ );
+    </script>
+
+</body>
+
+</html>

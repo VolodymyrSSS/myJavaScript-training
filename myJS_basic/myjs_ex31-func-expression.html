@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: functions-expression</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">Basic JS: function-expression</h2>
+
+    <h4 class="task">Мы имеем Объявление Функции (или Function Declaration) с названием 'sayHi'.
+        Переделайте эту функцию в другой вид - Функциональное Выражение (или Function Expression);<br>
+        Потом, раздельно, выведите в консоль результат работы этой функции, а на экран строковое 
+        представление этой функции.<br>
+        Далее скопируйте функцию в другую переменную и выведите в консоль результат вызова копии.
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            function sayHi() {<br>
+                console.log( 'Hallo' );<br>
+              };<br> 
+        </code>
+    </p>
+    <br>
+
+    <p><b>Решение</b>:</p>
+    <br>
+
+    <p>Существует ещё один синтаксис создания функций, который называется Function Expression 
+        (Функциональное Выражение).<br>
+        Оно выглядит вот так:
+    </p>
+
+    <p class="code-ex">
+        <code>
+            <b>let sayHi = function() {</b><br>
+                console.log( 'Hallo' );<br>
+              <b>};</b><br> 
+        </code>
+    </p>
+    <br>
+
+    <p>В коде выше функция создаётся и явно присваивается переменной, как любое другое значение. 
+        По сути без разницы, как мы определили функцию, это просто значение, хранимое в переменной 
+        sayHi.<br>
+        Смысл обоих частей кода одинаков: 'создать функцию и поместить её значение в переменную sayHi'.
+    </p>
+    <br>
+
+    <script>
+        let sayHi = function() {
+            console.log( 'Hallo' );
+        };
+    </script>
+
+    <p>Теперь давайте выведем в консоль результат работы этой функции а на экран - код функции<br>
+        При этом для второго, вызов функции sayHi осуществляем <b>без круглых скобок</b>.<br>
+        То есть код выведет строковое представление функции, которое является её исходным кодом.
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            sayHi();<br>
+            <br>
+            <b>alert(sayHi);</b> -нету круглых скобок<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        sayHi();
+
+        alert(sayHi);
+    </script>
+
+    <p>В JavaScript функции – это значения, поэтому мы и обращаемся с ними, как со значениями.<br>
+        Мы можем скопировать функцию в другую переменную:
+    </p>
+    <br>
+
+    <p class="code-ex" style="width: 55%;">
+        <code>
+            <b>let func = sayHi;</b> -копируем, внимание, так же нету круглых скобок!<br>
+            <br>
+            // Теперь функция может быть вызвана с помощью обеих переменных sayHi() и func().<br>
+            <br>
+            sayHi(); -выведет Hallo<br>
+            func(); -выведет Hallo
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let func = sayHi;
+
+        sayHi(); // Hallo
+        func(); // Hallo
+    </script>
+
+    <p>В строке где мы скопировали её значение в переменную func - обратите внимание ещё раз!: нет круглых скобок после sayHi. 
+        Если бы они были, то выражение func = sayHi() записало бы результат вызова sayHi() в переменную func, а не саму функцию 
+        sayHi.
+    </p>
+    <br>
+
+    <p>У вас мог возникнуть вопрос: Почему в Function Expression ставится точка с запятой ; на конце, а в Function Declaration нет:<br>
+        Нет необходимости в ; в конце блоков кода и синтаксических конструкций, которые их используют, таких как 
+        if { ... }, for { }, function f { } и т.д.<br>
+        Function Expression использует внутри себя инструкции присваивания let sayHi = ...; как значение. Это не блок кода, 
+        а выражение с присваиванием. Таким образом, точка с запятой не относится непосредственно к Function Expression, она 
+        лишь завершает инструкцию.
+    </p>
+
+
+</body>
+
+</html>

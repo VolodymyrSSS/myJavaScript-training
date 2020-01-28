@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: логический оператор '||' (or)</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">Basic JS: логический оператор '||' (ИЛИ)</h2>
+
+    <h4 class="task">Что выведет код ниже?</h4>
+
+    <p class="code-ex"><br>
+        <code>
+            console.log( null || 2 || undefined );<br>
+            <br>
+        </code>
+    </p>
+    <br>
+
+    <p><b>Ответ</b>:</p>
+    <br>
+
+    <script>
+        console.log( null || 2 || undefined );
+    </script>
+
+    <p>Выведет 2 так как ИЛИ "||" возвращает первое истинное значение.</p>
+
+    <h4 class="task">Что выведет код ниже?</h4>
+
+    <p class="code-ex"><br>
+        <code>
+            console.log( console.log(1) || 2 || console.log(3) );<br>
+            <br>
+        </code>
+    </p>
+    <br>
+
+    <p><b>Ответ</b>:</p>
+    <br>
+
+    <script>
+        console.log( console.log(1) || 2 || console.log(3) );
+    </script>
+
+    <p>Сначала 1, затем 2.<br>
+        Вызов console.log не возвращает значения, или, иначе говоря, возвращает undefined.<br>
+        Первый оператор ИЛИ || выполнит первый console.log(1).<br>
+        Получит undefined и пойдёт дальше, ко второму операнду в поисках истинного значения.<br>
+        Так как второй операнд 2 является истинным, то вычисления завершатся, результатом undefined || 2 будет 2, 
+        которое будет выведено внешним console.log( .... ).<br>
+        Второй оператор || не будет выполнен, выполнение до console.log(3) не дойдёт, поэтому 3 выведено не будет.
+    </p>
+
+    <h4 class="task">Представим, что у нас имеется ряд переменных, которые могут содержать данные 
+        или быть null/undefined. Как мы можем найти первую переменную с данными?
+    </h4>
+
+    <p><b>Решение</b>:</p>
+
+    <p>С помощью логического оператора || так как цепочка ИЛИ "||" возвращает первое истинное значение 
+        или последнее, если такое значение не найдено.
+    </p>
+    <br>
+
+    <p class="code-ex"><br>
+        <code>
+            let currentUser = null;<br>
+            let defaultUser = "John";<br>
+            <br>
+            <b>let name = currentUser || defaultUser || "unnamed";</b><br>
+            console.log( name ); // выбирается "John" – первое истинное значение
+            <br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let currentUser = null;
+        let defaultUser = "John";
+        
+        let name = currentUser || defaultUser || "unnamed";
+        console.log( name );
+    </script>
+    
+
+    <p>Если бы и currentUser, и defaultUser были ложными, в качестве результата мы бы наблюдали "unnamed".</p>
+
+</body>
+
+</html>

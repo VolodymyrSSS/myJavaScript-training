@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: work with variables</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">Работа с переменными: операторы сравнения</h2>
+
+    <h4 class="task">Каким будет результат этих выражений ? Что получим в результате каждого сравнения ?</h4>
+
+    <p class="code-ex" style="width: 60%;"><br>
+        <code>
+            5 > 4,  5 > 8 потом '2' > 1 потом 2 == 1 потом 2 != 1 и "2" > "12"<br>
+            0 == false и '' == false а так 0 === false и '' === false<br>
+            'ананас' > 'яблоко' потом 'Кот' > 'Код' потом 'Сонный' > 'Сон'<br>
+            undefined == null и undefined === null<br>
+            null == '\n0\n' и null === +'\n0\n'<br>
+            <br>
+        </code>
+    </p>
+    <br>
+
+    <p><b>Ответ</b>:</p>
+
+    <p><b>Операторы сравнения возвращают значения логического типа: true и false;</b><br>
+        Логическое значение true становится 1, а false – 0.
+    </p>
+    <br>
+    <p class="code-ex"><br>
+        <code>
+            console.log( 5 > 4 ); // true<br>
+            console.log( 5 > 8 ); // false<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        console.log( 5 > 4 );
+        console.log( 5 > 8 );
+    </script>
+
+    <p>При сравнении значений разных типов JavaScript приводит каждое из них к числу. Исключением является сравнение 
+        с помощью операторов строгого равенства/неравенства.
+    </p>
+    <br>
+    <p class="code-ex"><br>
+        <code>
+            console.log( '2' > 1 ); // true<br>
+            console.log( 2 == 1 ); // false<br>
+            console.log( 2 != 1 ); // true<br>
+            console.log( '2' > '12' ); // true - Первый символ первой строки "2" больше, чем первый символ второй "1"<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        console.log( '2' > 1 );
+        console.log( 2 == 1 );
+        console.log( 2 != 1 );
+        console.log( "2" > "12" );
+    </script>
+
+    <p>Обычное сравнение <b>==</b> не отличает 0 от false, та же проблема с пустой строкой:
+    </p>
+    <br>
+    <p class="code-ex"><br>
+        <code>
+            console.log( 0 == false ); // true<br>
+            console.log( '' == false ); // true<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        console.log( 0 == false );
+        console.log( '' == false );
+    </script>
+
+    <p>Это происходит из-за того, что операнды разных типов преобразуются оператором == к числу. В итоге, и пустая строка, 
+        и false становятся нулём. Для того, чтобы различать разные типы надо как-то сигнализировать если сравнение происходит 
+        разных типов и для этого мы используем оператор строгого равенства <b>===</b>.<br>
+        <b>Оператор строгого равенства === проверяет равенство без приведения типов:</b>
+    </p>
+    <br>
+    <p class="code-ex"><br>
+        <code>
+            console.log( 0 === false ); // false, так как сравниваются разные типы<br>
+            console.log( '' === false ); // false, так как сравниваются разные типы<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        console.log( 0 === false );
+        console.log( '' === false );
+    </script>
+
+    <p>Ещё есть оператор строгого неравенства !==, аналогичный !=</p>
+
+    <p>Строки сравниваются посимвольно:<br>
+        - cначала сравниваются первые символы строк<br>
+        - eсли первый символ первой строки больше (меньше), чем первый символ второй, то первая строка больше (меньше) второй.<br>
+        - eсли первые символы равны, то таким же образом сравниваются уже вторые символы строк.<br>
+        - cравнение продолжается, пока не закончится одна из строк.<br>
+        - eсли обе строки заканчиваются одновременно, то они равны. Иначе, большей считается более длинная строка.<br>
+    </p>
+    <br>
+    <p class="code-ex"><br>
+        <code>
+            console.log( 'ананас' > 'яблоко' ); // false, так как строчные буквы имеют больший код во внутренней таблице кодирования, 
+            которую использует JavaScript (Unicode) здесь 'я' > 'а' - сравнение завершится на первом шаге.<br>
+            console.log( 'Кот' > 'Код' ); // true, так как сравниваются разные типы К равна К - о равна о - т больше чем д. 
+            console.log( 'Сонный' > 'Сон' ); // true, так как 'Сонный' более длинная строка чем 'Сон'<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        console.log( 'ананас' > 'яблоко' );
+        console.log( 'Кот' > 'Код' );
+        console.log( 'Сонный' > 'Сон' );
+    </script>
+
+    <p>Поведение null и undefined при сравнении с другими значениями – особое:</p>
+    <br>
+    <p class="code-ex">При нестрогом равенстве ==<br>
+        <code>
+            console.log( null == undefined ); // true
+        </code>
+    </p>
+    
+    <p>Эти значения равны друг другу и не равны никаким другим значениям. Это специальное правило языка.</p>
+    <br>
+    <p class="code-ex">При строгом равенстве ===<br>
+        <code>
+            console.log( null === undefined ); // false
+        </code>
+    </p>
+    
+    <p>Эти значения различны, так как различны их типы.</p>
+    <br>
+    <script>
+        console.log( null == undefined );
+        console.log( null === undefined );
+    </script>
+
+    <p>При использовании математических операторов и других операторов сравнения < > <= >= значения null/undefined преобразуются к 
+        числам: null становится 0, а undefined – NaN.
+    </p>
+
+    <p class="code-ex" style="width: 75%;">При использовании математических операторов и других операторов сравнения<br>
+        < > <= >=  c null/undefined случаются забавные вещи, вот некоторые из них:<br>
+        <br>
+        <code>
+            console.log( null > 0 );  // false, cравнения преобразуют null в число, рассматривая его как 0, поэтому 0 > 0 будет false<br>
+            console.log( null == 0 ); // false, для нестрогого равенства == значений undefined и null действует особое правило: они 
+            равны друг другу и не равны никаким другим значениям поэтому будет false<br>
+            console.log( null >= 0 ); // true cравнения преобразуют null в число, рассматривая его как 0, поэтому 0 >= 0 будет true<br>
+        </code>
+    </p>
+    <br>
+
+    <p>Значение undefined несравнимо с другими значениями:</p>
+
+    <p class="code-ex">При строгом равенстве ===<br>
+        <code>
+            console.log( undefined > 0 ); // false (1)<br>
+            console.log( undefined < 0 ); // false (2)<br>
+            console.log( undefined == 0 ); // false (3)<br>
+        </code>
+    </p>
+    <br>
+
+    <p>Почему же сравнение undefined с нулём всегда ложно?<br></p>
+
+    <p>Сравнения (1) и (2) возвращают false, потому что undefined преобразуется в NaN, а NaN – это специальное числовое значение, 
+        которое возвращает false при любых сравнениях.<br>
+        Нестрогое равенство (3) возвращает false, потому что undefined равно только null и ничему больше.<br>
+    </p>
+
+    <p>Будьте осторожны при использовании операторов сравнений > и < с переменными, которые могут принимать значения null/undefined. 
+        Хорошей идеей будет сделать отдельную проверку на null/undefined.
+    </p>
+
+    <p class="code-ex"><br>
+        <code>
+            console.log( null == '\n0\n' ); // false, так как это специальный случай: значения null и undefined равны друг другу и нечиму больше при нестрогом сравнении.
+            console.log( null === '\n0\n' ); // false, так как при строгом сравнении разных типов, эти значения различны, так как различны их типы. 
+        </code>
+    </p>
+
+    <h4 class="task">Использовав операторы сравнения посмотрите на возможную и даже забавную ситуацию когда при двух равных значениях:
+        одно из них true как логическое значение, другое – false. Как так может быть?
+    </h4>
+
+    <p class="code-ex"><br>
+        <code>
+            let a = 0;<br>
+            console.log( Boolean(a) ); // false<br>
+            <br>
+            let b = "0";<br>
+            console.log( Boolean(b) ); // true<br>
+            <br>
+            <b>console.log(a == b); // true!</b><br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let a = 0;
+        console.log( Boolean(a) ); // false
+
+        let b = "0";
+        console.log( Boolean(b) ); // true
+
+        console.log(a == b); // true!
+    </script>
+
+    <p><b>Ответ</b>:</p>
+
+    <p>С точки зрения JavaScript, результат ожидаем. Равенство преобразует значения, используя числовое преобразование, 
+        поэтому "0" становится 0. В то время как явное преобразование с помощью Boolean использует другой набор правил.
+    </p>
+
+
+</body>
+
+</html>

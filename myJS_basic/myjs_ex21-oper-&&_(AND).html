@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: логический оператор '&&' (AND)</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">Basic JS: логический оператор '&&' (AND)</h2>
+
+    <h4 class="task">Что выведет код ниже?</h4>
+
+    <p class="code-ex"><br>
+        <code>
+            console.log( 1 && null && 2 );<br>
+            <br>
+        </code>
+    </p>
+    <br>
+
+    <p><b>Ответ</b>:</p>
+    <br>
+
+    <script>
+        console.log( 1 && null && 2 );
+    </script>
+
+    <p>Выведет null так как && возвращает первое ложное значение из списка.</p>
+
+    <h4 class="task">Что выведет код ниже?</h4>
+
+    <p class="code-ex"><br>
+        <code>
+            console.log( console.log(1) && console.log(2) );<br>
+            <br>
+        </code>
+    </p>
+    <br>
+
+    <p><b>Ответ</b>:</p>
+    <br>
+
+    <script>
+        console.log( console.log(1) && console.log(2) );
+    </script>
+
+    <p>Сначала 1, затем undefined.<br>
+        Вызов console.log не возвращает значения, или, иначе говоря, возвращает undefined.<br>
+        Первый оператор && выполнит первый console.log(1).<br>
+        Получит undefined и на нём же и закончит так как найдено ложное значение.<br>
+        Поэтому до правого console.log(2) дело не дойдёт, вычисления закончатся на левом.
+    </p>
+
+    <h4 class="task">Напишите условие 'if' для проверки, что переменная age находится в диапазоне 
+        между 14 и 90 включительно.<br>
+        «Включительно» означает, что значение переменной age может быть равно 14 или 90. Задайте
+        переменную чтобы она отвечала диапазону и вывелось 'Так как ваш возраст такой-то вам разрешено'.
+        Используйте для вывода в консоль шаблонные строки.
+    </h4>
+
+    <p><b>Ответ</b>:</p>
+
+    <p class="code-ex"><br>
+        <code>
+        let age;<br>
+        age = 14;<br>
+        if( age >= 14 && age <=90 ) {<br>
+          console.log(`Because your age is ${age} you've got permission`);<br>
+        };<br>
+        <br>
+        </code>
+    </p>
+    <br>
+
+    <p><b>Ответ</b>:</p>
+    <br>
+
+    <script>
+        let age;
+        age = 14;
+        if( age >= 14 && age <=90 ) {
+            console.log(`Because your age is ${age} you've got permission`);
+        };
+    </script>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: arrow-functions</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<p>
+
+    <h2 class="title">Basic JS: arrow-function</h2>
+
+    <h4 class="task">Замените код Function Expression стрелочной функцией?</h4>
+
+    <p class="code-ex">
+        <code>
+            function ask(question, yes, no) {<br>
+                if (confirm(question)) yes()<br>
+                else no();<br>
+              }<br>
+              <br>
+              ask(
+                'Вы согласны?',<br>
+                function() { alert('Да, вы согласились.'); },<br>
+                function() { alert('Вы отменили выполнение.'); }<br>
+              );<br> 
+        </code>
+    </p>
+    <br>
+
+    <p><b>Решение</b>:</p>
+
+    <p>Функции-стрелки очень удобны для однострочных действий. Они бывают двух типов:<br>
+        Без фигурных скобок: (...args) => expression – правая сторона выражение: функция выполняет его и возвращает результат.<br> 
+        С фигурными скобками: (...args) => { body } – скобки позволяют нам писать многострочные инструкции внутри функции, 
+        но при этом необходимо указывать директиву return, чтобы вернуть какое-либо значение.
+    </p>
+    <br>
+
+    <p>Теперь, давайте решим нашу задачу.</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            function ask(question, yes, no) {<br>
+                if (confirm(question)) yes()<br>
+                else no();<br>
+            }<br>
+            <br>
+            ask = (<br>
+                'Вы согласны?',<br>
+                () => alert('Да, вы согласились.'),<br>
+                () => alert('Вы отменили выполнение.')<br>
+            );<br>
+        </code>
+    </p>
+    <br>
+
+    
+    <script>
+        function ask(question, yes, no) {
+            if (confirm(question)) yes()
+            else no();
+        }
+            
+        ask(
+            "Вы согласны?",
+            () => alert("Да, вы согласились."),
+            () => alert("Вы отменили выполнение.")
+        );
+
+    </script>
+
+</body>
+
+</html>

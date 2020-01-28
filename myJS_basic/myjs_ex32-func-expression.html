@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: functions-expression</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<p>
+
+    <h2 class="title">Basic JS: function-expression</h2>
+
+    <h4 class="task">Покажите на примере что такое 'колбек' как ещё один пример функциональных выражений и 
+        передачи функции как значения.
+    </h4>
+
+    <p><b>Решение</b>:</p>
+
+    <p>Создадим функцию, которая должна задать вопрос question и, в зависимости от того, как ответит пользователь, 
+        вызвать yes() или no():
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            function ask(question, yes, no) {<br>
+                if (confirm(question)) yes()<br>
+                else no();<br>
+              }<br>
+              <br>
+              function showOk() {<br>
+                alert( 'Да, вы согласились.' );<br>
+              }<br>
+              <br>
+              function showCancel() {<br>
+                alert( 'Вы отменили выполнение.' );<br>
+              }<br>
+              <br>
+              // И теперь используем созданную функцию ask с аргументами которые соответствуют для 'yes'-showOk а для 'no'-showCancel<br>
+              <br>
+              ask('Вы согласны?', showOk, showCancel);<br> 
+        </code>
+    </p>
+    <br>
+
+    <p>Аргументы функции ask ещё называют функциями-колбэками или просто колбэками.<br>
+        Ключевая идея в том, что мы передаём функцию и ожидаем, что она вызовется обратно (от англ. «call back» – 
+        обратный вызов) когда-нибудь позже, если это будет необходимо. В нашем случае, showOk становится колбэком’ 
+        для ответа «yes», а showCancel – для ответа «no».
+    </p>
+
+    <script>
+        function ask(question, yes, no) {
+            if (confirm(question)) yes()
+            else no();
+            }
+            
+            function showOk() {
+            alert( 'Да, вы согласились.' );
+            }
+            
+            function showCancel() {
+            alert( 'Вы отменили выполнение.' );
+            }
+            
+            // И теперь используем созданную функцию ask с аргументами которые соответствуют для 'yes'-showOk а для 'no'-showCancel<br>
+            
+            ask('Вы согласны?', showOk, showCancel);
+    </script>
+    
+    <p>Мы можем переписать этот пример значительно короче, используя Function Expression:</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            ask(<br>
+                'Вы согласны?'',<br>
+                function() { alert('Да, вы согласились.'); },<br>
+                function() { alert('Вы отменили выполнение.'); }<br>
+            );<br>
+        </code>
+    </p>
+    <br>
+
+    <p>Здесь функции объявляются прямо внутри вызова ask(...). У них нет имён, поэтому они называются анонимными. 
+        Такие функции недоступны снаружи ask (потому что они не присвоены переменным), но это как раз то, что нам нужно.
+    </p>
+
+    <p>Функция – это значение, представляющее «действие»<br>
+        Мы можем передавать их из переменной в переменную и запускать, когда захотим.
+    </p>
+
+    <h4 class="task">Какие ключевые отличия Function Declaration от Function Expression?</h4>
+
+    <p>1.Cинтаксис:<br>
+        Function Declaration: функция объявляется отдельной конструкцией «function…» в основном потоке кода.
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            <b>// Function Declaration</b><br>
+            function sum(a, b) {<br>
+                return a + b;<br>
+            }<br>
+        </code>
+    </p>
+    <br>
+    <p>Function Expression: функция, созданная внутри другого выражения или синтаксической конструкции. В данном 
+        случае функция создаётся в правой части «выражения присваивания» =
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            <b>// Function Expression</b><br>
+            let sum = function(a, b) {<br>
+                return a + b;<br>
+            };<br>
+        </code>
+    </p>
+    <br>
+
+    <p>2. Более тонкое отличие состоит, в том, когда создаётся функция движком JavaScript:<br>
+        - Function Expression создаётся, когда выполнение доходит до него, и затем уже может использоваться.<br>
+        - Function Declaration можно использовать во всем скрипте (или блоке кода, если функция объявлена в блоке).<br>
+        В результате, функции, созданные, как Function Declaration могут быть вызваны раньше своих определений.<br>
+    </p>
+
+    <p>Например, так будет работать:</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            sayHi("Вася"); // Привет, Вася<br>
+            <br>
+            function sayHi(name) {<br>
+            console.log( `Привет, ${name}` );<br>
+            }<br>
+        </code>
+    </p>
+    <br>
+
+    <p>Но такой код вызовет ошибку:</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            sayHi("Вася"); // ошибка!<br>
+            <br>
+            let sayHi = function(name) {  // магии больше нет<br>
+            alert( `Привет, ${name}` );<br>
+            };<br>
+        </code>
+    </p>
+    <br>
+
+    <p>3. Oсобенность Function Declaration заключается в их блочной области видимости.</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            let age = prompt("Сколько Вам лет?", 18);<br>
+            <br>
+            // в зависимости от условия объявляем функцию<br>
+            if (age < 18) {<br>
+                function welcome() {<br>
+                    alert("Привет!");<br>
+                }<br>
+            } else {<br>
+                function welcome() {<br>
+                    alert("Здравствуйте!");<br>
+                }<br>
+            }<br>
+            <br>
+            // ...не работает<br>
+            welcome(); // Error: welcome is not defined<br>
+        </code>
+    </p>
+    <br>
+
+    <p>Вот ещё один пример:</p>
+
+    <p class="code-ex">
+        <code>
+            let age = prompt("Сколько Вам лет?", 18);<br>
+            <br>
+            // в зависимости от условия объявляем функцию<br>
+            if (age < 18) {<br>
+                function welcome() {<br>
+                    alert("Привет!");<br>
+                }<br>
+            } else {<br>
+                function welcome() {<br>
+                    alert("Здравствуйте!");<br>
+                }<br>
+            }<br>
+            <br>
+            // ...не работает<br>
+            welcome(); // Error: welcome is not defined<br>
+        </code>
+    </p>
+    <br>
+
+    <p>Это произошло, так как объявление Function Declaration видимо только внутри блока кода, в котором располагается.<br>
+        Что можно сделать, чтобы welcome была видима снаружи if?<br>
+        Верным подходом будет воспользоваться функцией, объявленной при помощи Function Expression, и присвоить значение 
+        welcome переменной, объявленной снаружи if, что обеспечит нам нужную видимость.
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            let age = prompt("Сколько Вам лет?", 18);
+            <br>
+            let welcome;<br>
+            <br>
+            if (age < 18) {<br>
+            <br>
+            welcome = function() {<br>
+                alert("Привет!");<br>
+            };<br>
+            <br>
+            } else {<br>
+            <br>
+            welcome = function() {<br>
+                alert("Здравствуйте!");<br>
+            };<br>
+            <br>
+            }<br>
+            <br>
+            welcome(); // теперь всё в порядке<br>
+        </code>
+    </p>
+    <br>
+
+    <p>Можно упростить этот код ещё сильнее, используя условный оператор ?:</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            let age = prompt("Сколько Вам лет?", 18);<br>
+            <br>
+            let welcome = (age < 18) ?<br>
+            function() { alert("Привет!"); } :<br>
+            function() { alert("Здравствуйте!"); };<br>
+            <br>
+            welcome(); // теперь всё в порядке<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let age = prompt("Сколько Вам лет?", 18);
+
+        let welcome = (age < 18) ?
+        function() { alert("Привет!"); } :
+        function() { alert("Здравствуйте!"); };
+
+        welcome(); // теперь всё в порядке
+    </script>
+
+    <h4 class="task">Когда использовать Function Declaration, а когда Function Expression?</h4>
+
+    <p><b>Ответ</b></p>
+
+    <p>
+        Как правило, если нам понадобилась функция, в первую очередь нужно рассматривать синтаксис Function Declaration, 
+        который мы использовали до этого. Он даёт нам больше свободы в том, как мы можем организовывать код. Функции, 
+        объявленные таким образом, можно вызывать до их объявления.<br>
+        Также функции вида function f(…) {…} чуть более заметны в коде, чем let f = function(…) {…}. Function Declaration 
+        легче «ловятся глазами».<br>
+        …Но если Function Declaration нам не подходит по какой-то причине (мы рассмотрели это в примере выше), то можно 
+        использовать объявление при помощи Function Expression.<br>
+    </p>
+
+
+
+
+
+</body>
+
+</html>

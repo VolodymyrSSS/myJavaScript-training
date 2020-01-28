@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: логический оператор '!'</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">Basic JS: логический оператор '!'</h2>
+
+    <p>Оператор 'НЕ' представлен восклицательным знаком ! (по русски - 'НЕ')<br>
+        Синтаксис довольно прост:<br>
+    </p>
+    <br>
+
+    <p class="code-ex"><br>
+        <code>
+            result = !value;<br>
+            <br>
+        </code>
+    </p>
+    <br>
+
+    <p>Оператор принимает один аргумент и выполняет следующие действия:<br>
+        Сначала приводит аргумент к логическому типу true/false.<br>
+        Затем возвращает противоположное значение.<br>
+    </p>
+    <br>
+
+    <p class="code-ex">Например:<br>
+        <code>
+            console.log( !true ); // false<br>
+            console.log( !0 ); // true<br>
+            console.log( !null ); // true<br>
+            console.log( !1 ); // false<br>
+            console.log( !-24 ); //false<br>
+            console.log( !2347 ); // false<br>
+            <br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        console.log( !true ); // false
+        console.log( !0 ); // true<br>
+        console.log( !null ); // true<br>
+        console.log( !1 ); // false<br>
+        console.log( !-24 ); //false<br>
+        console.log( !2347 ); // false<br>
+    </script>
+
+    <p>Большое применение логического оператора '!' это его двойное применение.<br>
+        <b>Двойное 'НЕ' - используют для преобразования значений к логическому типу:</b>
+    </p>
+    <br>
+
+    <p class="code-ex">Например:<br>
+        <code>
+            console.log( !!0 ); // false<br>
+            console.log( !!1 ); // true<br>
+            console.log( !!"non-empty string" ); // true<br>
+            console.log( !!null ); // false<br>
+            <br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        console.log( !!0 );
+        console.log( !!1 );
+        console.log( !!"non-empty string" );
+        console.log( !!null );
+    </script>
+
+    <p>Приоритет 'НЕ' является наивысшим из всех логических операторов, поэтому он всегда 
+        выполняется первым, перед && или ||.
+    </p>
+
+    <h4 class="task">Напишите условие if для проверки, что значение переменной age НЕ находится в 
+        диапазоне 14 и 90 включительно.<br>
+        Задайте переменную чтобы она отвечала диапазону и вывелось 'Так как ваш возраст такой-то вам вход бесплатный'.<br>
+        Используйте для вывода в консоль шаблонные строки.
+        Напишите два варианта: первый с использованием оператора !, второй – без этого оператора.
+    </h4>
+
+    <p><b>Решение с оператором !</b>:</p>
+
+    <p class="code-ex"><br>
+        <code>
+        let age1;<br>
+        age1 = 10;<br>
+        if<b>( !(age1 >= 14 && age1 <= 90 ))</b> {<br>
+          console.log(`Because your age is ${age1}, entrance free.`);<br>
+        };<br>
+        <br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let age2;
+        age2 = 10;
+        if( age2 >= 14 || age2 <= 90 ) {
+            console.log(`Because your age is ${age2}, entrance free`);
+        };
+    </script>
+
+    <p><b>Решение без оператора !</b>:</p>
+
+    <p class="code-ex"><br>
+        <code>
+        let age;<br>
+        age = 95;<br>
+        if<b>( age < 14 && age > 90 )</b> {<br>
+          console.log(`Because your age is ${age}, entrance free.`);<br>
+        };<br>
+        <br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let age;
+        age = 95;
+        if( age < 14 || age > 90 ) {
+            console.log(`Because your age is ${age}, entrance free`);
+        };
+    </script>
+
+</body>
+
+</html>

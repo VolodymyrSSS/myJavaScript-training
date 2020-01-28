@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: условные операторы: if..else</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">Basic JS: условные операторы: if..else</h2>
+
+    <h4 class="task">1. Создайте страницу, которая спрашивает 'В каком году появилась спецификация 
+        ECMAScript-2015?'<br>
+        Если был введён 2015 год то вывести 'Да вы знаток!', если был введён другой год - то вывести
+        'А вот и неправильно!'<br>
+        2. Создайте такую же страницу, которая на этот же вопрос выводит ответы в зависимости от введённого
+        года: если был введён год до 2015, то ответ 'Это слишком рано...'; если был введён год после 2015,
+        то вывести 'Это поздновато', ну а если 2015 то вывести 'Абсолютно верно!'<br>
+        <br>
+        Все выводы делайте в консоль. Там где это возможно используйте шаблонные строки.
+    </h4>
+
+    <p><b>Решение1</b>:</p>
+
+    <br>
+    <p class="code-ex"><br>
+        <code>
+            let year = prompt("What year did the ECMAScript-2015 specification appear?", "2014");<br>
+            if (year == 2015){<br>
+                alert("Yes you are a connoisseur!");<br>
+            } else {
+                alert("And here it is wrong!");<br>
+            }
+            <br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let year1 = prompt("What year did the ECMAScript-2015 specification appear?", "2014");
+            if (year1 == 2015){
+                alert("Yes you are a connoisseur!")
+            } else {
+                alert("And here it is wrong!")
+            }
+    </script>
+
+    <br>
+
+    <p><b>Решение2</b>:</p>
+
+    <p>Для этого используем блок 'else if'</p>
+    <br>
+    <p class="code-ex"><br>
+        <code>
+            let year = prompt("What year did the ECMAScript-2015 specification appear?", "2016");<br>
+            if (year < 2015){<br>
+                alert("This is too early...");<br>
+            } else if (year > 2015) {<br>
+                alert("It's too late");<br>
+            } else {<br>
+                alert("Absolutely right");<br>
+            }<br>
+            <br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let year2 = prompt("What year did the ECMAScript-2015 specification appear?", "2016");
+            if (year2 < 2015){
+                alert("This is too early...");
+            } else if (year2 > 2015) {
+                alert("It's too late");
+            } else {
+                alert("Absolutely right");
+            }
+    </script>
+
+    <p>Блоков else if может быть и больше. Присутствие блока else не является обязательным.</p>
+
+</body>
+
+</html>

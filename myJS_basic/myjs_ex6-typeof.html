@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: типы данных в JavaScript</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">Основы JS: типы данных в JavaScript</h2>
+
+    <h4 class="task">У нас есть ряд аргументов переменных разных типов. Определите для каждого аргумента его тип ?</h4>
+
+    <p class="code-ex">Вот эти аргументы:<br>
+        <code>
+            '564', 'undefined', '0', '"-29"', '-44', 'true', '"foo"', Symbol("id"), '{}', Math, 'null', 'function(){}', <br>
+        </code>
+    </p>
+    <br>
+
+    <p><b>Решение:</b></p>
+
+    <p>В JavaScript есть 7 основных типов.<br>
+
+        number для любых чисел: целочисленных или чисел с плавающей точкой.<br>
+        string для строк. Строка может содержать один или больше символов, нет отдельного символьного типа.<br>
+        boolean для true/false. <br>
+        null для неизвестных значений – отдельный тип, имеющий одно значение null. <br>
+        undefined для неприсвоенных значений – отдельный тип, имеющий одно значение undefined. <br>
+        object для более сложных структур данных. <br>
+        symbol для уникальных идентификаторов.<br>
+    </p>
+    <br>
+
+    <p><b>Оператор <em>typeof</em> позволяет нам увидеть, какой тип данных сохранён в переменной.</b></p>
+
+    <p>Для определения типа аргумента используем оператор <b>typeof</b><br>
+        <br>
+        У него есть два синтаксиса: со скобками и без:<br>
+        <b>1. Синтаксис оператора: typeof x.<br>
+        2. Синтаксис функции: typeof(x).</b><br>
+        Работают они одинаково, но первый синтаксис короче.
+    </p>
+    <br>
+
+    <p class="code-ex">Результатом typeof является строка, содержащая тип:<br>
+        <code>
+            typeof 564 // 'number'<br>
+            typeof undefined // 'undefined'<br>
+            typeof 0 // 'number'<br>
+            typeof "-29" // 'string'<br>
+            typeof -44 // 'number'<br>
+            typeof true // 'boolean'<br>
+            typeof "foo" // 'string'<br>
+            typeof Symbol('id') // symbol<br>
+            typeof {} // 'object'<br>
+            typeof Math // 'object'(1)<br>
+            typeof null // 'object' (2)<br>
+            typeof function(){} // 'function' (3)<br>
+            <br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        console.log( typeof 564 ); // 'number'
+        console.log( typeof undefined ); // 'undefined'
+        console.log( typeof 0 ); // 'number'
+        console.log( typeof "-29" ); // "string"
+        console.log( typeof -44 ); // 'number'
+        console.log( typeof true ); // 'boolean'
+        console.log( typeof "foo" ); // 'string'
+        console.log( typeof Symbol("id") ); // 'symbol'
+        console.log( typeof {} ); // 'object'
+        console.log( typeof Math ); // 'object'
+        console.log( typeof null ); // 'object'
+        console.log( typeof function(){} ); // 'function'
+    </script>
+
+    <p>Последние три строки помечены, потому что typeof ведет себя в них по-особому:<br>
+        1. Math – это встроенный объект, который предоставляет математические операции и константы.<br>
+        2. Результат typeof null == 'object' — это официально признанная ошибка в языке, которая сохраняется 
+        для совместимости. На самом деле null — это не объект, а отдельный тип данных.<br>
+        3. Функции не являются отдельным базовым типом в JavaScript, а подвидом объектов. Но typeof 
+        выделяет функции отдельно, возвращая для них 'function'. На практике это весьма удобно, так 
+        как позволяет легко определить функцию.
+    </p>
+
+</body>
+
+</html>

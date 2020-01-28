@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: оператор 'if'</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">Basic JS: оператор 'if'</h2>
+
+    <h4 class="task">1. Выполнится ли код при таком условии ?</h4>
+
+    <p class="code-ex"><br>
+        <code>
+            if (0) {
+                alert( 'Привет' );
+            }
+            <br>
+        </code>
+    </p>
+    <br>
+
+    <p><b>Ответ1</b>: нет не выполнится - 0 is falsy</p>
+    <p>Оператор if (…) вычисляет выражение в скобках и преобразует результат к логическому типу и, 
+        если результат true, то выполняет блок кода, если false - то нет.<br>
+        Далее, по правилам преобразования типов: <b>число 0, пустая строка "", null, undefined и 
+        NaN</b> становятся <b>false</b>. Из-за этого их называют «ложными» («falsy») значениями. 
+        Остальные значения становятся true, поэтому их называют «правдивыми» («truthy»).
+    </p>
+
+    <h4 class="task">2. А выполнится ли код при таком условии ?</h4>
+
+    <p class="code-ex"><br>
+        <code>
+            if ('0') {
+                alert( 'Привет' );
+            }
+            <br>
+        </code>
+    </p>
+    <br>
+
+    <p><b>Ответ2</b>: выполнится - любая строка, кроме пустой (а строка '0' – не пустая), в логическом контексте становится true</p>
+
+    <h4 class="task">3. А при таком ?</h4>
+
+    <p class="code-ex"><br>
+        <code>
+            if (1) {
+                alert( 'Привет' );
+            }
+            <br>
+        </code>
+    </p>
+    <br>
+
+    <p><b>Ответ3</b>: выполнится всегда так как здесь число 1 - truthy</p>
+
+</body>
+
+</html>

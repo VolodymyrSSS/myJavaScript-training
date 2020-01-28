@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: условные операторы: if..else и '?'</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">Basic JS: условные операторы: if..else и '?'</h2>
+
+    <h4 class="task">1. Назначте переменную в зависимости от условия;<br>
+        2. Спросите сколько лет;<br>
+        3. если нет 18 - допуск отменить и вывести на экране false;<br>
+        4. Eсли больше 18 - допуск разрешить и вывести на экране true<br> 
+        Решите операцию двумя способами:  используя if..else, и более коротким и простым способом -
+        используя тернарный оператор.
+    </h4>
+
+    <p><b>Решение c if..else</b>:</p>
+
+    <br>
+    <p class="code-ex"><br>
+        <code>
+            <b>let accessAllowed;</b><br>
+            let age = prompt('How old are you?', '18');<br>
+            <br>
+            if (age < 18) {<br>
+                <b>accessAllowed = false;</b><br>
+            } else {<br>
+                <b>accessAllowed = true;</b><br>
+            }<br>
+            <br>
+            alert( accessAllowed );<br>
+            <br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        'use strict';
+
+        let accessAllowed;
+        let age = prompt('How old are you?', '18');
+
+        if (age < 18) {
+            accessAllowed = false;
+        } else {
+            accessAllowed = true;
+        }
+
+        alert( accessAllowed );
+    </script>
+
+<p><b>Решение c тернарным оператором</b>:</p>
+
+<p>Так называемый «условный» оператор «вопросительный знак» позволяет нам сделать это более коротким и простым способом.<br>
+    Оператор представлен знаком вопроса ?. Его также называют «тернарный», так как этот оператор, единственный в своём роде, имеет три аргумента.
+</p>
+
+<p>Синтаксис: <b>let result = условие ? значение1 : значение2;</b><br>
+    Сначала вычисляется условие: если оно истинно, тогда возвращается значение1, в противном случае – значение2.
+</p>
+<br>
+
+<p class="code-ex"><br>
+    <code>
+        let age = prompt('How old are you?', '18');<br>
+        <b>let accessAllowed = (age < 18) ? false : true;</b><br>
+        alert( accessAllowed );<br>
+        <br>
+    </code>
+</p>
+<br>
+
+<script>
+    let age2 = prompt('How old are you?', '18');
+    let accessAllowed2 = (age2 < 18) ? false : true;
+
+    alert( accessAllowed2 );
+</script>
+<br>
+
+</body>
+
+</html>

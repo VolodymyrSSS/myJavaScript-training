@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: type-convertion</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+<h2 class="title">Basic JS: преобразование типов</h2>
+
+<h4 class="task">
+    Преобразуйте значение в переменной к строке:
+</h4>
+
+<p class="code-ex"><br>
+    <code>
+        let value = true;<br>
+        <br>
+    </code>
+</p>
+<br>
+
+<p><b>Решение</b>:</p>
+
+<p>Строковое преобразование происходит, когда требуется представление чего-либо в виде строки.<br>
+    Например, alert(value) преобразует значение к строке. Но для решения нашей задачи мы также 
+    можем использовать функцию <b>String(value)</b>.
+</p>
+<br>
+
+<p class="code-ex"><br>
+    <code>
+        let value = true;<br>
+        console.log(typeof value); // boolean<br>
+        <br>
+        value = <b>String(value);</b> // теперь value это строка 'true'<br>
+        console.log(typeof value); // string<br>
+        <br>
+    </code>
+</p>
+<br>
+
+<script>
+    let value = true;
+    console.log(typeof value);
+
+    value = String(value);
+    console.log(typeof value);
+</script>
+
+<p>Преобразование происходит очевидным образом. false становится 'false', null становится 'null' и т.п.</p>
+
+<h4 class="task">
+    Преобразуйте значение в переменной к числу:
+</h4>
+
+<p class="code-ex"><br>
+    <code>
+        let str = '123';<br>
+        <br>
+    </code>
+</p>
+<br>
+
+<p><b>Решение</b>:</p>
+
+<p>Численное преобразование происходит в математических функциях и выражениях. Например, когда операция 
+    деления / применяется не к числу: alert( "6" / "2" ); // 3, Строки преобразуются в числа.<br>
+    Мы можем использовать функцию Number(value), чтобы явно преобразовать value к числу:
+</p>
+<br>
+
+<p class="code-ex"><br>
+    <code>
+        let str = "123";<br>
+        console.log(typeof str); // string<br>
+        <br>
+        let num = <b>Number(str);</b> // становится числом 123<br>
+        console.log(typeof num); // number<br>
+        <br>
+    </code>
+</p>
+<br>
+
+<script>
+    let str = "123";
+    console.log(typeof str);
+
+    let num = Number(str);
+    console.log(typeof num);
+</script>
+
+<p>Явное преобразование часто применяется, когда мы ожидаем получить число из строкового контекста, 
+    например из текстовых полей форм. Если строка не может быть явно приведена к числу, то результатом 
+    преобразования будет NaN. Например:
+</p>
+<br>
+
+<p class="code-ex"><br>
+    <code>
+        let age = Number("Любая строка вместо числа");<br>
+        <br>
+        console.log(age); // NaN, преобразование  не удалось<br>
+        <br>
+    </code>
+</p>
+<br>
+
+<script>
+    let age = Number("Любая строка вместо числа");
+    console.log(age);
+</script>
+
+<p><b><em>Правила численного преобразования:</em></b><br>
+    Значение <b>undefined</b>	преобразуется в <b>NaN</b><br>
+    Значение <b>null</b>	преобразуется в <b>0</b><br>
+    Значение <b>true / false</b>	преобразуется в <b>1 / 0</b><br>
+    Значение <b>string</b>	преобразуется в: Пробельные символы по краям обрезаются. Далее, если остаётся 
+    пустая строка, то <b>0</b>, иначе из непустой строки <b>«считывается» число</b>. При ошибке результат <b>NaN</b>.<br>
+</p>
+
+<p>Примеры:</p>
+
+<p class="code-ex"><br>
+    <code>
+        console.log( Number("   123   ") ); // 123<br>
+        console.log( Number("123z") );  // NaN (ошибка чтения числа в "z")<br>
+        console.log( Number(true) );   // 1<br>
+        console.log( Number(false) );  // 0<br>
+        <br>
+    </code>
+</p>
+<br>
+
+<script>
+    console.log( Number("   123   ") );
+    console.log( Number("123z") );
+    console.log( Number(true) );
+    console.log( Number(false) );
+</script>
+<br>
+
+<p>Сложение „+“ объединяет строки<br>
+    Почти все математические операторы выполняют численное преобразование. Исключение составляет +. Если одно из 
+    слагаемых является строкой, тогда и все остальные приводятся к строкам.<br>
+    Тогда они конкатенируются (присоединяются) друг к другу:
+</p>
+
+<p class="code-ex"><br>
+    <code>
+        console.log( 1 + '2' ); // '12' (строка справа)<br>
+        console.log( '1' + 2 ); // '12' (строка слева)<br>
+        <br>
+    </code>
+</p>
+<br>
+
+<script>
+    console.log( 1 + '2' );
+    console.log( '1' + 2 );
+</script>
+
+<p>Так происходит, только если хотя бы один из аргументов является строкой. Во всех остальных случаях значения складываются как числа.</p>
+
+<h4 class="task">
+    Приведите такие значения переменной как числа/строки/пустая строка к логическому типу:
+</h4>
+
+<p><b>Решение</b>:</p>
+
+<p>Логическое преобразование происходит в логических операторах, но также может 
+    быть выполнено явно с помощью функции <b>Boolean(value)</b>.<br>
+    <br>
+    <b><em>Правило преобразования:</em></b><br>
+    Значения, которые интуитивно «пустые», вроде <b>0, пустой строки, null, undefined и NaN</b>, становятся <b>false</b>.<br>
+    Все <b>остальные</b> значения становятся <b>true</b>.
+</p>
+<br>
+
+<p class="code-ex"><br>
+    <code>
+        console.log( Boolean(1) ); // true<br>
+        console.log( Boolean(0) ); // false<br>
+        console.log( Boolean('0') ); // true - так как это строка<br>
+        console.log( Boolean("Привет!") ); // true<br>
+        console.log( Boolean("") ); // false<br>
+        console.log( Boolean(" ") ); // true - так как любая непустая строка это true
+        <br>
+    </code>
+</p>
+<br>
+
+<script>
+    console.log( Boolean(1) );
+    console.log( Boolean(0) );
+    console.log( Boolean("0") );
+    console.log( Boolean("Привет!") );
+    console.log( Boolean("") );
+    console.log( Boolean(" ") );
+</script>
+
+
+<h4 class="task">
+    Какой результат будет у выражений ниже?
+</h4>
+
+<p class="code-ex"><br>
+    <code>
+        console.log( "" + 1 + 0 );<br>
+        console.log( "" - 1 + 0 );<br>
+        console.log( true + false );<br>
+        console.log( 6 / "3" );<br>
+        console.log( "2" * "3" );<br>
+        console.log( 4 + 5 + "px" );<br>
+        console.log( "$" + 4 + 5 );<br>
+        console.log( "4" - 2 );<br>
+        console.log( "4px" - 2 );<br>
+        console.log( 7 / 0 );<br>
+        console.log( "  -9  " + 5 );<br>
+        console.log( "  -9  " - 5 );<br>
+        console.log( null + 1 );<br>
+        console.log( undefined + 1 );<br>
+        console.log( " \t \n" - 2 );<br>
+        <br>
+    </code>
+</p>
+<br>
+
+<p><b>Решение посмотрите в консоле</b>:</p>
+
+<script>
+    console.log( "" + 1 + 0 ); // 1 (Сложение со строкой "" + 1 преобразует 1 к строке: "" + 1 = '1', и в следующем случае '1' + 0, работает то же самое правило)
+    console.log( "" - 1 + 0 ); // -1 (Вычитание - как и большинство математических операторов работает только с числами, пустая строка "" приводится к 0)
+    console.log( true + false ); // 1
+    console.log( 6 / "3" ); // 2
+    console.log( "2" * "3" ); // 6
+    console.log( 4 + 5 + "px" ); // 9px
+    console.log( "$" + 4 + 5 ); // $45
+    console.log( "4" - 2 ); // 2
+    console.log( "4px" - 2 ); // NaN
+    console.log( 7 / 0 ); // infinity ()
+    console.log( "  -9  " + 5 ); // -9 5 (Сложение со строкой превращает число 5 в строку и добавляет к строке)
+    console.log( "  -9  " - 5 ); // -14 (Вычитание всегда преобразует к числу, значит строка " -9 " становится числом -9, пробелы по краям обрезаются)
+    console.log( null + 1 ); // 1 (null становится 0 после численного преобразования.)
+    console.log( undefined + 1 ); // NaN (undefined становится NaN после численного преобразования)
+    console.log( " \t \n" - 2 ); // -2 (Пробельные символы, такие как \t и \n по краям строки игнорируются при преобразовании в число, так что строка \t \n, аналогично пустой строке, становится 0 после численного преобразования.)
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: script-insert</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">Подключение script в HTML-документ</h2>
+
+    <h4 class="task">В примере ниже подключены два скрипта small.js и big.js.
+        Если предположить, что small.js загружается гораздо быстрее, чем big.js — какой выполнится
+        первым? Дайте ответ для каждого отдельного варианта.<br>
+    </h4>
+    
+    <p class="code-ex">Вариант1:<br>
+        <code>
+            script src="big.js" /script <br>
+            script src="small.js" /script<br>
+        </code>
+    </p>
+    <br>
+
+    <p><b>Ответ:</b> big.js</p>
+
+    <p>Скрипты вставляются на страницу как текст в теге-script, либо как внешний файл через 
+        script src = 'путь' /script. В этом варианте подключённые скрипты вставлены на страницу
+        web-документа используя тег-script и выполняютса синхронно, то есть последовательно. 
+        Поэтому, первым выполнится big.js, это нормальная последовательность выполнения подряд 
+        идущих скриптов.
+    </p>
+    <br>
+
+    <p class="code-ex">Вариант2:<br>
+        <code>
+            script <b>async</b> src="big.js" /script<br>
+            script <b>async</b> src="small.js" /script<br>
+        </code>
+    </p>
+    <br>
+
+    <p><b>Ответ:</b> small.js</p>
+
+    <p>Атрибуты async/defer работают только в том случае, если назначены на внешние скрипты, т.е.
+        имеющие src. Так же, при попытке назначить их на обычные скрипты script...script, они будут
+        проигнороированы. Специальные атрибуты async и defer используются для того, чтобы пока грузится 
+        внешний скрипт — браузер показал остальную (следующую за ним) часть страницы. Без них этого 
+        не происходит.<br>
+        Здесь скрипты выполняются асинхронно. То есть, при обнаружении script async src='...' браузер 
+        не останавливает обработку страницы, а спокойно работает дальше. Когда скрипт будет загружен 
+        — он выполнится. С использованием атрибутов async/defer скрипты ведут себя совершенно независимо 
+        друг от друга. В этом случае (с async) первым сработает тот скрипт, который раньше загрузится 
+        а именно - small.js.
+    </p>
+    <br>
+
+    <p class="code-ex">Вариант3:<br>
+        <code>
+            script <b>defer</b> src="big.js /script <br>
+            script <b>defer</b> src="small.js" /script <br>
+        </code>
+    </p>
+    <br>
+
+    <p><b>Ответ:</b> big.js</p>
+
+    <p>Первым выполнится big.js, а скрипт small.js, даже если загрузился раньше, будет его ждать 
+        так как скрипты, подключённые через defer, сохраняют порядок выполнения относительно друг друга.
+        Атрибут defer используют в тех случаях, когда второй скрипт small.js зависит от первого big.js, 
+        к примеру — использует что-то, описанное первым скриптом. Кроме тог, Одновременно указывать async 
+        и defer не имеет смысла, в этом случае браузер использует только async.
+    </p>
+
+
+
+
+</body>
+
+</html>

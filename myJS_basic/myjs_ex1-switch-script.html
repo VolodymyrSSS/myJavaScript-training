@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: script-insert</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">Подключение script в HTML-документ</h2>
+
+    <h4 class="task">1. Создайте страницу, которая отобразит в консоле сообщение «Я JavaScript1!».<br>
+        2. Покажите на экране второе сообщение «Я JavaScript2!» подключив внешний скрипт.
+    </h4>
+
+    <p><b>Решение1:</b></p>
+
+    <p>Программы на JavaScript могут быть вставлены в любое место HTML-документа с помощью тега-script.<br>
+        Как правило, только простейшие скрипты помещаются в HTML. Более сложные выделяются в отдельные файлы.<br>
+        Для подключения нескольких скриптов надо использовать несколько тегов, примеры:<br>
+        script src="/js/script1.js" /script <br>
+        script src="/js/script2.js" /script
+    </p>
+
+    <p>Используя тег-script вставим наш код в HTML-документ при этом результат работы скрипта выведем в консоль.</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            console.log( "Я JavaScript1!" );<br>
+            <br>
+        </code>
+    </p>
+
+    <script>
+        console.log( "Я JavaScript1!" );
+    </script>
+    <br>
+
+    <p><b>Решение2:</b></p>
+
+    <p>Если есть много JavaScript-кода, его желательно поместить в отдельный файл.<br>
+        Файл скрипта можно подключить к HTML с помощью атрибута <b>src:</b>
+    </p>
+    
+    <p>Польза от отдельных файлов в том, что браузер загрузит скрипт отдельно и сможет хранить его в кеше.<br>
+        Другие страницы, которые подключают тот же скрипт, смогут брать его из кеша вместо повторной загрузки из сети. 
+        И таким образом файл будет загружаться с сервера только один раз.
+        Это сокращает расход трафика и ускоряет загрузку страниц.
+    </p>
+     
+    
+    <p>Для второго сообщения укажем относительный путь от текущей страницы. Здесь надо учесть, что к примеру
+        запись script src="alert.js" /script<br>
+        будет означать, что файл "alert.js" находится в текущей папке; а запись<br>
+        script src="./alert.js" /script находится в папке что лежит выше по иерархии.
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            script src="alert.js" /script - относительный путь к внешнему скрипту<br>
+            <br>
+        </code>
+    </p>
+
+    <script src="alert1.js"></script>
+
+
+</body>
+
+</html>

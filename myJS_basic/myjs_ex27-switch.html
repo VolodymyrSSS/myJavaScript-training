@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: switch</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">Basic JS: конструкция 'switch'</h2>
+
+    <h4 class="task">У нас есть простое математическое выражение: a = 2 + 2; так же есть несколько 
+        вариантов ответов: 3, 4, 5. Покажите решение использовав конструкцию 'switch'.
+    </h4>
+
+    <p><b>Решение</b>:</p>
+
+    <p>Конструкция switch заменяет собой сразу несколько if.<br>
+        Конструкция switch имеет один или более блок case и необязательный блок default. Выглядит она так:
+    </p>
+    <br>
+    <p class="code-ex"><br>
+        <code>
+            switch(x) {<br>
+                case 'value1':  // if (x === 'value1')<br>
+                  ...<br>
+                  [break]<br>
+                  <br>
+                case 'value2':  // if (x === 'value2')<br>
+                  ...<br>
+                  [break]<br>
+                  <br>
+                default:<br>
+                  ...<br>
+                  [break]<br>
+              }<br>
+            <br>
+        </code>
+    </p>
+    <br>
+
+    <p>Если break нет, то выполнение пойдёт ниже по следующим case, при этом остальные 
+        проверки игнорируются.
+    </p>
+
+    <p>Давайте используем конструкцию 'switch':
+    </p>
+    <br>
+
+    <p class="code-ex"><br>
+        <code>
+            let a = 2 + 2;<br>
+            <br>
+            switch (a) {<br>
+            case 3:<br>
+                console.log( 'Маловато' );<br>
+                break;<br>
+            <b>case 4:<br>
+                console.log( 'В точку!' );<br>
+                break;</b><br>
+            case 5:<br>
+                console.log( 'Перебор' );<br>
+                break;<br>
+            default:<br>
+                console.log( 'Нет таких значений' );<br>
+            }<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let a1 = 2 + 2;
+            switch (a1) {
+            case 3:
+                console.log( 'Маловато' );
+                break;
+            case 4:
+                console.log( 'В точку!' );
+                break;
+            case 5:
+                console.log( 'Перебор' );
+                break;
+            default:
+                console.log( 'Нет таких значений' );
+            }
+    </script>
+
+    <p>Здесь оператор switch последовательно сравнит a со всеми вариантами из case.<br>
+       Сначала 3, затем – так как нет совпадения – 4. Совпадение найдено, будет выполнен этот 
+       вариант, со строки alert( 'В точку!' ) и далее, до ближайшего break, который прервёт 
+       выполнение.
+    </p>
+
+    <p>И switch и case допускают любое выражение в качестве аргумента.<br>
+        Вот ещё пример:
+    </p>
+    <br>
+
+    <p class="code-ex"><br>
+        <code>
+            <b>let a = "1";</b><br>
+            <b>let b = 0;</b><br>
+            switch (+a) {<br>
+            case b + 1:<br>
+                console.log('Выполнится, т.к. значением +a будет 1, что в точности равно b+1');<br>
+                break;<br>
+                <br>
+            default:<br>
+                console.log('Это не выполнится');<br>
+            }<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let a = "1";
+        let b = 0;
+        switch (+a) {
+        case b + 1:
+            console.log("Выполнится, т.к. значением +a будет 1, что в точности равно b+1");
+            break;
+
+        default:
+            console.log("Это не выполнится");
+        }
+    </script>
+
+    <p>Несколько вариантов case, использующих один код, можно группировать.<br>
+        Возможность группировать case – это побочный эффект того, как switch/case работает без break.
+    </p>
+
+    <p>Нужно отметить, что <b>проверка на равенство всегда строгая</b>. Значения должны быть одного типа, 
+        чтобы выполнялось равенство.<br>
+        Для примера, давайте рассмотрим следующий код:
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            let arg = prompt("Введите число?");<br>
+            switch (arg) {<br>
+            case '0':<br>
+            case '1':<br>
+                console.log( 'Один или ноль' );<br>
+                break;<br>
+                <br>
+            case '2':<br>
+                console.log( 'Два' );<br>
+                break;<br>
+                <br>
+            case 3:<br>
+                console.log( 'Никогда не выполнится!' );<br>
+                break;<br>
+            default:<br>
+                console.log( 'Неизвестное значение' );<br>
+            }<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let arg = prompt("Введите число?");
+        switch (arg) {
+            case '0':
+            case '1':
+                console.log( 'Один или ноль' );
+                break;
+
+            case '2':
+                console.log( 'Два' );
+                break;
+
+            case 3:
+                console.log( 'Никогда не выполнится!' );
+                break;
+            default:
+            console.log( 'Неизвестное значение' );
+        }
+    </script>
+
+
+</body>
+
+</html>

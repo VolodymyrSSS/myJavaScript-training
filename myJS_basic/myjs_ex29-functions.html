@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: functions</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">Basic JS: functions</h2>
+
+    <h4 class="task">Переменные, объявленные внутри функции, видны только внутри этой функции.
+        Покажите это на примере?
+    </h4>
+
+    <p><b>Решение</b>:</p>
+    <br>
+
+    <p class="code-ex" style="width: 70%;">
+        <code>
+            function showMessage() {<br> 
+                <b>let message</b> = "Привет, я JavaScript!"; -это локальная переменная<br> 
+                <br> 
+                console.log( message ); -выведет 'Привет, я JavaScript!'<br> 
+              }
+              <br> 
+              showMessage(); -вызываем функцию<br> 
+              <br> 
+              console.log( message ); -здесь будет ошибка, т.к. переменная видна только внутри функции<br> 
+        </code>
+    </p>
+    <br>
+
+    <script>
+        function showMessage() {
+            let message = "Привет, я JavaScript!"; // локальная переменная
+
+            console.log( message );
+        }
+
+        showMessage(); // Привет, я JavaScript!
+
+        console.log( message ); // <-- будет ошибка, т.к. переменная видна только внутри функции
+    </script>
+
+    <h4 class="task">Внешние переменные доступны для функции. Покажите это на примере?</h4>
+
+    <p>
+        У функции есть доступ к внешним переменным, например:
+    </p>
+    <br>
+
+    <p class="code-ex"><br>
+        <code>
+            <b>let userName</b> = 'Вася'; -это внешняя переменная<br>
+            <br>
+            function showMessage() {<br>
+            let message = 'Привет, ' + <b>userName</b> -здесь обращение к внешней переменной;<br>
+            alert(message);<br>
+            }<br>
+            <br>
+            showMessage(); // Привет, Вася<br>
+        </code>
+    </p>
+    <br>
+
+    <h4 class="task">Значение внешней переменной может быть изменено функцией. Покажите это на примере?</h4>
+
+    <p>Функция обладает полным доступом к внешним переменным и может изменять их значение.<br>
+        Но внешняя переменная используется, только если внутри функции нет такой локальной.</p>
+    <br>
+
+    <p class="code-ex"><br>
+        <code>
+            <b>let userName</b> = 'Вася';<br>
+            <br>
+            function showMessage() {<br>
+                <b>userName</b> = "Петя"; -здесь изменяем значение внешней переменной<br>
+            <br>
+                let message = 'Привет, ' + <b>userName</b>;<br>
+                    console.log(message);<br>
+            }<br>
+            <br>
+            console.log( userName ); -здесь Вася перед вызовом функции<br>
+            <br>
+            showMessage(); -теперь вызвали функцию<br>
+            <br>
+            alert( userName ); -тут Петя, значение внешней переменной было изменено функцией<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let userName = 'Вася';
+
+        function showMessage() {
+        userName = "Петя"; // (1) изменяем значение внешней переменной
+
+        let message = 'Привет, ' + userName;
+        console.log(message);
+        }
+
+        console.log( userName ); // Вася перед вызовом функции
+
+        showMessage();
+
+        console.log( userName ); // Петя, значение внешней переменной было изменено функцией
+    </script>
+
+    <h4 class="task">Если одноимённая переменная объявляется внутри функции, тогда она перекрывает внешнюю. 
+        Покажите это на примере?
+    </h4>
+
+    <p> В коде ниже функция использует локальную переменную userName. Внешняя будет проигнорирована:</p>
+    <br>
+
+    <p class="code-ex"><br>
+        <code>
+            <b>let userName</b> = 'Manfred';<br>
+            <br>
+            function showMessage() {<br>
+                <b>let userName</b> = 'Samuel'; -объявляем локальную переменную<br>
+            <br>
+                let message = 'Привет, ' + <b>userName</b>;<br>
+                    console.log(message);  - выведет 'Привет Samuel'<br>
+            }<br>
+            <br>
+            // функция создаст и будет использовать свою собственную локальную переменную userName<br>
+            showMessage();<br>
+            <br>
+            console.log( userName ); -тут Manfred, не изменилась, функция не трогала внешнюю переменную
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let userName2 = "Manfred";
+            
+        function showMessage() {
+            let userName2 = "Samuel";// объявляем локальную переменную
+        
+            let message2 = "Hallo, " + userName2;
+                console.log( message2 );
+        }
+        // функция создаст и будет использовать свою собственную локальную переменную userName
+        showMessage();
+    
+        console.log( userName2 );// тут Manfred, не изменилась, функция не трогала внешнюю переменную
+    </script>
+
+    <p>Переменные, объявленные снаружи всех функций, такие как внешняя 
+        переменная let userName = 'Manfred', в вышеприведённом коде – называются глобальными.
+        Глобальные переменные видимы для любой функции (если только их не перекрывают одноимённые 
+        локальные переменные).<br>
+        Желательно сводить использование глобальных переменных к минимуму. В современном коде обычно 
+        мало или совсем нет глобальных переменных. Хотя они иногда полезны для хранения важнейших 
+        «общепроектовых» данных.
+    </p>
+
+    <h4 class="task">Покажите как можна передать внутрь функции параметры (также называемые 
+        аргументы функции)? Покажите код?
+    </h4>
+
+    <p>В нижеприведённом примере функции передаются два параметра: 'from' и 'text'.</p>
+    <br>
+
+    <p class="code-ex" style="width: 55%;"><br>
+        <code>
+            function showMessage(from, text) { -здесь аргументы: from, text<br>
+                console.log(from + ': ' + text);<br>
+            }<br>
+            <br>  
+            showMessage('Margo', 'Привет!'); -выведет 'Margo: Привет!'<br>
+            showMessage('Margo', 'Как дела?'); - выведет 'Margo: Как дела?'<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        function showMessage(from, text) { // аргументы: from, text
+            console.log(from + ": " + text);
+        }
+
+        showMessage("Margo", "Привет!"); // Margo: Привет!
+        showMessage("Margo", "Как дела?"); // Margo: Как дела?
+    </script>
+
+    <p>Когда  вызывается функция, переданные значения копируются в локальные переменные from и text. 
+        Затем они используются в теле функции. Вот ещё один пример: у нас есть переменная from, и мы 
+        передаём её функции. Обратите внимание: функция изменяет значение from, но это изменение не видно 
+        снаружи. Функция всегда получает только копию значения:
+    </p>
+    <br>
+
+    <p class="code-ex" style="width: 55%;"><br>
+        <code>
+            function showMessage(from, text) {<br>
+                from = '*' + from + '*'; -немного украсим 'from'<br>
+                console.log( from + ': ' + text );<br>
+            }<br>
+            <br>
+            let from = 'Аня';<br>
+            <br>
+            showMessage(from, 'Привет'); -выведет '*Аня*: Привет'<br>
+            <br>  
+            // значение "from" осталось прежним, функция изменила значение локальной переменной<br>
+            console.log( from ); выведет 'Аня'<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        function showMessage(from, text) {
+            from = "*" + from + "*"; // немного украсим 'from'
+            console.log( from + ": " + text );
+        }
+
+        let from = "Аня";
+
+        showMessage(from, "Привет"); // *Аня*: Привет
+
+        // значение 'from' осталось прежним, функция изменила значение локальной переменной
+        console.log( from ); // Аня
+    </script>
+
+    <h4 class="task">Покажите как задать параметр по-умолчанию? Какое будет его значение? Покажите пример?</h4>
+
+    <p>Если параметр не указан, то его значением становится undefined.<br>
+        Например, вышеупомянутая функция showMessage(from, text) может быть вызвана с одним аргументом:<br>
+        showMessage("Аня");<br>
+        Это не приведёт к ошибке. Такой вызов выведет <em>"Аня: undefined"</em>. В вызове не указан 
+        параметр text, поэтому предполагается, что text === undefined.<br>
+        Если мы хотим задать параметру text значение по умолчанию, мы должны указать его после =
+    </p>
+    <br>
+
+    <p class="code-ex" style="width: 55%;"><br>
+        <code>
+            function showMessage(from, <b>text = 'текст не добавлен'</b>) {<br>
+                alert( from + ': ' + text );<br>
+            }<br>
+            <br>  
+            showMessage('Аня'); -выведет 'Аня: текст не добавлен'<br>
+        </code>
+    </p>
+    <br>
+
+    <p>Теперь, если параметр text не указан, его значением будет 'текст не добавлен'<br>
+       В данном случае 'текст не добавлен' это строка, но на её месте могло бы быть и более 
+       сложное выражение, которое бы вычислялось и присваивалось при отсутствии параметра. 
+       Например:
+    </p>
+    <br>
+
+    <p class="code-ex" style="width: 55%;"><br>
+        <code>
+            function showMessage(from, text = anotherFunction()) {<br>
+                anotherFunction() выполнится только если не передан text<br>
+                результатом будет значение text<br>
+              }<br>
+        </code>
+    </p>
+    <br>
+
+    <p>В JavaScript параметры по умолчанию вычисляются каждый раз, когда функция вызывается без 
+        соответствующего параметра. Ранние версии JavaScript не поддерживали параметры по умолчанию. 
+        Поэтому существуют альтернативные способы, которые могут встречаться в старых скриптах.
+        Например, явная проверка на undefined:
+    </p>
+
+    <p class="code-ex" style="width: 55%;"><br>
+        <code>
+            function showMessage(from, text) {<br>
+                if (text === undefined) {<br>
+                  text = 'текст не добавлен';<br>
+                }<br>
+            <br>  
+                alert( from + ": " + text );<br>
+            }<br>
+        </code>
+    </p>
+    <br>
+
+    <p>Или с помощью оператора ||:</p>
+
+    <p class="code-ex" style="width: 55%;"><br>
+        <code>
+            function showMessage(from, text) {<br>
+                // Если значение text ложно, тогда присвоить параметру text значение по умолчанию<br>
+                text = text || 'текст не добавлен';<br>
+                ...<br>
+              }<br>
+        </code>
+    </p>
+    <br>
+
+    <h3>Возврат значения</h3>
+
+    <h4 class="task">Верните результат функции сложения двух чисел:</h4>
+
+    <p>Функция может вернуть результат, который будет передан в вызвавший её код.</p>
+    <br>
+
+    <p class="code-ex" style="width: 55%;">
+        <code>
+            function sum(a, b) {<br>
+                <b>return a + b;</b><br>
+            }<br>
+            <br> 
+            let result = sum(1, 2);<br>
+            console.log( result ); // 3<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        function sum(a, b) {
+            return a + b;
+        }
+              
+        let result = sum(1, 2);
+        console.log( result ); // 3
+    </script>
+
+    <p>Директива return может находиться в любом месте тела функции. Как только выполнение 
+        доходит до этого места, функция останавливается, и значение возвращается в вызвавший \
+        её код (присваивается переменной result выше).
+    </p>
+
+    <p>Вызовов return может быть несколько, например:</p>
+    <br>
+
+    <p class="code-ex" style="width: 55%;">
+        <code>
+            function <b>checkAge(age)</b> {<br>
+                if (age > 18) {<br>
+                  return true;<br>
+                } else {<br>
+                  return confirm('А родители разрешили?');<br>
+                }<br>
+              }<br>
+              <br>
+              let age = prompt('Сколько вам лет?', 18);<br>
+              <br>
+              <b>if ( checkAge(age) ) {</b><br>
+                alert( 'Доступ получен' );<br>
+              } else {<br>
+                alert( 'Доступ закрыт' );<br>
+              }<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        function checkAge(age) {
+            if (age > 18) {
+                return true;
+            } else {
+                return confirm('А родители разрешили?');
+            }
+        }
+
+        let age = prompt('Сколько вам лет?', 18);
+
+        if ( checkAge(age) ) {
+            alert( 'Доступ получен' );
+        } else {
+            alert( 'Доступ закрыт' );
+        }
+    </script>
+
+    <p>Возможно использовать return и без значения. Это приведёт к немедленному выходу из функции.<br>
+        Например:
+    </p>
+    <br>
+
+    <p class="code-ex" style="width: 55%;">
+        <code>
+            function showMovie(age) {<br>
+                if ( !checkAge(age) ) {<br>
+                  return;<br>
+                }<br>
+                <br>
+                alert( "Вам показывается кино" ); //<br>
+                // ...<br>
+              }<br>
+        </code>
+    </p>
+    <br>
+
+    <p>В коде выше, если checkAge(age) вернёт false, showMovie не выполнит alert.</p>
+
+    <p>Результат функции с пустым return или без него – undefined.<br>
+        Или по-другому: если функция не возвращает значения, это всё равно, как если бы она 
+        возвращала undefined:
+    </p>
+
+    <p class="code-ex" style="width: 55%;">
+        <code>
+            function doNothing() { /* пусто */ }<br>
+            <br>
+            alert( doNothing() === undefined ); // true<br>
+        </code>
+    </p>
+    <br>
+
+    <p>Пустой return аналогичен return undefined:</p>
+
+    <p class="code-ex" style="width: 55%;">
+        <code>
+          function doNothing() {<br>
+            return;<br>
+          }<br>
+          <br>
+          alert( doNothing() === undefined ); // true<br>
+        </code>
+    </p>
+    <br>
+
+    <p><b>Никогда не добавляйте перевод строки между return и его значением</b>.<br>
+        Код не выполнится, потому что интерпретатор JavaScript подставит точку с 
+        запятой после return.
+    </p>
+    <br>
+
+    <p>Если мы хотим, чтобы возвращаемое выражение занимало несколько строк, нужно 
+        начать его на той же строке, что и return. Или, хотя бы, поставить там 
+        открывающую скобку, вот так:
+    </p>
+
+    <p class="code-ex" style="width: 55%;">
+        <code>
+            return <b>(</b><br>
+                some + long + expression<br>
+                + or +<br>
+                whatever * f(a) + f(b)<br>
+            <b>)</b><br>
+        </code>
+    </p>
+    <br>
+
+    <h3>Выбор имени функции</h3>
+
+    <p>Функция – это действие. Поэтому имя функции обычно является глаголом. Оно должно 
+        быть простым, точным и описывать действие функции, чтобы программист, который 
+        будет читать код, получил верное представление о том, что делает функция.
+    </p>
+
+    <p>Функции, начинающиеся с…<br>
+        <b>'get…'</b> – возвращают значение,<br>
+        <b>'calc…'</b> – что-то вычисляют,<br>
+        <b>'show…'</b> - что-то показывать,<br>
+        <b>'create…'</b> – что-то создают,<br>
+        <b>'check…'</b> – что-то проверяют и возвращают логическое значение, и т.д.<br>
+    </p>
+    <br>
+
+    <p><b>Функция должна делать только то, что явно подразумевается её названием. И это должно 
+        быть одним действием</b>.<br>
+        Два независимых действия обычно подразумевают две функции, даже если предполагается, 
+        что они будут вызываться вместе (в этом случае мы можем создать третью функцию, которая 
+        будет их вызывать).<br>
+        Небольшие функции не только облегчают тестирование и отладку – само существование таких 
+        функций выполняет роль хороших комментариев!<br>
+        Если это что-то большое, имеет смысл разбить функцию на несколько меньших. Иногда следовать 
+        этому правилу непросто, но это определённо хорошее правило.
+    </p>
+
+</body>
+
+</html>

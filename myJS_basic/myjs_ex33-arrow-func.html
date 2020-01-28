@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: arrow-functions</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<p>
+
+    <h2 class="title">Basic JS: arrow-function</h2>
+
+    <h4 class="task">У нас есть два аргумента 'a' и 'b'. Напешите код их прибавления используя «стрелочные функции».</h4>
+
+    <p><b>Решение</b>:</p>
+
+    <p>Функции-стрелки очень удобны для однострочных действий. «Функции-стрелки» или «стрелочные функции» (arrow functions), 
+        т.к. выглядит следующим образом:
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            <b>let func = (arg1, arg2, ...argN) => expression</b><br> 
+        </code>
+    </p>
+    <br>
+
+    <p>Такой код создаёт функцию func с аргументами arg1..argN и вычисляет expression с правой стороны с их использованием, 
+        возвращая результат.<br>
+        Другими словами, это более короткий вариант такой записи:
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            let func = function(arg1, arg2, ...argN) {<br>
+                return expression;<br>
+              };<br> 
+        </code>
+    </p>
+    <br>
+
+    <p>Теперь, давайте решим нашу задачу.</p>
+    <br>
+    
+    <p class="code-ex">
+        <code>
+            <b>let sum = (a, b) => a + b;</b><br>
+            <br>
+            /* Более короткая форма для:<br>
+            let sum = function(a, b) {<br>
+            return a + b;<br>
+            };<br>
+            */<br>
+            <br>
+            console.log( sum(1, 2) ); // 3<br> 
+        </code>
+    </p>
+    <br>
+
+    <p>То есть, (a, b) => a + b задаёт функцию с двумя аргументами a и b, которая при запуске вычисляет выражение 
+        справа a + b и возвращает его результат.
+    </p>
+
+    <script>
+        let sum = (a, b) => a + b;
+
+        console.log( sum(1, 2) );
+    </script>
+
+    <h4 class="task">Покажите пример использования «стрелочной функции» только с одним аргументом?
+    А потом когда нету аргументов?</h4>
+
+    <p class="code-ex">
+        <code>
+            let double = <b>n =></b> n * 2;<br>
+            <br>
+            // тоже что и<br>
+            // let double = function(n) { return n * 2 }<br>
+            <br>
+            console.log( double(n) ); // 6<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let n = 3;
+        let double = n => n * 2;
+
+        console.log( double(n) );
+    </script>
+
+    <p>Здесь функции объявляются прямо внутри вызова ask(...). У них нет имён, поэтому они называются анонимными. 
+        Такие функции недоступны снаружи ask (потому что они не присвоены переменным), но это как раз то, что нам нужно.
+    </p>
+
+    <p>Если нет аргументов, указываются пустые круглые скобки:</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            let sayHi = <b>() =></b> console.log('Hello, Buddy!');<br>
+            <br>
+            sayHi();<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let sayHi = () => console.log("Hello, Buddy!");
+
+        sayHi(); // Hello, Buddy!
+    </script>
+
+    <h4 class="task">Используйте «стрелочные функции» для динамического создания функции, так же как и Function Expression.<br>
+        Спросите сколько лет. И в зависимости от ответа выведите 'Привет' или 'Здравствуйте'.
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            let age = prompt('Сколько Вам лет?', 18);<br>
+            <br>
+            let welcome = (age < 18) ?<br>
+            <b>() => alert('Привет') :<br>
+            () => alert("Здравствуйте!");</b><br>
+            <br>
+            welcome(); // теперь всё в порядке<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let age = prompt("Сколько Вам лет?", 18);
+
+        let welcome = (age < 18) ?
+        () => alert('Привет') :
+        () => alert("Здравствуйте!");
+
+        welcome(); // теперь всё в порядке
+    </script>
+
+    <h4 class="task">Переделайте «стрелочную функциию» прибавления 'x' и 'y' так, чтобы получились 
+        «Многострочные стрелочные функции».
+    </h4>
+
+    <p>В примерах выше аргументы использовались слева от =>, а справа вычислялось выражение с их значениями. Но порой нам нужно 
+        что-то посложнее, например, выполнить несколько инструкций. Это также возможно, нужно лишь 
+        заключить инструкции в фигурные скобки. И использовать return внутри них, как в обычной функции.
+    </p>
+    <br>
+    
+    <p class="code-ex" style="width: 65%;">
+        <code>
+            let sum = (x, y) <b>=> {</b>  -фигурная скобка, открывающая тело многострочной функции<br>
+                let result = x + y;<br>
+                <b>return</b> result; -при фигурных скобках для возврата значения нужно явно вызвать return<br>
+              <b>};</b><br>
+              <br>
+              console.log( sum(2, 2) ); // 4<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let sum2 = (x, y) => {  // фигурная скобка, открывающая тело многострочной функции
+        let result = x + y;
+        return result; // при фигурных скобках для возврата значения нужно явно вызвать return
+        };
+
+        console.log( sum2(2, 2) ); // 4
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: work with variables</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">Basic JS: использование конструкции if..else</h2>
+
+    <h4 class="task">Используя конструкцию if..else, напишите код, который будет спрашивать: 
+        „Какое «официальное» название JavaScript?“ Если пользователь вводит «ECMAScript», то показать: 
+        «Верно!», в противном случае – отобразить на экране: «Не знаете? ECMAScript!»
+    </h4>
+
+    <p><b>Решение</b>:</p>
+
+    <br>
+    <p class="code-ex"><br>
+        <code>
+            let value = prompt("Какое 'официальное' название JavaScript?", "");<br>
+            if (value == 'ECMAScript') {<br>
+                alert('Верно!');<br>
+            } else {<br>
+                alert('Не знаете? ECMAScript!');<br>
+            }<br>
+            <br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        'use strict';
+
+        let value1 = prompt("Какое 'официальное' название JavaScript?", "");
+        if (value1 == 'ECMAScript') {
+          alert("Верно!");
+        } else {
+          alert("Не знаете? ECMAScript!");
+        }
+    </script>
+
+<h4 class="task">
+    Используя конструкцию if..else, напишите код, который получает число через prompt, а затем выводит в alert:<br>
+    1, если значение больше нуля,<br>
+    -1, если значение меньше нуля,<br>
+    0, если значение равно нулю.<br>
+    Предполагается, что пользователь вводит только числа.
+</h4>
+
+<p><b>Решение</b>:</p>
+
+<p class="code-ex"><br>
+    <code>
+        let value = prompt("Enter the number?", 0);<br>
+        if (value > 0) {<br>
+            alert (1); <br>
+        } else if (value < 0) {<br>
+            alert (-1);<br>
+        } else {<br>
+            alert (0);<br>
+        }<br>
+        <br>
+    </code>
+</p>
+<br>
+
+<script>
+    let value2 = prompt("Enter the number?", 0);
+
+    if (value2 > 0) {
+        alert (1); 
+    } else if (value2 < 0) {
+        alert (-1);
+    } else {
+        alert (0);
+    }
+</script>
+<br>
+
+</body>
+
+</html>

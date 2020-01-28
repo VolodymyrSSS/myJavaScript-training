@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: unary plus</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+<h2 class="title">Basic JS: унарный плюс</h2>
+
+<h4 class="task">
+    Что делает унарный плюс с числом ниже?
+</h4>
+
+<p class="code-ex"><br>
+    <code>
+        let x = 1;<br>
+        <br>
+    </code>
+</p>
+<br>
+
+<p><b>Решение</b>:</p>
+
+<p>Плюс + существует в двух формах: бинарной и унарной.<br>
+    Унарный, то есть применённый к одному значению, плюс + ничего не делает с числами.<br> 
+    Но если операнд не число, унарный плюс преобразует его в число. Используем это для решения задачи:
+</p>
+<br>
+
+<p class="code-ex"><br>
+    <code>
+        let x = 1;<br>
+        console.log( +x ); // 1 (не влияет на числo)<br>
+        <br>
+        let y = -2;<br>
+        console.log( +y ); // -2 (не влияет на числo)<br>
+        <br>
+        // Но преобразует нечисла в числа<br>
+        console.log( +true ); // 1<br>
+        console.log( +"" );   // 0<br>
+        console.log('25'); // 25 (здесь '25' - это строка)<br>
+    </code>
+</p>
+<br>
+
+<script>
+    let x = 1;
+    console.log( +x );
+    let y = -2;
+    console.log( +y );
+    console.log( +true );
+    console.log( +"" );
+    console.log('25');
+</script>
+
+<h4 class="task">
+    Как правильно сложить строки и получить правильное число учитывая конкатенацию?
+</h4>
+
+
+<p>Необходимость преобразовывать строки в числа возникает очень часто.<br>
+    Например, обычно значения полей HTML-формы – это строки. А что, если их нужно, к примеру, сложить?
+    Бинарный плюс сложит их как строки:
+</p>
+<br>
+
+<p class="code-ex"><br>
+    <code>
+        let apples = "2";<br>
+        let oranges = "3";<br>
+        console.log( apples + oranges ); // "23" (так как бинарный плюс складывает строки)<br>
+        <br>
+    </code>
+</p>
+<br>
+
+<p>Поэтому используем унарный плюс, чтобы преобразовать к числу.<br>
+   На самом деле унарный плюс то же самое, что и Number(...), только короче.<br>
+</p>
+<br>
+
+<p class="code-ex"><br>
+    <code>
+        let apples = "2";<br>
+        let oranges = "3";<br>
+        <br>
+        // оба операнда предварительно преобразованы в числа<br>
+        <b>console.log( +apples + +oranges );</b> // 5<br>
+        <br>
+        // более длинный вариант<br>
+        // console.log( Number(apples) + Number(oranges) ); // 5<br>
+        <br>
+    </code>
+</p>
+<br>
+
+<script>
+    let apples = "2";
+    let oranges = "3";
+    console.log( +apples + +oranges );
+    console.log( Number(apples) + Number(oranges) );
+</script>
+
+<p>С точки зрения математика, такое изобилие плюсов выглядит странным. Но с точки зрения программиста – 
+    ничего особенного: сначала выполнятся унарные плюсы, приведут строки к числам, а затем – бинарный '+' их сложит.
+</p>
+
+<p>Кроме того, «унарный плюс» имеет приоритет 16, который выше, чем 13 у «сложения» (бинарный плюс), то в выражении 
+    '+apples + +oranges' сначала выполнятся унарные плюсы, а затем сложение.
+</p>
+
+</body>
+
+</html>

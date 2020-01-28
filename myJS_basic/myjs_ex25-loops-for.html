@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: цикл for</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 40%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">Basic JS: цикл for</h2>
+
+    <p>Самый распространённый цикл — цикл for.<br>
+        Выглядит он так:<br>
+    </p>
+    <br>
+
+    <p class="code-ex"> Его синтаксис:<br>
+        <code>
+            <b>for (начало; условие; шаг) {<br>
+                // ... тело цикла ...<br>
+              }</b><br>
+            <br>
+        </code>
+    </p>
+    <br>
+
+    <p>Давайте разберёмся, что означает каждая часть, на примере. Цикл ниже выполняет console.log(i) 
+        для i от 0 до (но не включая) 3:</p>
+    <br>
+
+    <p class="code-ex" style="width: 50%;">
+        <code>
+            for (let i = 0; i < 3; i++) { -выведет 0, затем 1, затем 2<br>
+                console.log(i);<br>
+              }<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        for (let i = 0; i < 3; i++) { // выведет 0, затем 1, затем 2
+          console.log(i);
+        }
+    </script>
+
+    <p>Рассмотрим конструкцию for подробней:</p>
+    <br>
+
+    <p class="code-ex"><br>
+        <code>
+            начало	i = 0	Выполняется один раз при входе в цикл<br>
+            условие	i < 3	Проверяется перед каждой итерацией цикла. Если оно вычислится в false, цикл остановится.<br>
+            шаг	i++	 Выполняется после тела цикла на каждой итерации перед проверкой условия.<br>
+            тело console.log(i)	Выполняется снова и снова, пока условие вычисляется в true.<br>
+        </code>
+    </p>
+    <br>
+
+    <p>В примере переменная счётчика i была объявлена прямо в цикле. Это так называемое «встроенное» 
+        объявление переменной. Такие переменные существуют только внутри цикла.
+    </p>
+
+    <p class="code-ex" style="width: 55%;"><br>
+        <code>
+            for (<b>let</b> i = 0; i < 3; i++) { -выведет 0, затем 1, затем 2<br>
+                console.log(i);<br>
+            }<br>
+            <b>console.log(i);</b> -ошибка, нет такой переменной<br>
+        </code>
+    </p>
+    <br>
+
+    <p>Вместо объявления новой переменной мы можем использовать уже существующую:</p>
+    <br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            <b>let i = 0;</b><br>
+            for (i = 0; i < 3; i++) { // выведет 0, затем 1, затем 2<br>
+                console.log(i);<br>
+            }<br>
+            console.log(i); // 3, переменная доступна, т.к. была объявлена снаружи цикла<br>
+        </code>
+    </p>
+    <br>
+
+    <p>Любая часть for может быть пропущена.<br>
+       Для примера, мы можем пропустить начало если нам ничего не нужно делать перед стартом цикла.<br>
+       Вот так:
+    </p>
+    <br>
+
+    <p class="code-ex" style="width: 50%;">
+        <code>
+            let i = 0; -мы уже имеем объявленную i с присвоенным значением<br>
+            for (<b>;</b> i < 3; i++) { -нет необходимости в 'начале'<br>
+            console.log( i ); // 0, 1, 2<br>
+            }<br>
+        </code>
+    </p>
+    <br>
+
+    <p>Можно убрать и шаг:</p>
+    <br>
+
+    <p class="code-ex" style="width: 50%;">
+        <code>
+            let i = 0;<br>
+            for (<b>; i < 3;</b>) { -Это сделает цикл аналогичным while (i < 3)<br>
+                console.log( i++ );<br>
+            }<br>
+        </code>
+    </p>
+    <br>
+
+    <p>А можно и вообще убрать всё, получив бесконечный цикл:</p>
+    <br>
+
+    <p class="code-ex"><br>
+        <code>
+            for (<b>;;</b>) {<br>
+                // будет выполняться вечно<br>
+            }<br>
+        </code>
+    </p>
+    <br>
+
+    <p>При этом сами точки с запятой ; обязательно должны присутствовать, иначе будет ошибка синтаксиса.</p>
+    <br>
+
+    <h4 class="task">
+        Для каждого цикла запишите, какие значения он выведет. Оба цикла выведут console.log с одинаковыми 
+        значениями или нет?
+    </h4>
+
+    <p class="code-ex"><br>
+        <code>
+            Префиксная форма:<br>
+            for (let i = 0; i < 5; ++i) console.log( i );<br>
+            <br>
+            Постфиксная форма:<br>
+            for (let i = 0; i < 5; i++) console.log( i );<br>
+        </code>
+    </p>
+    <br>
+
+    <p><b>Ответ:</b> да, выведут одинаковые значения</p>
+    <br>
+
+    <p>В обоих формах: <b>будет выведено от 0 до 4</b></p>
+
+    <p>Такой результат обусловлен алгоритмом работы for:<br>
+        1.Выполнить единожды присваивание i = 0 перед чем-либо (начало).<br>
+        2.Проверить условие i < 5<br>
+        3.Если true – выполнить тело цикла alert(i), и затем i++<br>
+        Увеличение i++ выполняется отдельно от проверки условия (2), значение i при этом не используется, 
+        поэтому нет никакой разницы между i++ и ++i.
+    </p>
+    <br>
+
+    <script>
+        for (let i2 = 0; i2 < 5; ++i2) console.log( i2 );
+
+        for (let i3 = 0; i3 < 5; i3++) console.log( i3 );
+    </script>
+
+</body>
+
+</html>

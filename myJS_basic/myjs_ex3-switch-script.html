@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: script-insert</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">Подключение script в HTML-документ</h2>
+
+    <h4 class="task">В примере ниже на странице подключено сразу три скрипта.<br>
+        Какой выполнится первым?<br>
+    </h4>
+    
+    <p class="code-ex"><br>
+        <code>
+            script src="big.js" /script <br>
+            script src="small.js" /script<br>
+            script <b>defer async</b> alert('обычныйскрипт');<br>
+             /script<br>
+        </code>
+    </p>
+    <br>
+
+    <p><b>Ответ:</b> первым выполнится обычный скрипт, а именно будет выведено на экран 
+        (через alert) выражение 'обычныйскрипт'
+    </p>
+
+    <p>Специальные атрибуты async/defer работают только в том случае, если назначены на внешние скрипты, 
+        т.е. имеющие src.<br>
+        Соответственно, специальные атрибуты defer и async на обычном скрипте будут проигнорированы. И в
+        нашем случае, он работает так же, как и без них: script alert("обычныйскрипт"); /script то есть 
+        этот скрипт стаёт обычным скриптом. Кроме того, скрипты с async/defer не тормозят обработку 
+        страницы. То есть, браузер начнёт их загружать, а сам пойдёт дальше показывать страницу 
+        и выполнять скрипты - а значит, обычный скрипт в этом случае, очевидно, выполнится первым.<br>
+        Но более того, даже если скрипты small.js и big.js не нужно загружать, а браузер берёт их из 
+        кеша, то он всё равно устроен так, что выполнит их после основных скриптов страницы. Таким 
+        образом, первым всегда будет обычный скрипт, а вот относительный порядок small.js и big.js
+        здесь не регламентирован.
+    </p>
+    <br>
+
+</body>
+
+</html>

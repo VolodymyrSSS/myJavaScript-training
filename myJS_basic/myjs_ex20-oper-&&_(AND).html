@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: логический оператор '&&' (AND)</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">Basic JS: логический оператор '&&' (AND)</h2>
+
+    <h4 class="task">Сейчас у нас время: 12.30. 
+        Напешите код который выведет 'Время пить чай 12.30'.
+    </h4>
+
+    <p><b>Решение</b>:</p>
+
+    <p>В традиционном программировании && (AND) возвращает true, если оба аргумента истинны, а иначе – false.<br>
+        Существует всего четыре возможные логические комбинации c логическим оператором && (AND), по русски 'И':<br>
+    </p>
+    <br>
+    <p class="code-ex"><br>
+        <code>
+            alert( true && true );   // true<br>
+            alert( false && true );  // false<br>
+            alert( true && false );  // false<br>
+            alert( false && false ); // false<br>
+            <br>
+        </code>
+    </p>
+    <br>
+
+    <p>Оператор 'И' выполняет следующие действия:<br>
+        Вычисляет операнды слева направо.<br>
+        Каждый операнд конвертирует в логическое значение.<br>
+        Только если оба результата true, останавливается и возвращает исходное значение этого операнда.<br>
+        <br>
+        То есть, логический оператор <b>&& возвращает первое ложное значение</b>.<br>
+    </p>
+    <br>
+
+    <p class="code-ex">Как и в случае с 'ИЛИ', любое значение допускается в качестве операнда 'И':<br>
+        <code>
+            if (0 && "no matter what") { // вычисляется как false && true
+              alert( 'не сработает, так как результат ложный' );
+            }
+        </code>
+    </p>
+    <br>
+
+    <p>вот, ещё несколько примеров:</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            // Если первый операнд истинный, 'И' возвращает второй:<br>
+            console.log( 1 && 0 ); // 0<br>
+            console.log( 'Sally' && undefined ); // undefined<br>
+            <br>
+            // Если первый операнд ложный, 'И' возвращает его. Второй операнд игнорируется
+            console.log( 0 && 1 ); // 0<br>
+            console.log( null && 5 ); // null<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        console.log( 1 && 0 );
+        console.log( 'Sally' && undefined );
+        console.log( 0 && 1 );
+        console.log( null && 5 );
+    </script>
+
+    <p>Итак, для решения задачи используем оператор 'И':</p>
+    <br>
+
+    <p class="code-ex"><br>
+        <code>
+            let hour = 12;<br>
+            let minute = 30;<br>
+            <br>
+            if (hour == 12 && minute == 30) {<br>
+            console.log( 'The time to drink a tea 12:30' );<br>
+            }<br>
+            <br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let hour = 12;
+        let minute = 30;
+            
+        if (hour == 12 && minute == 30) {
+          console.log( 'The time to drink a tea 12:30' );
+        }
+    </script>
+
+    <p>Можно передать несколько значений подряд.<br>
+        При нескольких подряд операторах:<br><b>result = value1 && value2 && value3;</b> - && находит первое ложное значение на котором остановились вычисления<br>
+        При этом, оператор && выполняет следующие действия:<br>
+        Вычисляет операнды слева направо.<br>
+        Каждый операнд преобразует в логическое значение.<br>
+        Если результат false, останавливается и возвращает исходное значение этого операнда.<br>
+        Если все операнды были истинными, возвращается последний.<br>
+    </p>
+
+    <p>Другими словами, <b>&& возвращает первое ложное значение. Или последнее, если ничего не найдено</b>.</p>
+    <br>
+
+    <p class="code-ex"><br>
+        <code>
+            console.log( 1 && 2 && null && 3 ); // null, так как это первое ложное значение, на котором остановились вычисления, оно и возвратится.<br>
+            <br>
+            console.log( 1 && 2 && 3 ); // 3, так как когда все значения верны, возвращается последнее 
+        </code>
+    </p>
+    <br>
+
+    <script>
+        console.log( 1 && 2 && null && 3 );
+        console.log( 1 && 2 && 3 );
+    </script>
+
+    <p>Вышеуказанные правила схожи с поведением 'ИЛИ'. Разница в том, что 'И' возвращает первое ложное значение, а 'ИЛИ' –  первое истинное.</p>
+    <br>
+
+    <p><b>Приоритет оператора && больше, чем у ||</b><br>
+        Приоритет оператора 'И' больше, чем 'ИЛИ', так что он выполняется раньше.<br>
+        Таким образом, код a && b || c && d по существу такой же, как если бы выражения && были в круглых скобках: (a && b) || (c && d).
+    </p>
+    <br>
+
+   <p>Как и оператор 'ИЛИ', 'И' иногда может заменять if, к примеру:</p>
+
+   <p class="code-ex"><br>
+        <code>
+            let x = 1;<br>
+            <br>
+            (x > 0) && alert( 'Greater than zero!' );<br>
+        </code>
+    </p>
+<br>
+
+<p>Действие в правой части && выполнится только в том случае, если до него дойдут вычисления. 
+    То есть, alert сработает, если в левой части (x > 0) будет true.<br>
+    Однако, как правило, вариант с if лучше читается и воспринимается.
+    Он более очевиден, поэтому лучше использовать его. Вот посмотрите:
+</p>
+<br>
+
+<p class="code-ex"><br>
+    <code>
+        let x = 1;<br>
+        <br>
+        if (x > 0) {<br>
+          alert( 'Greater than zero!' );<br>
+        }<br>
+    </code>
+</p>
+<br>
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>

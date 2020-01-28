@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: switch</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">Basic JS: конструкция 'switch'</h2>
+
+    <h4 class="task">Напишите if..else, соответствующий следующему switch:</h4>
+
+    <p class="code-ex"><br>
+        <code>
+            switch (browser) {<br>
+                case 'Edge':<br>
+                  console.log( "You've got the Edge!" );<br>
+                  break;<br>
+                <br>
+                case 'Chrome':<br>
+                case 'Firefox':<br>
+                case 'Safari':<br>
+                case 'Opera':<br>
+                  console.log( 'Okay we support these browsers too' );<br>
+                  break;<br>
+                <br>
+                default:<br>
+                  console.log( 'We hope that this page looks ok!' );<br>
+            }<br>
+        </code>
+    </p>
+    <br>
+
+    <p><b>Решение</b>:</p>
+
+
+    <p>Конструкция switch заменяет собой сразу несколько if.<br>
+        Она представляет собой более наглядный способ сравнить выражение сразу с 
+        несколькими вариантами. Более того, если совсем точно следовать работе 
+        switch, то if должен выполнять строгое сравнение '==='. Впрочем, для таких 
+        строк, подойдёт и обычное сравнение '=='.
+    </p>
+    <br>
+
+    <p class="code-ex"><br>
+        <code>
+            if(browser == 'Edge') {<br>
+                alert("You've got the Edge!");<br>
+              } else if (browser == 'Chrome'<br>
+               || browser == 'Firefox'<br>
+               || browser == 'Safari'<br>
+               || browser == 'Opera') {<br>
+                alert( 'Okay we support these browsers too' );<br>
+              } else {<br>
+                alert( 'We hope that this page looks ok!' );<br>
+              }<br>
+        </code>
+    </p>
+    <br>
+
+    <p>Обратите внимание: конструкция browser == 'Chrome' || browser == 'Firefox' ... разбита 
+        на несколько строк для лучшей читаемости.<br>
+        Но всё равно запись через switch нагляднее.
+    </p>
+
+    <h4 class="task">Переписать условия 'if' на 'switch'</h4>
+
+    <p class="code-ex"><br>
+        <code>
+            const number = +prompt('Введите число между 0 и 3', '');<br>
+            <br>
+            if (number === 0) {<br>
+            alert('Вы ввели число 0');<br>
+            }<br>
+            <br>
+            if (number === 1) {<br>
+            alert('Вы ввели число 1');<br>
+            }<br>
+            <br>
+            if (number === 2 || number === 3) {<br>
+            alert('Вы ввели число 2, а может и 3');<br>
+            }<br>
+        </code>
+    </p>
+    <br>
+
+    <p><b>Решение</b>:</p>
+    <br>
+
+    <p class="code-ex"><br>
+        <code>
+            const number = +prompt('Введите число между 0 и 3', '');<br>
+            <br>
+            switch (number) {<br>
+            case 0:<br>
+                alert('Вы ввели число 0');<br>
+                break;<br>
+                <br>
+            case 1:<br>
+                alert('Вы ввели число 1');<br>
+                break;<br>
+                <br>
+            case 2:<br>
+            case 3:<br>
+                alert('Вы ввели число 2, а может и 3');<br>
+                break;<br>
+            }<br>
+        </code>
+    </p>
+    <br>
+
+
+    <script>
+        const number = +prompt('Введите число между 0 и 3', '');
+
+        switch (number) {
+        case 0:
+            alert('Вы ввели число 0');
+            break;
+
+        case 1:
+            alert('Вы ввели число 1');
+            break;
+
+        case 2:
+        case 3:
+            alert('Вы ввели число 2, а может и 3');
+            break;
+        }
+    </script>
+
+    <p>Обратите внимание: break внизу не обязателен, но ставится по «правилам хорошего тона».<br>
+        Допустим, он не стоит. Есть шанс, что в будущем нам понадобится добавить в конец ещё один 
+        case, например case 4, и мы, вполне вероятно, забудем этот break поставить. В результате 
+        выполнение case 2/case 3 продолжится на case 4 и будет ошибка.
+    </p>
+
+
+
+</body>
+
+</html>

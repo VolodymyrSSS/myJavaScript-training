@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: functions</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">Basic JS: functions</h2>
+
+    <h4 class="task">Ниже функция возвращает true, если параметр age больше 18.<br>
+        В ином случае она запрашивает подтверждение через confirm и возвращает его результат.<br>
+        Будет ли эта функция работать как-то иначе, если убрать else?
+    </h4>
+
+    <p class="code-ex" style="width: 70%;">
+        <code>
+            function checkAge(age) {<br>
+                if (age > 18) {<br>
+                  return true;<br>
+                } <b>else</b> {<br>
+                  // ...<br>
+                  return confirm('Родители разрешили?'); }<br>
+              }<br>
+        </code>
+    </p>
+    <br>
+
+    <p><b>Ответ</b>: Оба варианта функций работают одинаково, отличий нет.</p>
+    <br>
+
+    <h4 class="task">
+        Следующая функция возвращает true, если параметр age больше 18.<br>
+        В ином случае она задаёт вопрос confirm и возвращает его результат.<br>
+        Перепишите функцию, чтобы она делала то же самое, но без if, в одну строку:<br>
+        используя операторы '?', или '||'.
+    </h4>
+
+    <p><b>Решение</b>:</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            function checkAge(age) {<br>
+                if (age > 18) {<br>
+                  return true;<br>
+                } else {<br>
+                  return confirm('Родители разрешили?'); }<br>
+            }<br>
+        </code>
+    </p>
+    <br>
+
+    <p>Решение используя операторы '?', или '||'</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            function showMessage(age) {<br>
+                <b>(age > 18) ? true : confirm('Родители разрешили?');</b><br>
+            }<br>
+        </code>
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            function showMessage(age) {<br>
+                <b>return (age > 18) || confirm('Родители разрешили?');</b><br>
+            }<br>
+        </code>
+    </p>
+    <br>
+
+    <h4 class="task">Напишите функцию min(a,b), которая возвращает меньшее из чисел a и b.<br>
+        Пример вызовов: min(2, 5) == 2; min(3, -1) == -1; min(1, 1) == 1;<br>
+        Решите эту задачу с вариантом используя оператор '?'
+    </h4>
+
+    <p><b>Решение</b>:</p>
+    <br>
+
+    <p class="code-ex"><br>
+        <code>
+            function min(a, b) {<br>
+                <b>if(a < b) {<br>
+                    return a;<br>
+                } else {<br>
+                    return b; }</b><br>
+            };<br>
+            // проверим работу функции:<br>
+            console.log(min(2, 5)); // 2<br>
+            console.log(min(3, -1)); // -1<br>
+            console.log(min(1, 1)); // 1<br>
+        </code>
+    </p>
+    <br>
+
+    <p>В случае равенства a == b не имеет значения, что возвращать.</p>
+
+    <script>
+        function min(a, b) {
+            if(a < b) {
+                return a;
+            } else {
+                return b;
+            }
+        };
+
+        console.log(min(2, 5)); // 2
+        console.log(min(3, -1)); // -1
+        console.log(min(1, 1)); // 1
+    </script>
+
+    <p> Решение используя оператор '?'</p>
+    <br>
+
+    <p class="code-ex"><br>
+        <code>
+            function min(a, b) {<br>
+                <b>return a < b ? a : b;</b><br>
+              }<br>
+        </code>
+    </p>
+    <br>
+
+    <h4 class="task">Напишите функцию pow(x,n), которая возвращает x в степени n. 
+        Иначе говоря, умножает x на себя n раз и возвращает результат.<br>
+        Функция обязана поддерживать только натуральные значения n, т.е. целые от 1 и выше.<br>
+        Создайте страницу, которая запрашивает x и n, а затем выводит результат pow(x,n).<br>
+        Пример вызовов: pow(3, 2) = 3 * 3 = 9; pow(3, 3) = 3 * 3 * 3 = 27; pow(1, 100) = 1 * 1 * ...* 1 = 1
+    </h4>
+
+    <p class="code-ex" style="width: 65%;"><br>
+        <code>
+            function pow(x, n) {<br>
+                // возьмём какое-то число<br>
+                let result = x; -определим переменную результата присвоив туда начальное значение х <br>
+                <br>
+                // чтобы взять это число и умножить на себя n-раз<br>
+                <b>for (i = 1; i < n; i++)</b> { -чтобы взять n-раз<br>
+                    <b>result *= x</b>  -умножаем взятое число 'x' на себя n-раз<br>
+                }<br>
+                <br>
+                return result; -возвращаем/выводим результат работы функции<br>
+            }<br>
+            <br>
+            let x = prompt("Enter natural number 'x'", ""); -спросим ввести число 'х'<br>
+            let n = prompt("Enter power 'n'", ""); -спросим ввести степень'n'<br>
+            <br>
+            // Проверка на введение натурального числа<br>
+            if (n < 1) {<br>
+                alert(`Degree ${n} is not supported, use a natural number`);<br>
+            } else {<br>
+                alert( pow(x, n) );<br>
+            }<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        function pow(x, n) {
+            let result = x; // возьмём какое-то число
+
+            // чтобы взять это число и умножить на себя n-раз
+            for (i = 1; i < n; i++) {
+                result *= x // умножает x на себя n раз
+            }
+
+            return result;
+        }
+
+        let x = prompt("Enter natural number 'x'", "");
+        let n = prompt("Enter power 'n'", "");
+
+        // Проверка на введение натурального числа
+        if (n < 1) {
+            alert(`Degree ${n} is not supported, use a natural number`);
+        } else {
+            alert( pow(x, n) );
+        }
+    </script>
+
+
+</body>
+
+</html>
