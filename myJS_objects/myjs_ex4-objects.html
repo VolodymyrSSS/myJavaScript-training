@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: objects</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">JS-objects: Objects: cравнение объектов; объекты-константы; клонирование и объединение объектов, Object.assign; «глубокое клонирование»</h2>
+
+    <h3>Сравнение объектов</h3>
+
+    <h4 class="task">Покажите как сравниваются объекты?</h4>
+
+    <p><b>Решение</b>:</p>
+
+    <p>Операторы равенства <b>==</b> и строгого равенства <b>===</b> для объектов работают одинаково.<br>
+        <br>
+        <b>Два объекта равны только в том случае, если это один и тот же объект.</b><br>
+        <br>
+        Например, две переменные ссылаются на один и тот же объект, они равны:<br>
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            let a = {};<br>
+            let b = a; -копирование по ссылке<br>
+            <br>
+            console.log( a == b ); // true, обе переменные ссылаются на один и тот же объект<br>
+            console.log( a === b ); // true<br>
+        </code>
+    </p>
+
+    <script>
+        let a = {};
+        let b = a; // копирование по ссылке
+
+        console.log( a == b ); // true, обе переменные ссылаются на один и тот же объект
+        console.log( a === b ); // true
+    </script>
+    <br>
+
+    <p>А в примере ниже два разных объекта не равны, хотя и оба пусты:</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            let c = {};<br>
+            let d = {}; // два независимых объекта<br>
+            <br>
+            console.log( c == d ); // false<br>
+        </code>
+    </p>
+    
+    <script>
+        let c = {};
+        let d = {}; // два независимых объекта
+            
+        console.log( c == d ); // false
+    </script>
+
+    <p>Для сравнений типа obj1 > obj2 или для сравнения с примитивом obj == 5 объекты преобразуются в примитивы.<br>
+        Но, по правде говоря, сравнения такого рода необходимы очень редко и обычно являются результатом ошибки программиста.
+    </p>
+
+    <h3>Объекты-константы</h3>
+
+    <h4 class="task">Может ли объект, объявленный через const, быть изменён?</h4>
+
+    <p><b>Ответ</b>:</p>
+
+    <p>Да, объект объявленный через const, может быть изменён, но только его свойства!</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            const user = {<br>
+                name: "John"<br>
+            };<br>
+            <br> 
+            <b>user.age = 25;</b><br>
+            <br>  
+            console.log(user.age); // <b>25</b> - нет ошибки<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        const user1 = {
+            name: "Sara"
+        };
+        
+        user1.age = 25;
+          
+        console.log(user1.age); // 25
+    </script>
+
+    <p>Может показаться, что добавление нового свойства должно вызвать ошибку, но нет, здесь всё в порядке. 
+        Дело в том, что объявление const защищает от изменений только само значение user. А в нашем случае 
+        значение user – это ссылка на объект, и это значение мы не меняем. В строке user.age = 25 мы действуем 
+        внутри объекта, мы не переназначаем user.<br>
+        Другими словами, user хранит ссылку на объект. И это не может быть изменено. Но содержимое объекта менять можно.
+        <br>
+        Если же мы попытаемся присвоить user другое значение, то const выдаст ошибку:
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            const user = {<br>
+              name: 'Isolda'<br>
+            };<br>
+            <br>
+            // Ошибка (нельзя переопределять константу user)<br>
+            // TypeError: Assignment to constant variable.<br>
+            user = {<br>
+              name: 'Fima'<br>
+            };<br>
+        </code>
+    </p>
+
+    <script>
+        const user2 = {
+          name: "Isolda"
+        };
+            
+        // TypeError: Assignment to constant variable.
+        user2 = {
+          name: "Fima"
+        };
+    </script>
+
+    <h3>Клонирование и объединение объектов, Object.assign</h3>
+
+    <h4 class="task">У нас есть объект 'friend'. И нам нужно дублировать этот объект, или 
+        создать независимую его копию, клон. Покажите как это сделать?
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            let friend = {<br>
+              name: 'John',<br>
+              surname: 'Polok',<br>
+              age: 45,<br>
+              hobby: 'butterfly',<br>
+              'is football fun': false<br>
+            };<br>
+        </code>
+    </p>
+
+    <script>
+        let friend = {
+              name: 'John',
+              surname: 'Polok',
+              age: 45,
+              hobby: 'butterfly',
+              'is football fun': false
+            };
+    </script>
+    <br>
+
+    <p><b>Решение</b>:</p>
+
+    <p>
+        Это выполнимо, но немного сложно, так как в JavaScript нет встроенного метода для этого. На самом деле, 
+        такая нужда возникает редко. В большинстве случаев нам достаточно копирования по ссылке. Как мы знаем, 
+        при копировании переменной объекта создаётся ещё одна ссылка на тот же самый объект.<br>
+        Но если мы хотим создать независимую копию (или клон), то нам нужно создавать новый объект и повторять 
+        структуру дублируемого объекта, перебирая все его свойства и копируя их.
+    </p>
+    <br>
+
+    <p class="code-ex" style="width: 75%;">
+        <code>              
+            <b>let clone = {};</b> -создали новый пустой объект<br>
+            <br>
+            // скопируем все свойства friend в него<br>
+            <b>for (let key in friend) {<br>
+              clone[key] = friend[key];<br>
+            }</b><br>
+            <br>
+            // теперь в переменной clone находится абсолютно независимый клон объекта.<br>
+            <br>
+            clone.name = 'Sebastien'; -изменим в нём имя<br>
+            clone.surname = 'Bruayard'; -изменим в нём фамилию<br>
+            clone.age = 38; -изменим в нём возраст<br>
+            clone.hobby = 'foreigne languages'; -изменим в нём хобби<br>
+            clone['is football fun'] = true; -изменим в нём эти данные<br>
+            <br>
+            // проверка свойств в оригинальном объекте и клоне:<br>
+            console.log( friend.name ); -в оригинальном объекте значение свойства 'name' осталось прежним – John<br>
+            console.log( friend['is football fun'] ); -в оригинальном объекте значение этого булевого свойства осталось прежним - false<br>
+            console.log( clone.name ); -в клоне объекта значение свойства 'name' изменилось – Sebastien<br>
+            console.log( clone['is football fun'] ); -в клоне объекта значение этого булевого свойства изменилось на – true<br>
+        </code>
+    </p>
+
+    <script>
+        let clone = {}; // создали новый пустой объект
+        // скопируем все свойства friend в него
+        for (let key in friend) {
+            clone[key] = friend[key];
+        }
+            
+        // теперь в переменной clone находится абсолютно независимый клон объекта.
+        // изменим в нём данные
+        clone.name = 'Sebastien';
+        clone.surname = 'Bruayard';
+        clone.age = 38;
+        clone.hobby = 'foreigne languages';
+        clone['is football fun'] = true;
+        
+        // проверка свойств в оригинальном объекте и клоне: 
+        console.log( friend.name ); // John
+        console.log( friend['is football fun'] ); // false
+        console.log( clone.name ); // Sebastien
+        console.log( clone['is football fun'] ); // true
+    </script>
+    <br>
+
+    <p>Кроме того, для этих целей мы можем использовать метод <b>Object.assign.</b></p>
+    <br>
+
+    <p class="code-ex">Синтаксис:<br>
+        <code>
+            Object.assign(dest, [src1, src2, src3...])
+        </code>
+    </p>
+    <br>
+
+    <p>Аргументы dest, и src1, ..., srcN (может быть столько, сколько нужно) являются объектами.<br>
+        Метод копирует свойства всех объектов src1, ..., srcN в объект dest. То есть, свойства всех 
+        перечисленных объектов, начиная со второго, копируются в первый объект. После копирования 
+        метод возвращает объект dest. Но его возможности немного шире:
+    </p>
+    <br>
+
+    <p>1. Мы можем использовать Object.assign для простого клонирования. В нашем случае все свойства объекта 
+        'friend' будут скопированы в пустой объект, и ссылка на этот объект будет в переменной 'clone'. На самом 
+        деле, такое клонирование работает так же, как и через цикл, но короче.
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            let clone = <b>Object.assign({}, friend)</b>;<br>
+        </code>
+    </p>
+    <br>
+
+    <p>2. Мы можем использовать Object.assign для объединения нескольких объектов в один:</p>
+    <br>
+
+    <p class="code-ex" style="width: 55%;">
+        <code>
+            let visitor = { name: 'Mark' };<br>
+            <br>
+            let permissions1 = { canView: true };<br>
+            let permissions2 = { canEdit: true };<br>
+            <br>
+            // копируем все свойства из permissions1 и permissions2 в user<br>
+            <b>Object.assign(visitor, permissions1, permissions2);</b><br>
+            <br>
+            // now visitor = { name: 'Mark', canView: true, canEdit: true }<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let visitor = { name: 'Mark' };
+
+        let permissions1 = { canView: true };
+        let permissions2 = { canEdit: true };
+        
+        // копируем все свойства из permissions1 и permissions2 в user
+        Object.assign(visitor, permissions1, permissions2);
+        
+        console.log(visitor);
+    </script>
+
+    <p>Если принимающий объект 'visitor' уже имеет свойство с таким именем, оно будет перезаписано:</p>
+    <br>
+
+    <p class="code-ex" style="width: 55%;">
+        <code>
+            let visitor = { name: 'Mark' };<br>
+            <br>
+            // свойство name перезапишется, свойство isAdmin добавится<br>
+            <b>Object.assign(visitor, { name: 'Rodrigue', isAdmin: true });</b><br>
+            <br>
+            // now visitor = { name: 'Rodrigue', isAdmin: true }<br>
+        </code>
+    </p>
+    <br>
+
+    <h3>Глубокое клонирование</h3>
+
+    <p>Но до сих пор мы предполагали, что все свойства пользователя примитивны.<br>
+        Но свойства могут быть ссылками на другие объекты. Что с ними делать?<br>
+        Например, есть объект:
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+          let user = {<br>
+            name: "John",<br>
+            sizes: {<br>
+                height: 182,<br>
+                width: 50}<br>
+          };<br>
+          <br> 
+          console.log(user.sizes.height); // 182<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let user3 = {
+            name: "John",
+            sizes: {
+                height: 182,
+                width: 50}
+          };
+          
+          console.log(user3.sizes.height); // 182
+    </script>
+
+    <p>Теперь при клонировании недостаточно просто скопировать clone.sizes = user.sizes, поскольку 
+        user.sizes – это объект, он будет скопирован по ссылке. А значит объекты clone и user в своих 
+        свойствах sizes будут ссылаться на один и тот же объект:
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            <b>let clone = Object.assign({}, user);</b><br>
+            <br>
+            // проверим<br>
+            console.log( user.sizes === clone.sizes ); -true, один и тот же объект<br>
+            <br>
+            // но в таком случае 'user' и 'clone' обращаются к одному 'sizes'<br>
+            user.sizes.width++;   -меняем свойство в одном объекте<br>
+            console.log(clone.sizes.width); -и видим 51 - результат в другом объекте<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let clone3 = Object.assign({}, user3);
+            
+        // проверим
+        console.log( user3.sizes === clone3.sizes ); // true - один и тот же объект
+        
+        // но 'user' и 'clone' обращаются к одному 'sizes'
+        user3.sizes.width++;
+        console.log(clone3.sizes.width); // 51
+    </script>
+
+    <p>Чтобы исправить это, мы должны в цикле клонирования делать проверку, не является ли значение user[key] объектом, 
+        и если это так – копируем и его структуру тоже. Это называется «глубокое клонирование».
+    </p>
+
+
+</body>
+
+</html>

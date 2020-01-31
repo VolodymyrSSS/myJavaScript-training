@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: objects</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">JS-objects: Objects: exercises</h2>
+
+    <h4 class="task">
+        Напишите функцию isEmpty(obj), которая возвращает true, если у объекта нет свойств, иначе false.<br>
+        Должно работать так:
+    </h4>
+
+    <p class="code-ex" style="width: 55%;">
+        <code>
+            let schedule = {};<br>
+            <br>
+            console.log( isEmpty(schedule) ); // true - так как нет свойств<br>
+            <br>
+            schedule["8:30"] = "get up"; - добавили свойство '8:30'<br>
+            <br>
+            alert( isEmpty(schedule) ); // false<br>
+        </code>
+    </p>
+
+    <p><b>Решение</b>:</p>
+
+    <p>Просто в цикле перебираем свойства объекта и возвращаем false, как только встречаем свойство.</p>
+    <br>
+
+    <p class="code-ex" style="width: 55%;">
+        <code>
+            function isEmpty(obj) {<br>
+                for (let key in obj) {<br>
+                  // <b>если тело цикла начнет выполняться - значит в объекте есть свойства</b><br>
+                  <b>return false;</b><br>
+                } <br>
+                return true;<br>
+            }<br>
+        </code>
+    </p>
+
+    <script>
+        function isEmpty(obj) {
+            for (let key in obj) {
+              // если тело цикла начнет выполняться - значит в объекте есть свойства
+              return false;
+            } 
+            return true;
+        }
+
+        // проверяем работу функции
+        let schedule = {}; // создали пустой объект
+        
+        console.log( isEmpty(schedule) ); // true - так как нет свойств
+        
+        schedule["8:30"] = "get up"; // добавили свойство '8:30' в объект
+        
+        console.log( isEmpty(schedule) ); // false - так как есть свойство
+    </script>
+    <br>
+
+    <h4 class="task">
+        У нас есть объект 'salaries', в котором хранятся зарплаты команды программистов за 2 недели их работы. 
+        Напишите код для суммирования всех зарплат и сохраните результат в переменной 'sum'. Выведите в консоль
+        результат, который должен быть 3900 дол.США. Если объект 'salaries' пуст, то результат должен быть 0.
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            let salaries = {<br>
+              Stepan: 1000,<br>
+              Olya: 1600,<br>
+              Volodymyr: 1300<br>
+              }<br>
+        </code>
+    </p>
+
+    <script>
+        let salaries = {
+          Stepan: 1000,
+          Olya: 1600,
+          Volodymyr: 1300
+        }
+    </script>
+
+    <p><b>Решение</b>:</p>
+
+    <p>Для получения всех значений объекта используем цикл for..in и потом прибавим их. 
+        Перед этим зададим  первоначальное значение 'sum' нулю по условию задачи.</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            let sum = 0;<br>
+            <br>
+            for (let key in salaries) {<br>
+                sum += salaries[key]<br>
+            }<br>
+            <br>
+            console.log( sum ); // 3900<br>
+        </code>
+    </p>
+
+    <script>
+        let sum = 0;
+
+        for (let key in salaries) {
+            sum += salaries[key]
+        }
+
+        console.log( sum ); // 3900
+    </script>
+    <br>
+
+    <h4 class="task">
+        Создайте функцию multiplyNumeric(obj), которая умножает все числовые свойства объекта 'obj' на 2.<br>
+        При этом, функции multiplyNumeric не нужно ничего возвращать. Следует напрямую изменять объект.<br>
+        Используйте typeof для проверки, что значение свойства числовое. Например:
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            // до вызова функции<br>
+            let menu = {<br>
+            width: 200,<br>
+            height: 300,<br>
+            title: 'My menu'<br>
+            };<br>
+            <br>
+            multiplyNumeric(menu);<br>
+            <br>
+            // после вызова функции<br>
+            menu = {<br>
+            width: 400,<br>
+            height: 600,<br>
+            title: 'My menu'<br>
+            };<br>
+        </code>
+    </p>
+
+    <script>
+        let menu = {
+            width: 200,
+            height: 300,
+            title: "My menu"
+            }
+    </script>
+
+    <p><b>Решение</b>:</p>
+
+    <p>Для этого необходимо все только числовые значения умножить на два. А для доступа к свойствам объекта используем 
+        цикл for..in, а для получения значений этих свойств используем квадратные скобки.<br>
+        Но для умножения на 2 только числовых значений объекта необходимо сделать их проверку по типам использовав оператор
+        'typeof' по возможным их вариантам число/строка/null использовав логический оператор &&. Внимание, необходимо включить 
+        так же тип данных 'null' так как он считается JS как 'object' что является общепризнаной ошибкой языка. 
+        </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            function multiplyNumeric(obj) {<br>
+                for (let key in obj) {<br>
+                  if (typeof obj[key] == 'number' && obj[key] !== 'string' && obj[key] !== null) {<br>
+                    obj[key] *= 2;}<br>
+                }<br>
+            }<br>
+            <br>
+            // вызываем функцию и на её вход подаём наш объект 'menu' <br>
+            multiplyNumeric(menu);<br>
+            <br>
+            // выведем в консоль объект проверив работу функции<br>
+            console.log( menu );<br>
+        </code>
+    </p>
+
+    <script>
+        function multiplyNumeric(obj) {
+          for (let key in obj) {
+            if (typeof obj[key] == 'number' && obj[key] !== 'string' && obj[key] !== null) {
+              obj[key] *= 2;
+            }
+          }
+        }
+
+        // вызываем функцию и на её вход подаём наш объект 'menu' 
+        multiplyNumeric(menu);
+
+        // выведем в консоль объект проверив работу функции
+        console.log( menu );
+    </script>
+    <br>
+
+
+</body>
+
+</html>

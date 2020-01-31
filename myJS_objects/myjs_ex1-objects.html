@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: objects</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 40%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">JS-objects: Objects, basic</h2>
+
+    <h4 class="task">
+        Создайте объект 'user'. Задайте ему несколько свойств. Выведите в консоль значения этих свойств. 
+        Добавьте одно свойство с логическим значением, выведите его. Как удалить его? Покажите свойство
+        с именем из наскольких слов.
+    </h4>
+
+    <p>Пустой объект можно создать, используя один из двух вариантов синтаксиса:</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            <b>let user = new Object(); -синтаксис 'конструктор объекта'<br>
+                let user = {};  -синтаксис 'литерал объекта'</b><br>
+            <br>
+        </code>
+    </p>
+    <br>
+
+    <p>Мы сразу можем поместить в объект несколько свойств в виде пар «ключ: значение»:<br>
+        Свойства объекта также иногда называют полями объекта.<br>
+        У каждого свойства есть ключ (также называемый «имя» или «идентификатор»). После имени свойства 
+        следует двоеточие ':', и затем указывается значение свойства. Если в объекте несколько свойств, 
+        то они перечисляются через запятую.
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            let user = {     -объект 'user'<br>
+                name: 'John',  -под ключом 'name' хранится значение 'John'<br>
+                age: 30        -под ключом 'age' хранится значение 30<br>
+              };<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let user = {     // объект
+            name: "John",  // под ключом "name" хранится значение "John"
+            age: 30        // под ключом "age" хранится значение 30
+        };
+    </script>
+
+    <p>Для обращения к свойствам используется запись «через точку»:</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            получаем свойства объекта:<br>
+            console.log( <b>user.name</b> ); // John<br>
+            console.log( <b>user.age</b> ); // 30<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        console.log( user.name ); // John
+        console.log( user.age ); // 30
+    </script>
+
+    <p>Значение может быть любого типа. Давайте добавим свойство с логическим значением:</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            user.isAdmin = true;<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        user.isAdmin = true;
+        console.log( user.isAdmin ); // true
+    </script>
+
+    <p>Для удаления свойства мы можем использовать оператор delete:</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            delete user.isAdmin<br>
+        </code>
+    </p>
+    <br>
+
+    <p>Имя свойства может состоять из нескольких слов, но тогда оно должно быть заключено в кавычки:</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            let user = {<br>
+                name: 'John',<br>
+                age: 30,<br>
+                isAdmin: true,<br>
+                <b>'likes birds'</b>: true  -имя свойства из нескольких слов должно быть в кавычках<br>
+              };<br>
+        </code>
+    </p>
+    <br>
+
+    <p>Последнее свойство объекта может заканчиваться запятой.<br>
+        Это называется «висячая запятая». Такой подход упрощает добавление, удаление и перемещение свойств, так как все 
+        строки объекта становятся одинаковыми.
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            let user = {<br>
+                name: 'John',<br>
+                age: 30,<br>
+                isAdmin: true,<br>
+                'likes birds': true<b>,</b>  -в конце стоит запятая<br>
+              };<br>
+        </code>
+    </p>
+    <br>
+
+    <p>Для свойств, имена которых состоят из нескольких слов, доступ к значению «через точку» 
+        не работает: <em>user.likes birds = true</em> - это вызовет синтаксическую ошибку.<br>
+        Для таких случаев существует альтернативный способ доступа к свойствам через квадратные 
+        скобки. Такой способ сработает с любым именем свойства:
+    </p>
+    <br>
+
+    <p class="code-ex"><br>
+        <code>
+            let user = {};<br>
+            <br>
+            <b>user['likes birds']</b> = true; -присваивание значения свойству<br>
+            <br>
+            console.log(user['likes birds']); -получение значения свойства<br>
+            <br>
+            delete user['likes birds']; -удаление свойства<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        user["likes birds"] = true;
+        console.log( user["likes birds"] ); // true
+    </script>
+
+
+    <p>Квадратные скобки также позволяют обратиться к свойству, имя которого может быть результатом 
+        выражения. Например, имя свойства может храниться в переменной:
+    </p>
+    <br>
+
+    <p class="code-ex"><br>
+        <code>
+            let key = 'likes birds';<br>
+            <br>
+            user[key] = true; -то же самое, что и user['likes birds'] = true;<br>
+        </code>
+    </p>
+    <br>
+
+    <p>Здесь переменная key может быть вычислена во время выполнения кода или зависеть от 
+        пользовательского ввода. После этого мы используем её для доступа к свойству. Это 
+        даёт нам большую гибкость. Запись «через точку» такого не позволяет. Вот пример:
+    </p>
+    <br>
+
+    <p class="code-ex"><br>
+        <code>
+            let user = {<br>
+                name: 'Bonyfatsii',<br>
+                age: 40,<br>
+                hobby: 'oil painting'<br>
+              };<br>
+              
+              let key = prompt('Что вы хотите узнать о пользователе?', 'name');<br>
+              
+              // доступ к свойству через переменную
+              alert( user[key] ); -Bonyfatsii (если ввели 'name')<br>
+              <br>
+              console.log(user2.hobby); // oil painting<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let user2 = {
+          name: 'Bonyfatsii',
+          age: 40,
+          hobby: 'oil painting',
+        };
+              
+        let key = prompt('Что вы хотите узнать о пользователе?', 'name');
+        
+        // доступ к свойству через переменную
+        alert( user2[key] ); // Bonyfatsii (если ввели 'name')
+
+        console.log(user2.hobby); // oil painting
+    </script>
+
+</body>
+
+</html>

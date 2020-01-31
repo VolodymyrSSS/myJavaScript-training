@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: objects</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">JS-objects: Objects: вычисляемые свойства, cвойство из переменной, проверка существования свойства</h2>
+
+    <h4 class="task">
+        Создайте объект 'bag' и задайте ему свойство, имя которого будет браться из переменной 'fruit', которое 
+        будет получать через ответ посетителя на вопрос 'Какой фрукт купить?'. И если посетитель 
+        введёт слово 'apple', то в объекте 'bag' будет свойство 'apple' со значением, ну возьмём '5'.
+    </h4>
+
+    <p><b>Решение</b>:</p>
+
+    <p>Мы можем использовать квадратные скобки в литеральной нотации для создания вычисляемого свойства.</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            let fruit = prompt('What fruit to buy?', 'apple');<br>
+            <br>
+            let bag = {<br>
+              [fruit]: 5, -здесь имя свойства будет взято из переменной fruit<br>
+            };<br>
+            <br>
+            alert(bag.apple); // 5, если fruit='apple'<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let fruit = prompt("What fruit to buy?", "apple");
+
+        let bag = {
+          [fruit]: 5, // здесь имя свойства будет взято из переменной fruit
+        };
+
+        alert(bag.apple); // 5, если fruit='apple'
+    </script>
+
+    <p>Смысл вычисляемого свойства прост: запись [fruit] означает, что имя свойства необходимо взять из
+        переменной fruit. И если посетитель введёт слово 'apple', то в объекте bag теперь будет лежать 
+        свойство {apple: 5}. По сути, пример выше работает так же, как и следующий пример:
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            let fruit = prompt('What fruit to buy?'', 'apple'  );<br>
+            let bag = {};<br>
+            <br>
+            // имя свойства будет взято из переменной fruit<br>
+            bag[fruit] = 5;<br>
+        </code>
+    </p>
+    <br>
+
+    <p>Но первый пример выглядит лаконичнее.<br>
+        Мы можем использовать и более сложные выражения в квадратных скобках:
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            let fruit = 'apple';<br>
+            let bag = {<br>
+            [fruit + 'Computers']: 5 // bag.appleComputers = 5<br>
+            };<br>
+        </code>
+    </p>
+    <br>
+
+    <p>Квадратные скобки дают намного больше возможностей, чем запись через точку. Они позволяют использовать 
+        любые имена свойств и переменные, хотя и требуют более громоздких конструкций кода.
+    </p>
+    <br>
+
+    <p>В большинстве случаев, <b>когда имена свойств известны и просты, используется запись через точку.
+        Если же нам нужно что-то более сложное, то мы используем квадратные скобки</b>.<br>
+        <br>
+        Имя переменной не может совпадать с зарезервированными словами, такими как «for», «let», «return» и т.д.
+        Но для свойств объекта такого ограничения нет. Кроме того, существует другая структура данных Map, 
+        которая поддерживает произвольные ключи.
+    </p>
+
+    <h4 class="task">
+        Используя функцию 'makeUser', создайте объект 'user' с именами свойств: 'name и 'age': как и 
+        имена существующих переменных. Выведите значения созданныих свойств в консоль.
+    </h4>
+
+    <p><b>Решение</b>:</p>
+
+    <p>В реальном коде часто нам необходимо использовать существующие переменные как значения для свойств с тем же именем.</p>
+    <br>
+
+    <p class="code-ex" style="width: 70%;">
+        <code>
+            function <b>makeUser(name, age)</b> { -создаём функцию с аргументами названия которых будут как свойства объекта 'user'<br>
+                return {<br>
+                  <b>name: name,</b> -здесь значение свойствa совпадает с именем существующей переменной<br>
+                  <b>age: age,</b> -здесь значение свойствa так же совпадает с именем существующей переменной<br>
+                  // ...другие свойства<br>
+                };<br>
+              }<br>
+              <br>
+              let user = makeUser('Simon', 40);<br>
+              console.log(user.name); // Simon<br>
+              console.log(user.age); // 40<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        function makeUser(name, age) {
+          return {
+            name: name,
+            age: age,
+            // ...другие свойства
+          };
+        }
+              
+        let user = makeUser("Simon", 40);
+        console.log(user.name); // Simon
+        console.log(user.age); // 40
+    </script>
+
+    <p>В примере выше название свойств name и age совпадают с названиями переменных, которые мы подставляем в качестве 
+        значений этих свойств. Такой подход настолько распространён, что существуют специальные короткие свойства для 
+        упрощения этой записи.<br>
+        Вместо name:name мы можем написать просто name. Вот пример:
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            function makeUser(name, age) {<br>
+              return {<br>
+                <b>name,</b> // то же самое, что и name: name<br>
+                <b>age,</b>  // то же самое, что и age: age<br>
+                // ...};<br>
+            }<br>
+        </code>
+    </p>
+    <br>
+
+    <p>Но мы можем использовать как обычные свойства, так и короткие в одном и том же объекте:</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            let user = {<br>
+                name,  // тоже самое, что и name:name<br>
+                age: 45<br>
+            };<br>
+        </code>
+    </p>
+    <br>
+
+    <h3>Проверка существования свойства</h3>
+
+    <p>Особенность объектов в том, что можно получить доступ к любому свойству. Даже если свойства не существует – 
+        ошибки не будет! При обращении к свойству, которого нет, возвращается undefined. Это позволяет просто проверить 
+        существование свойства – сравнением его с undefined
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+          let user = {};<br>
+          console.log( user2.noSuchProperty === undefined ); // true означает 'свойства нет'<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+      let user2 = {};
+      console.log( user2.noSuchProperty === undefined ); // true - означает 'свойства нет'
+    </script>
+
+    <h4 class="task">
+        Мы имеем объект 'friend' с его свойствами. Проверте, существует ли в этом объекте свойство: 'age' и 'blabla'?
+    </h4>
+
+    <p><b>Решение</b>:</p>
+
+    <p>Существует специальный оператор <b>'in'</b> для проверки существования свойства в объекте.
+        Синтаксис оператора: <b>'key' in object</b>. 
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            let friend = { name: "Modest", age: 50 };<br>
+            <br>
+            console.log( <b>'age' in friend</b> ); // true, friend.age существует<br>
+            console.log( <b>'blabla' in friend</b> ); // false, friend.blabla не существует<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let friend = { name: "Modest", age: 50 };
+
+        console.log( "age" in friend ); // true, friend.age существует
+        console.log( "blabla" in friend ); // false, friend.blabla не существует
+    </script>
+
+    <p>Обратите внимание, что слева от оператора in должно быть имя свойства. Обычно это строка в кавычках.<br>
+        Если мы опускаем кавычки, это значит, что мы указываем переменную, в которой находится имя свойства. Например:
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            let friend = { name: "Modest", age: 50 };<br>
+            <br>
+            let key = 'name';<br>
+            console.log( <b>key in friend</b> ); // true, имя свойства было взято из переменной key<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let key = "name";
+        console.log( key in friend ); // true, имя свойства было взято из переменной key
+    </script>
+
+    <p>Обычно строгого сравнения "=== undefined" достаточно для проверки наличия свойства. Но есть особый случай, 
+        когда оно не подходит, и нужно использовать "in".<br>
+        Это когда свойство существует, но содержит значение undefined:
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            let obj = {<br>
+            test: undefined<br>
+            };<br>
+            <br>
+            alert( obj.test ); // выведет undefined, значит свойство не существует?<br>
+            <br>
+            alert( 'test' in obj ); // true, свойство существует!<br>
+        </code>
+    </p>
+    <br>
+
+    <p>В примере выше свойство obj.test технически существует в объекте. Оператор in сработал правильно.<br>
+        Подобные ситуации случаются очень редко, так как undefined обычно явно не присваивается. Для «неизвестных» 
+        или «пустых» свойств мы используем значение null. Таким образом, оператор in является экзотическим гостем 
+        в коде.
+    </p>
+
+</body>
+
+</html>

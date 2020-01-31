@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: objects</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">JS-objects: Objects: цикл «for…in»; упорядочение свойств объекта; копирование по ссылке</h2>
+
+    <h3>Цикл «for…in»</h3>
+
+    <h4 class="task">
+        У нас есть объект 'user'. Выведите в консоль все свойства этого объекта, а так же все значения этих свойств.
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            let user = {<br>
+                name: 'Modest',<br>
+                age: 40,<br>
+                isAdmin: true,<br>
+                hobby: 'oil paintings',<br>
+                pets: 'cat',<br>
+                'is beer addict': false<br>
+            };
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let user = {
+            name: "Modest",
+            age: 40,
+            isAdmin: true,
+            hobby: "oil paintings",
+            pets: "cat",
+            "is beer addict": false
+        };
+    </script>
+
+    <p><b>Решение</b>:</p>
+
+    <p>Для перебора всех свойств объекта используется цикл <b>for..in</b>. Этот цикл отличается от изученного ранее цикла for(;;).</p>
+    <br>
+
+    <p class="code-ex">Синтаксис:<br>
+        <code>
+            for (key in object) {<br>
+                // тело цикла выполняется для каждого свойства объекта<br>
+              }<br>
+        </code>
+    </p>
+    <br>
+
+    <p>Давайте выведем вначале все свойства объекта 'user', а потом все значения:</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            for (let key in user) {<br>
+              <b>ключи</b><br>
+              console.log(key);  // name, age, isAdmin, hobby, pets, 'is beer addict'<br>
+              <br>
+              <b>значения ключей</b><br>
+              console.log( user[key] ); // Modest, 40, true, 'oil paintings, cat, false<br>
+            }<br>
+        </code>
+    </p>
+
+    <script>
+        for (let key in user) {
+        // ключи
+        console.log(key);  // name, age, isAdmin, hobby, pets, 'is beer addict'
+
+        // значения ключей
+        console.log( user[key] ); // Modest, 40, true, 'oil paintings, cat, false
+        }
+    </script>
+
+    <p>Обратите внимание, что все конструкции «for» позволяют нам объявлять переменную внутри цикла, 
+        как, например, let key здесь.<br>
+        Кроме того, мы могли бы использовать другое имя переменной. Например, часто используется вариант 
+        <b>'for (let prop in obj)'</b>.
+    </p>
+    <br>
+
+    <h3>Упорядочение свойств объекта</h3>
+
+    <h4 class="task">
+        У нас есть объект 'codes' свойствами которого есть коды стран. Покажите в каком порядке выводятся свойства?
+        В чём особенность целочисленных свойств объекта? Как сделать так, чтоб выводились коды в порядке их создания?
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            let codes = {<br>
+                '49': 'Германия',<br>
+                '41': 'Швейцария',<br>
+                '44': 'Великобритания',<br>
+                // ..,<br>
+                '1': 'США'<br>
+              };<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let codes = {
+          "49": "Германия",
+          "41": "Швейцария",
+          "44": "Великобритания",
+          // ..,
+          "1": "СШA"
+        }
+    </script>
+
+    <p><b>Решение</b>:</p>
+
+    <p>Упорядочены ли свойства объекта? Другими словами, если мы будем в цикле перебирать все свойства объекта, 
+        получим ли мы их в том же порядке, в котором мы их добавляли? Можем ли мы на это рассчитывать?
+        Короткий ответ: свойства упорядочены особым образом: <b>свойства с целочисленными ключами сортируются 
+        по возрастанию, остальные располагаются в порядке создания</b>. В этом и есть их особенность.
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            for (let code in codes) { -здесь стразу объявили переменную 'code' для ключей объекта<br>
+                console.log(code); // 1, 41, 44, 49<br>
+              }<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+    for (let code in codes) {
+      console.log(code); // 1, 41, 44, 49
+    }
+    </script>
+
+    <p>Телефонные коды идут в порядке возрастания, потому что они являются целыми числами: 1, 41, 44, 49.</p>
+    <br>
+
+    <p>Термин «целочисленное свойство» означает строку, которая может быть преобразована в целое число и обратно без изменений.<br>
+        То есть, '49' – это целочисленное имя свойства, потому что если его преобразовать в целое число, а затем обратно в строку, 
+        то оно не изменится. А вот свойства '+49' или '1.2' таковыми не являются.
+    </p>
+    <br>
+
+    <p class="code-ex" style="width: 75%;"><b>Math.trunc</b> - встроенная функция, которая удаляет десятичную часть<br>
+        <code>
+            console.log( String(Math.trunc(Number("49"))) ); // "49", то же самое ⇒ свойство целочисленное<br>
+            console.log( String(Math.trunc(Number("+49"))) ); // "49", не то же самое, что "+49" ⇒ свойство не целочисленное<br>
+            console.log( String(Math.trunc(Number("1.2"))) ); // "1", не то же самое, что "1.2" ⇒ свойство не целочисленное<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        console.log( String(Math.trunc(Number("49"))) ); // "49", то же самое ⇒ свойство целочисленное
+        console.log( String(Math.trunc(Number("+49"))) ); // "49", не то же самое, что "+49" ⇒ свойство не целочисленное
+        console.log( String(Math.trunc(Number("1.2"))) ); // "1", не то же самое, что "1.2" ⇒ свойство не целочисленное
+    </script>
+
+    <p>С другой стороны, <b>если ключи не целочисленные, то они перебираются в порядке создания</b>, например:</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            let user = {<br>
+                name: 'John',<br>
+                surname: 'Smith'<br>
+              };<br>
+              <b>user.age</b> = 25; -добавим ещё одно свойство<br>
+              <br>
+              // не целочисленные свойства перечислены в порядке создания<br>
+              for (let prop in user) {<br>
+                console.log(prop); // name, surname, <b>age</b><br>
+              }<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let user2 = {
+          name: "John",
+          surname: "Smith"
+        };
+        user2.age = 25; // добавим ещё одно свойство
+
+        // не целочисленные свойства перечислены в порядке создания
+        for (let prop in user2) {
+            console.log(prop); // name, surname, age
+        }
+    </script>
+
+    <p>Таким образом, чтобы решить нашу проблему с телефонными кодами, мы можем схитрить, сделав коды не целочисленными 
+        свойствами. Добавления знака '+'' перед каждым кодом будет достаточно. Вот решение:
+    </p>
+    <br>
+
+    <p class="code-ex">Теперь код будет работать так, как мы задумывали<br>
+        <code>
+            let codes = {<br>
+              '+49': 'Германия',<br>
+              '+41': 'Швейцария',<br>
+              '+44': 'Великобритания',<br>
+              // ..,<br>
+              '+1': 'США'<br>
+            };<br>
+            <br>
+            for (let code in codes) {<br>
+              alert( +code ); // 49, 41, 44, 1<br>
+            }<br>
+        </code>
+    </p>
+    <br>
+
+    <h3>Копирование по ссылке</h3>
+
+    <h4 class="task">
+        У нас есть объект 'partisipant'. Скопируйте объект 'partisipant' в объект 'admin'. Измените через 'admin' 
+        свойство объекта, но покажите это изменение через объект 'partisipant'.
+    </h4>
+
+    <p><b>Решение</b>:</p>
+
+    <p>Одним из фундаментальных отличий объектов от примитивных типов данных является то, что они хранятся и копируются «по ссылке».</p>
+    <br>
+
+    <p>Примитивные типы: строки, числа, логические значения – присваиваются и копируются «по значению». Например:</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            let message = "Hello!";<br>
+            let phrase = message;<br>
+        </code>
+    </p>
+    <br>
+
+    <p>В результате мы имеем две независимые переменные, каждая из которых хранит строку 'Hello!''.</p>
+    <br>
+
+    <p>Объекты ведут себя иначе.<br>
+       <b>Переменная хранит не сам объект, а его «адрес в памяти», другими словами «ссылку» на него.</b><br>
+       И если у нас в объекте записано: let user = {name: "John"}; это значит что сам объект хранится где-то 
+       в памяти, а в переменной user лежит «ссылка» на эту область памяти.<br>
+       <b>Когда переменная объекта копируется – копируется ссылка, сам же объект не дублируется.</b><br>
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            let partisipant = { name: "John" };<br>
+            <br>
+            <b>let admin = partisipant;</b> -здесь копируется ссылка<br>
+        </code>
+    </p>
+    <br>
+
+    <p>Теперь у нас есть две переменные, каждая из которых содержит ссылку на один и тот же объект.<br>
+        Мы можем использовать любую из переменных для доступа к ящику и изменения его содержимого.
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            let partisipant = { name: 'John' };<br>
+            let admin = partisipant; -здесь копируется ссылка<br>
+            <br>
+            admin.name = 'Pete'; -здесь изменено свойство 'name' по ссылке из переменной 'admin'<br>
+            <br>
+            console.log(partisipant.name); // 'Pete', изменения видны по ссылке из переменной 'user'<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+      let partisipant = { name: 'Sairus' };
+
+      let admin2 = partisipant;
+
+      admin2.name = 'Pete'; // изменено по ссылке из переменной 'admin2'
+
+      console.log(partisipant.name); // 'Pete', изменения видны по ссылке из переменной 'partisipant'
+    </script>
+
+
+</body>
+
+</html>
