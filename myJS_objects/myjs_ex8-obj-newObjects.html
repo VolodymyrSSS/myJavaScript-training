@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: objects constructors</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">JS-objects: Objects: constructors exercises</h2>
+
+    <h4 class="task">Возможно ли создать функции A и B в примере ниже, где объекты равны new A()==new B()?<br>
+        Если да – приведите пример вашего кода.?
+    </h4>
+
+    <p><b>Ответ</b>: Да, возможно.</p>
+    <br>
+
+    <p>Известно, если есть в функции-конструкторе return, то при вызове return с объектом, будет возвращён объект, а не this.<br>
+        Исходя из этого, они могут вернуть один и тот же объект obj, определённый снаружи, а для этого мы его создадим.
+    </p>
+    <br>
+
+
+    <p class="code-ex">
+        <code>
+            <b>let obj = {};</b><br>
+            <br>
+            function A() { <b>return obj;</b> }<br>
+            function B() { <b>return obj;</b> }<br>
+            <br>
+            console.log( new A() == new B() ); // true<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let obj = {};
+        
+        function A() { return obj; }
+        function B() { return obj; }
+            
+        console.log( new A() == new B() ); // true
+    </script>
+
+    <h4 class="task">Создайте функцию-конструктор Calculator, который создаёт объекты с тремя методами:<br>
+        read() запрашивает два значения при помощи prompt и сохраняет их значение в свойствах объекта.<br>
+        sum() возвращает сумму введённых свойств.<br>
+        mul() возвращает произведение введённых свойств.<br>
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            let calculator = new Calculator();<br>
+            calculator.read();<br>
+            <br>
+            console.log( 'Sum=' + calculator.sum() );<br>
+            console.log( 'Mul=' + calculator.mul() );<br>
+        </code>
+    </p>
+    <br>
+
+    <p><b>Решение</b>:</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            function Calculator(){<br>
+                <br>
+                this.read = function() {<br>
+                    this.a = +prompt("Enter the number 'a', 0");<br>
+                    this.b = +prompt("Enter the number 'b', 0");<br>
+                };<br>
+                <br>
+                this.sum = function() {<br>
+                    return this.a + this.b;<br>
+                };<br>
+                <br>
+                this.mul = function() {<br>
+                    return this.a * this.b; };<br>
+                <br>
+            }<br>
+            <br>
+            let calculator = new Calculator();<br>
+            <br>
+            // проверяем работу:<br>
+            calculator.read();<br>
+            console.log( 'Sum=' + calculator.sum() );<br>
+            console.log( 'Mul=' + calculator.mul() );<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        function Calculator(){
+
+            this.read = function() {
+                this.a = +prompt("Enter the number 'a', 0");
+                this.b = +prompt("Enter the number 'b', 0");
+            };
+
+            this.sum = function() {
+                return this.a + this.b;
+            };
+
+            this.mul = function() {
+                return this.a * this.b;
+            };
+
+        }
+
+        let calculator = new Calculator();
+
+        // проверяем работу:
+        calculator.read();
+        console.log( 'Sum=' + calculator.sum() );
+        console.log( 'Mul=' + calculator.mul() );
+    </script>
+
+<h4 class="task">Напишите функцию-конструктор Accumulator(startingValue).<br>
+        Объект, который она создаёт, должен уметь следующее:<br>
+        Хранить «текущее значение» в свойстве value. Начальное значение устанавливается 
+        в аргументе конструктора startingValue.<br>
+        Метод read() использует prompt для получения числа и прибавляет его к свойству value.<br>
+        Таким образом, свойство value является текущей суммой всего, что ввёл пользователь при 
+        вызовах метода read(), с учётом начального значения startingValue.<br>
+        Работа кода показана ниже:
+</h4>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            let accumulator = new Accumulator(1); // начальное значение 1<br>
+            <br>
+            accumulator.read(); // прибавит ввод prompt к текущему значению<br>
+            accumulator.read(); // прибавит ввод prompt к текущему значению<br>
+            <br>
+            console.log(accumulator.value); // выведет сумму этих значений<br>
+        </code>
+    </p>
+    <br>
+
+    <p><b>Решение</b>:</p>
+    <br>
+
+    <p class="code-ex" style="width: 65%;">
+        <code>
+            function Accumulator(startingValue) {<br>
+                this.value = startingValue;<br>
+                <br>
+                this.read = function() {<br>
+                    this.value += +prompt("How many to add?", 0);<br>
+                };<br>
+                <br>
+            }<br>
+            <br>
+            let accumulator = new Accumulator(1);<br>
+            <br>
+            accumulator.read(); // запросит и прибавит ввод prompt к текущему значению<br>
+            accumulator.read(); // запросит и прибавит ввод prompt к текущему значению<br>
+            <br>
+            console.log(accumulator.value); // выведет сакумулированное число<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+
+        function Accumulator(startingValue) {
+            this.value = startingValue;
+
+            this.read = function() {
+                this.value += +prompt("How many to add?", 0);
+            };
+
+        }
+
+        let accumulator = new Accumulator(1);
+
+        accumulator.read(); // запросит и прибавит ввод prompt к текущему значению
+        accumulator.read(); // запросит и прибавит ввод prompt к текущему значению
+        
+        console.log(accumulator.value);
+
+    </script>
+
+    
+
+</body>
+
+</html>

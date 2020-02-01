@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: converse to primitives</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">JS-objects: преобразование объектов в примитивы</h2>
+
+    <p>Что произойдёт, если сложить два объекта obj1 + obj2, вычесть один из другого obj1 - obj2 или вывести их на экран, 
+        воспользовавшись alert(obj)?<br>
+        <br>
+        В этом случае объекты сначала автоматически преобразуются в примитивы, а затем выполняется операция.<br>
+        <br>
+        <em>Все объекты в логическом контексте являются true.</em> Существуют лишь их численные и строковые преобразования.<br>
+        Численные преобразования происходят, когда мы вычитаем объекты или выполняем математические операции. Например, 
+        объекты Date могут вычитаться, и результатом date1 - date2 будет временной отрезок между двумя датами.<br>
+        Что касается строковых преобразований – они обычно происходят, когда мы выводим объект alert(obj), а также в других 
+        случаях, когда объект используется как строка.
+    </p>
+
+    <h3>Преобразование к примитивам</h3>
+
+
+    <p>Преобразование объектов в примитивы вызывается автоматически многими встроенными функциями и операторами, которые ожидают 
+        примитив в качестве аргумента.<br>
+        Существуют три варианта преобразований («три хинта»), описанные в спецификации.<br>
+        Или по другому - существует всего 3 типа преобразований (хинтов):<br>
+        1. "string" (для alert и других операций, которым нужна строка)<br>
+        2. "number" (для математических операций)<br>
+        3. "default" (для некоторых операций)<br>
+    </p>
+
+    <h3>"string"</h3>
+
+    <p>Для преобразования объект к строке, когда операция ожидает получить строку, например alert:
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            // вывод<br>
+            alert(obj);<br>
+            <br>
+            // используем объект в качестве имени свойства<br>
+            anotherObj[obj] = 123;<br>
+        </code>
+    </p>
+    <br>
+
+    <h3>"number"</h3>
+
+    <p>Для преобразования объекта к числу, в случае математических операций:</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            // явное преобразование<br>
+            let num = Number(obj);<br>
+            <br>
+            // математическое (исключая бинарный оператор "+")<br>
+            let n = +obj; // унарный плюс<br>
+            let delta = date1 - date2;<br>
+            <br>
+            // сравнения больше/меньше<br>
+            let greater = user1 > user2;<br>
+        </code>
+    </p>
+   
+    <h3>"default"</h3>
+
+    <p>Происходит редко, когда оператор «не уверен», какой тип ожидать.<br>
+        Например, бинарный плюс + может работать с обоими типами: строками (объединять их) и числами (складывать). 
+        Таким образом, и те, и другие будут вычисляться. Или когда происходит сравнение объектов с помощью нестрогого 
+        равенства == со строкой, числом или символом, и неясно, какое преобразование должно быть выполнено.
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            // бинарный плюс<br>
+            let total = car1 + car2;<br>
+            <br>
+            // obj == string/number/symbol<br>
+            if (user == 1) { ... };<br>
+        </code>
+    </p>
+    <br>
+
+    <p>Оператор больше/меньше <> также может работать как со строками, так и с числами. Однако, по историческим причинам 
+        он использует хинт «number», а не «default».<br>
+        На практике все встроенные объекты, исключая Date, реализуют "default" преобразования 
+        тем же способом, что и "number". И нам следует поступать также.<br>
+        Обратите внимание, что существуют лишь три варианта хинтов. Всё настолько просто. Не существует хинта со значением «boolean» 
+        (все объекты являются true в логическом контексте) или каких-либо ещё. И если мы считаем "default" и "number" одинаковыми, 
+        как большинство встроенных объектов, то остаются всего два варианта преобразований.<br>
+    </p>
+    <br>
+
+    <h3>Алгоритм преобразований к примитивам</h3>
+
+    <p><b>В процессе преобразования движок JavaScript пытается найти и вызвать три следующих метода объекта:</b></p>
+    <br>
+    <p><b>1.</b> Вызывает obj[Symbol.toPrimitive](hint) – метод с символьным ключом Symbol.toPrimitive (системный символ), если 
+        такой метод существует, и передаёт ему хинт.<br>
+        <b>2.</b> Иначе, если хинт равен "string"
+        пытается вызвать obj.toString(), а если его нет, то obj.valueOf(), если он существует.<br>
+        <b>3.</b> В случае, если хинт равен "number" или "default"
+        пытается вызвать obj.valueOf(), а если его нет, то obj.toString(), если он существует.<br>
+    </p>
+
+    <h3>Symbol.toPrimitive</h3>
+
+    <p>Начнём с универсального подхода – символа Symbol.toPrimitive: метод с таким названием (если есть) <b>используется 
+        для всех преобразований</b>:
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            obj[Symbol.toPrimitive] = function(hint) {<br>
+                // должен вернуть примитивное значение<br>
+                // hint равно чему-то одному из: "string", "number" или "default"<br>
+              };<br>
+        </code>
+    </p>
+
+    <h4 class="task">
+        Используйте метод Symbol.toPrimitive в реализации объекта user для вывода в консоль всех типов преобразований (хинтов) к примитивам:
+        а на экран всех примитивов либо строковое-имя, либо числовое-денежное а либо по дефолту?
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            let user = {<br>
+                name: "John",<br>
+                money: 1000,<br>
+            }<br>
+        </code>
+    </p>
+    <br>
+
+    <p><b>Решение</b>:</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            'use strict';<br>
+            <br>
+            let user = {<br>
+              name: 'John',<br>
+              money: 5000,<br>
+              <br>
+              [Symbol.toPrimitive](hint) {<br>
+                console.log(`hint: ${hint}`);<br>
+                return hint == "string" ? `{name: "${this.name}"}` : this.money; }<br>
+            };<br>
+            <br>
+            // демонстрация результатов преобразований:<br>
+            alert(user); // hint: string -> {name: "John"}<br>
+            alert(+user); // hint: number -> 1000<br>
+            alert(user + 500); // hint: default -> 1500<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        'use strict';
+
+        let user = {
+          name: "John",
+          money: 5000,
+
+          [Symbol.toPrimitive](hint) {
+            console.log(`hint: ${hint}`);
+            return hint == "string" ? `{name: "${this.name}"}` : this.money;
+          }
+        };
+
+        // демонстрация результатов преобразований:
+        alert(user); // hint: string -> {name: "John"}
+        alert(+user); // hint: number -> 5000
+        alert(user + 500); // hint: default -> 5500
+    </script>
+
+    <p>Как мы видим из кода, user преобразовывается либо в информативную читаемую строку, 
+        либо в денежный счёт в зависимости от значения хинта. Единственный метод user[Symbol.toPrimitive] 
+        смог обработать все случаи преобразований.
+    </p>
+    
+    <h3>Методы toString/valueOf</h3>
+
+    <p>Методы toString и valueOf берут своё начало с древних времён. Они не символы, так как в то время 
+        символов ещё не существовало, а просто обычные методы объектов со строковыми именами. Они предоставляют 
+        «устаревший» способ реализации преобразований объектов.<br>
+        Если нет метода Symbol.toPrimitive, движок JavaScript пытается найти эти методы и вызвать их следующим образом:<br>
+        <br>
+        toString -> valueOf для хинта со значением «string».<br>
+        valueOf -> toString – в ином случае.
+    </p>
+
+    <h4 class="task">
+        Используйте комбинацию методов toString/valueOf Symbol.toPrimitive в реализации объекта user для вывода на экранв всех
+        примитивов либо строковое-имя, либо числовое-денежное, а либо по дефолту?
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            let user = {<br>
+                name: "Sally",<br>
+                money: 3000,<br>
+            }<br>
+        </code>
+    </p>
+    <br>
+
+    <p><b>Решение</b>:</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            'use strict';<br>
+            let user = {<br>
+                name: 'Sally',<br>
+                money: 3000,<br>
+                <br>
+                // для хинта равного 'string'<br>
+                toString() {<br>
+                  return `{name: '${this.name}''}`;<br>
+                },<br>
+                <br>
+                // для хинта равного 'number' или 'default'<br>
+                valueOf() {<br>
+                  return this.money;<br>
+                }<br>
+                <br>
+              };<br>
+              <br>
+              alert(user); // toString -> {name: 'Sally'}<br>
+              alert(+user); // valueOf -> 3000<br>
+              alert(user + 500); // valueOf -> 3500<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let user2 = {
+            name: "Sally",
+            money: 3000,
+
+            // для хинта равного 'string'
+            toString() {
+                return `{name: "${this.name}"}`;
+            },
+
+            // для хинта равного 'number' или 'default'
+            valueOf() {
+                return this.money;
+            }
+        };
+
+        alert(user2); // toString -> {name: "Sally"}
+        alert(+user2); // valueOf -> 3000
+        alert(user2 + 500); // valueOf -> 3500
+    </script>
+
+    <p>Как видим, получилось то же поведение, что и в предыдущем примере с Symbol.toPrimitive.<br>
+        Довольно часто мы хотим описать <b>одно «универсальное» преобразование объекта к примитиву для всех ситуаций</b>. 
+        Для этого <b>достаточно создать один toString</b>. Вот пример:
+    </p>
+    <br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            let user = {<br>
+                name: 'Vitold',<br>
+                <br>
+                toString() {<br>
+                  return this.name;<br>
+                }<br>
+              };<br>
+              <br>
+              alert(user); // toString -> Vitold<br>
+              alert(user + 500); // toString -> Vitold500<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        "use strict";
+
+        let user3 = {
+            name: 'Vitold',
+            
+            toString() {
+                return this.name;
+            }
+        };
+            
+        alert(user3.name); // toString -> Vitold
+        alert(user3 + 500); // toString -> Vitold500
+    </script>
+
+    <p>В отсутствие Symbol.toPrimitive и valueOf, toString обработает все случаи преобразований к примитивам.</p>
+
+    <h3>Возвращаемые типы</h3>
+
+    <p>Важно понимать, что все описанные методы для преобразований объектов не обязаны возвращать именно 
+        требуемый «хинтом» тип примитива.<br>
+        Нет обязательного требования, чтобы toString() возвращал именно строку, или чтобы метод Symbol.toPrimitive 
+        возвращал именно число для хинта «number».<br>
+        <b>Единственное обязательное требование: методы должны возвращать примитив, а не объект</b>.
+    </p>
+    <br>
+
+    <h3>Последующие операции</h3>
+
+    <p>Операция, инициировавшая преобразование, получает примитив и затем продолжает работу с ним, производя дальнейшие 
+        преобразования, если это необходимо. Примеры:
+    </p>
+    <br>
+
+    <p class="code-ex" style="width: 60%;">Математические операции, исключая бинарный плюс, преобразуют примитив к числу:<br>
+        <code>
+            let obj = {<br>
+                // toString обрабатывает все преобразования в случае отсутствия других методов<br>
+                toString() {<br>
+                  return '2'; }<br>
+              };<br>
+              <br>
+              console.log(obj * 2); // 4, объект был преобразован к примитиву '2', затем умножение сделало его числом<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let obj1 = {
+        // toString обрабатывает все преобразования в случае отсутствия других методов
+            toString() {
+                return "2";
+            }
+        };
+
+        console.log(obj1 * 2); // 4, объект был преобразован к примитиву '2', затем умножение сделало его числом
+    </script>
+    <br>
+
+    <p class="code-ex" style="width: 60%;">Бинарный плюс + в аналогичном случае сложит строки:<br>
+        <code>
+            let obj = {<br>
+                // toString обрабатывает все преобразования в случае отсутствия других методов<br>
+                toString() {<br>
+                  return '2'; }<br>
+              };<br>
+              <br>
+              console.log(obj + 2); // 22 (преобразование к примитиву вернуло строку => конкатенация)<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let obj2 = {
+          toString() {
+            return "2";
+          }
+        };
+
+        console.log(obj2 + 2); // 22 (преобразование к примитиву вернуло строку => конкатенация)
+    </script>
+
+    <p>Значение this вычисляется во время выполнения кода и зависит от контекста.</p>
+
+</body>
+
+</html>

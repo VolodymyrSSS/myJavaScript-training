@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: keyword-this</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">JS-objects: keyword-«this»: exercises</h2>
+
+    <h4 class="task">
+        Каким будет результат выполнения этого кода?<br>
+        Здесь есть подвох по проверке синтаксиса.
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            let user = {<br>
+                name: 'Попандопало',<br>
+                go: function() { console.log(this.name) }<br>
+              }<br>
+              <br>
+              (user.go)()<br>
+        </code>
+    </p>
+    <br>
+
+    <p><b>Ответ</b>: Будет ошибка: ReferenceError: Cannot access 'user' before initialization</p>
+
+    <p>Ошибка появляется, потому что точка с запятой пропущена после user = {...}.<br>
+        <br>
+        JavaScript не вставляет автоматически точку с запятой перед круглой скобкой <em>(user.go)()</em>, поэтому 
+        читает этот код так: <em>let user = { go:... }(user.go)()</em><br>
+        Теперь мы тоже можем увидеть, что такое объединённое выражение синтаксически является вызовом 
+        объекта { go: ... } как функции с аргументом (user.go). И это происходит в той же строчке с 
+        объявлением переменной let user, т.е. объект user ещё даже не определён, поэтому получается ошибка.
+        <br>
+        Если мы вставим точку с запятой – всё заработает:
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            let user = {
+                name: "Попандопало",
+                go: function() { console.log(this.name) }
+              }<b>;</b>
+              
+              (user.go)() // Попандопало<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let user = {
+          name: "Попандопало",
+          go: function() { console.log(this.name) }
+        };
+
+        (user.go)() // Попандопало
+    </script>
+
+    <p>Обратите внимание, что круглые скобки вокруг (user.go) ничего не значат. Обычно они определяют 
+        последовательность операций (оператор группировки), но здесь вызов метода через точку . срабатывает 
+        первым в любом случае, поэтому группировка ни на что не влияет. Только точка с запятой имеет значение.
+    </p>
+    <br>
+
+    <h4 class="task">
+        В представленном ниже коде мы намерены вызвать obj.go() метод 4 раза подряд.<br>
+        <br>
+        Но вызовы (1) и (2) работают иначе, чем (3) и (4). Почему?<br>
+        Объясните значение 'this'?<br>
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            let obj, method;<br>
+            <br>
+            obj = {<br>
+              go: function() { console.log(this); }<br>
+            };<br>
+            <br>
+            obj.go();               // (1) [object Object]<br>
+
+            (obj.go)();             // (2) [object Object]<br>
+
+            (method = obj.go)();    // (3) undefined<br>
+
+            (obj.go || obj.stop)(); // (4) undefined<br>
+        </code>
+    </p>
+    <br>
+
+    <p><b>Решение</b>:</p>
+    <br>
+
+    <p class="code-ex" style="width: 70%;">
+        <code>
+            let obj, method;<br>
+            <br>
+            obj = {<br>
+            go: function() { console.log(this); }<br>
+            };<br>
+            <br>
+            obj.go();               // (1) [object Object] - Это обычный вызов метода объекта через точку ., и this ссылается 
+            на объект перед точкой.<br>
+            <br>
+            (obj.go)();             // (2) [object Object] - Здесь то же самое. Круглые скобки (оператор группировки) тут не 
+            изменяют порядок выполнения операций – доступ к методу через точку в любом случае срабатывает первым.<br>
+            <br>
+            (method = obj.go)();    // (3) undefined - Здесь мы имеем более сложный вызов (expression).method(). Такой вызов 
+            работает, как если бы он был разделён на 2 строчки:<br>
+             <em>f = obj.go;</em> - вычисляется выражение (переменная f ссылается на код функции)<br>
+             <em>f();</em> - вызов функции, на которую ссылается f; Здесь f() выполняется как функция, без передачи 
+            значения this.<br>
+            <br>
+            (obj.go || obj.stop)(); // (4) undefined - Тут похожая ситуация на случай (3) – идёт потеря значения this.<br>
+            <br>
+            Чтобы объяснить поведение в примерах (3) и (4), нам нужно помнить, что доступ к свойству (через точку или квадратные 
+            скобки) возвращает специальное значение ссылочного типа (Reference Type). За исключением вызова метода, любая другая 
+            операция (подобно операции присваивания = или сравнения через логические операторы, например ||) превращает это 
+            значение в обычное, которое не несёт информации, позволяющей установить this.
+        </code>
+    </p>
+    <br>
+
+    <h4 class="task">
+        Использование "this" в литерале объекта.<br>
+        Здесь функция makeUser возвращает объект.<br>
+        Каким будет результат при обращении к свойству объекта ref? Почему?
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            function makeUser() {<br>
+                return {<br>
+                  name: 'Эпифаний',<br>
+                  ref: this };<br>
+              };<br>
+              <br>
+              let monk = makeUser();<br>
+              <br>
+              console.log( <b>monk.ref.name</b> ); // Каким будет результат?<br>
+        </code>
+    </p>
+    <br>
+
+    <p><b>Ответ</b>: Будет ошибка: Cannot read property 'name' of undefined<br>
+    <br>
+    Это потому, что правила, которые определяют значение this, никак не смотрят на объявление объекта. 
+    Важен лишь момент вызова метода. Здесь значение this внутри makeUser() является undefined, потому 
+    что makeUser() вызвана как функция, не через «точку» как метод.<br>
+    Литерал объекта сам по себе не влияет на this. Значение this одно для всей функции и блоков кода в ней, 
+    литеральные объекты не меняют его.<br>
+    Таким образом, при создании объекта ref: this берёт текущее значение this функции makeUser().
+    </p>
+    <br>
+    <p>А вот противоположный случай:</p>
+    <br>
+    <p class="code-ex">
+        <code>
+            function makeUser() {<br>
+                return {<br>
+                  name: 'Эпифаний',<br>
+                  ref() {<br> 
+                      return  this; }<br>
+                };<br>
+              <br>
+              let monk = makeUser();<br>
+              <br>
+              console.log( <b>monk.ref().name</b> ); // Эпифаний<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        function makeUser() {
+          return {
+            name: 'Эпифаний',
+            ref() {
+                return this;
+            }
+          };
+        };
+              
+        let monk = makeUser();
+              
+        console.log(monk.ref().name ); // Эпифаний
+    </script>
+
+    <p>Теперь это работает, поскольку monk.ref() вызывается как метод. И значением this становится объект перед точкой.</p>
+    <br>
+
+    <h4 class="task">
+        Создайте объект 'calculator' (калькулятор) с тремя методами:<br>
+        <br>
+        read() (читать) запрашивает два значения и сохраняет их как свойства объекта.<br>
+        sum() (суммировать) возвращает сумму сохранённых значений.<br>
+        mul() (умножить) перемножает сохранённые значения и возвращает результат.<br>
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            let calculator = {<br>
+                // ... ваш код ...<br>
+              };<br>
+              <br>
+              calculator.read();<br>
+              alert( calculator.sum() );<br>
+              alert( calculator.mul() );<br>
+        </code>
+    </p>
+    <br>
+
+    <p><b>Решение</b>:</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            let calculator = {<br>
+                sum() {<br>
+                    return this.a + this.b;<br>
+                },<br>
+                <br>
+                mul() {<br>
+                    return this.a * this.b;<br>
+                },<br>
+                <br>
+                read() {<br>
+                    this.a = +prompt('a?', 0);<br>
+                    this.b = +prompt('b?', 0); }<br>
+            };<br>
+            <br>
+            calculator.read();<br>
+            console.log( calculator.sum() );<br>
+            console.log( calculator.mul() );<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let calculator = {
+            sum() {
+                return this.a + this.b;
+            },
+
+            mul() {
+                return this.a * this.b;
+            },
+
+            read() {
+                this.a = +prompt("Enter the number 'a'", 0);
+                this.b = +prompt("Enter the number 'b'", 0);
+            }
+        };
+
+        calculator.read();
+        console.log( calculator.sum() );
+        console.log( calculator.mul() );
+    </script>
+
+    <h4 class="task">
+        Мы имеем объект 'ladder' (лестница), который своими методами позволяет подниматься вверх и спускаться.<br>
+        Eсли нам нужно сделать несколько последовательных вызовов, мы можем выполнить это так:<br>
+        ladder.up();<br>
+        ladder.up();<br>
+        ladder.down();<br>
+        ladder.showStep(); // 1<br>
+        Измените код методов up, down и showStep таким образом, чтобы их вызов можно было сделать по цепочке, например так:<br>
+        ladder.up().up().down().showStep(); // 1<br>
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            let ladder = {<br>
+                step: 0, -начальная ступень<br>
+                up() {<br>
+                  this.step++; -поднятса на 1 ступень<br>
+                },<br>
+                down() {<br>
+                  this.step--; -спуститса на 1 ступень<br>
+                },<br>
+                showStep: function() { -показывает текущую ступеньку<br>
+                    console.log( this.step ); }<br>
+              };<br>
+        </code>
+    </p>
+    <br>
+
+    <p><b>Решение</b>:</p>
+    <br>
+
+    <p>Необходимо заметить что, такой подход широко используется в библиотеках JavaScript.<br>
+        А решением является возврат самого объекта в каждом методе - то есть return this<br>
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            let ladder = {<br>
+                step: 0,<br>
+                up() {<br>
+                  this.step++;<br>
+                  return this;
+                },<br>
+                down() {<br>
+                  this.step--;<br>
+                  return this;<br>
+                },<br>
+                showStep: function() { // показывает текущую ступеньку<br>
+                  console.log( this.step ); // 1<br>
+                  return this; }<br>
+              };<br>
+              <br>
+              console.log( ladder.up().up().down().showStep() ); // выведет {step: 1, up: ƒ, down: ƒ, showStep: ƒ}<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let ladder = {
+            step: 0,
+            up() {
+                this.step++;
+                return this;
+            },
+            down() {
+                this.step--;
+                return this;
+            },
+            showStep: function() { // показывает текущую ступеньку
+                console.log( this.step ); // 1
+                return this;
+            }
+        };
+
+        console.log( ladder.up().up().down().showStep() ); // выведет {step: 1, up: ƒ, down: ƒ, showStep: ƒ} 
+    </script>
+
+
+
+
+    
+</body>
+
+</html>

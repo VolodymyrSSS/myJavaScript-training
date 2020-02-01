@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs: objects</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">JS-objects: Objects: конструкторы, создание объектов через 'new'</h2>
+
+    <p>Обычный синтаксис {...} позволяет создать только один объект. Но зачастую нам нужно создать множество 
+        однотипных объектов, таких как пользователи, элементы меню и т.д.<br>
+        Это можно сделать при помощи функции-конструктора и оператора 'new'.
+    </p>
+
+    <h3>Функция-конструктор</h3>
+
+    <p>Функции-конструкторы являются обычными функциями. Но есть два соглашения:<br>
+        <b>1. Имя функции-конструктора должно начинаться с большой буквы.<br>
+        2. Функция-конструктор должна вызываться при помощи оператора 'new'.</b>
+    </p>
+
+    <h4 class="task">Создайте объект 'user' с помощью функции-конструктора и оператора 'new'.</h4>
+
+    <p><b>Решение</b>:</p>
+    <br>
+
+    <p class="code-ex" style="width: 65%;">
+        <code>
+            function User(name) { -функция для конструирования нового объекта<br>
+                this.name = name; -для конструирования свойства 'name'<br>
+                this.isAdmin = false; -для конструирования свойства 'isAdmin'<br>
+              }<br>
+              <br>
+              <b>let user</b> = new User('Bonifatsii'); -создали новий объект 'user'<br>
+            <br>
+            // проверим работу и выведем в консоль значения свойств объекта 'user':<br>
+            console.log(user.name); // Bonifatsii<br>
+            console.log(user.isAdmin); // false<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        function User(name) {
+          this.name = name;
+          this.isAdmin = false;
+        }
+              
+        let user = new User("Bonifatsii");
+            
+        // проверим работу и выведем в консоль значения свойств объекта 'user':
+        console.log(user.name); // Bonifatsii
+        console.log(user.isAdmin); // false
+    </script>
+
+    <p>Когда функция вызывается как new User(...), происходит следующее:<br>
+        Создаётся новый пустой объект, и он присваивается this.<br>
+        Выполняется код функции. Обычно он модифицирует this, добавляет туда новые свойства.<br>
+        Возвращается значение this.<br>
+        <br>
+        Другими словами, вызов new User(...) делает примерно вот что:
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            function User(name) {<br>
+                // this = {};  (неявно)<br>
+                <br>
+                // добавляет свойства к this<br>
+                this.name = name;<br>
+                this.isAdmin = false;<br>
+                <br>
+                // return this;  (неявно)<br>
+              }<br>
+        </code>
+    </p>
+    <br>
+
+    <p>То есть, результат вызова new User('Bonifatsii') – это тот же объект, что и:</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            let user = {<br>
+                name: 'Bonifatsii',<br>
+                isAdmin: false<br>
+              };<br>
+        </code>
+    </p>
+    <br>
+
+    <p>Теперь, когда нам необходимо будет создать других пользователей, мы можем использовать new User('Sairus'), 
+        new User('Margo') и т.д. Данная конструкция гораздо удобнее и читабельнее, чем каждый раз создавать 
+        литерал объекта. Это и является основной <b>целью конструкторов – удобное повторное создание однотипных объектов</b>.
+    </p>
+    <br>
+
+    <p>Ещё раз заметим: технически любая функция может быть использована как конструктор. То есть, каждая 
+        функция может быть вызвана при помощи оператора new, и выполнится алгоритм, указанный выше в примере. 
+        Заглавная буква в названии функции является всеобщим соглашением по именованию, она как бы подсказывает 
+        разработчику, что данная функция является функцией-конструктором, и её нужно вызывать через new.
+    </p>
+    <br>
+
+    <p>Если в нашем коде большое количество строк, создающих один сложный объект, мы можем обернуть их в 
+        функцию-конструктор следующим образом: <b><em>new function() { … }</em></b>
+    </p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            let user = <b>new function()</b> {<br>
+                this.name = 'Вася';<br>
+                this.isAdmin = false;<br>
+                <br>
+                // ...другой код для создания пользователя<br>
+                // возможна любая сложная логика и выражения<br>
+                // локальные переменные и т. д.<br>
+              };<br>
+        </code>
+    </p>
+    <br>
+
+    <p>Такой конструктор не может быть вызван дважды, так как он нигде не сохраняется, просто создаётся и тут же 
+        вызывается. Таким образом, такой метод создания позволяет инкапсулировать код, который создаёт отдельный 
+        объект, но без возможности его повторного использования.
+    </p>
+
+    <h3>Проверка на вызов в режиме конструктора: new.target</h3>
+
+    <p>Используя специальное свойство new.target внутри функции, мы можем проверить, вызвана ли функция при помощи 
+        оператора new или без него.<br>
+        В случае, если функция вызвана при помощи new, то в new.target будет сама функция, в противном случае undefined
+    </p>
+
+    <h4 class="task">
+        Используя специальное свойство new.target внутри функции, проверьте, вызвана ли функция при помощи 
+        оператора new или без него. Результаты выведите в консоль.
+    </h4>
+
+    <p><b>Решение</b>:</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            function Friend() {<br>
+              console.log(new.target);<br>
+            }<br>
+            <br>
+            // без 'new':<br>
+            Friend(); // undefined<br>
+            <br>
+            // с 'new':<br>
+            new Friend(); // function Friend { ... }<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        'use strict';
+        function Friend() {
+              console.log(new.target);
+            }
+            
+            // без 'new':
+            Friend(); // undefined
+            
+            // с 'new':
+            new Friend(); // function Friend { ... }
+    </script>
+
+    <p>Это можно использовать, чтобы отличить обычный вызов от вызова «в режиме конструктора». 
+        В частности, вот так можно сделать, чтобы функцию можно было вызывать как с, так и без new:
+    </p>
+    <br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            function Person(name) {<br>
+              <b>if (!new.target) {</b> -в случае, если вы вызвали без оператора new<br>
+                return <b>new</b> Person(name); -добавим оператор new за вас<br>
+              }<br>
+              <br>
+              <b>this.name = name;</b>
+            }<br>
+            <br> 
+            let anarchist = Person('Nestor'); // переадресовывает вызовы на new User<br>
+            console.log(anarchist.name); // Nestor<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        'use strict';
+        function Person(name) {
+            if (!new.target) {
+              return new Person(name);
+            }
+            
+            this.name = name;
+        }
+            
+        let anarchist = Person('Nestor'); // переадресовывает вызовы на new Use
+        console.log(anarchist.name); // Nestor
+    </script>
+
+    <p>Такой подход иногда используется в библиотеках для создания более гибкого синтаксиса, который позволяет 
+        разработчикам вызывать функции при помощи оператора new или без него.<br>
+        Впрочем, это не очень хорошая практика, так как отсутствие new может ввести разработчика в заблуждение. 
+        С оператором new мы точно знаем, что в итоге будет создан новый объект.
+    </p>
+
+    <h3>Возврат значения из конструктора - return</h3>
+
+    <p>Обычно конструкторы ничего не возвращают явно. Их задача – записать все необходимое в this, который в итоге 
+        станет результатом.<br>
+        Но если return всё же есть, то применяется простое правило:<br>
+        <b>1. При вызове return с объектом, будет возвращён объект, а не this.
+        2. При вызове return с примитивным значением, примитивное значение будет отброшено.</b><br>
+    </p>
+
+    <p>В примере ниже return возвращает объект вместо this:</p>
+    <br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            function BigUser() {<br>
+                this.name = 'Molly';<br>
+                <br>
+                return { name: 'Godzilla' };  -будет возвращать этот объект<br>
+            }<br>
+            <br>  
+            console.log( new BigUser().name );  -Godzilla, получили этот объект<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        'use strict';
+        function BigUser() {
+          this.name = 'Molly';
+        
+          return { name: 'Godzilla' };
+        }
+            
+        console.log( new BigUser().name ); //Godzilla
+    </script>
+
+    <p>А вот пример с пустым return (или мы могли бы поставить примитив после return, неважно)</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            function SmallUser() {<br>
+              this.name = 'Samuel';<br>
+              <br>
+              return; -будет возвращать this<br>
+            }<br>
+            <br> 
+            console.log( new SmallUser().name );  // Samuel<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        'use strict';
+        function SmallUser() {
+          this.name = 'Samuel';
+        
+          return;
+        }
+         
+        console.log( new SmallUser().name );  // Samuel
+    </script>
+
+    <p><b>Другими словами, return с объектом возвращает объект, в любом другом случае конструктор вернёт this.</b><br>
+        Обычно у конструкторов отсутствует return. В данном блоке мы упомянули особое поведение с возвращаемыми 
+        объектами, чтобы не оставлять пробелов в изучении языка.
+    </p>
+    <br>
+
+    <p>Кстати, мы можем не ставить скобки после new, если вызов конструктора идёт без аргументов.</p>
+    <br>
+
+    <p class="code-ex">Пропуск скобок считается плохой практикой, но синтаксис языка такое позволяет.<br>
+        <code>
+            let user = new User; -без скобок<br>
+            // то же, что и<br>
+            let user = new User();<br>
+        </code>
+    </p>
+    <br>
+
+    <h3>Создание методов в конструкторе</h3>
+
+    <p>Использование конструкторов для создания объектов даёт большую гибкость. Можно передавать конструктору параметры, 
+       определяющие, как создавать объект, и что в него записывать.<br>
+       В this мы можем добавлять не только свойства, но и методы.
+    </p>
+
+    <h4 class="task">При помощи конструктора new User(name) создайте объект с данным именем name и методом sayHi?</h4>
+
+    <p><b>Решение</b>:</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            function User(name) {<br>
+                this.name = name;<br>
+                <br>
+                this.sayHi = function() {<br>
+                  console.log( 'My name is: ' + this.name ); };<br>
+              }<br>
+              <br>
+              <b>let brian = new User('Brian');</b><br>
+              <br>
+              brian.sayHi(); // My name is: Brian<br>
+              <br>
+              // Это идентично как:<br>
+              /*<br>
+              brian = {<br>
+                 name: 'Brian',<br>
+                 sayHi: function() { ... }<br>
+              }<br>
+              */<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        'use strict';
+        function User(name) {
+          this.name = name;
+            
+          this.sayHi = function() {
+            console.log( 'My name is: ' + this.name ); 
+          };
+
+        }
+        
+        let brian = new User('Brian');
+    
+        brian.sayHi(); // My name is: Brian
+    </script>
+
+    <p>Для создания сложных объектов есть и более «продвинутый» синтаксис – классы, которые разберём далее.</p>
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
