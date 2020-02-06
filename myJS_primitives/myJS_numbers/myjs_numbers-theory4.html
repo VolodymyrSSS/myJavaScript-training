@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-primitives: числа</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myJS-primitives: числа: проверки isFinite, isNaN и Object.is; числовое значение из строк: parseInt и parseFloat</h2>
+
+    <p>Помните эти специальные числовые значения?<br>
+        1. Infinity (и -Infinity) — особенное численное значение, которое ведёт себя в точности как математическая бесконечность ∞.<br>
+        2. NaN представляет ошибку.
+    </p><br>
+
+    <p>Эти числовые значения принадлежат типу number, но они не являются «обычными» числами, поэтому есть 
+        функции для их проверки:
+    </p>
+
+    <h3>isNaN(value)</h3>
+
+    <p>isNaN(value) преобразует значение в число и проверяет является ли оно NaN:</p>
+    <br>
+
+    <p class="code-ex">
+        <code>
+            console.log( isNaN(NaN) ); // true<br>
+            console.log( isNaN('str') ); // true<br>
+            console.log( isNaN('46') ); // '46' -> преобразовало в 46 -> false<br>
+            console.log( isNaN(27.3) ); // false<br>
+            console.log( isNaN(-5) ); // false<br>
+            console.log( isNaN('') ); // false - пустая строка интерпретируется как 0 во всех числовых функциях<br>
+        </code>
+    </p><br>
+
+    <script>
+        console.log( isNaN(NaN) ); // true
+        console.log( isNaN("str") ); // true
+        console.log( isNaN("46") ); // false
+        console.log( isNaN(27.3) ); // false
+        console.log( isNaN(-5) ); // false
+        console.log( isNaN("") ); // false
+    </script>
+
+    <p>Нужна ли нам эта функция? Разве не можем ли мы просто сравнить === NaN? К сожалению, нет. 
+        Значение NaN уникально тем, что оно не является равным ни чему другому, даже самому себе:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            console.log( NaN === NaN ); // false<br>
+        </code>
+    </p><br>
+
+    <script>
+        console.log( NaN === NaN ); // false
+    </script>
+
+    <h3>isFinite(value)</h3>
+
+    <p>isFinite(value) преобразует аргумент в число и возвращает true, если оно является обычным 
+        числом, т.е. не NaN/Infinity/-Infinity:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            console.log( isFinite('15') ); // true<br>
+            console.log( isFinite(-0.67) ); // true<br>
+            console.log( isFinite(856) ); // true<br>
+            console.log( isFinite('str') ); // false, потому что специальное значение: NaN<br>
+            console.log( isFinite(Infinity) ); // false, потому что специальное значение: Infinity<br>
+            console.log( isFinite('') ); // true - пустая строка интерпретируется как 0 во всех числовых функциях<br>
+        </code>
+    </p><br>
+
+    <script>
+        console.log( isFinite("15") ); // true
+        console.log( isFinite(-0.67) ); // true
+        console.log( isFinite(856) ); // true
+        console.log( isFinite('str') ); // false, потому что специальное значение: NaN
+        console.log( isFinite(Infinity) ); // false, потому что специальное значение: Infinity
+        console.log( isFinite("") ); // true
+    </script>
+
+    <p>Иногда isFinite используется для проверки, содержится ли в строке число:</p><br>
+
+    <p class="code-ex">
+        <code>
+            let num = +prompt('Enter a number', '');<br>
+            <br>
+            // вернёт true всегда, кроме ситуаций, когда аргумент Infinity/-Infinity или не число<br>
+            alert( isFinite(num) );<br>
+        </code>
+    </p>
+
+    <h3>Object.is</h3>
+
+    <p>Существует специальный метод Object.is, который сравнивает значения примерно как ===, но более надёжен 
+        в двух особых ситуациях:<br>
+        1. Работает с NaN: Object.is(NaN, NaN) === true, здесь он хорош.<br>
+        2. Зачения 0 и -0 разные: Object.is(0, -0) === false, это редко используется, 
+        но технически эти значения разные.<br>
+        <br>
+        Во всех других случаях <b>Object.is(a, b) идентичен a === b</b>.<br>
+        Этот способ сравнения часто используется в спецификации JavaScript. Когда внутреннему алгоритму необходимо 
+        сравнить 2 значения на предмет точного совпадения, он использует Object.is.
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let k = 24;<br>
+            let z = 24;<br>
+            console.log( Object.is(k, z) );<br>
+            <br>
+            let s = -0.42;<br>
+            let r = -0.042;;<br>
+            console.log( Object.is(s, r) );<br>
+        </code>
+    </p><br>
+
+    <script>
+        let k = 24;
+        let z = 24;
+        console.log( Object.is(k, z) );  // true
+            
+        let s = -0.42;
+        let r = -0.042;;
+        console.log( Object.is(s, r) ); // false
+    </script>
+
+    <h3>Получить числовое значение из строк: parseInt и parseFloat</h3>
+
+    <p>Для явного преобразования к числу можно использовать + или Number(). Если строка не является 
+        в точности числом, то результат будет NaN:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            console.log(  +'100px' ); // NaN<br>
+            console.log( Number('95pt') ); // NaN -тоже самое<br>
+            console.log( +'125€'); // NaN -тоже самое<br>
+        </code>
+    </p><br>
+
+    <script>
+        console.log(  +"100px" ); // NaN
+        console.log( Number("95pt") ); // NaN
+        console.log( +"125€"); // NaN
+    </script>
+
+    <p>Единственное исключение — это пробелы в начале строки и в конце, они игнорируются.</p><br>
+
+    <p>В реальной жизни мы часто сталкиваемся со значениями у которых есть единица измерения, например "100px" 
+        или "12pt" в CSS. Также во множестве стран символ валюты записывается после номинала "19€". Так как нам 
+        получить числовое значение из таких строк?<br>
+        Для этого есть <b>parseInt и parseFloat</b>.
+    </p><br>
+
+    <p>Они «читают» число из строки. Если в процессе чтения возникает ошибка, они возвращают полученное до ошибки число. 
+        <b>Функция parseInt возвращает целое число, а parseFloat возвращает число с плавающей точкой</b>:
+    </p><br>
+
+    <p class="code-ex" style="width: 75%;">
+        <code>
+            console.log( parseInt('100px') ); // 100<br>
+            console.log( parseFloat('12.5em') ); // 12.5<br>
+            <br>
+            console.log( parseInt('12.3') ); // 12 -вернётся только целая часть<br>
+            console.log( parseFloat('12.3.4') ); // 12.3 -произойдёт остановка чтения на второй точке<br>
+        </code>
+    </p><br>
+    
+    <script>
+        console.log( parseInt('100px') ); // 100
+        console.log( parseFloat('12.5em') ); // 12.5
+        
+        console.log( parseInt('12.3') ); // 12
+        console.log( parseFloat('12.3.4') ); // 12.3
+    </script>
+
+    <p>Функции parseInt/parseFloat вернут NaN, если не смогли прочитать ни одну цифру:</p><br>
+
+    <p class="code-ex" style="width: 75%;">
+        <code>
+            console.log( parseInt('a123') ); // NaN -на первом символе происходит остановка чтения<br>
+        </code>
+    </p><br>
+    
+    <script>
+        console.log( parseInt('a123') ); // NaN
+    </script>
+
+    <h5>Второй аргумент parseInt(str, radix)</h5>
+
+    <p>Функция parseInt() имеет необязательный второй параметр. Он определяет систему счисления, таким образом 
+        parseInt может также читать строки с шестнадцатеричными числами, двоичными числами и т.д.:</p><br>
+
+    <p class="code-ex" style="width: 75%;">
+        <code>
+            console.log( parseInt('0xff', <b>16</b>) ); // 255<br>
+            console.log( parseInt('ff', <b>16</b>) ); // 255, без 0x тоже работает<br>
+            <br>
+            console.log( parseInt('2n9c', <b>36</b>) ); // 123456<br>
+        </code>
+    </p><br>
+    
+    <script>
+        console.log( parseInt("0xff", 16) ); // 255
+        console.log( parseInt("ff", 16) ); // 255, без 0x тоже работает
+        console.log( parseInt("2n9c", 36) ); // 123456 
+    </script>
+
+    <h3>Другие математические функции</h3>
+
+    <p>В JavaScript встроен объект Math, который содержит различные математические функции и константы.<br>
+        Несколько примеров:</p><br>
+
+    <h5>Math.random()</h5>
+
+    <p>Возвращает псевдослучайное число в диапазоне от 0 (включительно) до 1 (но не включая 1)</p><br>
+
+    <p class="code-ex">
+        <code>
+            console.log( Math.random() ); // 0.1234567894322<br>
+            console.log( Math.random() ); // 0.5435252343232<br>
+            console.log( Math.random() ); // ... -любое количество псевдослучайных чисел<br>
+        </code>
+    </p><br>
+    
+    <script>
+        console.log( Math.random() ); // 0.1234567894322
+        console.log( Math.random() ); // 0.0020524446775553873
+        console.log( Math.random() ); // ... и т.д.
+    </script>
+
+    <h5>Math.max(a, b, c...) / Math.min(a, b, c...)</h5>
+
+    <p>Возвращает наибольшее/наименьшее число из перечисленных аргументов.</p><br>
+
+    <p class="code-ex">
+        <code>
+            console.log( Math.max(3, 5, -10, 0, 1) ); // 5<br>
+            console.log( Math.min(1, 2) ); // 1<br>
+        </code>
+    </p><br>
+    
+    <script>
+        console.log( Math.max(3, 5, -10, 0, 1) ); // 5
+        console.log( Math.min(1, 2) ); // 1
+    </script>
+
+    <h5>Math.pow(n, power)</h5>
+
+    <p>Возвращает число n, возведённое в степень power</p><br>
+
+    <p class="code-ex">
+        <code>
+            console.log( Math.pow(2, 10) ); // 2 в степени 10 = 1024<br>
+        </code>
+    </p><br>
+    
+    <script>
+        console.log( Math.pow(2, 10) ); // 1024
+    </script>
+
+    <p>В объекте Math есть множество функций и констант, включая тригонометрические функции, подробнее можно 
+        ознакомиться в документации по объекту Math.</p>
+
+</body>
+
+</html>

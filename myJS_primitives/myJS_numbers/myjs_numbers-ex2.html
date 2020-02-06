@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-primitives: методы у примитивов</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myJS-primitives: exercises методы у примитивов</h2>
+
+    <h4 class="task">Создайте скрипт, который запрашивает ввод (через prompt) двух чисел 'a' и 'b', а после показывает их сумму.<br>
+        P.S. Есть «подводный камень» при работе с типами.</h4>
+
+    <p><b>Решение</b>:<br><br>Ввод будем осуществлять через prompt. Прибавление чисел осуществляем оператором +.<br>
+        Для преобразования строки в число используем унарный оператор + перед prompt, который преобразует значение в числовой формат.<br>
+        В противном случае, a и b будут строками, и после суммирования произойдёт конкатенация двух строк, 
+        а именно: '1' + '2' = '12'.</p><br>
+
+    <p class="code-ex">
+        <code>
+            let a = +prompt('Enter the first number', '');<br>
+            let b = +prompt('Enter the second number', '');<br>
+            <br>
+            alert( a + b );<br>
+        </code>
+    </p><br>
+
+    <script>
+        let a = +prompt("Enter the first number", "");
+        let b = +prompt("Enter the second number", "");
+
+        alert( a + b );
+    </script>
+
+</body>
+
+</html>

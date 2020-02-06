@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-primitives: числа</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myJS-primitives: numbers: exercise</h2>
+
+    <h4 class="task">Создайте функцию readNumber, которая будет запрашивать ввод числового значения до тех пор, пока 
+        посетитель его не введёт. Функция должна возвращать числовое значение. Также надо разрешить пользователю остановить 
+        процесс ввода, отправив пустую строку или нажав «Отмена». В этом случае функция должна вернуть null.
+    </h4>
+
+    <p><b>Решение</b>:<br><br>Решение немного сложнее, чем могло бы быть, потому что нам надо обрабатывать null и пустую строку.<br>
+        Для ввода числового значения, пока посетитель его не введёт, используем цикл whil, при этом возьмём его форму 'do while' 
+        так как мы хотим чтобы хотя бы хоть раз выполнился проход введённого значения и его проверка заданному условию.<br>
+        Ввод будем осуществлять через prompt. И null (отмена) и пустая строка также соответствуют данному условию, потому что при 
+        приведении к числу они равны 0.<br>
+        Кроме того, для проверки на введение  обычного числа (и его преобразование к числу) используем 
+        функцию isFinite(value) которая преобразует аргумент в число и возвращает true, если оно является обычным числом, т.е. 
+        не NaN/Infinity/-Infinity. А для удовлетворения условия в цикле, используем оператор НЕ (!). <br>
+        После того, как цикл завершится, нам нужно проверить введённое значение на null и пустую строку (вернуть null), потому что 
+        после преобразования null в число, функция вернёт 0. Это сделаем логическим оператором '||' и строгим равенством. </p><br>
+
+    <p class="code-ex">
+        <code>
+            function readNumber() {<br>
+                let num; // объявили внутреннюю переменную<br>
+                <br>
+                do {<br>
+                    num = prompt('Enter the number', '');<br>
+                } while(!isFinite(num));<br>
+                <br>
+                if (num === null || num === '') return null;<br>
+                else return +num; // преобразовываем в число<br>
+            }<br>
+            <br>
+            alert( `The number you've taken: ${readNumber()}` );<br>
+        </code>
+    </p><br>
+
+    <script>
+        function readNumber() {
+            let num; // объявили внутреннюю переменную
+
+            do {
+                num = prompt("Enter the number", "");
+            } while(!isFinite(num));
+
+            if (num === null || num === "") return null;
+            else return +num; // преобразовываем в число
+        }
+
+        alert( `The number you've taken: ${readNumber()}` );
+    </script>
+
+</body>
+
+</html>

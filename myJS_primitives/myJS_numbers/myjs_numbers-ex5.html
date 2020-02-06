@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-primitives: числа</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myJS-primitives: numbers: exercise</h2>
+
+    <h4 class="task">Методы Math.round и toFixed, согласно документации, округляют до ближайшего целого числа:<br> 
+        0..4 округляется в меньшую сторону, тогда как 5..9 в большую сторону: console.log( 1.35.toFixed(1) ); // 1.4<br>
+        Но почему 6.35.toFixed(1) == 6.3 а не 6.4? Каким образом можно исправить ошибку в округлении числа 6.35?
+    </h4>
+
+    <script>
+        console.log( 1.35.toFixed(1) ); // 1.4
+
+        console.log( 6.35.toFixed(1) ); // 6.3
+    </script><br>
+
+    <p><b>Ответ</b>:<br><br> Во внутреннем двоичном представлении 6.35 является бесконечной двоичной дробью и хранится она 
+        с потерей точности; а потеря точности может как увеличивать, так и уменьшать число. И если посмотреть на это двоичное 
+        представление: console.log( 6.35.toFixed(20) ); // 6.34999999999999964473 то число становится чуть меньше, поэтому 
+        оно округляется в меньшую сторону.<br>
+        А для числа 1.35 - во внутреннем двоичном представлении будет: console.log( 1.35.toFixed(20) ); // 1.35000000000000008882
+        и потеря точности приводит к увеличению числа, поэтому округление произойдёт в большую сторону.</p><br>
+
+        <p>Для исправления ошибки в округлении числа 6.35 мы должны приблизить его к целому числу, перед округлением и далее округлить 
+            умножив и разделив число на 10.</p><br>
+    
+        <p class="code-ex" style="width: 80%;">
+            <code>
+                console.log( (6.35 * 10).toFixed(20) ); // 63.50000000000000000000<br>
+            </code>
+        </p><br>
+    
+        <p>Для числа 63.5 не происходит потери точности. Дело в том, что десятичная часть 0.5 на самом деле 1/2. Дробные числа, 
+            делённые на степень 2, точно представлены в двоичной системе, теперь мы можем округлить число:</p><br>
+    
+        <p class="code-ex" style="width: 80%;">
+            <code>
+                console.log(  <b>Math.round(6.35 * 10) / 10 );</b> // 6.35 -> 63.5 -> 64(rounded) -> 6.4<br>
+            </code>
+        </p><br>
+    
+        <script>
+            console.log( Math.round(6.35 * 10) / 10 ); // 6.4
+        </script>
+
+</body>
+
+</html>

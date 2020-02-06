@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-primitives: числа</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myJS-primitives: numbers: exercise</h2>
+
+    <h4 class="task">Взгляните на код ниже. Этот цикл – бесконечный. Он никогда не завершится, почему?</h4>
+
+    <p class="code-ex">
+        <code>
+            let i = 0;<br>
+            while (i != 10) {<br>
+                i += 0.2;<br>
+            }<br>
+        </code>
+    </p>
+    <br>
+
+    <p><b>Ответ</b>: Потому что i никогда не станет равным 10.<br><br>
+         Для проверки удовлетворения условия, чтобы код остановился, 
+        необходимо проверить, будет ли хоть одно значение равно 10.<br>
+        Так как мы имеем шаг прибавления - десятичную дробь то для этого переделаем немного код и изменим значения диапазона на 
+        десятичные дроби и также изменим диапазон от 9.8 до 10.2. чтобы внутри было значение 10.
+    </p><br>
+
+    <p class="code-ex" style="width: 80%;">
+        <code>
+            let i = 0;<br>
+            while (i < 11) {<br>
+                i += 0.2;<br>
+                if (i > 9.8 && i < 10.2) console.log( i );// 9.999999999999996 и 10.199999999999996<br>
+            }<br>
+        </code>
+    </p><br>
+
+    <p>Ни одно из этих чисел не равно 10.<br>
+        Это происходит из-за потери точности, при прибавлении таких дробей как 0.2</p><br>
+
+    <script>
+        let i = 0;
+        while (i < 11) {
+            i += 0.2;
+            if (i > 9.8 && i < 10.2) console.log( i );
+        }
+    </script>
+
+    <p><b>Вывод:</b> избегайте проверок на равенство при работе с десятичными дробями!</p>
+
+</body>
+
+</html>

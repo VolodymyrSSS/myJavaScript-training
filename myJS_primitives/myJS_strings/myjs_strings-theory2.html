@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-primitives: strings</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myJS-primitives: строки: доступ к символам: [pos] и str.charAt(pos); изменение регистра: toLowerCase() и toUpperCase(); поиск подстроки: str.indexOf(substr, pos), 
+        побитовое НЕ~, includes, startsWith, endsWith
+    </h2>
+
+    <h3>Доступ к символам</h3>
+
+    <p>Получить символ, который занимает позицию pos, можно с помощью <b>квадратных скобок</b>: [pos]. 
+        Также можно использовать метод <b>charAt</b>: str.charAt(pos). Первый символ занимает нулевую позицию:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let str = `Hello`;<br>
+            <br>
+            // получаем первый символ<br>
+            console.log( <b>str[0]</b> ); // H<br>
+            console.log( <b>str.charAt(0)</b> ); // H<br>
+            <br>
+            // получаем последний символ<br>
+            console.log( <b>str[str.length - 1]</b> ); // o<br>
+        </code>
+    </p><br>
+
+    <script>
+        let str = `Hello`;
+
+        // получаем первый символ
+        console.log( str[0] ); // H
+        console.log( str.charAt(0) ); // H
+
+        // получаем последний символ
+        console.log( str[str.length - 1] ); // o
+    </script>
+
+    <p>Квадратные скобки — современный способ получить символ, в то время как charAt существует в основном по 
+        историческим причинам. Разница только в том, что если символ с такой позицией отсутствует, тогда [] 
+        вернёт undefined, а charAt — пустую строку::
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let str = `Hello`;<br>
+            <br>
+            console.log( <b>str[1000]</b> ); // undefined<br>
+            console.log( <b>str.charAt(1000)</b> ); // '' (пустая строка)<br>
+        </code>
+    </p><br>
+
+    <script>
+        let str2 = `Hello`;
+
+        console.log( str2[1000] ); // undefined
+        console.log( str2.charAt(1000) ); // '' (пустая строка)
+    </script>
+
+    <p>Также можно перебрать строку посимвольно, используя <b>for..of</b>:</p><br>
+
+    <p class="code-ex">
+        <code>
+            <b>for (let char of "Hello")</b> {<br>
+              console.log(char);  -H,e,l,l,o (char — сначала H, потом e, потом l и т. д.)<br>
+            }<br>
+        </code>
+    </p><br>
+
+    <script>
+        for (let char of "Hello") {
+          console.log(char); // H,e,l,l,o (char — сначала "H", потом "e", потом "l" и т. д.)
+        }
+    </script>
+
+    <p><b><em>Строки неизменяемы</em></b></p><br>
+
+    <p>Содержимое строки в JavaScript нельзя изменить. Нельзя взять символ посередине и заменить его. 
+        Как только строка создана — она такая навсегда.<br>
+        Давайте попробуем так сделать, и убедимся, что это не работает:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let str = 'Hi';<br>
+            <br>
+            str[0] = 'h'; // ошибка<br>
+            console.log( str[0] ); // не работает<br>
+        </code>
+    </p><br>
+
+    <script>
+        let str3 = 'Hi';
+        
+        str3[0] = 'h';
+        console.log( str3[0] ); // H - не работает
+    </script>
+
+    <p>Можно создать новую строку и записать её в ту же самую переменную вместо старой.</p><br>
+
+    <p class="code-ex">
+        <code>
+            let str = 'Hi';<br>
+            <br>
+            str = 'h' + str[1]; -заменяем строку<br>
+            console.log( str ); // hi<br>
+        </code>
+    </p><br>
+
+    <script>
+        let str4 = 'Hi';
+        str4 = 'h' + str4[1]; // заменяем строку
+        console.log( str4 ); // hi
+    </script>
+
+    </script>
+
+    <h3>Изменение регистра</h3>
+
+    <p>Методы <b>toLowerCase()</b> и <b>toUpperCase()</b> меняют регистр символов:</p><br>
+
+    <p class="code-ex">
+        <code>
+            console.log( 'Interface'.toUpperCase() ); // INTERFACE<br>
+            console.log( 'Interface'.toLowerCase() ); // interface<br>
+        </code>
+    </p><br>
+
+    <script>
+        console.log( 'Interface'.toUpperCase() ); // INTERFACE
+        console.log( 'Interface'.toLowerCase() ); // interface
+    </script>
+
+    <p>Если мы захотим перевести в нижний регистр какой-то конкретный символ:</p><br>
+    
+    <p class="code-ex">
+        <code>
+            console.log( 'Interface'[0].toLowerCase() ); // 'i'<br>
+        </code>
+    </p><br>
+
+    <script>
+        console.log( 'Interface'[0].toLowerCase() ); // 'i'
+    </script>
+
+    <h3>Поиск подстроки</h3>
+
+    <p>Существует несколько способов поиска подстроки.</p><br>
+
+    <p>Mетод <b>str.indexOf(substr, pos)</b> ищет подстроку substr в строке str, начиная с позиции pos, и возвращает 
+        позицию, на которой располагается совпадение, либо -1 при отсутствии совпадений.
+    </p><br>
+
+    <p class="code-ex" style="width: 65%;">
+        <code>
+            let str = 'Widget with id';<br>
+            <br>
+            console.log( str.indexOf('Widget') ); // 0, потому что подстрока 'Widget' найдена в начале<br>
+            console.log( str.indexOf('widget') ); // -1, совпадений нет, поиск чувствителен к регистру<br>
+            <br>
+            console.log( str.indexOf("id") ); // 1, подстрока "id" найдена на позиции 1 (..idget with id)<br>
+        </code>
+    </p><br>
+
+    <script>
+        let str5 = 'Widget with id';
+            
+        console.log( str5.indexOf("Widget") ); // 0 
+        console.log( str5.indexOf("widget") ); // -1
+            
+        console.log( str5.indexOf("id") ); // 1
+    </script>
+
+    <p>Необязательный второй аргумент позволяет начать поиск с определённой позиции.<br>
+        Например, первое вхождение "id" — на позиции 1. Для того, чтобы найти следующее, начнём поиск с позиции 2:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let str = 'Widget with id';<br>
+            <br>
+            console.log( str.indexOf('id', 2) ) // 12<br>
+        </code>
+    </p><br>
+
+    <script>
+        console.log( str5.indexOf('id', 2) ) // 12
+    </script>
+
+    <p>Чтобы найти все вхождения подстроки, нужно запустить indexOf в цикле. Каждый раз, получив очередную позицию, 
+        начинаем новый поиск со следующей. Вот наглядный пример:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let str = 'Ослик Иа-Иа посмотрел на виадук';<br>
+            <br>
+            let target = 'Иа'; -эта подстрока - цель поиска<br>
+            <br>
+            let pos = 0; -это начальная позиция поиска - откуда искать<br>
+            while (true) { -условие: искать до тех пор пока<br>
+                let foundPos = str.indexOf(target, pos); -есть цель <br>
+                if (foundPos == -1) break; -если нету больше, то прервать поиск<br>
+                <br>
+                console.log( `Найдено тут: ${foundPos}` ); -вывести найденную позицию<br>
+                pos = foundPos + 1; -продолжаем поиск со следующей найденной позиции<br>
+            }<br>
+        </code>
+    </p><br>
+
+    <script>
+        let str6 = 'Ослик Иа-Иа посмотрел на виадук';
+
+        let target = 'Иа';
+
+        let pos = 0;
+        while (true) {
+          let foundPos = str6.indexOf(target, pos);
+          if (foundPos == -1) break;
+
+          console.log( `Найдено тут: ${foundPos}` );
+          pos = foundPos + 1; // продолжаем со следующей позиции
+        }
+    </script>
+
+    <p>Тот же алгоритм можно записать и короче, идучи от обратного:</p><br>
+
+    <p class="code-ex">
+        <code>
+            let str = 'Ослик Иа-Иа посмотрел на виадук';<br>
+            let target = 'Иа';<br>
+            <br>
+            let pos = -1; -не найденная позиция<br>
+            while ((pos = str.indexOf(target, pos + 1)) != -1) {<br>
+              console.log( pos );<br>
+            }<br>
+        </code>
+    </p><br>
+
+    <p>Eсли используется цикл if, то при проверке indexOf в условии if есть небольшое неудобство. Такое условие не будет работать:</p><br>
+    
+    <p class="code-ex">
+        <code>
+            let str = 'Widget with id';<br>
+            <br>
+            if (str.indexOf('Widget')) {<br>
+                alert('Совпадение есть'); -здесь не работает<br>
+            }<br>
+        </code>
+    </p><br>
+
+    <p>Мы ищем подстроку 'Widget', и она здесь есть, прямо на позиции 0. Но alert не показывается, 
+        т. к. str.indexOf('Widget') возвращает 0, и if решает, что тест не пройден.<br>
+        Поэтому надо делать проверку на -1:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            <b>if (str.indexOf('Widget') != -1)</b> {<br>
+                console.log('Совпадение есть'); // теперь работает<br>
+            }<br>
+        </code>
+    </p><br>
+
+    <script>
+        let str7 = "Widget with id";
+
+        if (str7.indexOf("Widget") != -1) {
+          console.log("Совпадение есть"); // Совпадение есть
+        }
+    </script>
+
+    <p>Также есть похожий метод <b>str.lastIndexOf(substr, position)</b>, который ищет с конца строки к её началу.<br>
+        Он используется тогда, когда нужно получить самое последнее вхождение: перед концом строки или начинающееся 
+        до (включительно) определённой позиции.
+    </p><br>
+
+    <h3>Трюк с побитовым НЕ</h3>
+
+    <p>Существует старый трюк с использованием побитового оператора НЕ — ~. Он преобразует число в 32-разрядное целое 
+        со знаком (signed 32-bit integer). Дробная часть, в случае, если она присутствует, отбрасывается. Затем все биты 
+        числа инвертируются.<br>
+        На практике это означает простую вещь: для 32-разрядных целых чисел значение ~n равно -(n+1).<br>
+        В частности:</p><br>
+
+    <p class="code-ex">
+        <code>
+            console.log( ~2 ); // -3, то же, что -(2+1)<br>
+            console.log( ~1 ); // -2, то же, что -(1+1)<br>
+            console.log( ~0 ); // -1, то же, что -(0+1)<br>
+            console.log( ~-1 ); // 0, то же, что -(-1+1)<br>
+        </code>
+    </p><br>
+
+    <script>
+        console.log( ~2 ); // -3, то же, что -(2+1)<br>
+        console.log( ~1 ); // -2, то же, что -(1+1)<br>
+        console.log( ~0 ); // -1, то же, что -(0+1)<br>
+        console.log( ~-1 ); // 0, то же, что -(-1+1)
+    </script>
+
+    <p>Таким образом, ~n равняется 0 только при n == -1 (для любого n, входящего в 32-разрядные целые числа со знаком).<br>
+        Соответственно, прохождение проверки if ( ~str.indexOf('…') ) означает, что результат indexOf отличен от -1, совпадение есть.
+        Это иногда применяют, чтобы сделать проверку indexOf компактнее:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let str7 = 'Widget with id';<br>
+            <br>
+            if (~str.indexOf('Widget')) {<br>
+                console.log( 'Совпадение есть' ); // Совпадение есть - работает!<br>
+            }<br>
+        </code>
+    </p><br>
+
+    <script>
+        let str8 = "Widget with id";
+
+        if (~str8.indexOf("Widget")) {
+            console.log( "Совпадение есть" ); // работает
+        }
+    </script>
+
+    <p>Обычно использовать возможности языка каким-либо неочевидным образом не рекомендуется, но этот трюк широко используется 
+        в старом коде, поэтому его важно понимать.<br>
+        Просто запомните: <b>if (~str.indexOf(…)) означает «если найдено»</b>.
+        Впрочем, если быть точнее, из-за того, что большие числа обрезаются до 32 битов оператором ~, существуют другие числа, 
+        для которых результат тоже будет 0, самое маленькое из которых — ~4294967295=0. Поэтому такая проверка будет правильно 
+        работать только для строк меньшей длины.<br>
+        На данный момент такой трюк можно встретить только в старом коде, потому что в новом он просто не нужен: есть метод .includes
+    </p><br>
+
+    <h3>includes, startsWith, endsWith</h3>
+
+    <p>Более современный метод <b>str.includes(substr, pos)</b> возвращает true, если в строке str есть подстрока substr, 
+        либо false, если нет. Но это — правильный выбор, если нам необходимо проверить, есть ли совпадение, но позиция не нужна:
+    </p><br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            console.log( 'Widget with id'.includes('Widget') ); // true<br>
+            <br>
+            console.log( 'Hello'.includes('Bye') ); // false<br>
+        </code>
+    </p><br>
+
+    <script>
+        console.log( "Widget with id".includes("Widget") ); // true
+        console.log( "Hello".includes("Bye") ); // false
+    </script>
+
+    <p>Необязательный второй аргумент str.includes позволяет начать поиск с определённой позиции:</p><br>
+
+    <p class="code-ex" style="width: 70%;">
+        <code>
+            console.log( 'Midget'.includes('id') ); // true<br>
+            console.log( 'Midget'.includes('id', 3) ); // false, поиск начат с позиции 3<br>
+        </code>
+    </p><br>
+
+    <script>
+        console.log( "Midget".includes("id") ); // true
+        console.log( "Midget".includes("id", 3) ); // false, поиск начат с позиции 3
+    </script>
+
+    <p>Методы <b>str.startsWith</b> и <b>str.endsWith</b> проверяют, соответственно, начинается ли и заканчивается ли 
+        строка определённой строкой:
+    </p><br>
+
+    <p class="code-ex" style="width: 70%;">
+        <code>
+            console.log( 'Widget'.startsWith('Wid') ); // true, 'Wid' — начало 'Widget'<br>
+            console.log( 'Widget'.endsWith('get') ); // true, 'get' — окончание 'Widget'<br>
+        </code>
+    </p><br>
+
+    <script>
+        console.log( "Widget".startsWith("Wid") ); // true
+        console.log( "Widget".endsWith("get") ); // true
+    </script>
+
+</body>
+
+</html>
