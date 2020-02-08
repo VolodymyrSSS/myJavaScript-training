@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: свойство length</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: basic_exercises: свойство length</h2>
+
+    <h4 class="task">Есть массив 'arr' из 3х элементов. Какая длинна будет у массива 
+        после удаления элемента и почему?
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            let arr = ['I', 'go', 'home'];<br>
+            <br>
+            <b>delete arr[1];</b> -удалить 'go'<br>
+            console.log( arr.length ); // <b>?</b>
+        </code>
+    </p><br>
+
+
+    <p><b>Ответ</b>: 3 элемента<br><br>
+        Вроде бы, элемент и был удалён, но при проверке оказывается, что массив всё ещё имеет 
+        3 элемента. Это потому, что массивы - это подвид объектов и всё, что делает delete obj.key 
+        – это удаляет значение с данным ключом key. Это нормально для объектов, но у нас упорядоченный 
+        объект - массив, и удалив только один ключ остальные остаються на своих местах в
+        порядке как были созданы; место удалённой пары ключ-значение станет пустым, а остальные пары 
+        остаются со своими значениями. Само значение удалённого элемента - undefined.
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            console.log( <b>arr.length</b> ); // <b>3</b><br>
+            <br>
+            console.log( arr2 ); // ['I', <b>empty</b>, 'home'];<br>
+            <br>
+            console.log( <b>arr2[1]</b> ); // <b>undefined</b><br>
+        </code>
+    </p><br>
+
+    <script>
+        let arr2 = ["I", "go", "home"];
+        delete arr2[1];
+
+        console.log( arr2 ); // ['I', пусто, 'home'];
+
+        console.log( arr2.length ); // 3
+
+        console.log( arr2[1] ); // undefined
+    </script>
+
+    <h4 class="task">Показывает ли свойство массива length, количество элементов массива?</h4>
+
+    <p><b>Ответ</b>: Нет, если быть точными, это не количество элементов массива, а наибольший 
+        цифровой индекс плюс один.<br><br>       
+        Свойство length автоматически обновляется при изменении массива.<br>
+        Например, единственный элемент, имеющий большой индекс, даёт и большую длину:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let fruits = []; -пустой массив<br>
+            <b>fruits[123]</b> = 'Яблоко'; - добавили один элемент<br>
+            <br>
+            // Какая длинна?<br>
+            console.log( <b>fruits.length</b> ); // <b>124</b> -ого!<br>
+        </code>
+    </p><br>
+
+    <p>Но обычно мы не используем массивы таким образом.<br></p><br>
+
+    <script>
+        let fruits = [];
+        fruits[123] = "Яблоко";
+
+        console.log( fruits.length ); // 124
+    </script>
+
+    <h4 class="task">Можно ли перезаписать свойство массива length?</h4>
+
+    <p><b>Ответ</b>: Да, его можно перезаписать.<br><br>  
+        Если мы вручную увеличим его, ничего интересного не произойдёт. Зато, если мы уменьшим его, 
+        массив станет короче. Этот процесс необратим, вот пример:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let arr = [1, 2, 3, 4, 5];<br>
+            <br>
+            arr.length = 2; -укорачиваем до двух элементов<br>
+            console.log( arr ); // [1, 2]<br>
+            <br>
+            arr.length = 5; -возвращаем length как было<br>
+            console.log( arr[3] ); // undefined: значения не восстановились<br>
+        </code>
+    </p><br>
+
+    <script>
+        let arr = [1, 2, 3, 4, 5];
+        
+        arr.length = 2;
+        console.log( arr ); // [1, 2]
+        
+        arr.length = 5;
+        console.log( arr[3] ); // undefined
+    </script>
+
+    <p>Таким образом, самый простой <b>способ очистить массив – это arr.length = 0;</b></p>
+
+</body>
+
+</html>

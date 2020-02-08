@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_basic: многомерный массив</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: basic_exercises: многомерный массив</h2>
+
+    <h4 class="task">Создайте многомерный массив 'matrix' и выведите в консоль центральный её элемент?</h4>
+
+    <p><b>Решение</b>:<br><br> Массивы могут содержать элементы, которые тоже являются массивами. 
+        Это можно использовать для создания многомерных массивов, например, для хранения матриц. 
+        Вот создадим одну:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let matrix = [<br>
+              [1, 2, 3],<br>
+              [4, 5, 6],<br>
+              [7, 8, 9]<br>
+            ];<br>
+        </code>
+    </p><br>
+
+    <p>Далее, выведем центральный её элемент:</p><br>
+
+    <p class="code-ex">
+        <code>
+            console.log( matrix[1][1] ); // 5 - центральный элемент<br>
+        </code>
+    </p><br>
+
+    <script>
+        let matrix = [
+              [1, 2, 3],
+              [4, 5, 6],
+              [7, 8, 9]
+            ];
+        
+            console.log( matrix[1][1] ); // 5
+    </script>
+    
+</body>
+
+</html>

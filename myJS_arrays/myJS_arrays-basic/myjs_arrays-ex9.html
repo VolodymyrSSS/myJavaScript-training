@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_basic: oперации с массивами</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: basic_exercises: операции с массивом используя push/shift/unshift</h2>
+
+    <h4 class="task">Произведите 5 операций с массивом:<br>
+        1. Создайте массив styles с элементами «Джаз» и «Блюз».<br>
+        2. Добавьте «Рок-н-ролл» в конец.<br>
+        3. Замените значение в середине на «Классика». Ваш код для поиска значения в середине должен работать для массивов с любой длиной.<br>
+        4. Удалите первый элемент массива и покажите его.<br>
+        5. Вставьте «Рэп» и «Регги» в начало массива.
+    </h4>
+
+    <p class="code-ex">Массив по ходу выполнения операций:<br>
+        <code>
+            Джаз, Блюз<br>
+            Джаз, Блюз, Рок-н-ролл<br>
+            Джаз, Классика, Рок-н-ролл<br>
+            Классика, Рок-н-ролл<br>
+            Рэп, Регги, Классика, Рок-н-ролл<br>
+        </code>
+    </p><br>
+
+    <p><b>Решение</b>:</p><br>
+
+    <p class="code-ex">
+        <code>
+            let styles = <b>['Джаз', 'Блюз'];</b> -создали массив с 2я элементами<br>
+            <br>
+            <b>styles.push</b>('Рок-н-ролл'); -добавили в конец Рок-н-ролл<br>
+            <br>
+            <b>styles[Math.floor((styles.length - 1) / 2)]</b> = 'Классика'; -поменяли значение в середине с учётом изменения длинны<br>
+            <br>
+            console.log( <b>styles.shift()</b> ); - удалили первый элемент массива 'Джаз' и показали его<br>
+            <br>
+            <b>styles.unshift</b>('Рэп', 'Регги'); -вставили в начало 'Рэп' и 'Регги'<br>
+            <br>
+            // посмотрим на созданный массив<br>
+            console.log( styles ); // <em>['Рэп', 'Регги', 'Классика', 'Рок-н-ролл']</em><br>
+        </code>
+    </p><br>
+
+    <script>
+        let styles = ["Джаз", "Блюз"];
+        styles.push("Рок-н-ролл");
+        styles[Math.floor((styles.length - 1) / 2)] = "Классика";
+        console.log( styles.shift() ); // Джаз
+        styles.unshift("Рэп", "Регги");
+
+        // посмотрим на созданный массив:
+        console.log( styles ); // ["Рэп", "Регги", "Классика", "Рок-н-ролл"]
+    </script>
+
+</body>
+
+</html>

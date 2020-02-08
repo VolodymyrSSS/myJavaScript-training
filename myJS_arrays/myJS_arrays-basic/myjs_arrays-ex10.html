@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_basic: вызов функции в контексте массива</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: basic_exercises: вызов функции в контексте массива</h2>
+
+    <h4 class="task">Вызов функции в контексте массива. Каков будет результат кода ниже? Почему?</h4>
+
+    <p class="code-ex">
+        <code>
+            let arr = ['a', 'b'];<br>
+            <br>
+            arr.push(function() {<br>
+                console.log( this );<br>
+            })<br>
+            <br>
+            <b>arr[2](); // ?</b><br>
+        </code>
+    </p><br>
+
+    <p><b>Ответ</b>: вызывается функция которая выводит массив из 3х элементов.<br><br>
+        К массиву был добавлен 3й элемент методом push(). И далее, вызов arr[2]() синтаксически 
+        – старый добрый obj[method](), в роли obj – arr, а в роли method – 2.
+        Итак, у нас есть вызов функции arr[2] как метода объекта. Соответственно, он получает 
+        в качестве this объект arr и выводит массив:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            <b>arr[2](); // 'a','b',function</b><br>
+        </code>
+    </p><br>
+
+    <script>
+        let arr = ["a", "b"];
+        
+        arr.push(function() {
+            console.log( this ); // 
+        })
+        
+        arr[2]();
+    </script>
+
+    <p>У массива в итоге 3 элемента: сначала их было 2, плюс функция.</p>
+
+</body>
+
+</html>

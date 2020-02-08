@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: особенность создания массивов через new Array()</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: basic_exercises: особенность создания массивов через new Array()</h2>
+
+    <h4 class="task">Какая хитрая особенность есть у массива используя другой синтаксис для создания массивов: new Array()?
+    </h4>
+
+    <p><b>Ответ</b>:<br><br> 
+        Как известно, существует ещё один вариант синтаксиса для создания массива: <b>new Array()</b>.</br> 
+        Он редко применяется, так как квадратные скобки [] короче но у него есть хитрая особенность.
+        Если new Array вызывается с одним аргументом, который представляет собой число, он создаёт 
+        массив без элементов, но с заданной длиной.<br>
+        Давайте посмотрим, как можно оказать себе медвежью услугу:
+    </p><br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            let arr = new Array(2); -создастся ли массив [2]?<br>
+            <br>
+            console.log( arr[0] ); // undefined! -нет элементов, но почему?<br>
+            <br>
+            console.log( arr.length ); // length 2 - а длинна есть, вот шняга!<br>
+        </code>
+    </p><br>
+
+    <script>
+        let arr = new Array(2);
+        
+        console.log( arr[0] ); // undefined
+        
+        console.log( arr.length ); // 2
+    </script>
+
+    <p>Как мы видим, в коде, представленном выше, в new Array(number) все элементы равны undefined.
+       Чтобы избежать появления таких неожиданных ситуаций, мы обычно используем квадратные скобки, если, конечно, не знаем 
+       точно, что по какой-то причине нужен именно new Array().
+    </p><br>
+
+
+</body>
+
+</html>

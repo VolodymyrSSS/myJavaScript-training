@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_basic: cумма введённых чисел</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: basic_exercises: cумма введённых чисел</h2>
+
+    <h4 class="task">Напишите функцию sumInput(), которая:<br>
+        1. Просит пользователя ввести значения, используя prompt и сохраняет их в массив.<br>
+        2. Заканчивает запрашивать значения, когда пользователь введёт не числовое значение, пустую строку или нажмёт «Отмена».<br>
+        3. Выводить каждый раз в консоль массив после введённого числа.<br>
+        4. Подсчитывает и возвращает сумму элементов массива на экран<br>
+        P.S. Ноль 0 – считается числом, не останавливайте ввод значений при вводе «0».
+    </h4>
+
+    <p><b>Решение</b>:<br><br>
+        Внутри функции создаём пустой массив который будет заполнятся введёнными элементами.
+        Ввод значений элементов в массив осуществляем методом push() Запрос значений через цикл
+        while по запросу prompt и сразу вывод полученного массива в консоль.
+        Внутри цикла так же осуществляем проверку на введение нечисла.
+        Обратите внимание на малозаметную, но важную деталь решения. Мы не преобразуем value в число 
+        сразу после prompt, потому что после value = +value мы не сможем отличить пустую строку (конец 
+        записи) от «0» (разрешённое число). Мы сделаем это позже - когда добавляем в массив.<br>
+        Внутри функции так же создаём начальное значение суммы для подсчёта введённых значений.
+
+    </p><br>
+
+    <p class="code-ex" style="width: 65%;">
+        <code>
+            function sumInput(){<br>
+                let numbers = []; -создаём пустой массив<br>
+                <br>
+                while (true) {<br>
+                    let value = prompt('Enter the number', 0);<br>
+                    <br>
+                    // Проверка на ввод нечисла<br>
+                    if (value === '' || value === null || !isFinite(value)) break;<br>
+                    <br>
+                    // тут одновременное добавление в массив и конверсия в число<br>
+                    numbers.push(+value);<br>
+                    <br>
+                    console.log(numbers); -выводить каждый раз массив после введения числа<br>
+                }<br>
+                <br>
+                let sum = 0; -начальное значение для подсчёта суммы<br>
+                for (let number of numbers) { -тут цикл for..of для прохода по значениям<br>
+                    sum += number;  -тут прибавляем<br>
+                }<br>
+                return sum; -возвращаем подсчитаную сумму<br>
+            }<br>
+            <br>
+            alert( sumInput() ); - выводим на экран<br>
+        </code>
+    </p><br>
+
+    <script>
+        'use strict';
+
+        function sumInput(){
+            let numbers = [];
+
+            while (true) {
+                let value = prompt("Enter the number", 0);
+
+                // Проверка на ввод нечисла
+                if (value === "" || value === null || !isFinite(value)) break;
+
+                numbers.push(+value);
+
+                // выводить каждый раз массив после введения числа
+                console.log(numbers);
+            }
+        
+            let sum = 0;
+            
+            for (let number of numbers) {
+                sum += number;
+            }
+
+            return sum;
+        }
+        
+        alert( sumInput() );
+    </script>
+
+</body>
+
+</html>

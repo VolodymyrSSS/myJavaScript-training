@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_basic: pop/push, shift/unshift</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: basic_exercises: методы pop/push, shift/unshift</h2>
+
+    <h4 class="task">Мы имеем массив элементов 'fruits'. Покажите на примерах использование методов 
+        для массивов pop/push, shift/unshift и объясните их предназначение?
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            let fruits = ['Яблоко', 'Апельсин', 'Груша']; - наш массив<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let fruits = ["Яблоко", "Апельсин", "Груша"];
+    </script>
+
+    <p><b>Решение</b>:<br><br>
+        Очередь – один из самых распространённых вариантов применения массива. В области компьютерных наук так называется 
+        упорядоченная коллекция элементов, поддерживающая два вида операций:<br>
+        push добавляет элемент в конец; shift удаляет элемент в начале, сдвигая очередь, так что второй элемент становится первым.<br>
+        Массивы поддерживают обе операции.
+    </p><br>
+
+    <img src="../img/shift_push.svg" alt="shift_push" style="margin-left: 150px;">
+    <br>
+    <br>
+
+    <p>Существует и другой вариант применения для массивов – структура данных, называемая стек.
+        Она поддерживает два вида операций:<br>
+        push добавляет элемент в конец; pop удаляет последний элемент из конца.<br>
+        Таким образом, новые элементы всегда добавляются или удаляются из «конца».
+    </p><br>
+
+    <img src="../img/push_pop.svg" alt="push_pop" style="margin-left: 150px;">
+    <br>
+    <br>
+
+    <p>Массивы в JavaScript могут работать и как очередь, и как стек. Мы можем добавлять/удалять 
+        элементы как в начало, так и в конец массива. В компьютерных науках структура данных, делающая 
+        это возможным, называется двусторонняя очередь.
+    </p><br>
+
+    <p><b>pop</b> - удаляет последний элемент из массива и возвращает его. Этот метод, работает с концом массива</p><br>
+
+    <p class="code-ex">
+        <code>
+            console.log( <b>fruits.pop()</b> ); // удаляем 'Груша' и выводим его<br>
+            console.log( fruits ); // Апельсин<br>
+        </code>
+    </p><br>
+
+    <script>
+        console.log( fruits.pop() ); // 'Груша'
+        console.log( fruits ); // ['Яблоко', 'Апельсин']
+    </script>
+
+    <p><b>push</b> - добавляет элемент в конец массива. Этот метод, также работает с концом массива</p><br>
+
+    <p class="code-ex">
+        <code>
+            let fruits = ['Яблоко', 'Апельсин'];<br>
+            <br>
+            <b>fruits.push('Груша');</b><br>
+            <br>
+            console.log( fruits ); // ['Яблоко', 'Апельсин', 'Груша']<br>
+        </code>
+    </p><br>
+
+    <script>
+        fruits.push("Груша");
+        
+        console.log( fruits ); // ['Яблоко', 'Апельсин', 'Груша']
+    </script>
+
+    <p><em>Вызов fruits.push(...) равнозначен fruits[fruits.length] = ....</em></p><br>
+
+    <p><b>shift</b> - удаляет из массива первый элемент и возвращает его. Этот метод, работает с началом массива</p><br>
+
+    <p class="code-ex">
+        <code>
+            console.log( <b>fruits.shift()</b> ); // удаляем Яблоко и выводим его<br>
+            console.log( fruits ); // ['Апельсин', 'Груша']<br>
+        </code>
+    </p><br>
+
+    <script>
+        console.log( fruits.shift() ); // Яблоко
+        console.log( fruits ); // ['Апельсин', 'Груша']
+    </script>
+
+<p><b>unshift</b> - добавляет элемент в начало массива. Этот метод, так же работает с началом массива.</p><br>
+
+<p class="code-ex">
+    <code>
+        let fruits = ['Апельсин', 'Груша'];<br>
+        <br>
+        <b>fruits.unshift('Яблоко');</b><br>
+        <br>
+        console.log( fruits ); // Яблоко, Апельсин, Груша<br>
+    </code>
+</p><br>
+
+<script>
+    fruits.unshift("Яблоко");
+    console.log( fruits ); // ['Яблоко', 'Апельсин', 'Груша']
+</script>
+
+<p>Методы push и unshift могут добавлять сразу несколько элементов:</p><br>
+
+<p class="code-ex">
+    <code>
+        let vegetables = ['Помидоры'];<br>
+        <br>
+        vegetables.push('Огурцы', 'Лук');<br>
+        vegetables.unshift('Капуста', 'Свекла');<br>
+        <br>
+        console.log( vegetables );<br>
+        // ['Капуста', 'Свекла', 'Помидоры', 'Огурцы', 'Лук']<br>
+    </code>
+</p><br>
+
+<script>
+    let vegetables = ["Помидоры"];
+
+    vegetables.push("Огурцы", "Лук");
+    vegetables.unshift("Капуста", "Свекла");
+
+    console.log( vegetables ); // ['Капуста', 'Свекла', 'Помидоры', 'Огурцы', 'Лук']
+</script>
+
+<h4 class="task">Какие методы являются более эффективными а какие нет?.</h4>
+
+<p><b>Ответ</b>:<br><br>
+    Методы push/pop выполняются быстро, а методы shift/unshift – медленно.<br>
+    Операция shift должна выполнить 3 действия: Удалить элемент с индексом 0; Сдвинуть все элементы 
+    влево, заново пронумеровать их, заменив 1 на 0, 2 на 1 и т.д; Обновить свойство length.<br>
+    Чем больше элементов содержит массив, тем больше времени потребуется для того, чтобы их переместить, 
+    больше операций с памятью. То же самое происходит с unshift: чтобы добавить элемент в начало массива, 
+    нам нужно сначала сдвинуть существующие элементы вправо, увеличивая их индексы.<br>
+    <br>
+    А что же с push/pop? Им не нужно ничего перемещать. Чтобы удалить элемент в конце массива, метод pop 
+    очищает индекс и уменьшает значение length. Метод pop не требует перемещения, потому что остальные элементы 
+    остаются с теми же индексами. Именно поэтому он выполняется очень быстро. Аналогично работает метод push.<br>
+</p><br>
+
+
+</body>
+
+</html>

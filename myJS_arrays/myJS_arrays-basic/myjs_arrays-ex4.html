@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_basic: перебор элементов for/for..of</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: basic_exercises: перебор элементов массива циклами for/for..of</h2>
+
+    <h4 class="task">Мы имеем массив элементов 'fruits'. Осуществите перебор элементов этого массива? 
+        На массиве 'tropicalFruits' покажите другой способ перебора элементов? Есть ли ещё методы перебора?
+    </h4>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            let fruits = ['Яблоко', 'Груша', 'Слива', 'Черешня', 'Абрикос', 'Персик'];<br>
+            let tropicalFruits = ['Ананас', 'Гуава', 'Личи', 'Папая', 'Манго', 'Авокадо'];<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let fruits = ["Яблоко", "Груша", "Слива", "Черешня", "Абрикос", "Персик"];
+        let tropicalFruits = ["Ананас", "Гуава", "Личи", "Папая", "Манго", "Авокадо"];
+    </script>
+
+    <p><b>Решение</b>:<br><br>
+        Одним из самых старых способов перебора элементов массива является цикл <b>for</b> по цифровым индексам:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let fruits = ['Яблоко', 'Груша', 'Слива', 'Черешня', 'Абрикос', 'Персик'];<br>
+            <br>
+            <b>for (let i = 0; i < arr.length; i++)</b> {<br>
+                console.log( arr[i] );<br>
+            }<br>
+        </code>
+    </p><br>
+
+    <script>
+        for (let i = 0; i < fruits.length; i++) {
+            console.log( fruits[i] );
+        }
+    </script>
+
+    <p>Но для массивов возможен и другой вариант цикла, <b>for..of</b> по значениям:</p><br>
+
+    <p class="code-ex">
+        <code>
+            let tropicalFruits = ['Ананас', 'Гуава', 'Личи', 'Папая', 'Манго', 'Авокадо'];<br><br>
+            <br>
+            // проходит по значениям<br>
+            <b>for (let fruit of tropicalFruits)</b> {<br>
+                console.log( fruit );<br>
+            }<br>
+        </code>
+    </p><br>
+
+    <script>        
+        for (let fruit of tropicalFruits) {
+            console.log( fruit );
+        }
+    </script>
+
+    <p>Цикл for..of не предоставляет доступа к номеру текущего элемента, только к его значению, но в большинстве 
+        случаев этого достаточно. А также это короче.
+    </p><br>
+
+    <p>Технически, так как массив является объектом, можно использовать и вариант <b>for..in</b>:</p><br>
+
+    <p class="code-ex">
+        <code>
+            let berries = ['Арбуз', 'Виноград', 'Клубника', 'Агрус'];<br>
+            <br>
+            <b>for (let key in berries)</b> {<br>
+                console.log( berries[key] ); // ['Арбуз', 'Виноград', 'Клубника', 'Агрус']<br>
+            }<br>
+        </code>
+    </p><br>
+
+    <script>
+        let berries = ["Арбуз", "Виноград", "Клубника", "Агрус"];
+
+        for (let key in berries) {
+            console.log( berries[key] ); // ['Арбуз', 'Виноград', 'Клубника', 'Агрус']
+        }
+    </script>
+
+    <p>Но на самом деле это – плохая идея. Существуют скрытые недостатки этого способа:<br>
+        <br>
+        1. Цикл for..in выполняет перебор всех свойств объекта, а не только цифровых.<br>
+        В браузере и других программных средах также существуют так называемые «псевдомассивы» – объекты, которые выглядят, как массив. 
+        То есть, у них есть свойство length и индексы, но они также могут иметь дополнительные нечисловые свойства и методы, которые нам 
+        обычно не нужны. Тем не менее, цикл for..in выведет и их. Поэтому, если нам приходится иметь дело с объектами, похожими на массив, 
+        такие «лишние» свойства могут стать проблемой.<br>
+        
+        2. Цикл for..in оптимизирован под произвольные объекты, не массивы, и поэтому в 10-100 раз медленнее. Увеличение скорости 
+        выполнения может иметь значение только при возникновении узких мест. Но мы всё же должны представлять разницу.
+    </p><br>
+
+    <p><b><em>В общем, не следует использовать цикл for..in для массивов.</em></b></p>
+
+</body>
+
+</html>

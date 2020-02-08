@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_basic</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: basic_exercises</h2>
+
+    <h4 class="task">Мы имеем массив элементов 'fruits'. Выведите в консоль каждый элемент этого массива?</h4>
+
+    <p class="code-ex">
+        <code>
+            let fruits = ['Яблоко', 'Апельсин', 'Слива'];<br>
+        </code>
+    </p>
+    <br>
+
+    <p><b>Решение</b>:<br><br>Для хранения упорядоченных коллекций существует особая структура данных, 
+        которая называется массив, <b>Array</b>.<br>
+        Мы можем получить элемент, указав его номер (индекс) в квадратных скобках. Элементы массива 
+        нумеруются, начиная с нуля.
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            console.log( <b>fruits[0]</b> ); // Яблоко<br>
+            console.log( <b>fruits[1]</b> ); // Апельсин<br>
+            console.log( <b>fruits[2]</b> ); // Слива<br>
+        </code>
+    </p><br>
+
+    <script>
+        let fruits = ["Яблоко", "Апельсин", "Слива"];
+
+        console.log( fruits[0] ); // Яблоко
+        console.log( fruits[1] ); // Апельсин
+        console.log( fruits[2] ); // Слива
+    </script>
+
+    <h4 class="task">Замените значение элемента 'Слива' на 'Груша'. Выведите в консоль этот 
+        элемент? Потом добавте новый элемент 'Лимон' и выведите в консоль весь массив?
+    </h4>
+
+    <p><b>Решение</b>:<br><br>Для замены: присваиваем нужному элементу новое значение, а для добавления 
+        нового - в квадратных скобках указываем следующий индекс.
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            <b>fruits[2] = 'Груша';</b> - перезаписываем значение элемента<br>
+            console.log( fruits[2] ); // Груша<br>
+            <br>
+            fruits<b>[3]</b> = 'Лимон';<br>
+            console.log( fruits ); // <em>['Яблоко','Апельсин',<b>'Груша', 'Лимон'</b>]</em><br>
+        </code>
+    </p><br>
+
+    <script>
+        fruits[2] = "Груша";
+        console.log( fruits[2] ); // Груша
+
+        fruits[3] = "Лимон";
+        console.log( fruits ); // ['Яблоко', 'Апельсин', 'Груша', 'Лимон']
+    </script>
+
+    <h4 class="task">Выведите в консоль Общее число элементов массива?</h4>
+
+    <p><b>Решение</b>:<br><br>Общее число элементов массива содержится в его свойстве length:</p><br>
+
+    <p class="code-ex">
+        <code>
+            console.log( <b>fruits.length</b> ); // 4<br>
+        </code>
+    </p><br>
+
+    <script>
+        console.log( fruits.length ); // 4
+    </script>
+
+    <h4 class="task">У нас есть массив 'arr' с разными типами значений?<br>
+        1. получить элемент с индексом 2 (объект) и затем показать его свойство 'surname', результат 
+        выведите в консоль?;<br>
+        2. получить элемент с индексом 5 (функция) и выполнить её?<br>
+    </h4>
+
+    <p class="code-ex" style="width: 90%;">
+        <code>
+            let arr = [ 'Папая', 'Гуава', { name: 'Джон', surname: 'Медисон', age: 50 }, true, 
+            false, function() { console.log('Здравствуйте!'); } ];<br>
+        </code>
+    </p><br>
+
+    <script>
+        let arr = [ 'Папая', 'Гуава', {name: 'Джон', surname: 'Медисон', age: 50}, true, false, function() { console.log("Здравствуйте!");} ];
+    </script>
+
+    <p><b>Решение</b>:<br><br>
+        В массиве могут храниться элементы любого типа. Для доступа к значениям элементов разных типов, 
+        используем обращение к названию массива где в квадратных скобках указываем индекс элемента и 
+        далее, через точку - его свойство либо вызываем функцию по правилам её вызова.
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+        // получить элемент с индексом 2 (объект) и затем показать его свойство 'surname'?;<br>
+            console.log( <b>arr[2].surname</b> ); // Медисон<br>
+            <br>
+        // получить элемент с индексом 5 (функция) и выполнить её<br>
+            <b>arr[5]();</b> // Здравствуйте!<br>
+        </code>
+    </p><br>
+
+    <script>
+        console.log( arr[2].surname ); // Медисон
+
+        arr[5](); // Здравствуйте!
+    </script>
+
+<h4 class="task">Создайте массив 'vegetables' чтоб каждый элемент занимал свою строку. Список 
+    свойств массива должен заканчиватся запятой. Для чего запятая?</h4>
+
+<p><b>Ответ</b>:<br><br>Список элементов массива, как и список свойств объекта, может оканчиваться запятой.
+    «Висячая запятая» упрощает процесс добавления/удаления элементов, так как все строки становятся идентичными.
+</p><br>
+
+<p class="code-ex">
+    <code>
+        let vegetables = [<br>
+          'Капуста',<br>
+          'Морковка',<br>
+          'Свекла'<b>,</b> -здесь «Висячая запятая»<br>
+        ];<br>
+    </code>
+</p><br>
+
+<script>
+    let vegetables = [
+      "Капуста",
+      "Морковка",
+      "Свекла",
+    ];
+
+    console.log( vegetables ); // ['Капуста', 'Морковка', 'Свекла']
+</script>
+
+</body>
+
+</html>

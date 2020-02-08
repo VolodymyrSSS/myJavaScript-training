@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: реализация массивами метода toString</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: basic_exercises: реализация массивами метода toString</h2>
+
+    <h4 class="task">Как реализуют массивы метод toString?</h4>
+
+    <p><b>Ответ</b>: преобразуют в строку где элементы разделены запятыми (без пробелов)<br><br>
+        Массивы по-своему реализуют метод toString, который возвращает список элементов, 
+        разделённых запятыми. Например:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let arr = [1, 2, 3];<br>
+            <br>
+            console.log( arr ); // 1,2,3<br>
+            console.log( <b>String(arr) === '1,2,3'</b> ); // true<br>
+        </code>
+    </p><br>
+
+    <script>
+        let arr = [1, 2, 3];
+        
+        console.log( arr ); // 1,2,3
+        console.log( String(arr) === '1,2,3' ); // true
+    </script>
+
+    <p>А теперь, если попробовать такое:</p><br>
+
+    <p class="code-ex">
+        <code>
+            console.log( [] + 1 ); // '1'<br>
+            console.log( [1] + 1 ); // '11'<br>
+            console.log( [1,2] + 1 ); // '1,21'<br>
+        </code>
+    </p><br>
+
+    <script>
+        console.log( [] + 1 ); // 1
+        console.log( [1] + 1 ); // 11
+        console.log( [1,2] + 1 ); // 1,21
+    </script>
+    
+    <p>Массивы реализуют только преобразование toString;<br> 
+        здесь [] становится пустой строкой - ''<br> 
+        [1] становится '1', а [1,2] становится '1,2'.<br>
+        <br>
+        Когда бинарный оператор плюс '+' добавляет что-либо к строке, он тоже преобразует это в строку, таким образом:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            console.log( '' + 1 ); // '1'<br>
+            console.log( '1' + 1 ); // '11'<br>
+            console.log( '1,2' + 1 ); // '1,21'<br>
+        </code>
+    </p><br>
+
+    <script>
+        console.log( "" + 1 ); // 1
+        console.log( "1" + 1 ); // 11
+        console.log( "1,2" + 1 ); // 1,21
+    </script>
+
+
+</body>
+
+</html>
