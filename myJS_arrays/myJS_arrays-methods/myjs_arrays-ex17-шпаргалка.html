@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_methods: шпаргалка по методам массива</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 30%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: arrays_methods: шпаргалка по методам массива</h2>
+
+    <h4 class="task">шпаргалка по методам массива</h4>
+
+    <p>
+        <b>Для добавления/удаления элементов:</b><br>
+        <br>
+        push (...items) – добавляет элементы в конец,<br>
+        pop() – извлекает элемент с конца,<br>
+        shift() – извлекает элемент с начала,<br>
+        unshift(...items) – добавляет элементы в начало.<br>
+        splice(pos, deleteCount, ...items) – начиная с индекса pos, удаляет deleteCount элементов 
+        и вставляет items.<br>
+        slice(start, end) – создаёт новый массив, копируя в него элементы с позиции start до 
+        end (не включая end).<br>
+        concat(...items) – возвращает новый массив: копирует все члены текущего массива и добавляет к 
+        нему items. Если какой-то из items является массивом, тогда берутся его элементы.<br>
+        <br>
+        <br>
+        <b>Для поиска среди элементов:</b><br>
+        <br>
+        indexOf/lastIndexOf(item, pos) – ищет item, начиная с позиции pos, и возвращает его индекс 
+        или -1, если ничего не найдено.<br>
+        includes(value) – возвращает true, если в массиве имеется элемент value, в противном случае 
+        false.<br>
+        find/filter(func) – фильтрует элементы через функцию и отдаёт первое/все значения, при 
+        прохождении которых через функцию возвращается true.<br>
+        findIndex похож на find, но возвращает индекс вместо значения.<br>
+        <br>
+        <br>
+        <b>Для перебора элементов:</b><br>
+        <br>
+        forEach(func) – вызывает func для каждого элемента. Ничего не возвращает.<br>
+        <br>
+        <br>
+        <b>Для преобразования массива:</b><br>
+        <br>
+        map(func) – создаёт новый массив из результатов вызова func для каждого элемента.<br>
+        sort(func) – сортирует массив «на месте», а потом возвращает его.<br>
+        reverse() – «на месте» меняет порядок следования элементов на противоположный и возвращает 
+        изменённый массив.<br>
+        split/join – преобразует строку в массив и обратно.<br>
+        reduce(func, initial) – вычисляет одно значение на основе всего массива, вызывая func для 
+        каждого элемента и передавая промежуточный результат между вызовами.<br>
+        <br>
+        <br>
+        <b>Дополнительно:</b><br>
+        <br>
+
+        Array.isArray(arr) проверяет, является ли arr массивом.<br>
+        <br>
+        Обратите внимание, что методы sort, reverse и splice изменяют исходный массив.<br>
+        <br>
+        Изученных нами методов достаточно в 99% случаев, но существуют и другие.<br>
+        <br>
+        arr.some(fn)/arr.every(fn) проверяет массив. Функция fn вызывается для каждого элемента 
+        массива аналогично map. Если какие-либо/все результаты вызовов являются true, то метод 
+        возвращает true, иначе false.<br>
+        arr.fill(value, start, end) – заполняет массив повторяющимися value, начиная с индекса start 
+        до end.<br>
+        arr.copyWithin(target, start, end) – копирует свои элементы, начиная со start и заканчивая end, 
+        в собственную позицию target (перезаписывает существующие).<br>
+    </p><br>
+
+</body>
+
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_methods: Фильтрация по диапазону 'на месте'</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: arrays_methods: exercises_Фильтрация по диапазону 'на месте'</h2>
+
+    <h4 class="task">Напишите функцию filterRangeInPlace(arr, a, b), которая принимает массив arr 
+        и удаляет из него все значения кроме тех, которые находятся между a и b. То есть, проверка 
+        имеет вид a ≤ arr[i] ≤ b.<br>
+        Функция должна изменять принимаемый массив и ничего не возвращать. Например:<br>
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            let arr = [5, 3, 8, 1, 18, 2, 11];<br>
+            <br>
+            filterRangeInPlace(arr, 1, 4); // удалены числа вне диапазона 1..4<br>
+            <br>
+            console.log( arr ); // [3, 1, 2]<br>
+        </code>
+    </p><br>
+
+    <p><b>Ответ</b>:<br><br>
+        Для решения задачи должно выполняться условие для елемента массива [i]: если a ≤ arr[i] или 
+        arr[i] ≤ b то элемент подходит. Это можно задать оператором ИЛИ (||). Кроме того, надо 
+        удалить элемент [i] который не подошол, а это можно осуществить методом arr.splice() где 
+        аргументами надо задать элемент [i] который не подошол и число сколько элементов удалить - 
+        в нашем случае 1 элемент.
+    </p>
+
+    <p class="code-ex">
+        <code>
+            let val = arr[i] -здесь элемент массива [i] присвоили в переменную<br>
+            if (val < a || val > b) { -здесь сравниваем переменную с нижней и верхней границей<br>
+              arr.splice(i, 1); -здесь удаляем элемент который не подошол числом 1<br>
+              i--; -здесь двигаемся по  массиву вниз<br>
+            }<br>
+        </code>
+    </p><br>
+        
+    <p>Для прохода по элементам массива используем цикл for:</p><br>
+
+    <p class="code-ex">
+        <code>
+            for (let i = 0; i < arr.length; i++) {
+            }<br>
+        </code>
+    </p><br>
+
+    <p>Теперь объеденим всё в единый код:</p><br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            function filterRangeInPlace(arr, a, b) {<br>
+                <br>
+                for (let i = 0; i < arr.length; i++) {<br></arr.length>
+                  let val = arr[i];
+                <br>
+                // удалить, если за пределами интервала<br>
+                if (val < a || val > b) {<br>
+                    arr.splice(i, 1);<br>
+                    i--;}<br>
+                }<br>
+              <br>
+            }<br>
+            <br>
+            let arr = [5, 3, 8, 1, 18, 2, 11];<br>
+            <br>
+            filterRangeInPlace(arr, 1, 4); // удалены числа вне диапазона 1..4<br>
+            <br>
+            console.log( arr ); // [3, 1, 2]  <br> 
+        </code>
+    </p><br>
+
+    <script>
+
+        function filterRangeInPlace(arr, a, b) {
+
+            for (let i = 0; i < arr.length; i++) {
+            let val = arr[i];
+
+            // удалить, если за пределами интервала
+                if (val < a || val > b) {
+                    arr.splice(i, 1);
+                    i--;
+                }
+            }
+        }
+
+        let arr = [5, 3, 8, 1, 18, 2, 11];
+
+        filterRangeInPlace(arr, 1, 4); // удалены числа вне диапазона 1..4
+
+        console.log( arr ); // [3, 1, 2]
+        
+    </script>
+
+</body>
+
+</html>

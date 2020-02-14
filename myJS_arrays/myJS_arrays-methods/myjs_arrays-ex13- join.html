@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_methods:  join</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: arrays_methods:  join</h2>
+
+    <h4 class="task">Покажите на примере возможность использования<br>
+        метода  join?
+    </h4>
+
+    <p><b>Ответ</b>:<br><br>
+        <b>Метод  arr.join(glue)</b> делает в точности противоположное split. <b>Он создаёт строку 
+            из элементов arr, вставляя glue между ними.</b>.<br>
+            <br>
+        Например:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let arr = ['Вася', 'Петя', 'Маша'];<br>
+            <br>
+            <b>let str = arr.join(';');</b> -объединить массив в строку через;<br>
+            <br>
+            console.log( str ); // 'Вася;Петя;Маша'<br>
+        </code>
+    </p><br>
+
+    <script>
+        let arr = ["Вася", "Петя", "Маша"];
+            
+        let str = arr.join(";");
+            
+        console.log( str ); // 'Вася;Петя;Маша'
+    </script>
+
+</body>
+
+</html>

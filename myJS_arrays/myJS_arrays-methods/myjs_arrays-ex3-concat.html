@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_methods: concat</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: arrays_methods: concat</h2>
+
+    <h4 class="task">Покажите на примере возможности использования<br>
+        специального метода concat?
+    </h4>
+
+    <p><b>Ответ</b>:<br><br>
+        Метод <b>arr.concat</b> создаёт новый массив, в который копирует данные из других массивов 
+        и дополнительные значения.
+    </p><br>
+
+    <p class="code-ex">Его синтаксис:<br>
+        <code>
+            <b>arr.concat(arg1, arg2...)</b><br>
+        </code>
+    </p>
+    <br>
+
+    <p>Он принимает любое количество аргументов, которые могут быть как массивами, так и простыми 
+        значениями. В результате мы получаем новый массив, включающий в себя элементы из arr, а также 
+        arg1, arg2 и так далее…<br>
+        Если аргумент argN – массив, то все его элементы копируются. Иначе скопируется сам аргумент.<br>
+        Например:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let arr = [1, 2];<br>
+            <br>
+            // создать массив из: arr и [3,4]<br>
+            console.log( <b>arr.concat([3, 4])</b> ); // 1,2,3,4<br>
+            <br>
+            // создать массив из: arr и [3,4] и [5,6]<br>
+            console.log( <b>arr.concat([3, 4], [5, 6])</b> ); // 1,2,3,4,5,6<br>
+            <br>
+            // создать массив из: arr и [3,4], потом добавить значения 5 и 6<br>
+            console.log( <b>arr.concat([3, 4], 5, 6)</b> ); // 1,2,3,4,5,6<br>
+        </code>
+    </p><br>
+
+    <script>
+        let arr = [1, 2];
+
+        // создать массив из: arr и [3,4]
+        console.log( arr.concat([3, 4]) ); // 1,2,3,4
+
+        // создать массив из: arr и [3,4] и [5,6]
+        console.log( arr.concat([3, 4], [5, 6]) ); // 1,2,3,4,5,6
+
+        // создать массив из: arr и [3,4], потом добавить значения 5 и 6
+        console.log( arr.concat([3, 4], 5, 6) ); // 1,2,3,4,5,6
+    </script>
+
+    <p>Обычно он просто копирует элементы из массивов. Другие объекты, даже если они выглядят 
+        как массивы, добавляются как есть. Вот пример:
+    </p><br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            let arr2 = [1, 2];<br>
+            <br>
+            let arrayLike = {<br>
+                0: "что-то",<br>
+                length: 1<br>
+            };<br>
+            <br>
+            console.log( <b>arr2.concat(arrayLike)</b> ); // <em>1,2,[1,2,{...}]</em><br>
+        </code>
+    </p><br>
+
+    <script>
+        let arr2 = [1, 2];
+
+        let arrayLike = {
+            0: "что-то",
+            length: 1
+        };
+
+        console.log( arr2.concat(arrayLike) ); // [1,2,{...}]
+    </script>
+
+    <p>…Но если объект имеет специальное свойство Symbol.isConcatSpreadable, то он обрабатывается 
+        concat как массив: вместо него добавляются его числовые свойства.<br>
+        Для корректной обработки в объекте должны быть числовые свойства и length:
+    </p><br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            let arr = [1, 2];
+
+        let arrayLike = {
+            0: 'что-то',
+            1: 'ещё',
+            [Symbol.isConcatSpreadable]: true,
+            length: 2
+        };
+
+        console.log( <b>arr.concat(arrayLike)</b> ); // [1, 2, 'что-то', 'ещё']<br>
+        </code>
+    </p><br>
+
+    <script>
+        let arr3 = [1, 2];
+
+        let arrayLike2 = {
+            0: "что-то",
+            1: "ещё",
+            [Symbol.isConcatSpreadable]: true,
+            length: 2
+        };
+
+        console.log( arr3.concat(arrayLike2) ); // [1,2,{...}]
+    </script>
+</body>
+
+</html>

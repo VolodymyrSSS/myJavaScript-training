@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_methods: split</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: arrays_methods: split</h2>
+
+    <h4 class="task">Покажите на примере возможность использования<br>
+        метода split?
+    </h4>
+
+    <p><b>Ответ</b>:<br><br>
+        Метод  str.split(delim) именно это и делает. Он разбивает строку на массив по заданному 
+        разделителю delim.</b>.<br>
+        Например, ситуация из реальной жизни. Мы пишем приложение для обмена сообщениями, и посетитель 
+        вводит имена тех, кому его отправить, через запятую: Вася, Петя, Маша. Но нам-то гораздо 
+        удобнее работать с массивом имён, чем с одной строкой. Как его получить? - Использовать 
+        метод  str.split(delim).
+    </p><br>
+
+    <p>В примере ниже разделителем является строка из запятой и пробела.</p><br>
+
+    <p class="code-ex">
+        <code>
+            let names = 'Вася, Петя, Маша';<br>
+            <br>
+            let arr = names.split(', ');<br>
+            <br>
+            for (let name of arr) {<br>
+            console.log( `Сообщение получит: ${name}.` ); // Сообщение получит: Вася (и другие имена)<br>
+            }<br>
+        </code>
+    </p><br>
+
+    <script>
+        let names = "Вася, Петя, Маша";
+
+        let arr = names.split(", ");
+
+        for (let name of arr) {
+            console.log( `Сообщение получит: ${name}.` ); // Сообщение получит: Вася (и другие имена)
+        }
+    </script>
+
+    <p>У метода split есть необязательный второй числовой аргумент – ограничение на количество 
+        элементов в массиве. Если их больше, чем указано, то остаток массива будет отброшен. 
+        На практике это редко используется:
+    </p><br>
+
+<p class="code-ex" style="width: 85%;">
+    <code>
+        <b>let companies = 'Addidas, Reebok, Puma, Benetton, Nike, Timberland, Collins'.split(', ', 3);</b><br>
+        <br>
+        console.log(companies); // <em>['Addidas', 'Reebok', 'Puma']</em><br>
+    </code>
+</p><br>
+
+<script>
+    let companies = 'Addidas, Reebok, Puma, Benetton, Nike, Timberland, Collins'.split(", ", 3);
+    
+    console.log( companies ); // ['Addidas','Reebok','Puma']
+</script>
+
+<p>Вызов split(s) с пустым аргументом s разбил бы строку на массив букв:</p><br>
+
+<p class="code-ex">
+    <code>
+        let str = 'тест';<br>
+        <br>
+        console.log( <b>str.split('')</b> ); // ['т','е','с','т']<br>
+    </code>
+</p><br>
+
+<script>
+    let str = "тест";
+
+    console.log( str.split("") ); // ['т','е','с','т']
+</script>
+</body>
+
+</html>

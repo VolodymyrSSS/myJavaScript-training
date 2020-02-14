@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_methods: Фильтрация по диапазону</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: arrays_methods: exercises_Фильтрация по диапазону</h2>
+
+    <h4 class="task">Напишите функцию filterRange(arr, a, b), которая принимает массив arr, ищет в 
+        нём элементы между a и b и отдаёт массив этих элементов.<br>
+        Функция должна возвращать новый массив и не изменять исходный. Ниже примеры работы функции:<br>
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            let arr = [5, 3, 8, 1, 18, 2, 11];<br>
+            <br>
+            let filtered = filterRange(arr, 1, 4);<br>
+            <br>
+            console.log( filtered ); // 3,1,2 (совпадающие значения)<br>
+            <br>
+            console.log( arr ); // 5,3,8,1,18,2,11 (без изменений)<br>
+        </code>
+    </p><br>
+
+    <p><b>Ответ</b>:<br><br>
+        Для решения задачи используем метод filter(func) который фильтрует элементы через функцию 
+        и отдаёт первое (либо все) значения, при прохождении которых через функцию возвращается true.<br>
+        Так же для указания границ диапазона используем оператор И(&&)
+    </p><br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            function filterRange(arr, a, b) {<br>
+                // добавлены скобки вокруг выражения для улучшения читабельности<br>
+                return <b>arr.filter(item => (a <= item && item <= b));</b><br>
+              }<br>
+              <br>
+              let arr = [5, 3, 8, 1, 18, 2, 11];<br>
+              <br>
+              let filtered = filterRange(arr, 1, 4);<br>
+              <br>
+              console.log( filtered ); // 3,1,2 (совпадающие значения)<br>
+              <br>
+              console.log( arr ); // 5,3,8,1,18,2,11 (без изменений)<br>  
+        </code>
+    </p><br>
+
+    <script>
+
+        function filterRange(arr, a, b) {
+            // добавлены скобки вокруг выражения для улучшения читабельности
+            return arr.filter(item => (a <= item && item <= b));
+        }
+
+        let arr = [5, 3, 8, 1, 18, 2, 11];
+        
+        let filtered = filterRange(arr, 1, 4);
+        
+        console.log( filtered ); // 3,1,2 (совпадающие значения)
+            
+        console.log( arr ); // 5,3,8,1,18,2,11 (без изменений)
+
+    </script>
+
+</body>
+
+</html>

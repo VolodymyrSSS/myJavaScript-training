@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_methods: Перемешайте массив</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: arrays_methods: exercises_Перемешайте массив</h2>
+
+    <h4 class="task">Напишите функцию shuffle(array), которая перемешивает (переупорядочивает 
+        случайным образом) элементы массива. Многократные прогоны через shuffle могут привести к 
+        разным последовательностям элементов.<br>
+        Все последовательности элементов должны иметь одинаковую вероятность. Например, [1,2,3] 
+        может быть переупорядочено как [1,2,3] или [1,3,2], или [3,1,2] и т.д., с равной вероятностью 
+        каждого случая.
+    </h4>
+
+    <p class="code-ex">Например:<br>
+        <code>
+            let arr = [1, 2, 3];<br>
+            <br>
+            shuffle(arr);<br>
+            // arr = [3, 2, 1]<br>
+            <br>
+            shuffle(arr);<br>
+            // arr = [2, 1, 3]<br>
+            <br>
+            shuffle(arr);<br>
+            // arr = [3, 1, 2]<br>
+            // ...<br>
+        </code>
+    </p><br>
+
+    <p><b>Решение</b>:<br><br>
+        Для решения задачи используем математическую функцию Math.random() - 0.5 которая отдаёт 
+        случайное число, которое может быть положительным или отрицательным, следовательно, функция 
+        сортировки меняет порядок элементов случайным образом.
+    </p><br>
+
+    <p class="code-ex">Простым решением может быть:<br>
+        <code>
+            function shuffle(array) {<br>
+                array.sort(() => Math.random() - 0.5);<br>
+            }<br>
+            <br>
+            let arr = [1, 2, 3];<br>
+            shuffle(arr);<br>
+            console.log(arr);<br>
+        </code>
+    </p><br>
+        
+    <script>
+        "use strict";
+        function shuffle(array2) {
+            array2.sort(() => Math.random() - 0.5);
+        }
+        let arr2 = [1, 2, 3];
+        shuffle(arr2);
+        console.log(arr2);
+    </script>
+
+    <p>Но поскольку метод sort не предназначен для использования в таких случаях, не все возможные 
+        варианты имеют одинаковую вероятность.<br>
+        Есть и другие хорошие способы решить эту задачу. Например, есть отличный алгоритм под 
+        названием Тасование Фишера — Йетса. Суть заключается в том, чтобы проходить по массиву в 
+        обратном порядке и менять местами каждый элемент со случайным элементом, который находится 
+        перед ним.
+    </p><br>
+
+    <p class="code-ex">Простым решением может быть:<br>
+        <code>
+            function shuffle(array) {<br>
+                for (let i = array.length - 1; i > 0; i--) {<br>
+                  let j = Math.floor(Math.random() * (i + 1)); // случайный индекс от 0 до i<br>
+                  <br>
+                // поменять элементы местами<br>
+                // мы используем для этого синтаксис "деструктурирующее присваивание"<br>
+                // подробнее о нём - в следующих главах<br>
+                // то же самое можно записать как:<br>
+                // let t = array[i]; array[i] = array[j]; array[j] = <br>
+                [array[i], array[j]] = [array[j], array[i]];<br>
+                }<br>
+            }<br>
+            <br>
+            // Давайте проверим эту реализацию на том же примере:<br>
+            function shuffle(array) {<br>
+                for (let i = array.length - 1; i > 0; i--) {<br>
+                  let j = Math.floor(Math.random() * (i + 1));<br>
+                  [array[i], array[j]] = [array[j], array[i]];<br>
+                }<br>
+              }<br>
+              <br>
+              // подсчёт вероятности для всех возможных вариантов<br>
+              let count = {<br>
+                '123': 0,<br>
+                '132': 0,<br>
+                '213': 0,<br>
+                '231': 0,<br>
+                '321': 0,<br>
+                '312': 0<br>
+              };<br>
+              <br>
+              for (let i = 0; i < 1000000; i++) {<br>
+                let array = [1, 2, 3];<br>
+                shuffle(array);<br>
+                count[array.join('')]++;<br>
+              }<br>
+              <br>
+              // показать количество всех возможных вариантов<br>
+              for (let key in count) {<br>
+                alert(`${key}: ${count[key]}`);<br>
+              }<br>
+        </code>
+    </p><br>
+
+    <script>
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        // подсчёт вероятности для всех возможных вариантов
+        let count = {
+            '123': 0,
+            '132': 0,
+            '213': 0,
+            '231': 0,
+            '321': 0,
+            '312': 0
+        };
+
+        for (let i = 0; i < 1000000; i++) {
+            let array = [1, 2, 3];
+            shuffle(array);
+            count[array.join('')]++;
+        }
+
+        // показать количество всех возможных вариантов
+        for (let key in count) {
+            console.log(`${key}: ${count[key]}`);
+        }
+    </script>
+
+    <p>Теперь всё в порядке: все варианты появляются с одинаковой вероятностью.</p>
+
+</body>
+
+</html>

@@ -223,30 +223,8 @@
     </p>
     <br>
 
-    <p>Вот ещё один пример:</p>
-
-    <p class="code-ex">
-        <code>
-            let age = prompt("Сколько Вам лет?", 18);<br>
-            <br>
-            // в зависимости от условия объявляем функцию<br>
-            if (age < 18) {<br>
-                function welcome() {<br>
-                    alert("Привет!");<br>
-                }<br>
-            } else {<br>
-                function welcome() {<br>
-                    alert("Здравствуйте!");<br>
-                }<br>
-            }<br>
-            <br>
-            // ...не работает<br>
-            welcome(); // Error: welcome is not defined<br>
-        </code>
-    </p>
-    <br>
-
-    <p>Это произошло, так как объявление Function Declaration видимо только внутри блока кода, в котором располагается.<br>
+    <p>Это произошло, так как объявление Function Declaration видимо только внутри блока кода, 
+        в котором располагается.<br>
         Что можно сделать, чтобы welcome была видима снаружи if?<br>
         Верным подходом будет воспользоваться функцией, объявленной при помощи Function Expression, и присвоить значение 
         welcome переменной, объявленной снаружи if, что обеспечит нам нужную видимость.
@@ -257,17 +235,17 @@
         <code>
             let age = prompt("Сколько Вам лет?", 18);
             <br>
-            let welcome;<br>
+            <b>let welcome;</b><br>
             <br>
             if (age < 18) {<br>
             <br>
-            welcome = function() {<br>
+            <b>welcome = function()</b> {<br>
                 alert("Привет!");<br>
             };<br>
             <br>
             } else {<br>
             <br>
-            welcome = function() {<br>
+            <b>welcome = function()</b> {<br>
                 alert("Здравствуйте!");<br>
             };<br>
             <br>
@@ -285,7 +263,7 @@
         <code>
             let age = prompt("Сколько Вам лет?", 18);<br>
             <br>
-            let welcome = (age < 18) ?<br>
+            <b>let welcome</b> = (age < 18) ?<br>
             function() { alert("Привет!"); } :<br>
             function() { alert("Здравствуйте!"); };<br>
             <br>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_methods: includes</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: arrays_methods: includes</h2>
+
+    <h4 class="task">Покажите на примере возможности использования<br>
+        специального метода includes?
+    </h4>
+
+    <p><b>Ответ</b>:<br><br> includes делает по сути то же самое, что и его строковый аналог, 
+        но работают с элементами вместо символов. Этот <em>метод используют</em> когда
+        мы хотим проверить наличие элемента, и <em>нет необходимости знать его точный индекс</em>.
+    </p><br>
+
+    <p>Метод <b>arr.includes(item, from)</b> ищет item, начиная с индекса from, и возвращает true, 
+        если поиск успешен. Например:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let arr = [1, 56, 0.73, 'tumeric', 0, false, NaN, 107 ];<br>
+            <br>
+            console.log( arr.includes(56) ); // true<br>
+            console.log( arr.includes(false) ); // true<br>
+            console.log( arr.includes(null) ); // false<br>
+            console.log( arr.includes(NaN) ); // true<br>
+            console.log( arr.includes('tumeric') ); // true<br>
+        </code>
+    </p><br>
+
+    <script>
+        let arr = [1, 56, 0.73, 'tumeric', 0, false, NaN, 107 ];
+
+        console.log( arr.includes(56) ); // true<br>
+        console.log( arr.includes(false) ); // true<br>
+        console.log( arr.includes(null) ); // false
+        console.log( arr.includes(NaN) ); // true
+        console.log( arr.includes('tumeric') ); // true
+    </script>
+
+    <p>Этот метод используют строгое сравнение ===, таким образом, если мы ищем false, 
+        он находит именно false, а не ноль.<br>
+        Кроме того, очень незначительным отличием includes является то, что он правильно 
+        обрабатывает NaN в отличие от indexOf/lastIndexOf.
+    </p><br>
+
+</body>
+
+</html>

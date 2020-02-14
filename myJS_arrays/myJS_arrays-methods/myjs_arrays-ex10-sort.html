@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_methods: sort(fn)</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: arrays_methods: sort(fn)</h2>
+
+    <h4 class="task">Покажите на примере возможность использования<br>
+        метода sort(fn)?
+    </h4>
+
+    <p><b>Ответ</b>:<br><br>
+        Метод sort(fn) пренадлежит к методам преобразования и упорядочения массива.<br>
+        <b>Вызов arr.sort() сортирует массив на месте, меняя в нём порядок элементов.
+        <br>
+        Он возвращает отсортированный массив, но обычно возвращаемое значение игнорируется, 
+        так как изменяется сам arr</b>.<br>
+        Например:
+    </p><br>
+
+
+    <p class="code-ex">
+        <code>
+            let arr = [ 1, 19, 2, 15, 17, 24 ];<br>
+            <br>
+            <b>arr.sort();</b> -метод сортирует содержимое arr<br>
+            <br>
+            console.log( arr );  // 1, 15, 17, 19, 2, 24 -возвращаемое значение проигнорировано<br>
+        </code>
+    </p><br>
+
+    <script>
+        let arr = [ 1, 19, 2, 15, 17, 24 ];
+
+        // метод сортирует содержимое arr
+        arr.sort();
+
+        console.log( arr );  // 1, 15, 17, 19, 2, 24
+    </script>
+
+    <p>Как видно, хоть и отсортировано но порядок неправильный! 1, 15, 17, 2, 24. Почему?</p>
+
+    <p><b>По умолчанию элементы сортируются как строки.</b><br>
+        Буквально, элементы преобразуются в строки при сравнении. Для строк применяется 
+        лексикографический порядок, и действительно выходит, что "2" > "15".
+        <br>
+        Что же происходит. Упомянутый ранее массив arr может быть массивом чего угодно, верно? 
+        Он может содержать числа, строки, объекты или что-то ещё. У нас есть набор каких-то элементов. 
+        Чтобы отсортировать его, нам нужна функция, определяющая порядок, которая знает, как сравнивать 
+        его элементы. По умолчанию элементы сортируются как строки.<br>
+        <br>
+        Метод arr.sort(fn) реализует общий алгоритм сортировки. Нам не нужно заботиться о том, как он 
+        работает внутри (в большинстве случаев это оптимизированная быстрая сортировка). Она проходится 
+        по массиву, сравнивает его элементы с помощью предоставленной функции и переупорядочивает их. 
+        Всё, что остаётся нам, это предоставить fn, которая делает это сравнение.<br>
+        <br>
+        Чтобы использовать наш собственный порядок сортировки, нам нужно предоставить функцию в 
+        качестве аргумента arr.sort().
+    </p><br>
+
+    <p></p>
+
+    <p class="code-ex">Функция должна для пары значений возвращать:<br>
+        <code>
+            function compare(a, b) {<br>
+                if (a > b) return 1; // если первое значение больше второго<br>
+                if (a == b) return 0; // если равны<br>
+                if (a < b) return -1; // если первое значение меньше второго<br>
+            }<br>
+        </code>
+    </p><br>
+
+    <p>Давайте используем это для сортировки наших чисел:</p><br>
+
+    <p class="code-ex">
+        <code>
+            <b>function compareNumeric(a, b) {<br>
+                if (a > b) return 1;<br>
+                if (a == b) return 0;<br>
+                if (a < b) return -1;<br></b>
+            }</b>
+            <br>
+            let arr = [ 1, 19, 2, 15, 17, 24 ];<br>
+            <br>
+            arr.sort(compareNumeric); -здесь функция без скобок!<br>
+            <br>
+            console.log(arr);  // 1, 2, 15, 17, 19, 24<br>
+        </code>
+    </p><br>
+
+    <script>
+        function compareNumeric(a, b) {
+            if (a > b) return 1;
+            if (a == b) return 0;
+            if (a < b) return -1;
+        }
+
+        let arr2 = [ 1, 19, 2, 15, 17, 24 ];
+
+        arr2.sort(compareNumeric);
+
+        console.log( arr2 );  // 1, 2, 15, 17, 19, 24
+    </script>
+
+    <p>На самом деле от функции сравнения требуется любое положительное число, чтобы сказать 
+        «больше», и отрицательное число, чтобы сказать «меньше». Это позволяет писать более 
+        короткие функции. Вот пример с тем же массивом чисел:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let arr = [ 1, 19, 2, 15, 17, 24 ];<br>
+            <br>
+            <b>arr.sort(function(a, b) { return a - b; });</b><br>
+            <br>
+            // а можна использовать стрелочные функции для того, чтобы сортировка 
+            выглядела более аккуратной:<br>
+            <b>arr.sort( (a, b) => a - b );</b><br>
+            <br>
+            console.log(arr);  // 1, 2, 15, 17, 19, 24<br>
+        </code>
+    </p><br>
+
+    <script>
+        arr2.sort(function(a, b) { return a - b; });
+
+        console.log( arr2 );  // 1, 2, 15, 17, 19, 24
+    </script>
+
+</body>
+
+</html>

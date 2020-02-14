@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_methods: slice</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: arrays_methods: slice</h2>
+
+    <h4 class="task">Покажите на примере возможности использования специального метода slice?</h4>
+
+    <p><b>Ответ</b>:<br><br>
+        Метод <b>arr.slice()</b> возвращает новый массив, в который копирует элементы, начиная 
+        с индекса start и до end (не включая end). Оба индекса start и end могут быть отрицательными. 
+        В таком случае отсчёт будет осуществляться с конца массива.<br>
+        Это похоже на строковый метод str.slice, но вместо подстрок возвращает подмассивы.
+    </p><br>
+
+    <p class="code-ex">Его синтаксис:<br>
+        <code>
+            <b>arr.slice([start], [end])</b><br>
+        </code>
+    </p>
+    <br>
+
+    <p>Например:</p><br>
+
+    <p class="code-ex">
+        <code>
+            let arr = ["t", "e", "s", "t"];<br>
+            <br>
+            console.log( <b>arr.slice(1, 3)</b> ); // e,s (копирует с 1 до 3, не вкл3)<br>
+            <br>
+            console.log( <b>arr.slice(-2)</b> ); // s,t (копирует с -2 до конца)<br>
+        </code>
+    </p><br>
+
+    <script>
+        let arr = ["t", "e", "s", "t"];
+
+        console.log( arr.slice(1, 3) ); // e,s (копирует с 1 до 3, не вкл3)
+
+        console.log( arr.slice(-2) ); // s,t (копирует с -2 до конца)
+    </script>
+
+    <p>Можно вызвать slice и вообще без аргументов: arr.slice() создаёт копию массива arr. 
+        Это часто используют, чтобы создать копию массива для дальнейших преобразований, которые 
+        не должны менять исходный массив.
+    </p><br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            let arr = ['Я', 'изучаю', 'JavaScript', 'прямо', 'сейчас'];<br>
+            <br>
+            // сделать копию массива 'arr' в массив 'efforts'<br>
+            <b>let efforts = arr.slice();</b><br>
+            <br>
+            console.log( arr ) // теперь ['Я', 'изучаю', 'JavaScript', 'прямо', 'сейчас']<br>
+        </code>
+    </p><br>
+
+    <script>
+        let arr2 = ["Я", "изучаю", "JavaScript", "прямо", "сейчас"];
+
+        // сделать копию массива 'arr' в массив 'efforts'
+        let efforts = arr2.slice();
+
+        console.log( efforts ) // ['Я', 'изучаю', 'JavaScript', 'прямо', 'сейчас']
+    </script>
+
+</body>
+
+</html>

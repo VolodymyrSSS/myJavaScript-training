@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_methods: filter</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: arrays_methods: filter</h2>
+
+    <h4 class="task">Покажите на примере возможность использования<br>
+        метода filter?
+    </h4>
+
+    <p><b>Ответ</b>:<br><br>
+        Метод find ищет один (первый попавшийся) элемент, на котором функция-колбэк вернёт true.
+        На тот случай, если найденных элементов может быть много, предусмотрен метод arr.filter(fn).
+        Синтаксис этого метода схож с find, но filter возвращает массив из всех подходящих элементов:
+    </p><br>
+
+    <p class="code-ex">Его синтаксис:<br>
+        <code>
+            <b>let results = arr.filter(function(item, index, array)</b> {
+                // если true - элемент добавляется к результату, и перебор продолжается
+                // возвращается пустой массив в случае, если ничего не найдено
+              <b>});</b><br>
+        </code>
+    </p>
+    <br>
+
+    <p>Например, у нас есть массив пользователей, каждый из которых имеет поля id и name. Давайте 
+        возвратим массив из двух первых пользователей и покажем длинну этого массива.
+    </p>
+
+    <p class="code-ex">
+        <code>
+            let users = [<br>
+                {id: 1, name: 'Brian'},<br>
+                {id: 2, name: 'Peter'},<br>
+                {id: 3, name: 'Mario'}<br>
+                {id: 4, name: 'Takada'}<br>
+            ];<br>
+            <br>
+            let someUsers = users.filter(item => item.id < 3);<br>
+            <br>
+            console.log(someUsers); // ['Brian', 'Peter']<br>
+            console.log(someUsers.length); // 2<br>
+        </code>
+    </p><br>
+
+    <script>
+        let users = [
+            {id: 1, name: 'Brian'},
+            {id: 2, name: 'Peter'},
+            {id: 3, name: 'Mario'},
+            {id: 4, name: 'Takada'}
+        ];
+                
+        let someUsers = users.filter(item => item.id < 3);
+        
+        console.log(someUsers); // ['Brian', 'Peter']
+        console.log(someUsers.length); // 2
+    </script>
+
+</body>
+
+</html>

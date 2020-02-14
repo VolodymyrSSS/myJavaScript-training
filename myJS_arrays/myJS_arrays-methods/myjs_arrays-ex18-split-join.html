@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_methods: split</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: arrays_methods: exercises</h2>
+
+    <h4 class="task">Напишите функцию camelize(str), которая преобразует строки вида «my-short-string» 
+        в «myShortString». То есть дефисы удаляются, а все слова после них получают заглавную букву.<br>
+        Для проверки, должно получиться как здесь:
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            camelize('background-color') == 'backgroundColor';<br>
+            camelize('list-style-image') == 'listStyleImage';<br>
+            camelize('-webkit-transition') == 'WebkitTransition';<br>
+        </code>
+    </p><br>
+
+
+    <p><b>Ответ</b>:<br><br>
+        Вначале, методом split, разобъём строку на массив символов, при этом в разделителе 
+        указываем '-' чтобы разбить по словам а не по буквам;<br>
+        Потом, переводим в верхний регистр первые буквы всех элементом массива за исключением первого методом map;<br>
+        В нём используем методы str.toUpperCase, и конкатенацию для перевода в верхний регистр первого символа и 
+        str.slice(1) для прибавления оставшегося слова (от 2 го символа) к первому символу<br>
+        Для условия - используем тернарный оператор;<br>
+        и методом join соединим обратно все в единую строку.
+    </p><br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            function camelize(str) {<br>
+                return str<br>
+                  .split('-') // разбивает 'my-long-word' на массив ['my', 'long', 'word']<br>
+                  .map(<br>
+                      // Переводит в верхний регистр первые буквы всех элементом массива за исключением первого<br>
+                      // превращает ['my', 'long', 'word'] в ['my', 'Long', 'Word']<br>
+                      (word, index) => index == 0 ? word : word[0].toUpperCase() + word.slice(1)<br>
+                  )<br>
+                  .join(''); // соединяет ['my', 'Long', 'Word'] в 'myLongWord'<br>
+              }<br>
+              <br>
+              // проверим работу функции;
+              console.log(camelize('background-color')); // 'backgroundColor';<br>
+              console.log(camelize('list-style-image')); // 'listStyleImage';<br>
+              console.log(camelize('-webkit-transition')); // 'WebkitTransition';<br>
+        </code>
+    </p><br>
+
+    <script>
+
+        function camelize(str) {
+            return str
+            .split('-') // разбивает 'my-long-word' на массив ['my', 'long', 'word']
+            .map(
+                // Переводит в верхний регистр первые буквы всех элементом массива за исключением первого
+                // превращает ['my', 'long', 'word'] в ['my', 'Long', 'Word']
+                (word, index) => index == 0 ? word : word[0].toUpperCase() + word.slice(1)
+            )
+            .join(''); // соединяет ['my', 'Long', 'Word'] в 'myLongWord'
+        }
+
+        console.log(camelize('background-color')); // 'backgroundColor';
+        console.log(camelize('list-style-image')); // 'listStyleImage';
+        console.log(camelize('-webkit-transition')); // 'WebkitTransition';
+
+    </script>
+
+</body>
+
+</html>

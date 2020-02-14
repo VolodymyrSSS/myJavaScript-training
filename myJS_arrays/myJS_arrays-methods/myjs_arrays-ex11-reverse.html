@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_methods: reverse</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: arrays_methods: reverse</h2>
+
+    <h4 class="task">Покажите на примере возможность использования<br>
+        метода reverse?
+    </h4>
+
+    <p><b>Ответ</b>:<br><br>
+        Метод arr.reverse пренадлежит к методам преобразования и упорядочения массива.<br>
+        <b>Вызов arr.reverse меняет порядок элементов в arr на обратный.<br>
+        Он также возвращает массив arr с изменённым порядком элементов.</b>.<br>
+        Например:
+    </p><br>
+
+    <p>Пример1:</p>
+    <p class="code-ex">
+        <code>
+            let arr1 = [1, 2, 3, 4, 5, 6, 7, 8, 9];<br>
+            <br>
+            <b>arr1.reverse();</b><br>
+            <br>
+            console.log( arr ); // <em>[9, 8, 7, 6, 5, 4, 3, 2, 1]</em><br>
+        </code>
+    </p><br>
+
+    <script>
+        let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+        arr.reverse();
+        console.log( arr ); // [9, 8, 7, 6, 5, 4, 3, 2, 1]
+    </script>
+
+<p>Пример2:</p>
+<p class="code-ex" style="width: 85%;">
+    <code>
+        let arr2 = ['Addidas', 'Reabook', 'Puma', 'Benetton', 'Nike', 'Timberland', 'Collins'];<br>
+        <br>
+        <b>arr.reverse();</b><br>
+        <br>
+        console.log( arr2 ); // <em>['Collins', 'Timberland', 'Nike', 'Benetton', 'Puma', 'Reabook', 'Addidas']</em><br>
+    </code>
+</p><br>
+
+<script>
+    let arr2 = ['Addidas', 'Reabook', 'Puma', 'Benetton', 'Nike', 'Timberland', 'Collins'];
+    
+    arr2.reverse();
+    console.log( arr2 ); // ['Collins', 'Timberland', 'Nike', 'Benetton', 'Puma', 'Reabook', 'Addidas']
+</script>
+
+</body>
+
+</html>

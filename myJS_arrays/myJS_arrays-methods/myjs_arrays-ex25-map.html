@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_methods: Трансформировать в объекты</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: arrays_methods: exercises_Трансформировать в объекты</h2>
+
+    <h4 class="task">У вас есть массив объектов user, и у каждого из объектов есть name, surname и id.
+        Напишите код, который создаст ещё один массив объектов с параметрами id и fullName, где 
+        fullName – состоит из name и surname. Используйте => функции.
+    </h4>
+
+    <p class="code-ex">Например:<br>
+        <code>
+            let oles = { name: 'Олесь', surname: 'Гончар', id: 1 };<br>
+            let stepan = { name: 'Степан', surname: 'Руданський', id: 2 };<br>
+            let olga = { name: 'Ольга', surname: 'Кобилянська', id: 3 };<br>
+            <br>
+            let users = [ oles, stepan, olga ];<br>
+            <br>
+            let usersMapped = /* ... ваш код ... */<br>
+            <br>
+            /*<br>
+            usersMapped = [<br>
+            { fullName: 'Олесь Гончар', id: 1 },<br>
+            { fullName: 'Степан Руданський', id: 2 },<br>
+            { fullName: 'Ольга Кобилянська', id: 3 }<br>
+            ]<br>
+            */<br>
+            <br>
+            console.log( usersMapped[0].id ) // 1<br>
+            console.log( usersMapped[0].fullName ) // Олесь Гончар<br>
+        </code>
+    </p><br>
+
+    <p><b>Решение</b>:<br><br>
+        На самом деле вам нужно трансформировать один массив объектов в другой. Для решения задачи 
+        используем метод map(func) который вызывает функцию для каждого элемента 
+        массива и возвращает массив результатов выполнения этой функции.
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let oles = { name: 'Олесь', surname: 'Гончар', id: 1 };<br>
+            let stepan = { name: 'Степан', surname: 'Руданський', id: 2 };<br>
+            let olga = { name: 'Ольга', surname: 'Кобилянська', id: 3 };<br>
+            <br>
+            let users = [ oles, stepan, olga ];<br>
+            <br>
+            let usersMapped = <b>users.map(user => ({<br>
+                fullName: `${user.name} ${user.surname}`,<br>
+                id: user.id</b><br>
+            }));<br>
+            <br>
+            /*<br>
+            usersMapped = [<br>
+            { fullName: 'Олесь Гончар', id: 1 },<br>
+            { fullName: 'Степан Руданський', id: 2 },<br>
+            { fullName: 'Ольга Кобилянська', id: 3 }<br>
+            ]<br>
+            */<br>
+            <br>
+            console.log( usersMapped[0].id ) // 1<br>
+            console.log( usersMapped[0].fullName ) // Олесь Гончар<br>
+        </code>
+    </p><br>
+        
+    <script>
+        "use strict";
+
+        let oles = { name: "Олесь", surname: "Гончар", id: 1 };
+        let stepan = { name: "Степан", surname: "Руданський", id: 2 };
+        let olga = { name: "Ольга", surname: "Кобилянська", id: 3 };
+
+        let users = [ oles, stepan, olga ];
+
+        let usersMapped = users.map(user => ({
+            fullName: `${user.name} ${user.surname}`,
+            id: user.id
+        }));
+
+            /*
+            usersMapped = [
+            { fullName: 'Олесь Гончар', id: 1 },
+            { fullName: 'Степан Руданський', id: 2 },
+            { fullName: 'Ольга Кобилянська', id: 3 }
+            ]
+            */
+
+        console.log( usersMapped[0].id ) // 1
+        console.log( usersMapped[0].fullName ) // Олесь Гончар
+
+    </script>
+
+    <p>Обратите внимание, что для стрелочных функций мы должны использовать дополнительные скобки.<br>
+        Как мы помним, есть две функции со стрелками: без тела value => expr и с телом value => {...}.<br>
+        Здесь JavaScript будет трактовать { как начало тела функции, а не начало объекта. Чтобы обойти 
+        это, нужно заключить их в «нормальные» скобки:
+    </p><br>
+
+</body>
+
+</html>

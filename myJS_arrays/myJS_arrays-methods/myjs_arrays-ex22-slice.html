@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_methods: Скопировать и отсортировать массив</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: arrays_methods: exercises_Скопировать и отсортировать массив</h2>
+
+    <h4 class="task">У нас есть массив строк 'arr'. Напишите код для получения отсортированной копии, 
+        но при этом оставить arr неизменённым. Создайте функцию copySorted(arr), которая будет 
+        возвращать такую копию.
+    </h4>
+
+    <p class="code-ex">Например:<br>
+        <code>
+            let arr = ['HTML', 'JavaScript', 'CSS'];<br>
+            <br>
+            let sorted = copySorted(arr);<br>
+            <br>
+            console.log( sorted ); // CSS, HTML, JavaScript<br>
+            console.log( arr ); // HTML, JavaScript, CSS (без изменений)<br>
+        </code>
+    </p><br>
+
+    <p><b>Решение</b>:<br><br>
+        Для решения задачи вначале применим к массиву 'arr' метод slice(start, end) который создаёт 
+        новый массив, копируя в него элементы с позиции start до end (не включая end). Но нам не нужно
+        указывать start и end, а просто использовать метод без указания аргументов, что создаёт копию 
+        массива 'arr' для дальнейших преобразований, которые не будут менять исходный массив.<br>
+        А для сортировки используем сразу метод arr.sort(), который сортирует массив на месте, меняя в 
+        нём порядок элементов. Он возвращает отсортированный массив (обычно возвращаемое значение 
+        игнорируется).<br>
+        Объеденим всё это в функции:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            <b>function copySorted(arr) {<br>
+                return arr.slice().sort();<br>
+            }</b><br>
+            <br>
+            let arr = ["HTML", "JavaScript", "CSS"];<br>
+            <br>
+            let sorted = copySorted(arr);<br>
+            <br>
+            console.log( sorted ); // ['CSS', 'HTML', 'JavaScript']<br>
+            console.log( arr ); // ['HTML', 'JavaScript', 'CSS']<br>
+        </code>
+    </p><br>
+        
+    <script>
+        "use strict";
+
+        function copySorted(arr) {
+            return arr.slice().sort();
+        }
+
+        let arr = ["HTML", "JavaScript", "CSS"];
+
+        let sorted = copySorted(arr);
+            
+        console.log( sorted ); // ['CSS', 'HTML', 'JavaScript']
+        console.log( arr ); // ['HTML', 'JavaScript', 'CSS']
+
+    </script>
+
+</body>
+
+</html>

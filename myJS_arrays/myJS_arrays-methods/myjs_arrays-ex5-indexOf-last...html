@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_methods: indexOf/lastIndexOf</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: arrays_methods: indexOf/lastIndexOf</h2>
+
+    <h4 class="task">Покажите на примере возможности использования<br>
+        специальных методов indexOf/lastIndexOf?
+    </h4>
+
+    <p><b>Ответ</b>:<br><br> indexOf/lastIndexOf имеют одинаковый синтаксис и делают по сути то же 
+        самое, что и их строковые аналоги, но работают с элементами вместо символов. Эти <em>методы используют</em> 
+        когда мы хотим проверить наличие элемента при этом <em>есть необходимость знать его точный индекс</em>.
+    </p><br>
+
+    <p>Метод <b>arr.indexOf(item, from)</b> ищет item, начиная с индекса from, и возвращает 
+        индекс, на котором был найден искомый элемент, в противном случае -1. Например:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let arr = [1, 0, false, NaN, 'tumeric'];<br>
+            <br>
+            console.log( arr.indexOf(0) ); // 1<br>
+            console.log( arr.indexOf(false) ); // 2<br>
+            console.log( arr.indexOf(null) ); // -1<br>
+            console.log( arr.indexOf(NaN) ); // -1 -должен быть 3, но === проверка на равенство не работает 
+            для NaN<br>
+            console.log( arr.indexOf('tumeric') ); // 4
+        </code>
+    </p><br>
+
+    <script>
+        let arr1 = [1, 0, false, NaN, "tumeric"];
+
+        console.log( arr1.indexOf(0) ); // 1
+        console.log( arr1.indexOf(false) ); // 2
+        console.log( arr1.indexOf(null) ); // -1
+        console.log( arr1.indexOf(NaN) ); // -1, не работает для NaN
+        console.log( arr1.indexOf("tumeric") ); // 4
+    </script>
+
+    <p>Метод <b>arr.lastIndexOf(item, from)</b> ищет item справа налево, начиная с индекса from, 
+        и возвращает индекс, на котором был найден искомый элемент, в противном случае -1. Например:
+    </p><br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            let arr = [73, true, 169, 22, 79, 0.53, 12, NaN, 'tumeric'];<br>
+            <br>
+            console.log( arr.lastIndexOf(12) ); // 6<br>
+            console.log( arr.lastIndexOf(22) ); // 3<br>
+            console.log( arr.lastIndexOf(true) ); // 1<br>
+            console.log( arr.lastIndexOf(null) ); // -1<br>
+            console.log( arr.lastIndexOf(NaN) ); // -1 -должен быть 7, но === проверка на равенство не работает 
+            для NaN<br>
+            console.log( arr2.lastIndexOf('tumeric') ); // 8<br>
+        </code>
+    </p><br>
+
+    <script>
+        let arr2 = [73, true, 169, 22, 79, 0.53, 12, 74, "tumeric"];
+        
+        console.log( arr2.lastIndexOf(12) ); // 6
+        console.log( arr2.lastIndexOf(22) ); // 3
+        console.log( arr2.lastIndexOf(true) ); // 1
+        console.log( arr2.lastIndexOf(null) ); // -1
+        console.log( arr2.lastIndexOf(NaN) ); // -1, не работает для NaN
+        console.log( arr2.lastIndexOf("tumeric") ); // 8
+    </script>
+
+    <p>Методы используют строгое сравнение ===, таким образом, если мы ищем false, 
+        он находит именно false, а не ноль.<br>
+        Как видно с примеров, <b>исключением для этих методов есть тип NaN</b> при котором проверка 
+        на равенство не работает!<br>
+    </p><br>
+
+</body>
+
+</html>

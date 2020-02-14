@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_methods: Отсортировать пользователей по возрасту</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: arrays_methods: exercises_Отсортировать пользователей по возрасту</h2>
+
+    <h4 class="task">Напишите функцию sortByAge(users), которая принимает массив объектов со свойством 
+        age и сортирует их по нему.
+    </h4>
+
+    <p class="code-ex">Например:<br>
+        <code>
+            let oles = { name: 'Олесь', age: 25 };<br>
+            let stepan = { name: 'Степан', age: 30 };<br>
+            let olga = { name: 'Ольга', age: 28 };<br>
+            let petro = { name: 'Петро', age: 31 };<br>
+            let lesya = { name: 'Леся', age: 19 };<br>
+            <br>
+            let arr = [  oles, stepan, olga, petro, lesya,];<br>
+            <br>
+            sortByAge(arr);<br>
+            <br>
+            // теперь [lesya, oles, olga, stepan, petro]
+            <br>
+            console.log( arr[0].name ) // lesya<br>
+            console.log( arr[1].name ) // oles<br>
+            console.log( arr[3].name ) // stepan<br>
+        </code>
+    </p><br>
+
+    <p><b>Решение</b>:<br><br>
+        Для решения задачи используем метод arr.sort(), который сортирует массив на месте, меняя в 
+        нём порядок элементов. Он возвращает отсортированный массив, но обычно возвращаемое значение 
+        игнорируется, так как изменяется сам arr. Или так - по умолчанию элементы сортируются как 
+        строки и если брать, как в задаче, за основу для сортирования возраст с числами, то '22' > '19'
+        и на первом месте станет 'Олесь' а не 'Леся', а нам это не подходит.<br> 
+        Чтобы отсортировать массив, нам нужна функция, определяющая порядок, которая знает, как 
+        сравнивать его элементы - то есть так как нам нужно.
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            function sortByAge(arr) {<br>
+                <b>arr.sort((a, b) => a.age > b.age ? 1 : -1);</b><br>
+              }<br>
+            let oles = { name: 'Олесь', age: 22 };<br>
+            let stepan = { name: 'Степан', age: 30 };<br>
+            let olga = { name: 'Ольга', age: 28 };<br>
+            let petro = { name: 'Петро', age: 31 };<br>
+            let lesya = { name: 'Леся', age: 19 };<br>
+            <br>
+            let arr = [  oles, stepan, olga, petro, lesya,];<br>
+            <br>
+            sortByAge(arr);<br>
+            <br>
+            // теперь [lesya, oles, olga, stepan, petro]
+            <br>
+            console.log( arr ) //
+            console.log( arr[0].name ) // lesya<br>
+            console.log( arr[1].name ) // oles<br>
+            console.log( arr[3].name ) // stepan<br>
+        </code>
+    </p><br>
+        
+    <script>
+        "use strict";
+
+        function sortByAge(arr) {
+            arr.sort((a, b) => a.age > b.age ? 1 : -1);
+        }
+
+        let oles = { name: 'Олесь', age: 22 };
+        let stepan = { name: 'Степан', age: 30 };
+        let olga = { name: 'Ольга', age: 28 };
+        let petro = { name: 'Петро', age: 31 };
+        let lesya = { name: 'Леся', age: 19 };
+            
+        let arr = [  oles, stepan, olga, petro, lesya,];
+            
+        sortByAge(arr);
+            
+        console.log( arr );
+        // теперь [lesya, oles, olga, stepan, petro]
+            
+        console.log( arr[0].name ); // Леся
+        console.log( arr[1].name ); // Олесь
+        console.log( arr[3].name ); // Степан
+
+    </script>
+
+</body>
+
+</html>

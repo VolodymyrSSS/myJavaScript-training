@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_methods: необязательный параметр thisArg.</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: arrays_methods: необязательный параметр thisArg.</h2>
+
+    <h4 class="task">Покажите на примере возможность использования<br>
+        необязательного параметра thisArg.?
+    </h4>
+
+    <p><b>Ответ</b>:<br><br>
+        Почти все методы массива, которые вызывают функции – такие как find, filter, map, 
+        за исключением метода sort, принимают необязательный параметр thisArg.<br>
+
+    </p><br>
+
+    <p class="code-ex">Вот полный синтаксис этих методов:<br>
+        <code>
+            arr.find(func, thisArg);<br>
+            arr.filter(func, thisArg);<br>
+            arr.map(func, thisArg);<br>
+            // ...<br>
+            // thisArg - это необязательный последний аргумент<br>
+        </code>
+    </p><br>
+
+    <p><b>Значение параметра thisArg становится this для func</b></p><br>
+
+    <p>Например, вот тут мы используем метод объекта army как фильтр, и thisArg передаёт ему контекст:</p><br>
+
+    <p class="code-ex">Вот полный синтаксис этих методов:<br>
+        <code>
+            let army = {<br>
+                minAge: 18,<br>
+                maxAge: 27,<br>
+                canJoin(user) {<br>
+                    return user.age >= this.minAge && user.age < this.maxAge;<br>
+                }<br>
+            };<br>
+            <br>
+            let users = [<br>
+                {age: 16},<br>
+                {age: 20},<br>
+                {age: 23},<br>
+                {age: 30}<br>
+            ];<br>
+            <br>
+            // найти пользователей, для которых army.canJoin возвращает true<br>
+            let soldiers = users.filter(army.canJoin, army);<br>
+            <br>
+            console.log(soldiers.length); // 2<br>
+            console.log(soldiers[0].age); // 20<br>
+            console.log(soldiers[1].age); // 23<br>
+            console.log(soldiers); // <em>[{age: 20}, {age: 23}]</em><br>
+        </code>
+    </p><br>
+
+    <script>
+        let army = {
+            minAge: 18,
+            maxAge: 27,
+            canJoin(user) {
+                return user.age >= this.minAge && user.age < this.maxAge;
+            }
+        };
+
+        let users = [
+            {age: 16},
+            {age: 20},
+            {age: 23},
+            {age: 30}
+        ];
+
+        // найти пользователей, для которых army.canJoin возвращает true
+        let soldiers = users.filter(army.canJoin, army);
+
+        console.log(soldiers.length); // 2
+        console.log(soldiers[0].age); // 20
+        console.log(soldiers[1].age); // 23
+        console.log(soldiers); // [{age: 20}, {age: 23}]
+    </script>
+
+    <p>Если бы мы в примере выше использовали просто users.filter(army.canJoin), то вызов army.canJoin 
+        был бы в режиме отдельной функции, с this=undefined. Это тут же привело бы к ошибке.<br>
+        <br>
+        Вызов users.filter(army.canJoin, army) можно заменить на <b>users.filter(user => army.canJoin(user))</b>, 
+        который делает то же самое. Последняя запись используется даже чаще, так как функция-стрелка 
+        более наглядна.
+    </p><br>
+
+</body>
+
+</html>

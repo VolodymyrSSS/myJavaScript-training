@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_methods: Создать расширяемый калькулятор</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: arrays_methods: exercises_Создать расширяемый калькулятор</h2>
+
+    <h4 class="task">Создайте функцию конструктор Calculator, которая создаёт «расширяемые» объекты 
+        калькулятора. Задание состоит из двух частей:<br>
+        1. Во-первых, реализуйте метод calculate(str), который принимает строку типа "1 + 2" в формате 
+        «ЧИСЛО оператор ЧИСЛО» (разделено пробелами) и возвращает результат. Метод должен понимать 
+        плюс + и минус -.
+    </h4>
+
+    <p class="code-ex">Пример использования:<br>
+        <code>
+            let calc = new Calculator;<br>
+            <br>
+            console.log( calc.calculate('3 + 7') ); // 10<br>
+        </code>
+    </p><br>
+
+    <h4 class="task">
+        2. Затем добавьте метод addMethod(name, func), который добавляет в калькулятор новые операции. 
+        Он принимает оператор name и функцию с двумя аргументами func(a,b), которая описывает его.<br>
+        3. Для этой задачи не нужны скобки или сложные выражения. Числа и оператор разделены ровно 
+        одним пробелом ну и не лишним будет добавить обработку ошибок.
+    </h4>
+
+    <p class="code-ex">Например, давайте добавим умножение *, деление / и возведение в степень **:<br>
+        <code>
+            let powerCalc = new Calculator;<br>
+            powerCalc.addMethod("*", (a, b) => a * b);<br>
+            powerCalc.addMethod("/", (a, b) => a / b);<br>
+            powerCalc.addMethod("**", (a, b) => a ** b);<br>
+            <br>
+            let result = powerCalc.calculate("2 ** 3");<br>
+            console.log( result ); // 8<br>
+        </code>
+    </p><br>
+
+    <p><b>Решение</b>:<br><br>
+        Вспомним, при создании функции-конструктора её имя должно начинаться с большой буквы, кроме того, 
+        функция-конструктор должна вызываться при помощи оператора 'new'. Обычно конструкторы ничего 
+        не возвращают явно. Их задача – записать все необходимое в this, который в итоге станет 
+        результатом. В this мы можем добавлять не только свойства, но и методы.<br>
+        Теперь, перейдём к решению первой части задачи:<br>
+        Зададим как определять метод для вычислений с + и -<br>
+        Все тесты и числовые преобразования выполняются в методе calculate(str).
+        Для реализации этого метода создадим функцию которая на вход будет получать строку.
+        Потом, создадим массив путём использования метода str.split(delim) который
+        разбивает строку на массив по заданному разделителю delim, в нашем случе - пробел.<br>
+        Сделаем также обработку ошибки (на введённое число).
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            this.methods = {<br>
+                '-'': (a, b) => a - b,<br>
+                '+'': (a, b) => a + b<br>
+            };<br>
+            <br>
+            this.calculate = function(str) {<br>
+                <br>
+                let split = str.split(' '),<br>
+                  a = +split[0],<br>
+                  op = split[1],<br>
+                  b = +split[2]<br>
+                <br>
+                if (!this.methods[op] || isNaN(a) || isNaN(b)) {<br>
+                  return NaN;<br>
+                }<br>
+                <br>
+                return this.methods[op](a, b);<br>
+              }<br>
+        </code>
+    </p><br>
+
+    <p>Обратите внимание, как хранятся методы. Они просто добавляются к внутреннему объекту.</p><br>
+
+    <p class="code-ex">
+        <code>
+            this.addMethod = function(name, func) {<br>
+                this.methods[name] = func;<br>
+              };<br>
+        </code>
+    </p><br>
+
+    <p>Теперь объеденим всё в функции-конструкторе:</p><br>
+
+    <p class="code-ex" style="width: 55%;">
+        <code>
+            function Calculator() {<br>
+                <br>
+                // задали порядок определения метода в функции<br>
+                <b>this.methods</b> = {<br>
+                    "-": (a, b) => a - b,<br>
+                    "+": (a, b) => a + b<br>
+                };<br>
+                <br>
+                // задали порядок перевода из строки в число и как считать<br>
+                <b>this.calculate</b> = function(str) {<br>
+                    <br>
+                    let split = str.split(' '),<br>
+                        a = +split[0],<br>
+                        op = split[1],<br>
+                        b = +split[2]<br>
+                        <br>
+                    if (!this.methods[op] || isNaN(a) || isNaN(b)) {<br>
+                        return NaN;<br>
+                    }<br>
+                    <br>
+                    return this.methods[op](a, b);<br>
+                }<br>
+                <br>
+                // задали порядок добавления метода<br>
+                <b>this.addMethod</b> = function(name, func) {<br>
+                    this.methods[name] = func;};<br>
+            }<br>
+            <br>
+            // проверим работу функции-конструктора:<br>
+            let powerCalc = new Calculator;<br>
+            <br>
+            powerCalc.addMethod("*", (a, b) => a * b);<br>
+            powerCalc.addMethod("/", (a, b) => a / b);<br>
+            powerCalc.addMethod("**", (a, b) => a ** b);<br>
+            <br>
+            let result = powerCalc.calculate("2 ** 3");<br>
+            console.log( result ); // 8<br>
+            let result2 = powerCalc.calculate("48 / 8");<br>
+            console.log( result2 ); // 6<br>
+            let result3 = powerCalc.calculate("9 * 8");<br>
+            console.log( result3 ); // 72<br>
+        </code>
+    </p><br>
+        
+    <script>
+        "use strict";
+
+        function Calculator() {
+
+            this.methods = {
+                "-": (a, b) => a - b,
+                "+": (a, b) => a + b
+            };
+
+            this.calculate = function(str) {
+
+                let split = str.split(' '),
+                    a = +split[0],
+                    op = split[1],
+                    b = +split[2]
+
+                if (!this.methods[op] || isNaN(a) || isNaN(b)) {
+                    return NaN;
+                }
+
+                return this.methods[op](a, b);
+            }
+
+            this.addMethod = function(name, func) {
+                this.methods[name] = func;
+            };
+        }
+
+        // проверим работу функции-конструктора:
+        let powerCalc = new Calculator;
+
+        powerCalc.addMethod("*", (a, b) => a * b);
+        powerCalc.addMethod("/", (a, b) => a / b);
+        powerCalc.addMethod("**", (a, b) => a ** b);
+
+        let result = powerCalc.calculate("2 ** 3");
+        console.log( result ); // 8
+        let result2 = powerCalc.calculate("48 / 8");
+        console.log( result2 ); // 6
+        let result3 = powerCalc.calculate("9 * 8");
+        console.log( result3 ); // 72
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_methods: forEach</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: arrays_methods: forEach</h2>
+
+    <h4 class="task">Покажите на примере возможности использования<br>
+        специального метода forEach?
+    </h4>
+
+    <p><b>Ответ</b>:<br><br>
+        Метод <b>arr.forEach</b> позволяет запускать функцию для каждого элемента массива.
+    </p><br>
+
+    <p class="code-ex">Его синтаксис:<br>
+        <code>
+            <b>arr.forEach(function(item, index, array)</b> {<br>
+                // ... делать что-то с item<br>
+            <b>});</b><br>
+        </code>
+    </p>
+    <br>
+
+    <p>Например, этот код выведет в консоль каждый элемент массива:</p><br>
+
+    <p class="code-ex">
+        <code>
+            // Вызов console.log для каждого элемента<br>
+            ['Bilbo', 'Gandalf', 'Nazgul'].forEach(console.log);<br>
+        </code>
+    </p><br>
+
+    <script>
+        // Вызов console.log для каждого элемента
+        ["Bilbo", "Gandalf", "Nazgul"].forEach(console.log);
+    </script>
+
+    <p>А этот вдобавок расскажет и о своей позиции в массиве:</p><br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            ["Bilbo", "Gandalf", "Nazgul"].forEach((item, index, array) => {<br>
+                console.log(`${item} имеет позицию ${index} в ${array}`);<br>
+              });<br>
+        </code>
+    </p><br>
+
+    <script>
+        ["Bilbo", "Gandalf", "Nazgul"].forEach((item, index, array) => {
+            console.log(`${item} имеет позицию ${index} в ${array}`);
+        });
+    </script>
+
+    <p>Результат функции (если она вообще что-то возвращает) отбрасывается и игнорируется.</p><br>
+
+</body>
+
+</html>

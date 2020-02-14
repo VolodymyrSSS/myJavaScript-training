@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_methods: map</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: arrays_methods: map</h2>
+
+    <h4 class="task">Покажите на примере возможность использования<br>
+        метода map?
+    </h4>
+
+    <p><b>Ответ</b>:<br><br>
+        Метод arr.map пренадлежит к методам преобразования и упорядочения массива.
+        Он является одним из наиболее полезных и часто используемых.
+        <b>Метод arr.map вызывает функцию для каждого элемента массива и возвращает массив 
+            результатов выполнения этой функции</b>.<br>
+        Или по другому - мы используем его когда нам нужно перебрать массив и вернуть данные 
+        для каждого элемента.
+    </p><br>
+
+    <p class="code-ex">Его синтаксис:<br>
+        <code>
+            let result = <b>arr.map</b>(function(item, index, array) {<br>
+                <b>// возвращается новое значение вместо элемента</b><br>
+              });<br>
+        </code>
+    </p>
+    <br>
+
+    <p>Например, здесь мы преобразуем каждый элемент в его длину:</p><br>
+
+    <p class="code-ex" style="width: 70%;">
+        <code>
+            let lengths = ['Bilbo', 'Gandalf', 'Nazgul'].map(item => item.length);<br>
+            <br>
+            console.log(lengths); // <em>[5,7,6]</em><br>
+        </code>
+    </p><br>
+
+    <script>
+        let lengths = ['Bilbo', 'Gandalf', 'Nazgul'].map(item => item.length);
+        
+        console.log(lengths); // [5,7,6]
+    </script>
+
+</body>
+
+</html>

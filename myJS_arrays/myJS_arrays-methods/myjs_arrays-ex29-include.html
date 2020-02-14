@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_methods: Оставить уникальные элементы массива</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: arrays_methods: exercises_Оставить уникальные элементы массива</h2>
+
+    <h4 class="task">Пусть arr – массив строк.<br>
+        Напишите функцию unique(arr), которая возвращает массив, содержащий только уникальные 
+        элементы arr.
+    </h4>
+
+    <p class="code-ex">Например:<br>
+        <code>
+            let strings = [<br>
+            'кришна', 'кришна', 'харе', 'харе',<br>
+            'харе', 'харе', 'кришна', 'кришна', '':-O'<br>
+            ];<br>
+            <br>
+            console.log( unique(strings) ); // [ кришна, харе, :-O ]<br>
+        </code>
+    </p><br>
+
+    <script>
+        let strings = [
+            "кришна", "кришна", "харе", "харе",
+            "харе", "харе", "кришна", "кришна", ":-O"
+        ];
+    </script>
+
+    <p><b>Решение</b>:<br><br>
+        Давайте пройдёмся по элементам массива: для каждого элемента мы проверим, есть ли он в массиве 
+        с результатом. Для проверки есть ли элемент в массиве, наилучшим образом подходит использование 
+        метода includes(value), который возвращает true, если в массиве имеется элемент value, в 
+        противном случае false.<br>
+        Итак, если есть элемент в массиве с результатом, то игнорируем его, а если нет – добавляем к 
+        результатам.
+    </p><br>
+
+    <p class="code-ex" style="width: 65%;">
+        <code>
+            function unique(arr) {<br>
+                let result = []; -здесь создали массив куда будем добавлять уникальные элементы<br>
+                <br>
+                for (let str of arr) { - здесь проходим по элементам массива<br>
+                  <b>if (!result.includes(str))</b> { - если есть элемент в массиве с результатом, то игнорируем его<br>
+                    <b>result.push(str);</b> - если нету элементов в массиве с результатом, то добавляем его}<br>
+                }<br>
+                <br>
+                return result;<br>
+              }<br>
+        </code>
+    </p><br>
+        
+    <script>
+        "use strict";
+
+        function unique(arr) {
+            let result = [];
+
+            for (let str of arr) {
+                if (!result.includes(str)) {
+                result.push(str);
+                }
+            }
+
+            return result;
+        }
+
+        console.log( unique(strings) ); // [ кришна, харе, :-O ]
+    </script>
+
+    <p>Код работает, но в нём есть потенциальная проблема с производительностью. Метод result.includes(str) 
+        внутри себя обходит массив result и сравнивает каждый элемент с str, чтобы найти совпадение.<br>
+        Таким образом, если result содержит 100 элементов и ни один не совпадает со str, тогда он 
+        обойдёт весь result и сделает ровно 100 сравнений. А если result большой, например, 10000, 
+        то будет произведено 10000 сравнений.<br>
+        Само по себе это не проблема, потому что движки JavaScript очень быстрые, поэтому обход 10000 
+        элементов массива занимает считанные микросекунды. Но мы делаем такую проверку для каждого 
+        элемента arr в цикле for. Поэтому, если arr.length равен 10000, у нас будет что-то вроде 
+        10000*10000 = 100 миллионов сравнений. Это многовато. Вот почему <b>данное решение подходит 
+        только для небольших массивов</b>.
+    </p><br>
+
+</body>
+
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_methods: find</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: arrays_methods: find</h2>
+
+    <h4 class="task">Покажите на примере возможности использования<br>
+        метода find?
+    </h4>
+
+    <p><b>Ответ</b>:<br><br>
+        Представьте, что у нас есть массив объектов. Как нам найти объект с определённым условием?
+        Здесь пригодится метод <b>arr.find</b>. В реальной жизни массивы объектов – обычное дело, 
+        поэтому метод find крайне полезен.
+    </p><br>
+
+    <p class="code-ex">Его синтаксис:<br>
+        <code>
+            <b>let result = arr.find(function(item, index, array)</b> {<br>
+                // если true - возвращается текущий элемент и перебор прерывается<br>
+                // если все итерации оказались ложными, возвращается undefined<br>
+              <b>});</b><br>
+        </code>
+    </p>
+    <br>
+
+    <p>Функция вызывается по очереди для каждого элемента массива:<br>
+        item – очередной элемент<br>
+        index – его индекс<br>
+        array – сам массив<br>
+        Если функция возвращает true, поиск прерывается и возвращается item. Если ничего не найдено, 
+        возвращается undefined.<br>
+    </p><br>
+
+    <p>Или по другому: Метод find ищет один (первый попавшийся) элемент, на котором функция-колбэк вернёт true.</p><br>
+
+    <p>Например, у нас есть массив пользователей, каждый из которых имеет поля id и name. Попробуем 
+        найти того, кто с id == 2.
+    </p>
+
+    <p class="code-ex">
+        <code>
+            let users = [<br>
+                {id: 1, name: 'Brian'},<br>
+                {id: 2, name: 'Peter'},<br>
+                {id: 3, name: 'Mario'}<br>
+                {id: 4, name: 'Takada'}<br>
+            ];<br>
+            <br>
+            let user = <b>users.find(item => item.id == 2);</b><br>
+            <br>
+            console.log(user.name); // Peter<br>
+        </code>
+    </p><br>
+
+    <script>
+        let users = [
+            {id: 1, name: 'Brian'},
+            {id: 2, name: 'Peter'},
+            {id: 3, name: 'Mario'},
+            {id: 4, name: 'Takada'}
+        ];
+                
+        let user = users.find(item => item.id == 2);
+
+        console.log(user.name); // Peter
+    </script>
+
+    <p>Обратите внимание, что в данном примере мы передаём find функцию item => item.id == 2, 
+        с одним аргументом. Это типично, дополнительные аргументы этой функции используются редко.
+    </p><br>
+
+    <p>Давайте ещё попробуем найти того, кто имеет id == 3 но при этом используем Function Expression 
+        вместо стрелочных функций:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let user = users.find(function (item) {<br>
+                return item.id == 3<br>
+            });<br>
+            <br>
+            console.log(user.name); // Mario<br>
+        </code>
+    </p><br>
+
+    <script>
+        let user3 = users.find(function (item) {
+            return item.id == 3
+        });
+    
+        console.log(user3.name); // Mario
+    </script>
+
+    <p>Давайте попробуем найти id того, кто имеет name: 'Takada' и при этом так же используем Function Expression 
+        вместо стрелочной функции:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let user4 = users.find(function (item) {<br>
+                return item.name == 'Takada'<br>
+            });<br>
+            <br>
+            console.log(user4.id); // 4<br>
+        </code>
+    </p><br>
+
+    <script>
+        let user4 = users.find(function (item) {
+            return item.name == 'Takada'
+        });
+    
+        console.log(user4.id); // 4
+    </script>
+
+    <p>Метод <b>arr.findIndex</b> – по сути, то же самое, но возвращает индекс, на котором был найден 
+        элемент, а не сам элемент, и -1, если ничего не найдено.
+    </p><br>
+
+
+</body>
+
+</html>

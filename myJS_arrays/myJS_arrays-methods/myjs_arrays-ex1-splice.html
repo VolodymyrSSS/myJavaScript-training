@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_methods: splice</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: arrays_methods: splice</h2>
+
+    <h4 class="task">Покажите на примерах возможности использования специального метода splice?</h4>
+
+    <p><b>Ответ</b>:<br><br>
+        Метод <b>arr.splice(str)</b> – это универсальный «швейцарский нож» для работы с массивами. 
+        Умеет всё: добавлять, удалять и заменять элементы.
+    </p><br>
+
+    <p class="code-ex">Его синтаксис:<br>
+        <code>
+            <b>arr.splice(index[, deleteCount, elem1, ..., elemN])</b><br>
+        </code>
+    </p>
+    <br>
+
+    <p><b>Удаление и замена элементов</b><br><br>
+        Он начинает с позиции index, удаляет deleteCount элементов и вставляет elem1, ..., elemN 
+        на их место. Возвращает массив из удалённых элементов. Например:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let arr = ['Я', 'изучаю', 'JavaScript'];<br>
+            <br>
+            <b>arr.splice(1, 1);</b> -начиная с позиции 1, удалить 1 элемент<br>
+            <br>
+            console.log( arr ); // осталось ['Я', 'JavaScript']<br>
+        </code>
+    </p><br>
+
+    <script>
+        let arr = ["Я", "изучаю", "JavaScript"];
+        
+        arr.splice(1, 1);
+        
+        console.log( arr ); // ['Я','JavaScript']
+    </script>
+
+    <p>В примере ниже, мы удалим 3 элемента и заменим их двумя другими.</p><br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            let arr = ['Я', 'изучаю', 'JavaScript', 'прямо', 'сейчас'];<br>
+            <br>
+            // удалить 3 первых элемента и заменить их другими<br>
+            <b>arr.splice(0, 3, 'Давай', 'танцевать');</b><br>
+            <br>
+            console.log( arr ) // теперь ['Давай', 'танцевать', 'прямо', 'сейчас']<br>
+        </code>
+    </p><br>
+
+    <script>
+        let arr2 = ["Я", "изучаю", "JavaScript", "прямо", "сейчас"];
+
+        // удалить 3 первых элемента и заменить их другими
+        arr2.splice(0, 3, "Давай", "танцевать");
+
+        console.log( arr2 ) // теперь ['Давай', 'танцевать', 'прямо', 'сейчас']
+    </script>
+
+    <p>А в этом примере, видно, что splice возвращает массив из удалённых элементов:</p><br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            let arr = ['Я', 'изучаю', 'JavaScript', 'прямо', 'сейчас'];<br>
+            <br>
+            // удалить 2 первых элемента<br>
+            let removed = <b>arr3.splice(0, 2);</b><br>
+            <br>
+            console.log( removed ); // 'Я', 'изучаю' <-- массив из удалённых элементов<br>
+            </code>
+    </p><br>
+
+    <script>
+        let arr3 = ["Я", "изучаю", "JavaScript", "прямо", "сейчас"];
+
+        // удалить 2 первых элемента
+        let removed = arr3.splice(0, 2);
+
+        console.log( removed ); // 'Я', 'изучаю' <-- массив из удалённых элементов
+    </script>
+
+    <p><b>Вставка и добавление элементов</b><br><br>
+        Метод splice также может вставлять элементы без удаления, для этого <br>
+        достаточно установить deleteCount в 0. Например:
+    </p><br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            let arr = ['Я', 'изучаю', 'JavaScript'];<br>
+            <br>
+            // с позиции 2 удалить 0 элементов вставить 'сложный', 'язык'<br>
+            <b>arr.splice(2, 0, "сложный", "язык");</b><br>
+            <br>
+            console.log( arr ); // 'Я', 'изучаю', <b>'сложный', 'язык'</b>, 'JavaScript'<br>
+        </code>
+    </p><br>
+
+    <script>
+        let arr4 = ["Я", "изучаю", "JavaScript"];
+
+        // с позиции 2 удалить 0 элементов вставить 'сложный', 'язык'
+        arr4.splice(2, 0, "сложный", "язык");
+
+        console.log( arr4 ); // 'Я', 'изучаю', 'сложный', 'язык', 'JavaScript'
+    </script>
+
+    <p>В этом и в других методах массива допускается использование отрицательного индекса. 
+        Он позволяет начать отсчёт элементов с конца, как в этом примере:
+    </p><br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            let arr5 = [1, 2, 5];<br>
+            <br>
+            // начиная с индекса -1 (перед последним элементом) удалить 0 элементов, затем вставить числа 3 и 4<br>
+            <b>arr.splice(-1, 0, 3, 4);</b><br>
+            <br>
+            console.log( arr ); // 1,2,3,4,5<br>
+        </code>
+    </p><br>
+
+    <script>
+        let arr5 = [1, 2, 5];
+
+        // начиная с индекса -1 (перед последним элементом) удалить 0 элементов, затем вставить числа 3 и 4
+        arr5.splice(-1, 0, 3, 4);
+
+        console.log( arr5 ); // 1,2,3,4,5
+    </script>
+
+
+
+
+
+</body>
+
+</html>

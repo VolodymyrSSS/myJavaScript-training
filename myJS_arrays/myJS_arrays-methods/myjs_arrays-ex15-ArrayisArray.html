@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_methods: reduce</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: arrays_methods: reduce</h2>
+
+    <h4 class="task">Покажите на примере возможность использования<br>
+        метода reduce?
+    </h4>
+
+    <p><b>Ответ</b>:<br><br>
+        Массивы не образуют отдельный тип языка. Они основаны на объектах.</br>
+        Поэтому typeof не может отличить простой объект от массива:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            console.log(typeof {}); // object<br>
+            console.log(typeof []); -тоже object<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        console.log(typeof {}); // object
+        console.log(typeof []); // object
+    </script>
+
+    <p>Но массивы используются настолько часто, что для этого придумали специальный метод: 
+        <b>Array.isArray(value). Он возвращает true, если value массив, и false, если нет</b>.
+    </p><br>
+
+    <p>Рассмотрим пример:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            console.log(<b>Array.isArray({}));</b> // false<br>
+            <br>
+            console.log(<b>Array.isArray([]));</b> // true<br>
+        </code>
+    </p><br>
+
+    <script>
+        console.log(Array.isArray({})); // false
+        
+        console.log(Array.isArray([])); // true
+    </script>
+
+</body>
+
+</html>

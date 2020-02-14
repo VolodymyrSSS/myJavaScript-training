@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_methods: Трансформировать в массив имён</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: arrays_methods: exercises_Трансформировать в массив имён</h2>
+
+    <h4 class="task">У вас есть массив объектов user, и в каждом из них есть user.name. Напишите код, 
+        который преобразует их в массив имён.
+    </h4>
+
+    <p class="code-ex">Например:<br>
+        <code>
+            let vasya = { name: 'Вася', age: 25 };<br>
+            let petya = { name: 'Петя', age: 30 };<br>
+            let masha = { name: 'Маша', age: 28 };<br>
+            <br>
+            let users = [ vasya, petya, masha ];<br>
+            <br>
+            let names = /* ... ваш код */<br>
+            <br>
+            console.log( names ); // [ 'Вася', 'Петя', 'Маша' ]<br>
+        </code>
+    </p><br>
+
+    <p><b>Решение</b>:<br><br>
+        Для решения задачи используем метод map(func) который вызывает функцию для каждого элемента 
+        массива и возвращает массив результатов выполнения этой функции.
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let vasya = { name: 'Вася', age: 25 };<br>
+            let petya = { name: 'Петя', age: 30 };<br>
+            let masha = { name: 'Маша', age: 28 };<br>
+            <br>
+            let users = [ vasya, petya, masha ];<br>
+            <br>
+            let names = <b>users.map(item => item.name);</b><br>
+            <br>
+            console.log( names ); // [ 'Вася', 'Петя', 'Маша' ]<br>
+        </code>
+    </p><br>
+        
+    <script>
+        "use strict";
+
+        let vasya = { name: "Вася", age: 25 };
+        let petya = { name: "Петя", age: 30 };
+        let masha = { name: "Маша", age: 28 };
+
+        let users = [ vasya, petya, masha ];
+
+        let names = users.map(item => item.name);
+
+        console.log( names ); // [ 'Вася', 'Петя', 'Маша' ]
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: arrays_methods: Получить средний возраст</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-arrays: arrays_methods: exercises_Получить средний возраст</h2>
+
+    <h4 class="task">Напишите функцию getAverageAge(users), которая принимает массив объектов со 
+        свойством age и возвращает средний возраст.<br>
+        Формула вычисления среднего арифметического значения:<br> (age1 + age2 + ... + ageN) / N.
+    </h4>
+
+    <p class="code-ex">Например:<br>
+        <code>
+            let oles = { name: 'Олесь', age: 25 };<br>
+            let stepan = { name: 'Степан', age: 30 };<br>
+            let olga = { name: 'Ольга', age: 28 };<br>
+            let petro = { name: 'Петро', age: 31 };<br>
+            let lesya = { name: 'Леся', age: 19 };<br>
+            <br>
+            let arr = [  oles, stepan, olga, petro, lesya,];<br>
+            <br>
+            console.log( <b>getAverageAge(arr)</b> ) // (25 + 30 + 28 + 31 + 19) / 5 = 26.6<br>
+        </code>
+    </p><br>
+
+    <p><b>Решение</b>:<br><br>
+        Для решения задачи наилучшим образом подходит использование метода reduce(func, initial) 
+        который вычисляет одно значение на основе всего массива, вызывая func для каждого элемента и 
+        передавая промежуточный результат между вызовами.<br>
+        Вспомним: 
+        <b>let value = arr.reduce(function(previousValue, item, index, array) {...}, [initial]);</b><br>
+        Здесь функция применяется по очереди ко всем элементам массива и «переносит» свой результат 
+        на следующий вызов.<br>
+        А previousValue – результат предыдущего вызова этой функции, равен initial при первом вызове 
+        (если передан initial). Или можна сказать так - «аккумулирующий» результат предыдущих вызовов 
+        функции. По окончании он становится результатом reduce.<br>
+        Для определения количества студентов будем брать свойство массива length.
+    </p><br>>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            function getAverageAge(users) {<br>
+                return users<b>.reduce((prev, user) => prev + user.age, 0) / users.length;</b><br>
+              }<br>
+              <br>
+              // (25 + 30 + 28 + 31 + 19) / 5 = 26.6<br>
+            console.log( `There are <b>${arr.length}</b> students. // 5<br>
+            The avarage age of the group is <b>${getAverageAge(arr)}</b> years.` ) // 26.6<br>
+        </code>
+    </p><br>
+        
+    <script>
+        "use strict";
+
+        function getAverageAge(users) {
+          return users.reduce((prev, user) => prev + user.age, 0) / users.length;
+        }
+
+        let oles = { name: 'Олесь', age: 25 };
+        let stepan = { name: 'Степан', age: 30 };
+        let olga = { name: 'Ольга', age: 28 };
+        let petro = { name: 'Петро', age: 31 };
+        let lesya = { name: 'Леся', age: 19 };
+        
+        let arr = [  oles, stepan, olga, petro, lesya ];
+
+        // (25 + 30 + 28 + 31 + 19) / 5 = 26.6
+        console.log( `There are ${arr.length} students. 
+        The avarage age of the group is ${getAverageAge(arr)} years.` ) // 26.6
+
+    </script>
+
+</body>
+
+</html>
