@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-map_set: использование методов и свойств Мар</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs_map-set: exercise: использование методов и свойств Мар</h2>
+
+    <h4 class="task">Cоздайте коллекцию ключ/значение на основе структуры Мар при этом используйте 
+        разные типы данных для ключей: строки, числа и булевые.<br>
+        Выведите в консоль 2 значения по ключу и верните текущее количество элементов.
+    </h4>
+
+    <p><b>Ответ</b>:<br><br>
+        Map – это коллекция ключ/значение, как и Object. Но основное отличие в том, что Map позволяет 
+        использовать ключи любого типа.<br>
+        Используем подходящие методы и свойства Map для решения задачи:<br>
+        <b>new Map()</b> – создаёт коллекцию.<br>
+        <b>map.set(key, value)</b> – записывает по ключу key значение value.<br>
+        <b>map.get(key)</b> – возвращает значение по ключу или undefined, если ключ key отсутствует.<br>
+        map.has(key) – возвращает true, если ключ key присутствует в коллекции, иначе false.<br>
+        map.delete(key) – удаляет элемент по ключу key.<br>
+        map.clear() – очищает коллекцию от всех элементов.<br>
+        <b>map.size</b> – возвращает текущее количество элементов.<br>
+    </p><br>
+
+    <p class="code-ex" style="width: 65%;">
+        <code>
+            <b>let map = new Map();</b><br>
+            <br>
+            <b>map.set</b>('1', 'str1');    // строка в качестве ключа<br>
+            <b>map.set</b>(1, 'num1');      // цифра как ключ<br>
+            <b>map.set</b>(true, 'bool1');  // булево значение как ключ<br>
+            <br>
+            // помните, обычный объект Object приводит ключи к строкам?<br>
+            // Map сохраняет тип ключей, так что в этом случае сохранится 2 разных значения:<br>
+            console.log(<b>map.get(1)</b>); // 'num1'<br>
+            console.log(<b>map.get('1')</b>); // 'str1'<br>
+            console.log(<b>map.size</b>); // 3<br>
+        </code>
+    </p><br>
+
+    <script>
+        let map = new Map();
+
+        map.set("1", "str1");    // строка в качестве ключа
+        map.set(1, "num1");      // цифра как ключ
+        map.set(true, "bool1");  // булево значение как ключ
+
+        // помните, обычный объект Object приводит ключи к строкам?
+        // Map сохраняет тип ключей, так что в этом случае сохранится 2 разных значения:
+        console.log(map.get(1)); // num1
+        console.log(map.get("1")); // str1
+        console.log(map.size); // 3
+    </script>
+
+    <p>Как мы видим, в отличие от объектов, ключи не были приведены к строкам. Можно использовать 
+        любые типы данных для ключей.
+    </p><br>
+
+</body>
+
+</html>

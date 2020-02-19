@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-structures: weakMap_WeakSet Хранение отметок 'не прочитано'</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-weakMap_WeakSet: exercise: Хранение отметок 'не прочитано'</h2>
+
+    <h4 class="task">Есть массив сообщений: 'messages'. У вас есть к ним доступ, но управление этим 
+        массивом происходит где-то ещё. Добавляются новые сообщения и удаляются старые, и вы не знаете 
+        в какой момент это может произойти.<br>
+        Решите, какую структуру данных вы могли бы использовать для ответа на вопрос «было ли сообщение 
+        прочитано?». Структура должна быть подходящей, чтобы можно было однозначно сказать, было ли 
+        прочитано это сообщение для каждого объекта сообщения.<br>
+        P.S. Когда сообщение удаляется из массива messages, оно должно также исчезать из структуры данных.<br>
+        Так же, нам не следует модифицировать сами объекты сообщений, добавлять туда свойства. Если 
+        сообщения принадлежат какому-то другому коду, то это может привести к плохим последствиям.
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            let messages = [<br>
+                {text: 'Hello', from: 'John'},<br>
+                {text: 'How goes?'', from: 'John'},<br>
+                {text: 'See you soon', from: 'Alice'}<br>
+            ];<br>
+        </code>
+    </p><br>
+
+    <script>
+        let messages = [
+            {text: "Hello", from: "John"},
+            {text: "How goes?", from: "John"},
+            {text: "See you soon", from: "Alice"}
+        ];
+    </script>
+
+    <p><b>Решение</b>:<br><br>
+        Для решения задачи подходит WeakSet, который позволит хранить набор сообщений и проверит
+        наличие сообщения в нём.
+    </p><br>
+
+    <p class="code-ex" style="width: 75%;">
+        <code>
+            let readMessages = <b>new WeakSet()</b>;<br>
+            <br>
+            // Два сообщения были прочитаны<br>
+            readMessages.<b>add(messages[0])</b>;<br>
+            readMessages.<b>add(messages[1])</b>;<br>
+            // readMessages содержит 2 элемента<br>
+            <br>
+            // ...давайте снова прочитаем первое сообщение!<br>
+            readMessages.add(messages[0]);<br>
+            // readMessages до сих пор содержит 2 элемента<br>
+            <br>
+            // Вопрос: было ли сообщение message[0] прочитано?<br>
+            console.log('Read message 0: ' + <b>readMessages.has(messages[0])</b>); // Read message 0: <b>true</b><br>
+            <br>
+            console.log(messages.shift()); // <em>{text: 'How goes?', from: 'John'}</em><br>
+            // теперь readMessages содержит 1 элемент (хотя технически память может быть очищена позже)<br>
+        </code>
+    </p><br>
+
+    <script>
+        let readMessages = new WeakSet();
+
+        // Два сообщения были прочитаны
+        readMessages.add(messages[0]);
+        readMessages.add(messages[1]);
+        // readMessages содержит 2 элемента
+
+        // ...давайте снова прочитаем первое сообщение!
+        readMessages.add(messages[0]);
+        // readMessages до сих пор содержит 2 элемента
+
+        // Вопрос: было ли сообщение message[0] прочитано?
+        console.log("Read message 0: " + readMessages.has(messages[0])); // Read message 0: true
+
+        messages.shift();
+        // теперь readMessages содержит 1 элемент (хотя технически память может быть очищена позже)
+        console.log(messages.shift()); // {text: 'How goes?', from: 'John'}
+    </script>
+
+    <p>WeakSet очищается автоматически. Минус в том, что мы не можем перебрать его содержимое, не можем 
+        получить «все прочитанные сообщения» напрямую. Но мы можем сделать это, перебирая все сообщения и 
+        фильтруя те, которые находятся в WeakSet.<br>
+        <br>
+        Альтернативным решением может быть добавление свойства вида message.isRead=true к сообщению после 
+        его прочтения. Так как сообщения принадлежат чужому коду, то это не очень хорошо, но если 
+        использовать свойство-символ, то вероятность конфликтов будет небольшой.
+    </p><br>
+
+    <p class="code-ex">Например:<br>
+        <code>
+            // символьное свойство вместо имени, которое известно только нашему коду<br>
+            let isRead = Symbol('isRead');<br>
+            console.log(messages[0][isRead] = true);<br><br>
+        </code>
+    </p><br>
+
+    <script>
+        let isRead = Symbol('isRead');
+        console.log(messages[0][isRead] = true); // true
+    </script>
+
+    <p>Теперь чужой код вряд ли увидит наше дополнительное свойство.<br>
+       Хотя символы и позволяют уменьшить вероятность проблем, использование здесь WeakSet лучше с архитектурной 
+       точки зрения.
+    </p><br>
+
+</body>
+
+</html>

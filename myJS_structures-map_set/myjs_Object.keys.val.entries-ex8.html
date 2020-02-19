@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjsObject.keys.values.entries: Сумма свойств объекта</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-Object.keys.values.entries: exercise Сумма свойств объекта</h2>
+
+    <h4 class="task">Есть объект salaries с произвольным количеством свойств, содержащих заработные платы.
+        Напишите функцию sumSalaries(salaries), которая возвращает сумму всех зарплат с помощью метода 
+        Object.values и цикла for..of. Если объект salaries пуст, то результат должен быть 0.
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            let salaries = {<br>
+                'John': 100,<br>
+                'Pete': 300,<br>
+                'Mary': 250<br>
+            };<br>
+            <br> 
+            console.log( sumSalaries(salaries) ); // 650<br>
+        </code>
+    </p><br>
+
+    <script>
+        let salaries = {
+            "John": 100,
+            "Pete": 300,
+            "Mary": 250
+        };
+    </script>
+
+    <p><b>Решение</b>:<br><br>
+        Для решения задачи подходит метод перебора объектов Object.values(obj) который возвращает массив значений.
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            function sumSalaries(salaries) {<br>
+                let sum = 0;<br>
+                for (let salary of <b>Object.values(salaries)</b>) {<br>
+                  sum += salary;<br>
+                }<br>
+                <br>
+                return sum; // 650<br>
+              }<br>
+              <br>
+              console.log( sumSalaries(salaries) ); // 650<br>
+        </code>
+    </p><br>
+
+    <script>
+        function sumSalaries(salaries) {
+          let sum = 0;
+          for (let salary of Object.values(salaries)) {
+            sum += salary;
+          }
+    
+          return sum; // 650
+        }
+              
+        console.log( sumSalaries(salaries) ); // 650
+    </script>
+
+    <p>Или, как вариант, мы можем получить сумму, используя методы Object.values для получения массива
+        значений и далее методом для массивов reduce складываем их:</p><br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            // reduce перебирает массив значений salaries, складывает их и возвращает результат<br>
+            function sumSalaries(salaries) {<br>
+              return <b>Object.values(salaries).reduce((a, b) => a + b, 0)</b> // 650<br>
+            }<br>
+        </code>
+    </p><br>
+
+    <script>
+        function sumSalaries2(salaries) {
+            return Object.values(salaries).reduce((a, b) => a + b, 0) // 650
+        }
+              
+        console.log( sumSalaries2(salaries) ); // 650
+    </script>
+
+
+</body>
+
+</html>

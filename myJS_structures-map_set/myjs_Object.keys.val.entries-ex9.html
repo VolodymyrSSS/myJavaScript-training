@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjsObject.keys.values.entries: Подсчёт количества свойств объекта</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-Object.keys.values.entries: exercise Подсчёт количества свойств объекта</h2>
+
+    <h4 class="task">Напишите функцию count(obj), которая возвращает количество свойств объекта.<br>
+        Постарайтесь сделать код как можно короче. Игнорируйте символьные свойства, подсчитывайте 
+        только «обычные».
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            let user = {<br>
+                name: 'John',<br>
+                age: 30<br>
+            };<br>
+              <br>
+            console.log( count(user) ); // 2<br>
+        </code>
+    </p><br>
+
+    <script>
+        let user = {
+            name: "John",
+            age: 30
+        };
+    </script>
+
+    <p><b>Решение</b>:<br><br>
+        Для решения задачи подходит метод перебора объектов Object.keys(obj) который возвращает массив ключей.<br>
+        Получив ключи, мы можем использовать свойство для массивов arr.length для получения количество свойств 
+        объекта.
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            function count(obj) { <br>
+                return <b>Object.keys(obj).length</b>;<br>
+            }<br>
+            <br>
+            console.log( count(user) ); // 2<br>
+        </code>
+    </p><br>
+
+    <script>
+        function count(obj) { 
+          return Object.keys(obj).length;
+        }
+              
+        console.log( count(user) ); // 2
+    </script>
+
+</body>
+
+</html>

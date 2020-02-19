@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-structure: Object.keys, values, entries</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-structure: Object.keys, values, entries</h2>
+
+    <p>Давайте отойдём от отдельных структур данных и поговорим об их переборе вообще.<br>
+       Ранее, мы видели методы map.keys(), map.values(), map.entries().<br>
+       Это универсальные методы, и существует общее соглашение использовать их для структур данных. 
+       Если бы мы делали собственную структуру данных, нам также следовало бы их реализовать.
+        <br>
+        Методы поддерживаются для структур: <br>Map, Set, Array (кроме arr.values()) <br>
+        Простые объекты также можно перебирать похожими методами, но синтаксис немного отличается.
+    </p>
+
+    <h3>Object.keys, values, entries</h3>
+
+    <p>Для простых объектов доступны следующие методы:</p><br>
+
+    <p class="code-ex">
+        <code>
+            <b>Object.keys(obj)</b> – возвращает массив ключей.<br>
+            <b>Object.values(obj)</b> – возвращает массив значений.<br>
+            <b>Object.entries(obj)</b> – возвращает массив пар [ключ, значение].<br>
+        </code>
+    </p><br>
+
+    <p>Обратите внимание на различия (по сравнению с map, например):</p><br>
+
+    <p class="code-ex" style="width: 65%;">
+        <code>
+            Синтаксис вызова для map:	map.keys();  -Возвращает: перебираемый объект<br>
+            Синтаксис вызова для Object:  Object.keys(obj); не obj.keys() -Возвращает: «реальный» массив<br>
+        </code>
+    </p><br>
+
+    <p>Первое отличие в том, что мы должны вызвать Object.keys(obj), а не obj.keys().<br>
+        Почему так? Основная причина – гибкость. Помните, что объекты являются основой всех сложных 
+        структур в JavaScript. У нас может быть объект data, который реализует свой собственный метод 
+        data.values(). И мы всё ещё можем применять к нему стандартный метод Object.values(data).<br>
+        Второе отличие в том, что методы вида Object.* возвращают «реальные» массивы, а не просто 
+        итерируемые объекты. Это в основном по историческим причинам.
+    </p><br>
+
+    <p class="code-ex">Например:<br>
+        <code>
+            let user = {<br>
+                name: 'John',<br>
+                age: 30<br>
+            };<br>
+            <br>
+            Object.keys(user) = ['name', 'age']<br>
+            Object.values(user) = ['John', 30]<br>
+            Object.entries(user) = [ ['name','John'], ['age',30] ]<br>
+            <br>
+            // Вот пример использования Object.values ​​для перебора значений свойств в цикле:<br>
+            for (let value of <b>Object.values(user)</b>) {<br>
+                console.log(value); // John, затем 30<br>
+            }<br>
+            <br>
+            // А вот пример использования Object.entries ​​для перебора пар ключ/значение в цикле:<br>
+            for (let value of <b>Object.entries(user)</b>) {<br>
+                console.log(value); // ['name', 'John'], затем ['age', 30]<br>
+            }<br>
+        </code>
+    </p><br>
+
+    <script>
+        let user = {
+            name: "John",
+            age: 30
+        };
+        
+        // Вот пример использования Object.values ​​для перебора значений свойств в цикле:<br>
+        for (let value of Object.values(user)) {
+            console.log(value); // John, затем 30
+        }
+
+        // А вот пример использования Object.entries ​​для перебора пар ключ/значение в цикле:
+        for (let value of Object.entries(user)) {
+            console.log(value); // ['name', 'John'], затем ['age', 30]
+        }
+    </script>
+
+    <p>Object.keys/values/entries игнорируют символьные свойства<br>
+        Так же, как и цикл for..in, эти методы игнорируют свойства, использующие Symbol(...) в качестве 
+        ключей. Обычно это удобно. Но если требуется учитывать и символьные ключи, то для этого существует 
+        отдельный метод <b>Object.getOwnPropertySymbols</b>, возвращающий массив только символьных ключей. 
+        Также, существует метод <b>Reflect.ownKeys(obj)</b>, который возвращает все ключи.
+    </p><br>
+
+    <h3>Трансформации объекта</h3>
+
+    <p>У объектов нет множества методов, которые есть в массивах, например map, filter и других.<br>
+        Если мы хотели бы их применить, то можно использовать Object.entries с последующим вызовом 
+        Object.fromEntries:<br>
+        1. Вызов Object.entries(obj) возвращает массив пар ключ/значение для obj.<br>
+        2. На нём вызываем методы массива, например, map.<br>
+        3. Используем Object.fromEntries(array) на результате, чтобы преобразовать его обратно в объект.<br>
+    </p><br>
+
+    <p>Например, у нас есть объект с ценами, и мы хотели бы их удвоить:</p><br>
+
+    <p class="code-ex">
+        <code>
+            let prices = {<br>
+                banana: 1,<br>
+                orange: 2,<br>
+                meat: 4,<br>
+              };<br>
+              <br>
+              let doublePrices = <b>Object.fromEntries</b>(<br>
+                // преобразовать в массив, затем map, затем fromEntries обратно объект<br>
+                <b>Object.entries(prices).map(([key, value]) => [key, value * 2])</b><br>
+              );<br>
+              <br>
+              console.log(doublePrices.meat); // 8<br>
+        </code>
+    </p><br>
+
+    <script>
+        let prices = {
+          banana: 1,
+          orange: 2,
+          meat: 4,
+        };
+            
+        let doublePrices = Object.fromEntries(
+        // преобразовать в массив, затем map, затем fromEntries обратно объект
+          Object.entries(prices).map(([key, value]) => [key, value * 2])
+        );
+        
+        console.log(doublePrices.meat); // 8
+    </script>
+
+    <p>Это может выглядеть сложным на первый взгляд, но становится лёгким для понимания после нескольких 
+        раз использования.<br>
+        Можно делать и более сложные «однострочные» преобразования таким путём. Важно только сохранять 
+        баланс, чтобы код при этом был достаточно простым для понимания.
+    </p><br>
+
+</body>
+
+</html>

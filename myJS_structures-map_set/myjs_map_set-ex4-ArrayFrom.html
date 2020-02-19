@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: structures: map-set: Перебираемые ключи</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-structures: map-set: Перебираемые ключи</h2>
+
+    <h4 class="task">Мы хотели бы получить массив ключей map.keys() в переменную и далее работать с 
+        ними, например, применить метод .push. Но это не выходит. Почему? Что нужно поправить в коде, 
+        чтобы вызов keys.push сработал?
+    </h4>
+
+    <p class="code-ex">Но это не выходит:<br>
+        <code>
+            let map = new Map();<br>
+            <br>
+            map.set('name', 'John');<br>
+            <br>
+            let keys = map.keys();<br>
+            <br>
+            // Error: keys.push is not a function<br>
+            // Ошибка: keys.push -- это не функция<br>
+            keys.push('more');<br>
+        </code>
+    </p><br>
+
+    <p><b>Ответ</b>:<br><br>
+        Это потому что map.keys() возвращает итерируемый объект, а не массив.<br>
+        Мы можем конвертировать его в массив с помощью Array.from:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let map = new Map();<br>
+            <br>
+            map.set('name', 'John');<br>
+            <br>
+            let keys = <b>Array.from(map.keys())</b>;<br>
+            <br>
+            keys.push('more');<br>
+            <br>
+            console.log(keys); // name, more<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        let map = new Map();
+
+        map.set("name", "John");
+
+        let keys = Array.from(map.keys());
+
+        keys.push("more");
+
+        console.log(keys); // name, more
+    </script>
+
+
+</body>
+
+</html>

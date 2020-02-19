@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: structures: map-set: Отфильтруйте анаграммы</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-structures: map-set: Отфильтруйте анаграммы</h2>
+
+    <h4 class="task">Анаграммы – это слова, у которых те же буквы в том же количестве, но они 
+        располагаются в другом порядке. Например: nap - pan; ear - are - era; cheaters - hectares 
+        - teachers; Напишите функцию aclean(arr), которая возвращает массив слов, очищенный от 
+        анаграмм. Из каждой группы анаграмм должно остаться только одно слово, не важно какое.
+    </h4>
+
+    <p class="code-ex">Например:<br>
+        <code>
+            let arr = ['nap', 'teachers', 'cheaters', 'PAN', 'ear', 'era', 'hectares'];<br>
+            <br>
+            console.log( aclean(arr) ); // 'nap,teachers,ear' or 'PAN,cheaters,era'<br>
+        </code>
+    </p><br>
+
+    <p><b>Ответ</b>:<br><br>
+        Чтобы найти все анаграммы, давайте разобьём каждое слово на буквы и отсортируем их, 
+        а потом объединим получившийся массив снова в строку. После этого все анаграммы будут 
+        одинаковы.
+    </p><br>
+
+    <p class="code-ex">Например:<br>
+        <code>
+            nap, pan -> anp<br>
+            ear, era, are -> aer<br>
+            cheaters, hectares, teachers -> aceehrst<br>
+        </code>
+    </p>
+    <br>
+
+    <p>Мы будем использовать отсортированные строки как ключи в коллекции Map, для того чтобы 
+        сопоставить каждому ключу только одно значение:
+    </p><br>
+
+    <p class="code-ex">Например:<br>
+        <code>
+            function aclean(arr) {<br>
+                let map = new Map();<br>
+                <br>
+                for (let word of arr) {<br>
+                  // разбиваем слово на буквы, сортируем и объединяем снова в строку<br>
+                  <b>let sorted = word.toLowerCase().split('').sort().join('');</b> // (*)<br>
+                  map.set(sorted, word);<br>
+                }<br>
+                <br>
+                return Array.from(map.values());<br>
+            }<br>
+            <br>
+            let arr = ['nap', 'teachers', 'cheaters', 'PAN', 'ear', 'era', 'hectares'];<br>
+            <br>
+            console.log( aclean(arr) );<br>
+        </code>
+    </p><br>
+
+    <script>
+        function aclean(arr) {
+          let map = new Map();
+
+          for (let word of arr) {
+            // разбиваем слово на буквы, сортируем и объединяем снова в строку
+            let sorted = word.toLowerCase().split("").sort().join("");
+            map.set(sorted, word);
+          }
+
+          return Array.from(map.values());
+        }
+
+        let arr = ["nap", "teachers", "cheaters", "PAN", "ear", "era", "hectares"];
+
+        console.log( aclean(arr) );
+    </script>
+
+    <p>Строка с отсортированными буквами получается в результате цепочки вызовов в строке (*).<br>
+        Для удобства, давайте разделим это на несколько строк:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let sorted = arr[i] -взяли элемент: PAN<br>
+              .toLowerCase() -перевели всё в нижний регистр: pan<br>
+              .split("") // ["p","a","n"] -разбиваем слово на буквы<br>
+              .sort() // ["a","n","p"] -сортируем буквы<br>
+              .join(""); // anp -перевели снова у строку<br>
+        </code>
+    </p><br>
+
+    <p>Два разных слова 'PAN' и 'nap' принимают ту же самую форму после сортировки букв – 'anp'.</p><br>
+
+    <p>Следующая линия помещает слово в объект Map:<br>
+        map.set(sorted, word);<br>
+        Если мы когда-либо ещё встретим слово в той же отсортированной форме, тогда это слово 
+        перезапишет значение с тем же ключом в объекте. Таким образом, нескольким словам у нас 
+        будет всегда соответствовать одна отсортированная форма.<br>
+        В конце Array.from(map.values()) принимает итерируемый объект значений объекта Map (в 
+        данном случае нам не нужны ключи) и возвращает их в виде массива.<br>
+        Также в этом случае вместо Map мы можем использовать простой объект, потому что ключи 
+        являются строками.<br>
+        <br>
+        В этом случае решение может выглядеть так:<br>
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            function aclean(arr) {<br>
+                let obj = {};<br>
+                <br>
+                for (let i = 0; i < arr.length; i++) {<br>
+                  let sorted = arr[i].toLowerCase().split("").sort().join("");<br>
+                  <b>obj[sorted] = arr[i];</b><br>
+                }<br>
+                <br>
+                return Object.values(obj);
+              }<br>
+              <br>
+              let arr = ["nap", "teachers", "cheaters", "PAN", "ear", "era", "hectares"];<br>
+              <br>
+              console.log( aclean(arr) );<br>
+        </code>
+    </p><br>
+
+
+
+</body>
+
+</html>

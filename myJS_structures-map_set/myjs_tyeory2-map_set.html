@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-map_set: structures Map/Set</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-map_set: structures Map/Set</h2>
+
+    <h3>structure Map</h3>
+
+    <h4 class="task">Что такое структура: Map ?</h4>
+
+    <p><b>Ответ</b>:<br><br>
+        Мы знаем о следующих сложных структурах данных:<br>
+        Объекты для хранения именованных коллекций.<br>
+        Массивы для хранения упорядоченных коллекций.<br>
+        Но этого не всегда достаточно для решения повседневных задач. Поэтому также существуют Map и Set.<br>
+        <br>
+        <b>Map</b> – это коллекция ключ/значение, как и Object. Но основное отличие в том, что Map позволяет 
+        использовать ключи любого типа.
+    </p><br>
+
+    <p class="code-ex"><b>Методы и свойства Map:</b><br>
+        <code>
+            new Map() – создаёт коллекцию.<br>
+            map.set(key, value) – записывает по ключу key значение value.<br>
+            map.get(key) – возвращает значение по ключу или undefined, если ключ key отсутствует.<br>
+            map.has(key) – возвращает true, если ключ key присутствует в коллекции, иначе false.<br>
+            map.delete(key) – удаляет элемент по ключу key.<br>
+            map.clear() – очищает коллекцию от всех элементов.<br>
+            map.size – возвращает текущее количество элементов.<br>
+        </code>
+    </p><br>
+
+    <p>Можно использовать любые типы данных для ключей.</p><br>
+
+    <p><b>Map может использовать даже объекты в качестве ключей.</b></p><br>
+
+    <p class="code-ex" style="width: 65%;">Например:<br>
+        <code>
+            <b>let john = { name: 'John' };</b><br>
+            <br>
+            // давайте сохраним количество посещений для каждого пользователя<br>
+            let visitsCountMap = <b>new Map()</b>;<br>
+            <br>
+            // объект john - это ключ для значения в объекте Map<br>
+            visitsCountMap.<b>set(john, 1024)</b>;<br>
+            <br>
+           console.log(visitsCountMap.<b>get(john))</b>; // 1024<br>
+        </code>
+    </p><br>
+
+    <script>
+        let john = { name: "John" };
+        
+        // давайте сохраним количество посещений для каждого пользователя
+        let visitsCountMap = new Map();
+        
+        // объект john - это ключ для значения в объекте Map
+        visitsCountMap.set(john, 1024);
+            
+        console.log(visitsCountMap.get(john)); // 1024
+    </script>
+
+    <p>Использование объектов в качестве ключей – это одна из известных и часто применяемых 
+        возможностей объекта Map. При строковых ключах обычный объект Object может подойти, но для 
+        ключей-объектов – уже нет.<br>
+        Попробуем заменить Map на Object в примере выше:
+    </p><br>
+
+    <p class="code-ex" style="width: 65%;">Например:<br>
+        <code>
+            let john = { name: "John" };<br>
+            <br>
+            let visitsCountObj = <b>{}</b>; // попробуем использовать объект<br>
+            <br>
+            visitsCountObj[john] = 1024; // возьмём объект john как ключ<br>
+            <br>
+            // Вот как это было записано!<br>
+            console.log( visitsCountObj<b>['[object Object]']</b> ); // 1024<br>
+        </code>
+    </p><br>
+
+    <p>Так как visitsCountObj – это объект, то все ключи он автоматически преобразует к строке, в 
+        итоге получился строковой ключ "[object Object]". Это не то, чего мы хотим.
+    </p><br>
+
+    <p>Чтобы сравнивать ключи, объект Map использует алгоритм SameValueZero. Это почти такое же 
+        сравнение, что и ===, с той лишь разницей, что NaN считается равным NaN. Так что NaN также 
+        может использоваться в качестве ключа. Этот алгоритм не может быть заменён или модифицирован.<br>
+    </p><br>
+
+    <p>Каждый вызов map.set возвращает объект map, так что мы можем объединить вызовы в цепочку:</p><br>
+
+    <p class="code-ex">
+        <code>
+            map.set("1", "str1")<br>
+               .set(1, "num1")<br>
+               .set(true, "bool1");<br>
+        </code>
+    </p><br>
+
+    <p><b>Перебор Map</b></p><br>
+
+    <p>Для перебора коллекции Map есть 3 метода:</p><br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            <b>map.keys()</b> – возвращает итерируемый объект по ключам,<br>
+            <b>map.values()</b> – возвращает итерируемый объект по значениям,<br>
+            <b>map.entries()</b> – возвращает итерируемый объект по парам вида [ключ, значение], этот 
+            вариант используется по умолчанию в for..of.<br>
+            </code>
+    </p><br>
+
+    <p>В отличие от обычных объектов Object, в Map перебор происходит в том же порядке, в каком 
+        происходило добавление элементов.<br>
+        Кроме этого, Map имеет встроенный метод forEach, схожий со встроенным методом массивов Array.
+    </p><br>
+
+    <p><b>Object.entries: Map из Object</b></p><br>
+
+    <p>При создании Map мы можем указать массив (или другой итерируемый объект) с парами ключ-значение 
+        для инициализации, как здесь:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            // массив пар [ключ, значение]<br>
+            let map = new Map([<br>
+                ['1',  'str1'],<br>
+                [1,    'num1'],<br>
+                [true, 'bool1']<br>
+            ]);<br>
+            <br>
+            console.log( <b>map.get('1')</b> ); // str1<br>
+        </code>
+    </p><br>
+
+    <script>
+        // массив пар [ключ, значение]
+        let map2 = new Map([
+            ['1',  'str1'],
+            [1,    'num1'],
+            [true, 'bool1']
+        ]);
+
+        console.log( map2.get('1') ); // str1
+    </script>
+
+    <p>Если у нас уже есть обычный объект, и мы хотели бы создать Map из него, то поможет встроенный 
+        метод <b>Object.entries(obj)</b>, который получает объект и возвращает массив пар ключ-значение для 
+        него, как раз в этом формате.<br>
+        <br>
+        Так что мы можем создать Map из обычного объекта следующим образом:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let obj = {<br>
+                name: "John",<br>
+                age: 30<br>
+            };<br>
+            <br>  
+            let map = new Map(<b>Object.entries(obj)</b>);<br>
+        </code>
+    </p><br>
+
+    <p>Здесь Object.entries возвращает массив пар ключ-значение: [ ['name','John'], ['age', 30] ]. 
+        Это именно то, что нужно для создания Map.
+    </p><br>
+
+    <p><b>Object.fromEntries: Object из Map</b></p><br>
+
+    <p>Есть метод Object.fromEntries, который делает противоположное: получив массив пар вида 
+        [ключ, значение], он создаёт из них объект:
+    </p><br>
+
+    <p class="code-ex">Пример:<br>
+        <code>
+            let prices = <b>Object.fromEntries</b>([<br>
+            ['banana', 1],<br>
+            ['orange', 2],<br>
+            ['meat', 4]<br>
+            ]);<br>
+            <br>
+            // now prices = { banana: 1, orange: 2, meat: 4 }<br>
+            <br>
+            console.log(prices.orange); // 2<br>
+        </code>
+    </p><br>
+
+    <script>
+        let prices = Object.fromEntries([
+            ["banana", 1],
+            ["orange", 2],
+            ["meat", 4]
+        ]);
+
+        // now prices = { banana: 1, orange: 2, meat: 4 }
+        console.log(prices.orange); // 2
+    </script>
+
+    <p>Мы можем использовать Object.fromEntries, чтобы получить обычный объект из Map.<br>
+    К примеру, у нас данные в Map, но их нужно передать в сторонний код, который ожидает обычный объект.<br>
+        Вот как это сделать:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let map = new Map();<br>
+                map.set('banana', 1);<br>
+                map.set('orange', 2);<br>
+                map.set('meat', 4);<br>
+            <br>
+            let obj = <b>Object.fromEntries(map.entries())</b>; // make a plain object (*)<br>
+            <br>
+            // готово!<br>
+            // obj = { banana: 1, orange: 2, meat: 4 }<br>
+            <br>
+            console.log(obj.orange); // 2<br>
+        </code>
+    </p><br>
+
+    <script>
+        let map1 = new Map();
+            map1.set('banana', 1);
+            map1.set('orange', 2);
+            map1.set('meat', 4);
+
+        let obj1 = Object.fromEntries(map1.entries()); // make a plain object (*)
+
+        // готово!
+        // obj = { banana: 1, orange: 2, meat: 4 }
+        console.log(obj1.orange); // 2
+    </script>
+
+    <p>Вызов map.entries() возвращает массив пар ключ/значение, как раз в нужном формате для 
+        Object.fromEntries.<br>
+        Мы могли бы написать строку (*) ещё короче:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let obj = Object.fromEntries(map); // убрать .entries()<br>
+        </code>
+    </p><br>
+
+    <p>Это то же самое, так как Object.fromEntries ожидает перебираемый объект в качестве аргумента, 
+        не обязательно массив. А перебор map как раз возвращает пары ключ/значение, так же, как и 
+        map.entries(). Так что в итоге у нас будет обычный объект с теми же ключами/значениями, что 
+        и в map.
+    </p><br>
+
+    <h3>structure Set</h3>
+
+    <h4 class="task">Что такое структура: Set ?</h4>
+
+    <p><b>Ответ</b>:<br><br>
+        Объект <b>Set</b> – это особый вид коллекции: «множество» значений (без ключей), где каждое 
+        значение может появляться только один раз.
+    </p><br>
+
+    <p class="code-ex" style="width: 60%;"><b>Методы Set:</b><br>
+        <code>
+            new Set(iterable) – создаёт Set, и если в качестве аргумента был предоставлен 
+            итерируемый объект (обычно это массив), то копирует его значения в новый Set.<br>
+            set.add(value) – добавляет значение (если оно уже есть, то ничего не делает), возвращает тот же объект set.<br>
+            set.delete(value) – удаляет значение, возвращает true если value было в множестве на момент вызова, иначе false.<br>
+            set.has(value) – возвращает true, если значение присутствует в множестве, иначе false.<br>
+            set.clear() – удаляет все имеющиеся значения.<br>
+            set.size – возвращает количество элементов в множестве.<br>
+        </code>
+    </p><br>
+
+    <p>Основная «изюминка» – это то, что при повторных вызовах set.add() с одним и тем же значением 
+        ничего не происходит, за счёт этого как раз и получается, что каждое значение появляется один 
+        раз.
+    </p><br>
+
+    <h4 class="task">Мы ожидаем посетителей, и нам необходимо составить их список. Но повторные визиты 
+        не должны приводить к дубликатам. Каждый посетитель должен появиться в списке только один раз.
+    </h4>
+
+    <p><b>Решение</b>:</p><br><br>
+
+    <p>Множество Set – как раз то, что нужно для этого:</p><br>
+
+    <p class="code-ex" style="width: 65%;"><b>Методы Set:</b><br>
+        <code>
+            let set = new Set();<br>
+            <br>
+            let john = { name: "John" };<br>
+            let pete = { name: "Pete" };<br>
+            let mary = { name: "Mary" };<br>
+            <br>
+            // считаем гостей, некоторые приходят несколько раз<br>
+            set.add(john);<br>
+            set.add(pete);<br>
+            set.add(mary);<br>
+            set.add(john);<br>
+            set.add(mary);<br>
+            <br>
+            // set хранит только 3 уникальных значения<br>
+            console.log(set.size); // 3<br>
+            <br>
+            for (let user of set) {<br>
+                console.log(user.name); // John (потом Pete и Mary)<br>
+            }<br>
+        </code>
+    </p><br>
+
+    <script>
+        let set = new Set();
+
+        let brian = { name: "Brian" };
+        let pete = { name: "Pete" };
+        let mary = { name: "Mary" };
+
+        // считаем гостей, некоторые приходят несколько раз
+        set.add(brian);
+        set.add(pete);
+        set.add(mary);
+        set.add(brian);
+        set.add(mary);
+
+        // set хранит только 3 уникальных значения
+        console.log(set.size); // 3
+
+        for (let user of set) {
+            console.log(user.name); // Brian (потом Pete и Mary)
+        }
+    </script>
+
+    <p>Альтернативой множеству Set может выступать массив для хранения гостей и дополнительный 
+        код для проверки уже имеющегося элемента с помощью arr.find. Но в этом случае будет хуже 
+        производительность, потому что arr.find проходит весь массив для проверки наличия элемента. 
+        Множество Set лучше оптимизировано для добавлений, оно автоматически проверяет на уникальность.
+    </p><br>
+
+    <p><b>Перебор объекта Set</b></p><br>
+
+    <p>Мы можем перебрать содержимое объекта set как с помощью метода for..of, так и используя forEach:</p><br>
+
+    <p class="code-ex">
+        <code>
+            let set = new Set(['апельсин', 'яблоко', 'банан']);<br>
+            <br>
+            for (let value of set) console.log(value);<br>
+            <br>
+            // то же самое с forEach:<br>
+            set.forEach((value, valueAgain, set) => {<br>
+            console.log(value);<br>
+            });<br>
+        </code>
+    </p><br>
+
+    <p>Заметим забавную вещь. Функция в forEach у Set имеет 3 аргумента: значение value, потом снова 
+        то же самое значение valueAgain, и только потом целевой объект. Это действительно так, значение 
+        появляется в списке аргументов дважды.<br>
+        Это сделано для совместимости с объектом Map, в котором колбэк forEach имеет 3 аргумента. 
+        Выглядит немного странно, но в некоторых случаях может помочь легко заменить Map на Set и 
+        наоборот.
+    </p><br>
+
+    <p>Set имеет те же встроенные методы, что и Map:</p><br>
+
+    <p class="code-ex" style="width: 65%;">
+        <code>
+            <b>set.keys()</b> – возвращает перебираемый объект для значений,<br>
+            <b>set.values()</b> – то же самое, что и set.keys(), присутствует для обратной совместимости с Map,<br>
+            <b>set.entries()</b> – возвращает перебираемый объект для пар вида [значение, значение], 
+            присутствует для обратной совместимости с Map.<br>
+        </code>
+    </p><br>
+
+    <h3>Итого</h3>
+
+    <p>Map – коллекция пар ключ-значение.<br>
+        <br>
+        Методы и свойства:<br>
+        new Map([iterable]) – создаёт коллекцию, можно указать перебираемый объект (обычно массив) 
+        из пар [ключ,значение] для инициализации.<br>
+        map.set(key, value) – записывает по ключу key значение value.<br>
+        map.get(key) – возвращает значение по ключу или undefined, если ключ key отсутствует.<br>
+        map.has(key) – возвращает true, если ключ key присутствует в коллекции, иначе false.<br>
+        map.delete(key) – удаляет элемент по ключу key.<br>
+        map.clear() – очищает коллекцию от всех элементов.<br>
+        map.size – возвращает текущее количество элементов.<br>
+        <br>
+        Отличия от обычного объекта Object:<br>
+        Что угодно может быть ключом, в том числе и объекты.<br>
+        Есть дополнительные методы, свойство size.
+    </p><br>
+
+    <p>Set – коллекция уникальных значений, так называемое «множество».<br>
+        <br>
+        Методы и свойства:<br>
+        new Set([iterable]) – создаёт Set, можно указать перебираемый объект со значениями для 
+        инициализации.<br>
+        set.add(value) – добавляет значение (если оно уже есть, то ничего не делает), возвращает 
+        тот же объект set.<br>
+        set.delete(value) – удаляет значение, возвращает true если value было в множестве на момент 
+        вызова, иначе false.<br>
+        set.has(value) – возвращает true, если значение присутствует в множестве, иначе false.<br>
+        set.clear() – удаляет все имеющиеся значения.<br>
+        set.size – возвращает количество элементов в множестве.
+    </p><br>
+
+    <p>Перебор Map и Set всегда осуществляется в порядке добавления элементов, так что нельзя сказать, 
+        что это – неупорядоченные коллекции, но поменять порядок элементов или получить элемент 
+        напрямую по его номеру нельзя.
+    </p><br>
+
+</body>
+
+</html>

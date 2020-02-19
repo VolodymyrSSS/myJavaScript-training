@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-arrays: structures: map-set: Фильтрация уникальных элементов массива</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-structures: map-set: Фильтрация уникальных элементов массива</h2>
+
+    <h4 class="task">У нас есть массив arr.<br>
+        Создайте функцию unique(arr), которая вернёт массив уникальных, не повторяющихся значений 
+        массива arr. Используйте Set для хранения уникальных значений.
+    </h4>
+
+    <p class="code-ex">Например:<br>
+        <code>
+            function unique(arr) {<br>
+              /* ваш код */<br>
+            }<br>
+            <br>
+            // Здесь мы используем строки, но значения могут быть любого типа.<br>
+            let values = [<br>
+                'Hare', 'Krishna', 'Hare', 'Krishna',<br>
+                'Krishna', 'Krishna', 'Hare', 'Hare', ':-O'<br>
+            ];<br>
+            <br>  
+            console.log( unique(values) ); // Hare, Krishna, :-O<br>
+        </code>
+    </p>
+    <br>
+
+    <p><b>Ответ</b>:<br><br>
+        Как мы видим, мы получаем массив строк - итерированный объект.<br>
+        Для решения задачи используем универсальный метод <b>Array.from</b>, который принимает итерируемый 
+        объект или псевдомассив и делает из него «настоящий» Array. После этого мы уже можем использовать 
+        методы массивов. Более полный синтаксис: Array.from(obj[, mapFn, thisArg]) - необязательные 
+        аргументы mapFn и thisArg позволяют применять функцию с задаваемым контекстом к каждому 
+        элементу. Но это пока для задачи не актуально.<br>
+        Array.from принимает объект, проверяет, является ли он итерируемым объектом или псевдомассивом, 
+        затем создаёт новый массив и копирует туда все элементы.<br>
+        А для создания массива с уникальными значениями используем метод <b>new Set(iterable)</b>, который 
+        создаёт Set («множество» значений без ключей), и если в качестве аргумента был предоставлен итерируемый объект (обычно это массив), 
+        то копирует его значения в новый Set.<br>
+        Таким образом функция получит вид:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            function unique(arr) {<br>
+                return <b>Array.from(new Set(arr))</b>;<br>
+              }<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        function unique(arr) {
+            return Array.from(new Set(arr));
+        }
+            
+        let values = [
+            "Hare", "Krishna", "Hare", "Krishna",
+            "Krishna", "Krishna", "Hare", "Hare", ":-O"
+        ];
+        
+        console.log( unique(values) ); // [ Hare, Krishna, :-O ]
+    </script>
+
+</body>
+
+</html>

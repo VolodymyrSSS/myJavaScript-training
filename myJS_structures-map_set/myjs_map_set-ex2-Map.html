@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-map_set: exercise: перебор коллекции Мар</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-map_set: exercise: перебор коллекции Мар</h2>
+
+    <h4 class="task">У нас есть коллекция данных для одного рецепта созданное на основе структуры Мар. 
+        Выполните перебор элементов этой коллекции отдельно по ключам, помом по значениям и наконец - 
+        по парам вида ключ/значение и выведите результаты в консоль.
+    </h4>
+
+    <p class="code-ex">Например:<br>
+        <code>
+            let recipeMap = <b>new Map</b>([<br>
+                ['огурец', 500],<br>
+                ['помидор', 350],<br>
+                ['лук',    50]<br>
+            ]);<br>
+        </code>
+    </p><br>
+
+    <p><b>Ответ</b>:<br><br>
+        Map – это коллекция ключ/значение, как и Object. Но основное отличие в том, что Map позволяет 
+        использовать ключи любого типа.<br>
+        Для перебора коллекции Map есть 3 метода:<br>
+        <b>map.keys(</b>) – возвращает итерируемый объект по ключам,<br>
+        <b>map.values()</b> – возвращает итерируемый объект по значениям,<br>
+        <b>map.entries()</b> – возвращает итерируемый объект по парам вида [ключ, значение], 
+        этот вариант используется по умолчанию в for..of.<br>
+        Используем эти методы для решения задачи:<br>
+    </p><br>
+
+    <p class="code-ex" style="width: 70%;">
+        <code>
+            let recipeMap = new Map([<br>
+                ['огурец', 500],<br>
+                ['помидор', 350],<br>
+                ['лук',    50]<br>
+            ]);<br>
+            <br>
+            // перебор по ключам (овощи)<br>
+            for (let vegetable of <b>recipeMap.keys()</b>) {<br>
+                console.log(vegetable); // огурец, помидор, лук<br>
+            }<br>
+            <br>
+            // перебор по значениям (числа)<br>
+            for (let amount of <b>recipeMap.values()</b>) {<br>
+                console.log(amount); // 500, 350, 50<br>
+            }<br>
+            <br>
+            // перебор по элементам в формате [ключ, значение]<br>
+            for (let entry of recipeMap) { // то же самое, что и <b>recipeMap.entries()</b><br>
+                console.log(entry); // [ огурец,500 ] ["помидор", 350] ["лук", 50]<br>
+            }<br>
+        </code>
+    </p><br>
+
+    <script>
+        let recipeMap = new Map([
+            ["огурец", 500],
+            ["помидор", 350],
+            ["лук",    50]
+        ]);
+
+        // перебор по ключам (овощи)
+        for (let vegetable of recipeMap.keys()) {
+            console.log(vegetable); // огурец, помидор, лук
+        }
+
+        // перебор по значениям (числа)
+        for (let amount of recipeMap.values()) {
+            console.log(amount); // 500, 350, 50
+        }
+
+        // перебор по элементам в формате [ключ, значение]
+        for (let entry of recipeMap) { // то же самое, что и recipeMap.entries()
+            console.log(entry); // огурец,500 (и так далее)
+        }
+    </script>
+
+    <p>В отличие от обычных объектов Object, в Map перебор происходит в том же порядке, в каком 
+        происходило добавление элементов.<br>
+        Кроме этого, Map имеет встроенный метод forEach, схожий со встроенным методом массивов Array:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            // выполняем функцию для каждой пары (ключ, значение)<br>
+            recipeMap<b>.forEach</b>((value, key, map) => {<br>
+                console.log(`${key}: ${value}`); // отдельно огурец: 500 помидор: 350 и лук: 50<br>
+            });<br>
+        </code>
+    </p><br>
+
+    <script>
+        recipeMap.forEach((value, key, map) => {
+            console.log(`${key}: ${value}`); // отдельно огурец: 500 помидор: 350 и лук: 50
+        });
+    </script>
+
+</body>
+
+</html>
