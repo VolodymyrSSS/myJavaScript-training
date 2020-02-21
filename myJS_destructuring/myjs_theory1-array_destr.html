@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-destructuring: Деструктуризация массива</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-destructuring: Деструктуризация массива</h2>
+
+    <p>В JavaScript есть две чаще всего используемые структуры данных – это Object и Array. Объекты 
+        позволяют нам создавать одну сущность, которая хранит элементы данных по ключам, а массивы – 
+        хранить упорядоченные коллекции данных. Но когда мы передаём их в функцию, то ей может понадобиться 
+        не объект/массив целиком, а элементы по отдельности.<br>
+        <b>Деструктурирующее присваивание</b> – это специальный синтаксис, который позволяет нам «распаковать» 
+        массивы или объекты в кучу переменных, так как иногда они более удобны. Деструктуризация также 
+        прекрасно работает со сложными функциями, которые имеют много параметров, значений по умолчанию и так 
+        далее.
+    </p><br>
+
+
+    <p>Пример деструктуризации массива:</p><br>
+
+    <p class="code-ex">
+        <code>
+            // у нас есть массив с именем и фамилией<br>
+            let arr = ["James", "Bond"]<br>
+            <br>
+            // деструктурирующее присваивание записывает firstName=arr[0], surname=arr[1]<br>
+            <b>let [firstName, surname] = arr;</b><br>
+            <br>
+            console.log(firstName); // James<br>
+            console.log(surname);  // Bond<br>
+        </code>
+    </p>
+    <br>
+
+    <script>
+        // у нас есть массив с именем и фамилией
+        let arr = ["James", "Bond"]
+
+        // деструктурирующее присваивание записывает firstName=arr[0], surname=arr[1]
+        let [firstName, surname] = arr;
+
+        console.log(firstName); // James
+        console.log(surname);  // Bond
+    </script>
+
+    <p>Теперь мы можем использовать переменные вместо элементов массива.<br>
+        Отлично смотрится в сочетании со split или другими методами, возвращающими массив:
+    </p><br>
+
+    <p class="code-ex"><br>
+        <code>
+            let [firstName, surname] = 'Ilya Kantor'.split(' ');<br>
+        </code>
+    </p><br>
+
+    <p>«Деструктурирующее присваивание» не уничтожает массив. Оно вообще ничего не делает с правой частью 
+        присваивания, его <b>задача – только скопировать нужные значения в переменные</b>.<br>
+        Это просто короткий вариант записи:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            // let [firstName, surname] = arr;<br>
+            <b>let firstName = arr[0];<br>
+            let surname = arr[1];</b><br>
+        </code>
+    </p><br>
+
+    <p>Ненужные элементы массива также могут быть отброшены через запятую:</p><br>
+
+    <p class="code-ex">
+        <code>
+            // второй элемент не нужен<br>
+            let [firstName, , title] = ['Julius', 'Caesar', 'Consul', 'of the Roman Republic'];<br>
+            <br>
+            console.log( title ); // Consul<br>
+        </code>
+    </p><br>
+
+    <script>
+        // второй элемент не нужен
+        let [firstName2, , title] = ["Julius", "Caesar", "Consul", "of the Roman Republic"];
+
+        console.log( title ); // Consul
+    </script>
+
+    <p>В примере выше второй элемент массива пропускается, а третий присваивается переменной title, 
+        оставшиеся элементы массива также пропускаются (так как для них нет переменных).
+    </p><br>
+
+    <p>На самом деле мы можем использовать любой перебираемый объект, не только массивы:</p><br>
+
+    <p class="code-ex">
+        <code>
+            let [a, b, c] = 'abc';<br>
+            let [one, two, three] = new Set([1, 2, 3]);<br>
+        </code>
+    </p><br>
+
+    <p>Мы можем использовать что угодно «присваивающее» с левой стороны.<br>
+        Например, можно присвоить свойству объекта:
+    </p>
+
+    <p class="code-ex" style="width: 63%;">
+        <code>
+            let user = {};<br>
+            [user.name, user.surname] = "Sigizmund Evstachovich".split(' ');<br>
+            <br>
+            console.log(user.name); // Sigizmund<br>
+        </code>
+    </p><br>
+
+    <script>
+        let user = {};
+        [user.name, user.surname] = "Sigizmund Evstachovich".split(' ');
+
+            console.log(user.name); // Sigizmund
+    </script>
+
+    <p>Мы можем использовать метод Object.entries(obj) c деструктуризацией для цикличного перебора ключей и 
+        значений объекта:
+    </p><br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            let user = {<br>
+                name: 'Modest',<br>
+                age: 50<br>
+            };<br>
+            <br>
+            // цикл по ключам и значениям<br>
+            for (let [key, value] of Object.entries(user)) {<br>
+                console.log(`${key}:${value}`); // name:John, then age:30<br>
+            }<br>
+        </code>
+    </p><br>
+
+    <script>
+        let user3 = {
+          name: "Modest",
+          age: 50
+        };
+        
+        // цикл по ключам и значениям
+        for (let [key, value] of Object.entries(user3)) {
+            console.log(`${key}:${value}`); // name:Modest, потом age:50
+        }
+    </script>
+
+    <p>то же самое для map:</p><br>
+
+    <p class="code-ex">
+        <code>
+            let user = new Map();<br>
+            user.set('name', 'Kazumi');<br>
+            user.set('age', '45');<br>
+            <br>
+            for (let [key, value] of user) {<br>
+                console.log(`${key}:${value}`); // name:Kazumi, then age:45<br>
+            }<br>
+        </code>
+    </p><br>
+
+    <script>
+        let user4 = new Map();
+        user4.set("name", "Kazumi");
+        user4.set("age", "45");
+
+        for (let [key, value] of user4) {
+          console.log(`${key}:${value}`); // name:Kazumi, then age:45
+        }
+    </script>
+
+    <h3>Остаточные параметры «…»</h3>
+
+    <p>Если мы хотим не просто получить первые значения, но и собрать все остальные, то мы можем добавить 
+        ещё один параметр, который получает остальные значения, используя оператор «остаточные параметры» – 
+        троеточие ('...'):
+    </p><br>
+
+    <p class="code-ex" style="width: 85%;">
+        <code>
+            let [name1, name2, <b>...rest</b>] = ['Julius', 'Caesar', <b>'Consul', 'of the Roman Republic'</b>];
+
+            console.log(name1); // Julius<br>
+            console.log(name2); // Caesar<br>
+            <br>
+            // Обратите внимание, что 'rest' является массивом.<br>
+            console.log(rest[0]); // Consul<br>
+            console.log(rest[1]); // of the Roman Republic<br>
+            console.log(rest.length); // 2<br>
+        </code>
+    </p><br>
+
+    <script>
+        let [name1, name2, ...rest] = ["Julius", "Caesar", "Consul", "of the Roman Republic"];
+
+        console.log(name1); // Julius
+        console.log(name2); // Caesar
+
+        console.log(rest[0]); // Consul
+        console.log(rest[1]); // of the Roman Republic
+        console.log(rest.length); // 2
+    </script>
+
+    <p>Переменная rest является массивом из оставшихся элементов. Вместо rest можно использовать любое 
+        другое название переменной, просто убедитесь, что перед переменной есть три точки и она стоит на 
+        последнем месте в деструктурирующем присваивании.
+    </p><br>
+
+    <h3>Значения по умолчанию</h3>
+
+    <p>Если в массиве меньше значений, чем в присваивании, то ошибки не будет. Отсутствующие значения 
+        считаются неопределёнными:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let [firstName, surname] = <b>[];</b><br>
+            <br>
+            console.log(firstName); // <b>undefined</b><br>
+            console.log(surname); // <b>undefined</b><br>
+        </code>
+    </p><br>
+
+    <script>
+        let [firstName3, surname3] = [];
+
+        console.log(firstName3); // undefined
+        console.log(surname3); // undefined
+    </script>
+
+    <p>Если нам необходимо указать значения по умолчанию, то мы можем использовать = (в левой её части):</p><br>
+
+    <p class="code-ex" style="width: 75%;">
+        <code>
+            // значения по умолчанию<br>
+            let [<b>name4 = "Guest", surname4 = "Anonymous"</b>] = ["Julius"];<br>
+            <br>
+            console.log(name4);    // Julius -из массива<br>
+            console.log(surname4); // <b>Anonymous</b> -значение по умолчанию<br>
+        </code>
+    </p><br>
+
+    <script>
+        // значения по умолчанию
+        let [name4 = "Guest", surname4 = "Anonymous"] = ["Julius"];
+
+        console.log(name4);    // Julius (из массива)
+        console.log(surname4); // Anonymous (значение по умолчанию)
+    </script>
+
+    <p>Значения по умолчанию могут быть гораздо более сложными выражениями или даже функциями. Они 
+        выполняются, только если значения отсутствуют.<br>
+        <br>
+        Например, здесь мы используем функцию prompt для указания двух значений по умолчанию. Но она будет 
+        запущена только для отсутствующего значения:
+    </p><br>
+
+    <p class="code-ex" style="width: 75%;">
+        <code>
+            // prompt запустится только для surname<br>
+            let [<b>name = prompt('name?'), surname = prompt('surname?')</b>] = ['Julius'];<br>
+            <br>
+            console.log(name);    // Julius (из массива)<br>
+            console.log(surname); // результат prompt<br>
+        </code>
+    </p><br>
+
+    <script>
+        // prompt запустится только для surname
+        let [name5 = prompt("name?"), surname5 = prompt("surname?")] = ["Julius"];
+
+        console.log(name5);    // Julius
+        console.log(surname5); // результат prompt
+    </script>
+
+
+</body>
+
+</html>

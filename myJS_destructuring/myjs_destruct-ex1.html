@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-destructuring: exercise Деструктурирующее присваивание</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-destructuring: exercise Деструктурирующее присваивание</h2>
+
+    <h4 class="task">У нас есть объект 'user'. Напишите деструктурирующее присваивание, которое:<br>
+        свойство name присвоит в переменную name.<br>
+        свойство years присвоит в переменную age.<br>
+        свойство isAdmin присвоит в переменную isAdmin (false, если нет такого свойства)<br>
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            let user = {<br>
+                name: 'Amamadoo',<br>
+                years: 55<br>
+              };<br>
+        </code>
+    </p><br>
+
+    <p>Пример переменных после вашего присваивания:</p><br>
+
+    <p class="code-ex">
+        <code>
+            let user = { name: 'Amamadoo', years: 55 };<br>
+            <br>
+            // ваш код должен быть с левой стороны:<br>
+            // ... = user<br>
+            <br>
+            console.log( name ); // Amamadoo<br>
+            console.log( age ); // 55<br>
+            console.log( isAdmin ); // false<br>
+        </code>
+    </p><br>
+
+    <script>
+        let messages = [
+            {text: "Hello", from: "John"},
+            {text: "How goes?", from: "John"},
+            {text: "See you soon", from: "Alice"}
+        ];
+    </script>
+
+    <p><b>Решение</b>:<br><br>
+        Для решения задачи используем обычное деструктурирование:
+    </p><br>
+
+    <p class="code-ex" style="width: 75%;">
+        <code>
+            let user = { name: 'Amamadoo', years: 55 };<br>
+            <br>
+            // для значения по умолчанию используем =<br>
+            <b>let {name, years: age, isAdmin = false} = user;</b>l<br>
+            <br>
+            console.log( name ); // Amamadoo<br>
+            console.log( age ); // 55<br>
+            console.log( isAdmin ); // false<br>
+        </code>
+    </p><br>
+
+    <script>
+        let user = { 
+            name: 'Amamadoo', 
+            years: 55 
+        };
+        
+        let {name, years: age, isAdmin = false} = user;
+        
+        console.log( name ); // Amamadoo
+        console.log( age ); // 55
+        console.log( isAdmin ); // false
+    </script>
+
+</body>
+
+</html>

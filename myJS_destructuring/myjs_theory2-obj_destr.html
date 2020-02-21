@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-destructuring: Деструктуризация объекта</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-destructuring: Деструктуризация объекта</h2>
+
+    <p>В JavaScript есть две чаще всего используемые структуры данных – это Object и Array. Объекты 
+        позволяют нам создавать одну сущность, которая хранит элементы данных по ключам, а массивы – 
+        хранить упорядоченные коллекции данных. Но когда мы передаём их в функцию, то ей может понадобиться 
+        не объект/массив целиком, а элементы по отдельности.<br>
+        <b>Деструктурирующее присваивание</b> – это специальный синтаксис, который позволяет нам «распаковать» 
+        массивы или объекты в кучу переменных, так как иногда они более удобны. Деструктуризация также 
+        прекрасно работает со сложными функциями, которые имеют много параметров, значений по умолчанию и так 
+        далее.
+    </p><br>
+
+
+    <p>Вот синтаксис деструктурирующего присваивания с объектами.</p><br>
+
+    <p class="code-ex">Синтаксис:<br>
+        <code>
+            let {var1, var2} = {var1:…, var2:…}<br>
+        </code>
+    </p><br>
+
+    <p>У нас есть существующий объект с правой стороны, который мы хотим разделить на переменные. 
+        Левая сторона содержит «шаблон» для соответствующих свойств. В простом случае это список 
+        названий переменных в {...}.
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let options = {<br>
+                title: 'Menu',<br>
+                width: 100,<br>
+                height: 200<br>
+            };<br>
+            <br>
+            <b>let {title, width, height} = options;</b><br>
+            <br>
+            console.log(title);  // Menu<br>
+            console.log(width);  // 100<br>
+            console.log(height); // 200<br>
+        </code>
+    </p><br>
+
+    <script>
+        let options = {
+            title: "Menu",
+            width: 100,
+            height: 200
+        };
+
+        let {title, width, height} = options;
+
+        console.log(title);  // Menu
+        console.log(width);  // 100
+        console.log(height); // 200
+    </script>
+
+    <p>Свойства options.title, options.width и options.height присваиваются соответствующим переменным. 
+        Порядок не имеет значения. Вот так – тоже работает:
+    </p><br>
+
+    <p class="code-ex" style="width: 75%;">
+        <code>
+            // изменён порядок в let {...}<br>
+            let {height, width, title} = { title: "Menu", height: 200, width: 100 }<br>
+        </code>
+    </p><br>
+
+    <p>Если мы хотим присвоить свойство объекта переменной с другим названием, например, свойство 
+        options.width присвоить переменной w, то мы можем использовать двоеточие:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let options = {<br>
+                title: 'Menu',<br>
+                width: 100,<br>
+                height: 200<br>
+            };<br>
+            <br>
+            // { sourceProperty: targetVariable }<br>
+            let {<b>width: w, height: h, title</b>} = options;<br>
+            <br>
+            // width -> w<br>
+            // height -> h<br>
+            // title -> title<br>
+            <br>
+            console.log(title);  // Menu<br>
+            console.log(<b>w</b>);      // <b>100</b><br>
+            console.log(h);      // 200<br>
+        </code>
+    </p><br>
+
+    <script>
+        let options2 = {
+          title2: "Menu",
+          width2: 50,
+          height2: 100
+        };
+              
+        // { sourceProperty: targetVariable }
+        let {width2: w2, height2: h2, title2} = options2;
+                
+        console.log(title2);  // Menu
+        console.log(w2);      // 50
+        console.log(h2);      // 100
+    </script>
+
+    <p>Двоеточие показывает «что : куда идёт». В примере выше свойство width сохраняется в переменную w, 
+        свойство height сохраняется в h, а title присваивается одноимённой переменной.
+    </p><br>
+
+    <p>Для потенциально отсутствующих свойств мы можем установить значения по умолчанию, используя '='', как здесь:</p><br>
+
+    <p class="code-ex">
+        <code>
+            let options = {<br>
+              title: 'Menu'<br>
+            };<br>
+            <br>
+            let {<b>width = 250, height = 380,</b> title} = options;<br>
+            <br>
+            console.log(title);  // Menu<br>
+            console.log(<b>width</b>);  // 250<br>
+            console.log(<b>height</b>); // 380<br>
+        </code>
+    </p><br>
+
+    <script>
+        let options3 = {
+          title3: "Menu"
+        };
+        
+        let {width3 = 250, height3 = 380, title3} = options3;
+            
+        console.log(title3);  // Menu
+        console.log(width3);  // 250
+        console.log(height3); // 380
+    </script>
+
+    <p>Как и в случае с массивами, значениями по умолчанию могут быть любые выражения или даже функции. 
+        Они выполнятся, если значения отсутствуют.<br>
+        <br>
+        В коде ниже prompt запросит width, но не title:
+    </p><br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            let options = {<br>
+                title: "Menu"<br>
+              };<br>
+              <br>
+              let {<b>width = prompt('width?'), title = prompt('title?')</b>} = options;<br>
+              <br>
+              console.log(title);  // Menu<br>
+              console.log(<b>width);  // (результат prompt)</b><br>
+        </code>
+    </p><br>
+
+    <p>Мы также можем совмещать : и =:</p><br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            let options = {<br>
+              title: "Our poster"<br>
+            };<br>
+            <br>
+            let {<b>width: w = 520</b>, height: h = 810, title} = options4;<br>
+            <br>
+            console.log(title);  // Our poster<br>
+            console.log(<b>w</b>);      // <b>520</b><br>
+            console.log(h);      // 810<br>
+        </code>
+    </p><br>
+
+    <script>
+        let options4 = {
+          title4: "Our poster"
+        };
+
+        let {width: w4 = 520, height: h4 = 810, title4} = options4;
+
+        console.log(title4);  // Our poster
+        console.log(w4);      // 520
+        console.log(h4);      // 810
+    </script>
+
+    <p>Если у нас есть большой объект с множеством свойств, можно взять только то, что нужно:</p><br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            let options = {<br>
+                title: 'Banner',<br>
+                width: 1235,<br>
+                height: 921<br>
+              };<br>
+              <br>
+              // взять только title, игнорировать остальное<br>
+              <b>let { title } = options;</b><br>
+              <br>
+              console.log(title); // Banner<br>
+        </code>
+    </p><br>
+
+    <script>
+        let options5 = {
+          title5: "Banner",
+          width5: 1235,
+          height5: 921
+        };
+
+        // взять только title, игнорировать остальное
+        let { title5 } = options5;
+
+        console.log(title5); // Banner
+    </script>
+
+    <h3>Остаток объекта «…»</h3>
+
+    <p>Что если в объекте больше свойств, чем у нас переменных? Можем ли мы взять необходимые нам, а 
+        остальные присвоить куда-нибудь? Можно использовать троеточие, как и для массивов. В некоторых 
+        старых браузерах (IE) это не поддерживается, используйте Babel для полифила.<br>
+        <br>
+        Выглядит так:<br>
+    </p><br>
+
+    <p class="code-ex" style="width: 75%;">
+        <code>
+            let commercial = {<br>
+                slogan: 'Our houses are the best',<br>
+                height: 600,<br>
+                width: 250,<br>
+                color: 'yellow',<br>
+                frame: 'aluminium'<br>
+            };<br>
+            <br>
+            // slogan = свойство с именем slogan<br>
+            // rest = объект с остальными свойствами<br>
+            <b>let {slogan, ...rest} = commercial;</b><br>
+            <br>
+            // сейчас title='Our houses are the best', rest={height: 600, width: 250, color: 'yellow', frame: 'aluminium'}<br>
+            console.log(rest.height);  // 600<br>
+            console.log(rest.color);   // yellow<br>
+        </code>
+    </p><br>
+
+    <script>
+        let commercial = {
+          slogan: "Our houses are the best",
+          height: 600,
+          width: 250,
+          color: "yellow",
+          frame: "aluminium"
+        };
+
+        // slogan = свойство с именем slogan
+        // rest = объект с остальными свойствами
+        let {slogan, ...rest} = commercial;
+
+        // сейчас title="Our houses are the best", rest={height: 600, width: 250, color: 'yellow', frame: 'aluminium'}
+        console.log(rest.height);  // 600
+        console.log(rest.color);   // yellow
+    </script>
+
+    <p>Обратите внимание на let. В примерах выше переменные были объявлены в присваивании:<br> 
+        <b>let {…} = {…}</b>.<br> 
+        Конечно, мы могли бы использовать существующие переменные и не указывать let, но тут есть подвох.<br>
+        Вот так не будет работать:<br>
+    </p><br>
+
+    <p class="code-ex" style="width: 75%;">
+        <code>
+            let title, width, height;<br>
+            <br>
+            // ошибки будет в этой строке<br>
+            <b>{</b>title, width, height<b>}</b> = {title: 'Menu', width: 200, height: 100};<br>
+        </code>
+    </p><br>
+
+    <p>Проблема в том, что JavaScript обрабатывает {...} в основном потоке кода (не внутри другого 
+        выражения) как блок кода. Такие блоки кода могут быть использованы для группировки операторов.<br>
+        Так что здесь JavaScript считает, что видит блок кода, отсюда и ошибка. На самом-то деле у нас 
+        деструктуризация. Чтобы показать JavaScript, что это не блок кода, мы можем заключить выражение 
+        в скобки (...):
+    </p><br>
+
+    <p class="code-ex" style="width: 75%;">
+        <code>
+            let title, width, height;<br>
+            <br>
+            // сейчас всё работает<br>
+            <b>({</b>title, width, height<b>})</b> = {title: 'Menu', width: 200, height: 100};<br>
+        </code>
+    </p><br>
+
+
+    <h3>Вложенная деструктуризация</h3>
+
+    <p>Если объект или массив содержит другие вложенные объекты или массивы, то мы можем использовать 
+        более сложные шаблоны с левой стороны, чтобы извлечь более глубокие свойства.
+    </p><br>
+
+    <p>В приведённом ниже коде options хранит другой объект в свойстве size и массив в свойстве items. 
+        Шаблон в левой части присваивания имеет такую же структуру, чтобы извлечь данные из них:
+    </p><br>
+
+    <p class="code-ex" style="width: 65%;">
+        <code>
+            let options = {<br>
+                size: {<br>
+                    width: 100,<br>
+                    height: 200<br>
+                },<br>
+                items: ['Cake', 'Donut'],<br>
+                extra: true<br>
+            };<br>
+            <br>
+            // деструктуризация разбита на несколько строк для ясности<br>
+            let {<br>
+                size: { -положим size сюда<br>
+                    width,<br>
+                    height<br>
+                },<br>
+                items: [item1, item2], -добавим элементы к items<br>
+                title = 'Menu' -отсутствует в объекте, используется значение по умолчанию<br>
+            } = options6;<br>
+            <br>
+            console.log(title6);  // Menu<br>
+            console.log(width6);  // 100<br>
+            console.log(height6); // 200<br>
+            console.log(item1);  // Cake<br>
+            console.log(item2);  // Donut<br>
+        </code>
+    </p><br>
+
+    <script>
+        let options6 = {
+            size6: {
+                width6: 100,
+                height6: 200
+            },
+            items6: ["Cake", "Donut"],
+            extra6: true
+        };
+
+        // деструктуризация разбита на несколько строк для ясности
+        let {
+            size6: { // положим size сюда
+                width6,
+                height6
+            },
+            items6: [item1, item2], // добавим элементы к items
+            title6 = "Menu" // отсутствует в объекте (используется значение по умолчанию)
+        } = options6;
+
+        console.log(title6);  // Menu
+        console.log(width6);  // 100
+        console.log(height6); // 200
+        console.log(item1);  // Cake
+        console.log(item2);  // Donut
+    </script>
+
+    <p>Весь объект options, кроме свойства extra, которое в левой части отсутствует, присваивается в соответствующие переменные.<br>
+        Заметим, что переменные для size и items отсутствуют, так как мы взяли сразу их содержимое.
+    </p><br>
+
+    <h3>Умные параметры функций</h3>
+
+    <p>Есть ситуации, когда функция имеет много параметров, большинство из которых не обязательны. Это 
+        особенно верно для пользовательских интерфейсов. Представьте себе функцию, которая создаёт меню. 
+        Она может иметь ширину, высоту, заголовок, список элементов и так далее.<br>
+        <br>
+        Вот так – плохой способ писать подобные функции:
+    </p><br>
+
+    <p class="code-ex" style="width: 65%;">
+        <code>
+            function showMenu(title = 'Untitled', width = 200, height = 100, items = []) {<br>
+               // ...<br>
+            }<br>
+        </code>
+    </p><br>
+
+    <p>В реальной жизни проблема заключается в том, как запомнить порядок всех аргументов. Обычно IDE 
+        пытаются помочь нам, особенно если код хорошо документирован, но всё же… Другая проблема заключается 
+        в том, как вызвать функцию, когда большинство параметров передавать не надо, и значения по умолчанию 
+        вполне подходят.<br>
+        <br>
+        Разве что вот так?
+    </p><br>
+
+    <p class="code-ex" style="width: 65%;">
+        <code>
+            // undefined там, где подходят значения по умолчанию<br>
+            showMenu('My Menu', undefined, undefined, ['Item1', 'Item2'])<br>
+        </code>
+    </p><br>
+
+    <p>Это выглядит ужасно. И становится нечитаемым, когда мы имеем дело с большим количеством параметров.<br>
+        На помощь приходит деструктуризация! Мы можем передать параметры как объект, и функция немедленно 
+        деструктурирует его в переменные:
+    </p><br>
+
+    <p class="code-ex" style="width: 75%;">
+        <code>
+            // мы передаём объект в функцию<br>
+            let options = {<br>
+              title: 'My menu',<br>
+              items: ['Item1', 'Item2']<br>
+            };<br>
+            <br>
+            // ...и она немедленно извлекает свойства в переменные<br>
+            function showMenu({title = 'Untitled', width = 200, height = 100, items = []}) {<br>
+              // title, items – взято из options,<br>
+              // width, height – используются значения по умолчанию<br>
+              console.log( `${title} ${width} ${height}` ); // My Menu 200 100<br>
+              console.log( items ); // Item1, Item2<br>
+            }<br>
+            <br>
+            showMenu(options);<br>
+        </code>
+    </p><br>
+
+    <script>
+        let options7 = {
+          title7: "My menu",
+          items7: ["Item1", "Item2"]
+        };
+
+        function showMenu({title7 = "Untitled", width7 = 200, height7 = 100, items7 = []}) {
+            console.log( `${title7} ${width7} ${height7}` ); // My Menu 200 100
+            console.log( items7 ); // Item1, Item2
+        }
+
+        showMenu(options7);
+    </script>
+
+    <p>Мы также можем использовать более сложное деструктурирование с вложенными объектами и двоеточием:</p><br>
+
+    <p class="code-ex" style="width: 75%;">
+        <code>
+            let banner2 = {<br>
+                bannerName: "My banner",<br>
+                bannerItems: ["Item1", "Item2", "Item3"]<br>
+              };<br>
+              <br>
+              function showBanner({<br>
+                bannerName = "Untitled",<br>
+                <b>width: w = 720</b>,  // width присваиваем в w<br>
+                <b>height: h = 700</b>, // height присваиваем в h<br>
+                bannerItems: [item1, item2, item3] // первый элемент bannerItems присваивается в item1, второй в item2, третій в item3<br>
+              }) {<br>
+                  console.log( `${bannerName} ${w} ${h}` ); // My banner 720 700<br>
+                  console.log( item1 ); // Item1<br>
+                  console.log( item2 ); // Item2<br>
+                  console.log( item3 ); // Item3<br>
+              }<br>
+              <br>
+              showBanner(banner2);<br>
+        </code>
+    </p><br>
+
+    <script>
+        let banner2 = {
+          bannerName: "My banner",
+          bannerItems: ["Item1", "Item2", "Item3"]
+        };
+
+        function showBanner({
+          bannerName = "Untitled",
+          width: w = 720,  // width присваиваем в w
+          height: h = 700, // height присваиваем в h
+          bannerItems: [item1, item2, item3] // первый элемент bannerItems присваивается в item1, второй в item2, третій в item3
+        }) {
+            console.log( `${bannerName} ${w} ${h}` ); // My banner 720 700
+            console.log( item1 ); // Item1
+            console.log( item2 ); // Item2
+            console.log( item3 ); // Item3
+        }
+
+        showBanner(banner2);
+    </script>
+
+<p>Полный синтаксис – такой же, как для деструктурирующего присваивания:</p><br>
+
+<p class="code-ex" style="width: 75%;">
+    <code>
+        function({<br>
+            incomingProperty: varName = defaultValue<br>
+            ...<br>
+          })<br>
+    </code>
+</p><br>
+
+<p>Тогда для объекта с параметрами будет создана переменная varName для свойства с именем incomingProperty 
+    по умолчанию равная defaultValue.
+</p><br>
+
+<p>Пожалуйста, обратите внимание, что такое деструктурирование подразумевает, что в showMenu() будет 
+    обязательно передан аргумент. Если нам нужны все значения по умолчанию, то нам следует передать 
+    пустой объект:
+</p><br>
+
+<p class="code-ex" style="width: 75%;">
+    <code>
+        <b>showBanner({});</b> // ок, все значения - по умолчанию<br>
+        <br>
+        showBanner(); // так была бы ошибка<br>
+    </code>
+</p><br>
+
+<p>Мы можем исправить это, сделав {} значением по умолчанию для всего объекта параметров:</p><br>
+
+<p class="code-ex" style="width: 80%;">
+    <code>
+        function showBanner({ bannerName = 'My banner', width = 720, height = 700 } <b>= {}</b>) {<br>
+            console.log( `${bannerName} ${width} ${height}` );<br>
+        }<br>
+        <br>
+        showBanner(); // My banner 720 700<br>
+    </code>
+</p><br>
+
+<p>В приведённом выше коде весь объект аргументов по умолчанию равен {}, поэтому всегда есть что-то, 
+    что можно деструктурировать.
+</p><br>
+
+</body>
+
+</html>

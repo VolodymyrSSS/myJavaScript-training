@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-destructuring: exercise Максимальная зарплата</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-destructuring: exercise Максимальная зарплата</h2>
+
+    <h4 class="task">У нас есть объект salaries с зарплатами программистов за 2 недели.<br>
+        Создайте функцию topSalary(salaries), которая возвращает имя самого высокооплачиваемого сотрудника.
+        Если объект salaries пустой, то нужно вернуть null.
+        Если несколько высокооплачиваемых сотрудников, можно вернуть любого из них.<br>
+        P.S. Используйте Object.entries и деструктурирование, чтобы перебрать пары ключ/значение.
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            let salaries = {<br>
+                'John': 1100,<br>
+                'Pete': 1300,<br>
+                'Mary': 1250<br>
+                'Samuel': 968<br>
+              };<br>
+        </code>
+    </p><br>
+
+    <script>
+        let salaries = {
+          "John": 1100,
+          "Pete": 1300,
+          "Mary": 1250,
+          "Samuel": 968
+        };
+    </script>
+
+    <p><b>Решение</b>:<br><br>
+        Функция должна возвращать имя, а на вход, должна получать объект с зарплатами ключи которых мы
+        должны перебрать с помощью for of (для объектов). Для сравнения - используем оператор '<>'.<br>
+        Кроме того, Object.entries(obj) – возвращает массив пар [ключ, значение] поэтому деструктуризацию 
+        будем делать как для массивов.
+    </p><br>
+
+    <p class="code-ex" style="width: 65%;">
+        <code>
+            function topSalary(salaries) {<br>
+                <br>
+                let max = 0;<br>
+                let maxName = null;<br>
+                <br>
+                for(<b>const [name, salary] of Object.entries(salaries)</b>) {<br>
+                  if (max < salary) {<br>
+                  max = salary;<br>
+                  maxName = name;}<br>
+                }<br>
+                <br>
+                return maxName;<br>
+            }<br>
+            <br>
+            console.log(topSalary(salaries)); // Pete<br>
+        </code>
+    </p><br>
+
+    <script>
+        function topSalary(salaries) {
+  
+          let max = 0;
+          let maxName = null;
+
+          for(const [name, salary] of Object.entries(salaries)) {
+            if (max < salary) {
+            max = salary;
+            maxName = name;
+            }
+          }
+
+          return maxName;
+        }
+
+        console.log(topSalary(salaries)); // Pete
+    </script>
+
+</body>
+
+</html>
