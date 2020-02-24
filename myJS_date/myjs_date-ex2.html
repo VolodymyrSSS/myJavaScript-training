@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-date: exercise Покажите день недели</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-date: exercise Покажите день недели</h2>
+
+    <h4 class="task">Напишите функцию getWeekDay(date), показывающую день недели в коротком формате: 
+        «ПН», «ВТ», «СР», «ЧТ», «ПТ», «СБ», «ВС».
+    </h4>
+
+    <p class="code-ex" style="width: 55%;">Например<br>
+        <code>
+            let date = new Date(2012, 0, 3);  // 3 января 2012 года<br>
+            console.log( <b>getWeekDay(date)</b> );  // нужно вывести <b>'ВТ'</b><br>
+        </code>
+    </p><br>
+
+    <p><b>Решение</b>:<br><br>
+        Для решения задачи используем метод <b>date.getDay()</b>, который возвращает номер дня недели, 
+        начиная с воскресенья. Но если использовать этот метод напрямую, то мы и получим номер дня недели,
+        как здесь:
+    </p><br>
+
+    <p class="code-ex" style="width: 55%;">
+        <code>
+            let date = new Date(2012, 0, 3); // 3 января 2012 года<br>
+            let day = <b>date.getDay(date)</b>;<br>
+            console.log( day ); // <b>2</b><br>
+        </code>
+    </p><br>
+
+    <script>
+        let date = new Date(2012, 0, 3);
+        let day = date.getDay(date);
+        console.log( day ); // 2
+    </script>
+
+    <p>А нам нужно во-первых, создать функцию, во-вторых она должна вывести не номер дня недели, а название
+        дня недели, а именно «ВТ». Поэтому, надо вначале создать массив дней недели, чтобы получить имя 
+        нужного дня по его номеру, как здесь:
+    </p><br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            let days = ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'];<br>
+        </code>
+    </p><br>
+
+    <p>и далее поместить в функцию, которая получает номер дня недели(индекс массива) и выводит значение 
+        соответствующего индекса которое соответствует названию дня недели:
+    </p><br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            function getWeekDay(date) {<br>
+              let days = ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'];<br>
+              <br>
+              return <b>days[date.getDay()]</b>;<br>
+            }<br>
+            <br>
+              let date = new Date(2012, 0, 3);<br>
+              <br>
+              console.log( <b>getWeekDay(date)</b> ); // 'ВТ'<br>
+        </code>
+    </p><br>
+
+    <script>
+
+        function getWeekDay(date) {
+          let days = ["ВС", "ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ"];
+          return days[date.getDay()];
+        }
+
+        let date2 = new Date(2012, 0, 3);
+        
+        console.log( getWeekDay(date2) ); // 'ВТ'
+    </script>
+
+    
+
+</body>
+
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-date: exercise Последнее число месяца?</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-date: exercise Последнее число месяца?</h2>
+
+    <h4 class="task">Напишите функцию getLastDayOfMonth(year, month), возвращающую последнее число месяца. 
+        Иногда это 30, 31 или даже февральские 28/29. Параметры для функции: year – год из четырёх цифр, например, 2012.
+        month – месяц от 0 до 11.
+    </h4>
+
+    <p class="code-ex" style="width: 55%;">Например:<br>
+        <code>
+            getLastDayOfMonth(2012, 1) = 29 (високосный год, февраль).<br>
+        </code>
+    </p><br>
+
+    <p><b>Решение</b>:<br><br>
+        Нам надо передать в функцию год и месяц, но при этом она должна вернуть последний день месяца.<br> 
+        То есть - внутри функции мы должны передать ещё параметр и для числа. Передать параметры можно так:<br>
+        <b>new Date(year, month, date,)</b>. 
+        Из этого, мы можем получить  любой день месяца используем метод <b>getDate()</b>.
+        Обычно даты начинаются с 1, но технически возможно передать любое число, и дата сама себя поправит. Так что если 
+        передать 0, то это значение будет соответствовать «один день перед первым числом месяца», другими словами: «последнее 
+        число прошлого месяца». вот так:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            function getLastDayOfMonth(year, month) {<br>
+                let date = new Date(<b>year, month, 0</b>);<br>
+                return date.getDate();<br>
+            }<br>
+            <br>
+            проверим работу функции<br>
+            <br>
+            console.log( getLastDayOfMonth(2012, 0) ); // 31<br>
+            console.log( getLastDayOfMonth(2012, 1) ); // 31<br>
+            console.log( getLastDayOfMonth(2013, 1) ); // 31<br>
+        </code>
+    </p><br>
+
+    <p>Но если проверить работу функции для разных значений месяца или года, то мы будем получать одно и тоже число 31.
+        Ошибка в том, что мы в функции определяем текущий месяц, а берём последнее число для предыдущего месяца - в нашем случае
+        для февраля 2012 года мы получим 31 января 2012 года. Вот поэтому нам надо брать следующий месяц что бы получить последнее
+        число месяца, который определён как текущий. Для определения в функции следующего месяца мы просто прибавим в параметрах 
+        месяца еденицу и конечным решением для задачи будет:
+    </p><br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            function getLastDayOfMonth(year, month) {<br>
+              let date = new Date(<b>year, month + 1, 0</b>);<br>
+              return date.getDate();<br>
+            }<br>
+            <br>
+            console.log( getLastDayOfMonth(2012, 0) ); // 31 для января 2012<br>
+            console.log( getLastDayOfMonth(2012, 1) ); // 29 для февраля 2012<br>
+            console.log( getLastDayOfMonth(2013, 1) ); // 28 для февраля 2013<br>
+            console.log( getLastDayOfMonth(2020, 1) ); // 29 для февраля 2020<br>
+        </code>
+    </p><br>
+
+    <script>
+        function getLastDayOfMonth(year, month) {
+          let date = new Date(year, month + 1, 0);
+          return date.getDate();
+        }
+
+        console.log( getLastDayOfMonth(2012, 0) ); // 31
+        console.log( getLastDayOfMonth(2012, 1) ); // 29
+        console.log( getLastDayOfMonth(2013, 1) ); // 28
+        console.log( getLastDayOfMonth(2020, 1) ); // 29
+    </script>
+    
+</body>
+
+</html>

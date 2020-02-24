@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-date: exercise День недели в европейской нумерации</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-date: exercise День недели в европейской нумерации</h2>
+
+    <h4 class="task">В Европейских странах неделя начинается с понедельника (день номер 1), затем идёт 
+        вторник (номер 2) и так до воскресенья (номер 7). Напишите функцию getLocalDay(date), которая 
+        возвращает «европейский» день недели для даты date.
+    </h4>
+
+    <p class="code-ex" style="width: 55%;">Например:<br>
+        <code>
+            let date = new Date(2012, 0, 3);  // 3 января 2012 года<br>
+            console.log( <b>getLocalDay(date)</b> ); // вторник, нужно показать <b>2</b><br>
+        </code>
+    </p><br>
+
+    <p><b>Решение</b>:<br><br>
+        Для решения задачи используем метод <b>date.getDay()</b>, который возвращает номер дня недели, 
+        но в JS начиная с воскресенья - тобиш c 0.<br>
+        Но потом необходимо переопределить 0-день, который обозначен как Воскресенье, в 7-день для соответствия
+        европейской нумерации.
+    </p><br>
+
+    <p class="code-ex" style="width: 55%;">
+        <code>
+            function getLocalDay(date) {<br>
+                <br>
+                let day = date.getDay();<br>
+                <br>
+                if (day == 0) { // день недели 0 (воскресенье) в европейской нумерации будет 7<br>
+                  <b>day = 7;</b> // переопределили в 7-день<br>
+                }<br>
+                <br>
+                <b>return day</b>;<br>
+            }<br>
+            <br>
+            let date = new Date(2012, 0, 3);<br>
+            <br>
+            console.log( <b>getLocalDay(date)</b> ); // <b>2</b><br>
+        </code>
+    </p><br>
+
+    <script>
+        function getLocalDay(date) {
+        
+          let day = date.getDay();
+        
+          if (day == 0) {
+            day = 7;
+          }
+        
+          return day;
+        }
+
+        let date = new Date(2012, 0, 3);
+
+        console.log( getLocalDay(date) ); // 2
+    </script>
+    
+</body>
+
+</html>

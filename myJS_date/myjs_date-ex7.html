@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-date: exercise Сколько секунд осталось до завтра?</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-date: exercise Сколько секунд осталось до завтра?</h2>
+
+    <h4 class="task">Создайте функцию getSecondsToTomorrow(), возвращающую количество секунд до завтрашней даты.
+        Функция должна работать в любой день, т.е. в ней не должно быть конкретного значения сегодняшней даты.
+        Например, если сейчас 23:00, то:
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            getSecondsToTomorrow() == 3600<br>
+        </code>
+    </p><br>
+
+    <p><b>Решение</b>:<br><br>
+        Чтобы получить количество миллисекунд до завтра, можно из «завтра 00:00:00» вычесть текущую дату.<br>
+        Сперва сгенерируем дату на «завтра» и сделаем следующее:
+    </p><br>
+
+    <p class="code-ex" style="width: 65%;">
+        <code>
+            function getSecondsToTomorrow() {<br>
+                let now = new Date();<br>
+              <br>
+                // завтрашняя дата<br>
+                let tomorrow = new Date(now.getFullYear(), now.getMonth(), <b>now.getDate()+1</b>);<br>
+                <br>
+                let diff = tomorrow - now; // разница в миллисекундах<br>
+                return Math.round(diff / 1000); // преобразуем в секунды<br>
+            }<br>
+        </code>
+    </p><br>
+
+    <p>Альтернативное решение:</p><br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            function getSecondsToTomorrow() {<br>
+                let now = new Date();<br>
+                let hour = now.getHours();<br>
+                let minutes = now.getMinutes();<br>
+                let seconds = now.getSeconds();<br>
+                <br>
+                let totalSecondsToday = (hour * 60 + minutes) * 60 + seconds;<br>
+                let totalSecondsInADay = 86400;<br>
+                <br>
+                return totalSecondsInADay - totalSecondsToday;<br>
+              }<br>
+        </code>
+    </p><br>
+
+    <script>
+        function getSecondsToTomorrow() {
+          let now = new Date();
+          let hour = now.getHours();
+          let minutes = now.getMinutes();
+          let seconds = now.getSeconds();
+
+          let totalSecondsToday = (hour * 60 + minutes) * 60 + seconds;
+          let totalSecondsInADay = 86400;
+
+          return totalSecondsInADay - totalSecondsToday;
+        }
+        
+        console.log( getSecondsToTomorrow() ); // 14057
+    </script>
+
+    <p>Учтите, что многие страны переходят с зимнего времени на летнее и обратно, так что могут быть дни длительностью 
+        в 23 или 25 часов. Такие дни, если это важно, можно обрабатывать отдельно.
+    </p><br>
+    
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-date: exercise Создайте дату</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-date: exercise Создайте дату</h2>
+
+    <h4 class="task">Создайте объект Date для даты: 20 февраля 2012 года, 3 часа 12 минут. 
+        Временная зона – местная. Для вывода используйте console.log<br>
+    </h4>
+
+    <p><b>Решение</b>:<br><br>
+        Для решения задачи используем конструктор <b>new Date(year, month, date, hours, minutes, seconds, ms)</b> 
+        но с заданными в задаче компонентами. Конструктор new Date стандартно использует местную временную 
+        зону. Единственная важная вещь, которую нужно запомнить – это то, что месяцы начинаются с нуля.
+    </p><br>
+
+    <p class="code-ex" style="width: 55%;">
+        <code>
+            let d = new Date(2012, 1, 20, 3, 12);<br>
+            console.log( d ); // Mon Feb 20 2012 03:12:00 GMT+0200<br>
+        </code>
+    </p><br>
+
+    <script>
+        let d = new Date(2012, 1, 20, 3, 12);
+        console.log( d ); // 
+    </script>
+
+</body>
+
+</html>

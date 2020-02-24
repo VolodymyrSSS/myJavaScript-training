@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-date: exercise Какой день месяца был много дней назад?</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-date: exercise Какой день месяца был много дней назад?</h2>
+
+    <h4 class="task">Создайте функцию getDateAgo(date, days), возвращающую число, которое было days дней назад от даты date.<br>
+        К примеру, если сегодня двадцатое число, то getDateAgo(new Date(), 1) вернёт девятнадцатое и getDateAgo(new Date(), 
+        2) – восемнадцатое. Функция не должна изменять переданный ей объект date и должна надёжно работать при значении 
+        days=365 и больших значениях:
+    </h4>
+
+    <p class="code-ex" style="width: 55%;">Например:<br>
+        <code>
+            let date = new Date(2015, 0, 2);<br>
+            <br>
+            console.log( getDateAgo(date, 1) ); // 1, (1 Jan 2015)<br>
+            console.log( getDateAgo(date, 2) ); // 31, (31 Dec 2014)<br>
+            console.log( getDateAgo(date, 365) ); // 2, (2 Jan 2014)<br>
+        </code>
+    </p><br>
+
+    <p><b>Решение</b>:<br><br>
+        Идея проста: нужно вычесть заданное количество дней из date.<br>
+        По сути, в функции, устанавливаем новый компонент котовый она возвращает - другую дату. Для установки даты мы используем 
+        метод <b>setDate(date)</b>: берём date методом getDate(), отнимаем число дней назад (обозначим их как days), и возвращаем
+        полученую дату вот так:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            function getDateAgo(date, days) {<br>
+              <b>date.setDate(date.getDate() - days)</b>;<br>
+              return date.getDate();<br>
+            }<br>
+        </code>
+    </p><br>
+
+    <p>Но функция не должна изменять объект date. Это очень важно, поскольку внешний код, передающий нам объект, не ожидает 
+        его изменения. Решить это нам поможет клонирование даты: <b>let dateCopy = new Date(date);</b>, получив клон мы выполняем 
+        действия с ним а не с date, вот так:
+    </p><br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            function getDateAgo(date, days) {<br>
+                <b>let dateCopy =</b> new Date(date);<br>
+                <br>
+                <b>dateCopy.</b>setDate(date.getDate() - days);<br>
+                return <b>dateCopy.</b>getDate();<br>
+            }<br>
+            <br>
+            let date = new Date(2015, 0, 2);<br>
+            <br>
+            console.log( getDateAgo(date, 1) ); // 1, (1 Jan 2015)<br>
+            console.log( getDateAgo(date, 2) ); // 31, (31 Dec 2014)<br>
+            console.log( getDateAgo(date, 365) ); // 2, (2 Jan 2014)<br>
+        </code>
+    </p><br>
+
+    <script>
+        function getDateAgo(date, days) {
+        let dateCopy = new Date(date);
+
+        dateCopy.setDate(date.getDate() - days);
+        return dateCopy.getDate();
+        }
+
+        let date = new Date(2015, 0, 2);
+
+        console.log( getDateAgo(date, 1) ); // 1, (1 Jan 2015)
+        console.log( getDateAgo(date, 2) ); // 31, (31 Dec 2014)
+        console.log( getDateAgo(date, 365) ); // 2, (2 Jan 2014)
+    </script>
+    
+</body>
+
+</html>

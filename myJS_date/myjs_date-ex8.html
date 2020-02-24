@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-date: exercise Форматирование относительной даты</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-date: exercise Форматирование относительной даты</h2>
+
+    <h4 class="task">Напишите функцию formatDate(date), форматирующую date по следующему принципу:<br>
+        Если спустя date прошло менее 1 секунды, вывести 'прямо сейчас'.<br>
+        В противном случае, если с date прошло меньше 1 минуты, вывести 'n сек. назад'.<br>
+        В противном случае, если меньше часа, вывести 'm мин. назад'.<br>
+        В противном случае, полная дата в формате 'DD.MM.YY HH:mm'. А именно: 'день.месяц.год часы:минуты',<br>
+        всё в виде двух цифр, т.е. 31.12.16 10:00.<br>
+    </h4>
+
+    <p class="code-ex" style="width: 55%;">Например:<br>
+        <code>
+            console.log( formatDate(new Date(new Date - 1)) ); // 'прямо сейчас'<br>
+            <br>
+            console.log( formatDate(new Date(new Date - 30 * 1000)) ); // '30 сек. назад'<br>
+            <br>
+            console.log( formatDate(new Date(new Date - 5 * 60 * 1000)) ); // '5 мин. назад'<br>
+            <br>
+            // вчерашняя дата вроде 31.12.2016, 20:00<br>
+            console.log( formatDate(new Date(new Date - 86400 * 1000)) );<br>
+        </code>
+    </p><br>
+
+    <p><b>Решение</b>:<br><br>
+        Чтобы получить время с date по текущий момент, нужно вычесть даты.
+    </p><br>
+
+    <p class="code-ex" style="width: 65%;">
+        <code>
+            function formatDate(date) {<br>
+                let diff = new Date() - date; // разница в миллисекундах<br>
+                <br>
+                if (diff < 1000) { // меньше 1 секунды<br>
+                  return 'прямо сейчас';<br>
+                }<br>
+                <br>
+                let sec = Math.floor(diff / 1000); // преобразовать разницу в секунды<br>
+                <br>
+                if (sec < 60) {<br>
+                  return sec + ' сек. назад';<br>
+                }<br>
+                <br>
+                let min = Math.floor(diff / 60000); // преобразовать разницу в минуты<br>
+                if (min < 60) {<br>
+                  return min + ' мин. назад';<br>
+                }<br>
+                <br>
+                // отформатировать дату<br>
+                // добавить ведущие нули к единственной цифре дню/месяцу/часам/минутам<br>
+                let d = date;<br>
+                d = [<br>
+                  '0' + d.getDate(),<br>
+                  '0' + (d.getMonth() + 1), <br>
+                  '' + d.getFullYear(),<br>
+                  '0' + d.getHours(),<br>
+                  '0' + d.getMinutes()<br>
+                ].map(component => component.slice(-2)); // взять последние 2 цифры из каждой компоненты<br>
+                <br>
+                // соединить компоненты в дату<br>
+                return d.slice(0, 3).join('.') + ' ' + d.slice(3).join(':');<br>
+              }<br>
+              <br>
+              console.log( formatDate(new Date(new Date - 1)) ); // 'прямо сейчас'<br>
+              <br>
+              console.log( formatDate(new Date(new Date - 30 * 1000)) ); // '30 сек. назад'<br>
+              <br>
+              console.log( formatDate(new Date(new Date - 5 * 60 * 1000)) ); // '5 мин. назад'<br>
+              <br>
+              // вчерашняя дата вроде 31.12.2016, 20:00<br>
+              alert( formatDate(new Date(new Date - 86400 * 1000)) );<br>
+        </code>
+    </p><br>
+
+    <p>Альтернативное решение:</p><br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            function formatDate(date) {<br>
+                let dayOfMonth = date.getDate();<br>
+                let month = date.getMonth() + 1;<br>
+                let year = date.getFullYear();<br>
+                let hour = date.getHours();<br>
+                let minutes = date.getMinutes();<br>
+                let diffMs = new Date() - date;<br>
+                let diffSec = Math.round(diffMs / 1000);<br>
+                let diffMin = diffSec / 60;<br>
+                let diffHour = diffMin / 60;<br>
+                <br>
+                // форматирование<br>
+                year = year.toString().slice(-2);<br>
+                month = month < 10 ? '0' + month : month;<br>
+                dayOfMonth = dayOfMonth < 10 ? '0' + dayOfMonth : dayOfMonth;<br>
+                hour = hour < 10 ? '0' + hour : hour;<br>
+                minutes = minutes < 10 ? '0' + minutes : minutes;<br>
+                <br>
+                if (diffSec < 1) {<br>
+                  return 'прямо сейчас';<br>
+                } else if (diffMin < 1) {<br>
+                  return `${diffSec} сек. назад`<br>
+                } else if (diffHour < 1) {<br>
+                  return `${diffMin} мин. назад`<br>
+                } else {<br>
+                  return `${dayOfMonth}.${month}.${year} ${hour}:${minutes}`}<br>
+              }<br>
+        </code>
+    </p><br>
+
+    <script>
+        function formatDate(date) {
+            let dayOfMonth = date.getDate();
+            let month = date.getMonth() + 1;
+            let year = date.getFullYear();
+            let hour = date.getHours();
+            let minutes = date.getMinutes();
+            let diffMs = new Date() - date;
+            let diffSec = Math.round(diffMs / 1000);
+            let diffMin = diffSec / 60;
+            let diffHour = diffMin / 60;
+
+            // форматирование
+            year = year.toString().slice(-2);
+            month = month < 10 ? '0' + month : month;
+            dayOfMonth = dayOfMonth < 10 ? '0' + dayOfMonth : dayOfMonth;
+            hour = hour < 10 ? '0' + hour : hour;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+
+            if (diffSec < 1) {
+                return 'прямо сейчас';
+            } else if (diffMin < 1) {
+                return `${diffSec} сек. назад`
+            } else if (diffHour < 1) {
+                return `${diffMin} мин. назад`
+            } else {
+                return `${dayOfMonth}.${month}.${year} ${hour}:${minutes}`
+            }
+        }
+    </script>
+
+    <p>Учтите, что многие страны переходят с зимнего времени на летнее и обратно, так что могут быть дни длительностью 
+        в 23 или 25 часов. Такие дни, если это важно, можно обрабатывать отдельно.
+    </p><br>
+    
+</body>
+
+</html>

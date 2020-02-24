@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-date: Дата и время</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-date: Дата и время</h2>
+
+    <p><b>Встроенный объект Date</b>: содержит дату и время, а также предоставляет методы управления ими.<br>
+       Например, его можно использовать для хранения времени создания/изменения, для измерения времени или 
+       просто для вывода текущей даты.
+    </p><br>
+
+    <h3>Создание</h3>
+
+    <p>Для создания нового объекта Date нужно вызвать конструктор <b>new Date()</b> с одним из следующих аргументов:</p><br>
+
+    <p><b>new Date()</b> без аргументов - cоздать объект Date с текущими датой и временем:</p><br>
+
+    <p class="code-ex">
+        <code>
+            let now = <b>new Date();</b><br>
+            console.log( now ); // <b>показывает текущие дату и время</b><br>
+        </code>
+    </p><br>
+
+    <script>
+        let now = new Date();
+        console.log( now ); // показывает текущие дату и время
+    </script>
+
+    <p><b>new Date(milliseconds)</b> - cоздать объект Date с временем, равным количеству миллисекунд 
+        (тысячная доля секунды),<br> прошедших с 1 января 1970 года UTC+0 :
+    </p><br>
+
+    <p class="code-ex"><br>
+        <code>
+            let Jan01_1970 = new Date(0); -0 соответствует 01.01.1970 UTC+0<br>
+            console.log( Jan01_1970 );<br>
+            <br>
+            // теперь добавим 24 часа и получим 02.01.1970 UTC+0<br>
+            let Jan02_1970 = <b>new Date(24 * 3600 * 1000);</b><br>
+            console.log( Jan02_1970 );<br>
+        </code>
+    </p><br>
+
+    <script>
+        let Jan01_1970 = new Date(0);
+        console.log( Jan01_1970 );
+        
+        let Jan02_1970 = new Date(24 * 3600 * 1000);
+        console.log( Jan02_1970 );
+    </script>
+
+    <p>Целое число, представляющее собой количество миллисекунд, прошедших с начала 1970 года, называется 
+        таймстамп (англ. timestamp). Это – легковесное численное представление даты. Из таймстампа всегда 
+        можно получить дату с помощью new Date(timestamp) и преобразовать существующий объект Date в 
+        таймстамп, используя метод date.getTime() (см. ниже).
+    </p><br>
+
+    <p>Датам до 1 января 1970 будут соответствовать отрицательные таймстампы, например:</p><br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            let Dec31_1969 = <b>new Date(-24 * 3600 * 1000)</b>; -31 декабря 1969 года<br>
+            console.log( Dec31_1969 ); // Wed Dec 31 1969 03:00:00 GMT+0300<br>
+            <br>
+            let Dec30_1969 = <b>new Date(2 * -24 * 3600 * 1000)</b>; -30 декабря 1969 года<br>
+            console.log( Dec30_1969 ); // // Tue Dec 30 1969 03:00:00 GMT+0300<br>
+        </code>
+    </p><br>
+
+    <script>
+        let Dec31_1969 = new Date(-24 * 3600 * 1000);
+        console.log( Dec31_1969 ); // Wed Dec 31 1969 03:00:00 GMT+0300
+        let Dec30_1969 = new Date(2 * -24 * 3600 * 1000);
+        console.log( Dec30_1969 ); // Tue Dec 30 1969 03:00:00 GMT+0300
+    </script>
+
+    <p><b>new Date(datestring)</b> - если аргумент всего один, и это строка, то из неё «прочитывается» дата.</p><br>
+
+    <p class="code-ex">
+        <code>
+            let date = <b>new Date('2017-01-26')</b>;<br>
+            console.log(date);<br>
+            // Время не указано, поэтому оно ставится в полночь по Гринвичу и<br>
+            // меняется в соответствии с часовым поясом места выполнения кода<br>
+            // Так что в результате можно получить<br>
+            // Thu Jan 26 2017 11:00:00 GMT+1100 (восточно-австралийское время)<br>
+            // или<br>
+            // Wed Jan 25 2017 16:00:00 GMT-0800 (тихоокеанское время)<br>
+        </code>
+    </p><br>
+
+    <script>
+        let date = new Date("2017-01-26");
+        console.log(date); // Thu Jan 26 2017 02:00:00 GMT+0200 
+    </script>
+
+    <p><b>new Date(year, month, date, hours, minutes, seconds, ms)</b> - cоздать объект Date с заданными 
+        компонентами в местном часовом поясе. Обязательны только первые два аргумента.<br>
+        1. year должен состоять из четырёх цифр: значение 2013 корректно, 98 – нет.<br>
+        2. month начинается с 0 (январь) по 11 (декабрь).<br>
+        3. Параметр date здесь представляет собой день месяца. Если параметр не задан, то принимается значение 1.<br>
+        4. Если параметры hours/minutes/seconds/ms отсутствуют, их значением становится 0.
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            <b>new Date(2011, 0, 1, 0, 0, 0, 0)</b>; 1 Jan 2011, 00:00:00<br>
+            new Date(2011, 0, 1); -то же самое, так как часы и проч. равны 0<br>
+        </code>
+    </p><br>
+
+    <p>Минимальная точность – 1 мс (1/1000 секунды):</p><br>
+
+    <p class="code-ex">
+        <code>
+            let date = new Date(2011, 0, 1, 2, 3, 4, <b>567</b>);<br>
+            console.log( date ); // <b>1.01.2011, 02:03:04.567</b><br>
+        </code>
+    </p><br>
+
+    <script>
+        let date2 = new Date(2011, 0, 1, 2, 3, 4, 567);
+        console.log( date2 ); // 1.01.2011, 02:03:04.567
+    </script>
+
+    <h3>Получение компонентов даты</h3>
+
+    <p>Существуют методы получения года, месяца и т.д. из объекта Date:</p><br>
+
+    <p><b>getFullYear()</b> - получить год (4 цифры).<br>
+        Многие интерпретаторы JavaScript реализуют нестандартный и устаревший метод getYear(), который 
+        порой возвращает год в виде двух цифр. Пожалуйста, обходите его стороной. Если нужно значение 
+        года, используйте getFullYear().
+    </p><br>
+
+    <p><b>getMonth()</b> - получить месяц, от 0 до 11.</p><br>
+
+    <p><b>getDate()</b> - получить день месяца, от 1 до 31, что несколько противоречит названию метода.</p><br>
+
+    <p><b>getHours(), getMinutes(), getSeconds(), getMilliseconds()</b> - получить, соответственно, часы, 
+        минуты, секунды или миллисекунды.</p><br>
+
+    <p><b>getDay()</b> - получить определённый день недели.<br>
+        Вернуть день недели от 0 (воскресенье) до 6 (суббота). Несмотря на то, что в ряде стран за первый 
+        день недели принят понедельник, в JavaScript начало недели приходится на воскресенье.
+    </p><br>
+
+    <h3>Cоответствиe с местным часовым поясом</h3>
+
+    <p>Все вышеперечисленные методы возвращают значения в соответствии с местным часовым поясом.<br>
+        Однако существуют и их UTC-варианты, возвращающие день, месяц, год для временной зоны UTC+0:<br>
+        <b>getUTCFullYear(), getUTCMonth(), getUTCDay()</b>. Для их использования требуется после 'get' 
+        подставить 'UTC'.
+    </p>
+
+    <p>Если ваш местный часовой пояс смещён относительно UTC, то следующий код покажет разные часы:</p><br>
+
+    <p class="code-ex" style="width: 63%;">
+        <code>
+            let date = new Date(); -текущая дата<br>
+            <br>
+            // час в вашем текущем часовом поясе<br>
+            console.log( <b>date.getHours()</b> ); // 8<br>
+            <br>
+            // час в часовом поясе UTC+0 -лондонское время без перехода на летнее время<br>
+            console.log( <b>date.getUTCHours()</b> ); // 6<br>
+        </code>
+    </p><br>
+
+    <script>
+        let date3 = new Date();
+        // час в вашем текущем часовом поясе
+        console.log( date3.getHours() ); // 8
+        // час в часовом поясе UTC+0 -лондонское время без перехода на летнее время
+        console.log( date3.getUTCHours() ); // 6
+    </script>
+
+    <p>Помимо вышеприведённых методов, существуют два особых метода без UTC-варианта:<br>
+    <br>
+    <b>getTime()</b> - для заданной даты возвращает таймстамп – количество миллисекунд, прошедших 
+        с 1 января 1970 года UTC+0.<br>
+    <br>
+    <b>getTimezoneOffset()</b> - возвращает разницу в минутах между местным часовым поясом и UTC:<br>
+    </p><br>
+
+    <p class="code-ex" style="width: 63%;">
+        <code>
+            // если вы в часовом поясе UTC-1 (например для Лиссабона), то выводится 60<br>
+            // если вы в часовом поясе UTC+3 (например для Москвы), выводится -180<br>
+            // если вы в часовом поясе UTC+2, (например для Киева), выводится -120<br>
+            console.log( new Date()<b>.getTimezoneOffset()</b> ); // -120<br>
+        </code>
+    </p><br>
+
+    <script>
+        // мы в часовом поясе UTC+2, выводится -120
+        console.log( new Date().getTimezoneOffset() ); // -180
+    </script>
+
+</body>
+
+</html>
