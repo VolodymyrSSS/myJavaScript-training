@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-JSON: Формат JSON</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-JSON: JSON.stringify</h2>
+
+    <p>Допустим, у нас есть сложный объект, и мы хотели бы преобразовать его в строку, чтобы отправить по сети или 
+        просто вывести для логирования. Естественно, такая строка должна включать в себя все важные свойства. Мы могли бы 
+        реализовать преобразование следующим образом:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let user = {<br>
+                name: 'Modest',<br>
+                age: 50,<br>
+                <br>
+                toString() {<br>
+                  return `{name: '${this.name}'', age: ${this.age}}`;}<br>
+              };<br>
+              <br>
+              console.log(user); // {name: 'Modest', age: 50}<br>
+        </code>
+    </p><br>
+
+    <script>
+        let user = {
+            name: "Modest",
+            age: 50,
+              
+            toString() {
+                return `{name: "${this.name}", age: ${this.age}}`;
+            }
+        };
+              
+        console.log(user); // {name: 'Modest', age: 50}
+    </script>
+
+    <p>Но в процессе разработки добавляются новые свойства, старые свойства переименовываются и удаляются. Обновление 
+        такого toString каждый раз может стать проблемой. Мы могли бы попытаться перебрать свойства в нём, но что, если 
+        объект сложный, и в его свойствах имеются вложенные объекты? Мы должны были бы осуществить их преобразование тоже.
+        К счастью, нет необходимости писать код для обработки всего этого. У задачи есть простое решение.
+    </p><br>
+
+    <p><b>JSON (JavaScript Object Notation)</b> – это общий формат для представления значений и объектов. Его описание 
+        задокументировано в стандарте RFC 4627. Первоначально он был создан для JavaScript, но многие другие языки также 
+        имеют библиотеки, которые могут работать с ним. Таким образом, JSON легко использовать для обмена данными, когда 
+        клиент использует JavaScript, а сервер написан на Ruby/PHP/Java или любом другом языке.<br>
+        <br>
+        JavaScript предоставляет методы:<br>
+        1. <b>JSON.stringify</b> для преобразования объектов в JSON.<br>
+        2. <b>JSON.parse</b> для преобразования JSON обратно в объект.
+    </p>
+
+    <h3>JSON.stringify</h3>
+
+    <p>Метод JSON.stringify предназначен для преобразования объектов в JSON.<br>
+    <br>
+    Например, здесь мы преобразуем через JSON.stringify данные студента:</p><br>
+
+    <p class="code-ex" style="width: 65%;">
+        <code>
+            let student = {<br>
+                name: 'John',<br>
+                age: 30,<br>
+                isAdmin: false,<br>
+                courses: ['html', 'css', 'js'],<br>
+                wife: null<br>
+            };<br>
+            <br>
+            let json = <b>JSON.stringify(student)</b>;<br>
+            <br>
+            console.log(typeof json); // string - мы получили строку!<br>
+            <br>
+            console.log(json);<br>
+            // выведет объект в формате JSON:<br>
+            {"name": "John", "age": 30, "isAdmin": false, "courses": ["html", "css", "js"], "wife": null}<br>
+        </code>
+    </p><br>
+
+    <script>
+        let student = {
+            name: "John",
+            age: 30,
+            isAdmin: false,
+            courses: ["html", "css", "js"],
+            wife: null
+        };
+              
+        let json = JSON.stringify(student);
+            
+        console.log(typeof json); // string
+            
+        console.log(json);
+        /* выведет объект в формате JSON:
+        {
+        "name": "John",
+        "age": 30,
+        "isAdmin": false,
+        "courses": ["html", "css", "js"],
+        "wife": null
+        }
+        */
+    </script>
+
+    <p>Метод JSON.stringify(student) берёт объект и преобразует его в строку. Полученная строка json называется JSON-форматированным 
+        или сериализованным объектом. Мы можем отправить его по сети или поместить в обычное хранилище данных.<br>
+        <br>
+        Обратите внимание, что объект в формате JSON имеет несколько важных отличий от объектного литерала:<br>
+        Строки используют двойные кавычки. Никаких одинарных кавычек или обратных кавычек в JSON. Так 'John' становится "John".<br>
+        Имена свойств объекта также заключаются в двойные кавычки. Это обязательно. Так age:30 становится "age":30.<br>
+    </p><br>
+
+    <p>JSON.stringify может быть применён и к примитивам.<br>
+        <b>JSON поддерживает следующие типы данных:</b><br>
+        - Объекты { ... }<br>
+        - Массивы [ ... ]<br>
+        Примитивы:<br>
+        - строки,<br>
+        - числа,<br>
+        - логические значения true/false,<br>
+        - null.
+    </p>
+
+    <p class="code-ex">например:<br>
+        <code>
+            // число в JSON остаётся числом<br>
+            console.log( JSON.stringify(1) ) // 1<br>
+            <br>
+            // строка в JSON по-прежнему остаётся строкой, но в двойных кавычках<br>
+            console.log( JSON.stringify('test') ) // "test"<br>
+            <br>
+            console.log( JSON.stringify(true) ); // true<br>
+            <br>
+            console.log( JSON.stringify([1, 2, 3]) ); // [1,2,3]<br>
+        </code>
+    </p><br>
+
+    <script>
+        // число в JSON остаётся числом<br>
+        console.log( JSON.stringify(1) ) // 1
+        
+        // строка в JSON по-прежнему остаётся строкой, но в двойных кавычках
+        console.log( JSON.stringify('test') ) // "test"
+        
+        console.log( JSON.stringify(true) ); // true
+        
+        console.log( JSON.stringify([1, 2, 3]) ); // [1,2,3]
+    </script>
+
+    <p>JSON является независимой от языка спецификацией для данных, поэтому JSON.stringify пропускает 
+        некоторые специфические свойства объектов JavaScript. А именно:<br>
+        - Свойства-функции (методы).<br>
+        - Символьные свойства.<br>
+        - Свойства, содержащие undefined.
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let user = {<br>
+                sayHi() { // будет пропущено<br>
+                    console.log("Hello");<br>
+                },<br>
+                [Symbol("id")]: 123, // также будет пропущено<br>
+                something: undefined // как и это - пропущено<br>
+            };<br>
+            <br>
+            console.log( <b>JSON.stringify(user)</b> ); // <b>{}</b> -пустой объект<br>
+        </code>
+    </p><br>
+
+    <script>
+        let user2 = {
+            sayHi() { // будет пропущено
+                console.log("Hello");
+            },
+            [Symbol("id")]: 123, // также будет пропущено
+            something: undefined // как и это - пропущено
+        };
+            
+        console.log( JSON.stringify(user2) ); // {} (пустой объект)
+    </script>
+
+    <p>Обычно это нормально. Если это не то, чего мы хотим, то это можно настроить. Самое замечательное, что вложенные 
+        объекты поддерживаются и конвертируются автоматически.
+    </p><br>
+
+    <p class="code-ex" style="width: 55%;">Например:<br>
+        <code>
+            let meetup = {<br>
+                title: 'Conference',<br>
+                room: {<br>
+                  number: 23,<br>
+                  participants: ['john', 'ann']}<br>
+              };<br>
+              <br>
+              console.log( <b>JSON.stringify(meetup)</b> );<br>
+              <br>
+              // вся структура преобразована в строку:<br>
+              { "title":"Conference", "room":{"number":23,"participants":["john","ann"]}, }<br>
+        </code>
+    </p><br>
+
+    <script>
+        let meetup = {
+            title: "Conference",
+            room: {
+                number: 23,
+                participants: ["john", "ann"]
+            }
+        };
+
+        console.log( JSON.stringify(meetup) ); // { "title":"Conference", "room":{"number":23,"participants":["john","ann"]},}
+    </script>
+
+    <p>Важное ограничение: не должно быть циклических ссылок.</p><br>
+
+    <p class="code-ex" style="width: 55%;">Например:<br>
+        <code>
+            let room = {<br>
+              number: 23<br>
+            };<br>
+            <br>
+            let meetup = {<br>
+              title: 'Conference',<br>
+              participants: ['john', 'ann']<br>
+            };<br>
+            <br>
+            meetup.place = room; // meetup ссылается на room<br>
+            room.occupiedBy = meetup; // room ссылается на meetup - появилась циклическая ссылка<br>
+            <br>
+            JSON.stringify(meetup); // Ошибка: Преобразование цикличной структуры в JSON<br>
+        </code>
+    </p><br>
+
+    <p>Здесь преобразование завершается неудачно из-за циклической ссылки: room.occupiedBy ссылается на meetup, и 
+        meetup.place ссылается на room.
+    </p><br>
+
+    <h3>Преобразуем: replacer</h3>
+
+    <p class="code-ex"> Полный синтаксис JSON.stringify:<br>
+        <code>
+            let json = JSON.stringify(value[, replacer, space])<br>
+        </code>
+    </p><br>
+
+    <p>Где: <br>
+        value - значение для кодирования;<br>
+        replacer - массив свойств для кодирования или функция соответствия function(key, value);<br>
+        space - дополнительное пространство (отступы), используемое для форматирования;<br>
+    </p><br>
+
+    <p>В большинстве случаев JSON.stringify используется только с первым аргументом. Но если нам нужно настроить процесс замены, 
+        например, отфильтровать циклические ссылки, то можно использовать второй аргумент.<br>
+        <br>
+        Если мы передадим ему массив свойств, будут закодированы только эти свойства.
+    </p><br>
+
+    <p class="code-ex"> Например:<br>
+        <code>
+            let room = {<br>
+              number: 23<br>
+            };<br>
+            <br>
+            let meetup = {<br>
+              title: "Conference",<br>
+              participants: [{name: "John"}, {name: "Alice"}],<br>
+              place: room // meetup ссылается на room<br>
+            };<br>
+            <br>
+            room.occupiedBy = meetup; // room ссылается на meetup<br>
+            <br>
+            console.log( JSON.stringify(meetup, <b>['title', 'participants']</b>) );<br>
+            // {"title":"Conference","participants":[{},{}]}<br>
+        </code>
+    </p><br>
+
+    <p>Здесь мы, наверное, слишком строги. Список свойств применяется ко всей структуре объекта. Так что внутри 
+        participants – пустые объекты, потому что name нет в списке.<br>
+        <br>
+        Давайте включим в список (в действительности, в массив) все свойства, кроме room.occupiedBy, из-за которого появляется 
+        цикличная ссылка:
+    </p><br>
+
+    <p class="code-ex"> Например:<br>
+        <code>
+            let room = {<br>
+              number: 23<br>
+            };<br>
+            <br>
+            let meetup = {<br>
+              title: "Conference",<br>
+              participants: [{name: "John"}, {name: "Alice"}],<br>
+              place: room // meetup ссылается на room<br>
+            };<br>
+            <br>
+            room.occupiedBy = meetup; // room ссылается на meetup<br>
+            <br>
+            console.log( JSON.stringify(meetup, <b>['title', 'participants', 'place', 'name', 'number']</b>) );<br>
+            // Теперь всё, кроме occupiedBy, сериализовано. <br>
+            { "title":"Conference", "participants":[{"name":"John"},{"name":"Alice"}], "place":{"number":23} }<br>
+        </code>
+    </p><br>
+
+    <p>Теперь всё, кроме occupiedBy, сериализовано. Но список свойств довольно длинный. К счастью, в качестве replacer 
+        мы можем использовать функцию, а не массив. Функция будет вызываться для каждой пары (key, value), и она должна 
+        возвращать заменённое значение, которое будет использоваться вместо исходного. Или undefined, чтобы пропустить 
+        значение.<br>
+        <br>
+        В нашем случае мы можем вернуть value «как есть» для всего, кроме occupiedBy. Чтобы игнорировать occupiedBy, код 
+        ниже возвращает undefined:
+    </p><br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            let room = {<br>
+              number: 23<br>
+            };<br>
+            <br>
+              let meetup = {<br>
+                title: 'Conference',<br>
+                participants: [{name: 'John'}, {name: 'Alice'}],<br>
+                place: room // meetup ссылается на room<br>
+              };<br>
+              <br>
+              room.occupiedBy = meetup; // room ссылается на meetup<br>
+              <br>
+              console.log( JSON.stringify(meetup, function replacer(key, value) {<br>
+                console.log(`${key}: ${value}`);<br>
+                return (key == 'occupiedBy') ? undefined : value;<br>
+              }));<br>
+              <br>
+              /* пары ключ:значение, которые приходят в replacer:<br>
+              :             [object Object]<br>
+              title:        Conference<br>
+              participants: [object Object],[object Object]<br>
+              0:            [object Object]<br>
+              name:         John<br>
+              1:            [object Object]<br>
+              name:         Alice<br>
+              place:        [object Object]<br>
+              number:       23<br>
+              */<br>
+        </code>
+    </p><br>
+
+    <script>
+        let room3 = {
+          number: 23
+        };
+
+        let meetup3 = {
+          title: "Conference",
+          participants: [{name: "John"}, {name: "Alice"}],
+          place: room3 // meetup ссылается на room
+        };
+
+        room3.occupiedBy = meetup3; // room ссылается на meetup
+
+        console.log( JSON.stringify(meetup3, function replacer(key, value) {
+            console.log(`${key}: ${value}`);
+            return (key == 'occupiedBy3') ? undefined : value;
+        }));
+    </script>
+
+    <p>Обратите внимание, что функция replacer получает каждую пару ключ/значение, включая вложенные объекты и элементы массива. 
+        И она применяется рекурсивно. Значение this внутри replacer – это объект, который содержит текущее свойство.<br>
+        Первый вызов – особенный. Ему передаётся специальный «объект-обёртка»: {"": meetup}. Другими словами, первая (key, value) 
+        пара имеет пустой ключ, а значением является целевой объект в общем. Вот почему первая строка из примера выше будет 
+        ":[object Object]".<br>
+        Идея состоит в том, чтобы дать как можно больше возможностей replacer – у него есть возможность проанализировать и 
+        заменить/пропустить даже весь объект целиком, если это необходимо.
+    </p><br>
+
+    <h3>Форматирование: space</h3>
+
+    <p>Третий аргумент в JSON.stringify(value, replacer, space) – это количество пробелов, используемых для удобного форматирования.
+        Ранее все JSON-форматированные объекты не имели отступов и лишних пробелов. Это нормально, если мы хотим отправить объект 
+        по сети.<br>
+        Аргумент space используется исключительно для вывода в удобочитаемом виде.<br>
+        <br>
+        Ниже space = 2 указывает JavaScript отображать вложенные объекты в несколько строк с отступом в 2 пробела внутри объекта:
+    </p><br>
+
+    <p class="code-ex"> Например:<br>
+        <code>
+            let user = {<br>
+              name: 'John',<br>
+              age: 25,<br>
+              roles: {<br>
+                isAdmin: false,<br>
+                isEditor: true}<br>
+            };<br>
+            <br>
+            console.log(JSON.stringify(user, null, 2));<br>
+            /* отступ в 2 пробела:<br>
+            {  <br>
+              "name": "John",<br>
+              "age": 25,<br>
+              "roles": {<br>
+                "isAdmin": false,<br>
+                "isEditor": true  }<br>
+            }  */<br>
+            <br>
+            /* для JSON.stringify(user, null, 4) результат содержит больше отступов:<br>
+            {    <br>
+                 "name": "John",<br>
+                 "age": 25,<br>
+                 "roles":    {<br>
+                     "isAdmin": false,<br>
+                     "isEditor": true    }<br>
+            }    */<br>
+        </code>
+    </p><br>
+
+    <script>
+        let user4 = {
+          name: "John",
+          age: 25,
+          roles: {
+            isAdmin: false,
+            isEditor: true
+            }
+        };
+
+        console.log(JSON.stringify(user4, null, 2));
+        /* отступ в 2 пробела:
+        {
+        "name": "John",
+        "age": 25,
+        "roles": {
+          "isAdmin": false,
+          "isEditor": true
+         }
+        }*/
+    </script>
+
+    <h3>Пользовательский «toJSON»</h3>
+
+    <p>Как и toString для преобразования строк, объект может предоставлять метод toJSON для преобразования в JSON. JSON.stringify 
+        автоматически вызывает его, если он есть.
+    </p><br>
+
+    <p class="code-ex" style="width: 55%;">Например:<br>
+        <code>
+            let room = {<br>
+                number: 23<br>
+            }; <br>
+            <br>
+            let meetup = {<br>
+                title: "Conference",<br>
+                date: new Date(Date.UTC(2017, 0, 1)),<br>
+                room<br>
+            };<br>
+            <br>
+            alert( JSON.stringify(meetup) );<br>
+            /*{<br>
+              "title":"Conference",<br>
+              "date":"2017-01-01T00:00:00.000Z",  // (1)<br>
+              "room": {"number":23}               // (2)<br>
+            }*/<br>
+        </code>
+    </p><br>
+
+    <script>
+        let room4 = {
+          number: 23
+        };
+
+        let meetup4 = {
+          title: "Conference",
+          date: new Date(Date.UTC(2017, 0, 1)),
+          room4
+        };
+
+        console.log( JSON.stringify(meetup4) ); // { "title":"Conference", "date":"2017-01-01T00:00:00.000Z", "room": {"number":23} }
+    </script>
+
+    <p>Как видим, date (1) стал строкой. Это потому, что все объекты типа Date имеют встроенный метод toJSON, 
+        который возвращает такую строку.<br>
+        Теперь давайте добавим собственную реализацию метода toJSON в наш объект room (2):
+    </p><br>
+
+    <p class="code-ex" style="width: 55%;">
+        <code>
+            let room = {<br>
+                number: 23,<br>
+                <b>toJSON() {<br>
+                  return this.number;<br>
+                }</b><br>
+              };<br>
+              <br>
+              let meetup = {<br>
+                title: "Conference",<br>
+                <b>room</b><br>
+              };<br>
+              <br>
+              console.log( <b>JSON.stringify(room)</b> ); // 23<br>
+              <br>
+              console.log( <b>JSON.stringify(meetup)</b> );<br>
+              /* {<br>
+                  "title":"Conference",<br>
+                  "room": 23<br>
+                } */<br>
+        </code>
+    </p><br>
+
+    <script>
+        let room5 = {
+          number: 23,
+          toJSON() {
+            return this.number;
+          }
+        };
+
+        let meetup5 = {
+          title: "Conference",
+          room5
+        };
+
+        console.log( JSON.stringify(room5) ); // 23
+
+        console.log( JSON.stringify(meetup5) ); // { "title":"Conference", "room": 23 }
+    </script>
+
+    <p>Как видите, toJSON используется как при прямом вызове JSON.stringify(room), так и когда room вложен в другой 
+        сериализуемый объект.
+    </p><br>
+
+
+</body>
+
+</html>

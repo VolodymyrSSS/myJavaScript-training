@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs-JSON: exercise Исключить обратные ссылки</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs-JSON: exercise Исключить обратные ссылки</h2>
+
+    <h4 class="task">В простых случаях циклических ссылок мы можем исключить свойство, из-за которого они возникают, 
+        из сериализации по его имени. Но иногда мы не можем использовать имя, так как могут быть и другие, нужные, свойства 
+        с этим именем во вложенных объектах. Поэтому можно проверять свойство по значению.<br>
+        Напишите функцию replacer для JSON-преобразования, которая удалит свойства, ссылающиеся на meetup:
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            let room = {<br>
+                number: 23<br>
+            };<br>
+            <br>
+            let meetup = {<br>
+                title: 'Совещание',<br>
+                occupiedBy: [{name: 'Самуил'}, {name: 'Яков'}, {name: 'Изя'}],<br>
+                place: room<br>
+            };<br>
+            <br> 
+            // цикличные ссылки<br>
+            room.occupiedBy = meetup;<br>
+            meetup.self = meetup;<br>
+            <br>
+            console.log( JSON.stringify(meetup, function replacer(key, value) {<br>
+                /* ваш код */<br>
+            }));<br>
+            <br>
+            /* в результате должно быть:<br>
+            {<br>
+                "title":"Совещание",<br>
+                "occupiedBy":[{name: "Самуил"}, {name: "Яков"}, {name: "Изя"}],<br>
+                "place":{"number":23}<br>
+            }*/<br>
+        </code>
+    </p><br>
+
+    <script>
+        let room = {
+          number: 23
+        };
+
+        let meetup = {
+          title: "Совещание",
+          occupiedBy: [{name: "Самуил"}, {name: "Яков"}, {name: "Изя"}],
+          place: room
+        };
+
+        room.occupiedBy = meetup;
+        meetup.self = meetup;
+    
+    </script>
+
+
+    <p><b>Решение</b>:<br><br>
+        Нам нужно настроить процесс замены, для того, чтобы отфильтровать циклическую ссылку при этом 
+        передать массив свойств, которые нужно. Используем второй аргумент JSON.stringify - replacer: 
+        тоесть создадим массив свойств для кодирования и передачи, вот так:
+    </p><br>
+
+    <p class="code-ex" style="width: 70%;">
+        <code>
+            console.log( JSON.stringify(meetup, ['title', 'occupiedBy', 'place', 'name', 'number'])<br>
+        </code>
+    </p><br>
+
+    <p>Теперь всё, кроме meetup.self, сериализовано. Но список свойств довольно длинный. К счастью, 
+        в качестве replacer мы можем использовать функцию, а не массив. Функция будет вызываться для 
+        каждой пары (key, value), и она должна возвращать заменённое значение, 
+        которое будет использоваться вместо исходного. Или undefined, чтобы пропустить значение.<br>
+        В нашем случае мы можем вернуть value «как есть» для всего, кроме meetup.self. Чтобы игнорировать 
+        meetup.self, код ниже возвращает undefined. Кроме того, здесь нам также нужно проверить key =="", 
+        чтобы исключить первый вызов, где значение value равно meetup. Конечныь решением будет:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let room = {<br>
+                number: 23<br>
+            };<br>
+            <br>
+            let meetup = {<br>
+                title: 'Совещание',<br>
+                occupiedBy: [{name: 'Самуил'}, {name: 'Яков'}, {name: 'Изя'}],<br>
+                place: room<br>
+            };<br>
+            <br> 
+            // цикличные ссылки<br>
+            room.occupiedBy = meetup;<br>
+            meetup.self = meetup;<br>
+            <br>
+            console.log( JSON.stringify(meetup, function replacer(key, value) {<br>
+                return <b>(key != '' && value == meetup) ? undefined : value;</b><br>
+              }));<br>
+        </code>
+    </p><br>
+
+    <script>
+            console.log( JSON.stringify(meetup, function replacer(key, value) {
+                return (key != '' && value == meetup) ? undefined : value;
+            }));
+    </script>
+
+</body>
+
+</html>
