@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs_reqursion: exercise Рекурсивные обходы</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs_reqursion: Рекурсивные обходы</h2>
+
+    <h4 class="task">Представьте, у нас есть IT-компания. Отдел может состоять из массива работников. 
+        Например, в отделе sales работают 2 сотрудника: Джон и Алиса. Или отдел может быть разделён 
+        на подотделы, например, отдел development состоит из подотделов: sites и internals. В каждом 
+        подотделе есть свой персонал. Структура персонала может быть представлена как объект смотреть
+        ниже на код.
+        Также возможно, что при росте подотдела он делится на подразделения (или команды).
+        Кроме того, подотдел sites в будущем может быть разделён на команды siteA и siteB. И потенциально 
+        они могут быть разделены ещё.<br>
+        Нам нужна функция для получения суммы всех зарплат. Как мы можем это сделать?
+        
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            let company = {<br>
+                sales: [{name: 'John', salary: 1000}, {name: 'Alice', salary: 600 }],<br>
+                development: {<br>
+                  sites: [{name: 'Peter', salary: 2000}, {name: 'Alex', salary: 1800 }],<br>
+                  internals: [{name: 'Jack', salary: 1300}]<br>
+                }<br>
+              };<br>
+        </code>
+    </p><br>
+
+    <script>
+        let company = {
+            sales: [{name: "John", salary: 1000}, {name: "Alice", salary: 600}],
+            development: {
+                sites: [{name: "Peter", salary: 2000}, {name: "Alex", salary: 1800}],
+                internals: [{name: "Jack", salary:1300}]
+            }
+        };
+    </script>
+
+
+    <p><b>Решение</b>:<br><br>
+        Итеративный подход не прост, потому что структура довольно сложная. Первая идея заключается в том, 
+        чтобы сделать цикл for поверх объекта company с вложенным циклом над отделами 1-го уровня вложенности. 
+        Но затем нам нужно больше вложенных циклов для итераций над сотрудниками отделов второго уровня, таких 
+        как sites… А затем ещё один цикл по отделам 3-го уровня, которые могут появиться в будущем? Если мы 
+        поместим в код 3-4 вложенных цикла для обхода одного объекта, то это будет довольно некрасиво.<br>
+    </p><br>
+
+    <p>Давайте используем рекурсию.<br>
+        Как мы видим, когда наша функция получает отдел для подсчёта суммы зарплат, есть два возможных случая:<br>
+        1. Либо это «простой» отдел с массивом: тогда мы сможем суммировать зарплаты в простом цикле - это тривиальный случй, 
+        мы получим базу рекурсии.<br>
+        2. Или это объект с N подотделами – тогда мы можем сделать N рекурсивных вызовов, чтобы получить сумму для каждого из 
+        подотделов, и объединить результаты - этим случаем, мы определим шаг рекурсии.  Сложная задача разделяется на подзадачи 
+        для подотделов. Они могут, в свою очередь, снова разделиться на подотделы, но рано или поздно это разделение закончится, 
+        и решение сведётся к случаю (1).
+    </p><br>
+
+    <p>Принцип прост: для объекта {...} используются рекурсивные вызовы, а массивы [...] являются «листьями» дерева рекурсии, 
+        они сразу дают результат.
+        Для итерации по значениям объекта, используем метод перебора элементов объекта  <b>for..of</b>. А для получения значений массива
+        который находится в объекте или массива значений, используем метод массивов <b>Object.values</b>.
+        А для получения суммы элементов массива, используем метод <b>arr.reduce</b>.
+    </p><br>
+
+    <p>Схема вызовов:</p>
+    <img src="./img/recursive-salaries.svg" alt="recursive-salaries" style="margin-left: 150px;">
+    <br>
+    <br>
+
+    <p class="code-ex" style="width: 70%;">
+        <code>
+            // Функция для подсчёта суммы зарплат<br>
+            function sumSalaries(department) {<br>
+            if (Array.isArray(department)) { // <b>случай (1)</b><br>
+                return department.reduce((prev, current) => prev + current.salary, 0); // сумма элементов массива<br>
+            } else { // <b>случай (2)</b><br>
+                let sum = 0;<br>
+                for (let subdep of Object.values(department)) {<br>
+                sum += <b>sumSalaries(subdep)</b>; // рекурсивно вызывается для подотделов, суммируя результаты<br>
+                }<br>
+                return sum;}<br>
+            }<br>
+            <br>
+            console.log(sumSalaries(company)); // 6700<br>
+        </code>
+    </p><br>
+
+    <script>
+        function sumSalaries(department) {
+            if (Array.isArray(department)) { // случай (1)
+                return department.reduce((prev, current) => prev + current.salary, 0); // сумма элементов массива
+            } else { // случай (2)
+                let sum = 0;
+                for (let subdep of Object.values(department)) {
+                sum += sumSalaries(subdep); // рекурсивно вызывается для подотделов, суммируя результаты
+                }
+                return sum;
+            }
+        }
+
+        console.log(sumSalaries(company)); // 6700
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs_reсursion: exercise Вычислить факториал</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs_reсursion: Вычислить факториал</h2>
+
+    <h4 class="task">Написать функцию factorial(n), которая возвращает n!, используя рекурсию.
+        Определение факториала можно записать как:<br> 
+        n! = n * (n - 1) * (n - 2) * ...*1 Отсюда - факториал натурального числа – это число, 
+        умноженное на 'себя минус один', затем на 'себя минус два', и так далее до 1. Факториал
+         n обозначается как n!<br>
+        При этом n! так же можно записать как n * (n-1)!<br>
+        Можете решить задачу используя условный оператор '?' ?
+    </h4>
+
+    <p class="code-ex">Примеры значений для разных n:<br>
+        <code>
+            1! = 1<br>
+            2! = 2 * 1 = 2<br>
+            3! = 3 * 2 * 1 = 6<br>
+            4! = 4 * 3 * 2 * 1 = 24<br>
+            5! = 5 * 4 * 3 * 2 * 1 = 120<br>
+        </code>
+    </p><br>
+
+    <p><b>Решение</b>:<br><br>
+        По определению факториал n! можно записать как n * (n-1)! - это рекурсивно определяемая структура 
+        данных – структура, которая повторяет саму себя в своих частях.<br>
+        Как всегда для решения с рекурсией определим базу рекурсии и шаг рекурсии:<br>
+        Другими словами, factorial(n) можно получить как n умноженное на результат factorial(n-1). 
+        И результат для n-1, в свою очередь, может быть вычислен рекурсивно и так далее до 1 - это определяет
+        шаг рекурсии который мы и возвращаем.<br>
+        А база рекурсии будет: если n == 1, то мы возвращаем 1 тут результат очевиден: факториал от 1, равен 1;<br>
+
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            function factorial(n) {<br>
+                <b>if (n == 1) {<br>
+                  return 1;<br>
+                } else {<br>
+                  return n * factorial(n-1); }</b><br>
+              }<br>
+              <br>
+              // проверим работу функции факториала:<br>
+              console.log(factorial(1)); // 1
+              console.log(factorial(2)); // 2
+              console.log(factorial(3)); // 6
+              console.log(factorial(4)); // 24
+              console.log(factorial(5)); // 120<br>
+        </code>
+    </p><br>
+
+    <script>
+        function factorial(n) {
+          if (n == 1) {
+            return 1;
+          } else {
+            return n * factorial(n-1); 
+          }
+        }
+
+        console.log(factorial(1)); // 1
+        console.log(factorial(2)); // 2
+        console.log(factorial(3)); // 6
+        console.log(factorial(4)); // 24
+        console.log(factorial(5)); // 120
+    </script>
+
+    <p>Известно, факториал от 0 равен 1, поэтому мы можем в базе определить 0 но возвращать будет всё равно 1.</p><br>
+
+    <p class="code-ex">
+        <code>
+            function factorial(n) {<br>
+                if (<b>n == 0</b>) {<br>
+                  <b>return 1;</b><br>
+                } else {<br>
+                  return n * factorial(n-1); }<br>
+              }<br>
+        </code>
+    </p><br>
+
+    <p>Теперь довольно просто использовать условный оператор '?', вот так:</p><br>
+
+    <p class="code-ex">
+        <code>
+            function factorial(n) {<br>
+                return <b>(n != 1) ?  n * factorial(n-1) : 1;</b><br>
+              }<br>
+              <br>
+              // проверим работу с использованием тернарного оператора:<br>
+              console.log(factorial(1)); // 1
+              console.log(factorial(2)); // 2
+              console.log(factorial(3)); // 6
+              console.log(factorial(4)); // 24
+              console.log(factorial(5)); // 120
+        </code>
+    </p><br>
+
+    <script>
+        function factorial2(n) {
+          return (n != 1) ?  n * factorial(n-1) : 1;
+        }
+
+        console.log(factorial2(1)); // 1
+        console.log(factorial2(2)); // 2
+        console.log(factorial2(3)); // 6
+        console.log(factorial2(4)); // 24
+        console.log(factorial2(5)); // 120
+    </script>
+
+<p>Базисом рекурсии является значение 1. А можно было бы сделать базисом и 0, однако это добавило 
+    рекурсии дополнительный шаг:
+</p><br>
+
+<p class="code-ex">
+    <code>
+        function factorial(n) {<br>
+            return <b>n ?  n * factorial(n-1) : 1;</b><br>
+          }<br>
+    </code>
+</p><br>
+
+</body>
+
+</html>

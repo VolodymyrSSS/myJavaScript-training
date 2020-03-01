@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs_recursion: exercise Вывод односвязного списка</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs_reqursion: Вывод односвязного списка</h2>
+
+    <h4 class="task">Допустим, у нас есть односвязный список см ниже. Напишите функцию printList(list), 
+        которая выводит элементы списка по одному.:<br>
+        Сделайте два варианта решения: используя цикл и через рекурсию.<br>
+        Как лучше: с рекурсией или без?
+    </h4>
+
+    <p class="code-ex">Например:<br>
+        <code>
+            let list = {<br>
+                value: 1,<br>
+                next: {<br>
+                  value: 2,<br>
+                  next: {<br>
+                    value: 3,<br>
+                    next: {<br>
+                      value: 4,<br>
+                      next: null}<br>
+                  } } };<br>
+        </code>
+    </p><br>
+
+    <script>
+        let list = {
+          value: 1,
+          next: {
+            value: 2,
+            next: {
+              value: 3,
+              next: {
+                value: 4,
+                next: null
+              }
+             }
+          }
+        };
+    </script>
+
+    <p><b>Решение</b>:<br>
+        <br>
+        Рекурсивно определяемая структура данных – это структура данных, которая может быть определена 
+        с использованием самой себя.<br>
+        Например, связанный список, который мы имеем в задании, может быть определён как рекурсивно 
+        определяемая структура данных, состоящая из объекта, содержащего ссылку на список (или null):
+         <b>list = { value, next -> list }</b><br>
+        Как известно, рекурсия означает вызов функции самой себя. Её используют, когда вычисление функции 
+        можно свести к её более простому вызову, а его – к ещё более простому и так далее, пока значение 
+        не станет очевидно.<br>
+    </p><br>
+
+    <p>Рекурсивный вариант printList(list) следует простой логике: для вывода списка мы должны вывести 
+        текущий list, затем сделать то же самое для list.next:<br>
+        За базу рекурсии можно считать вывод значения любого свойства объекта - в нашем случае свойства
+        текущего листа. Так как это объект, то для вывода значения его свойства используют точку, вот 
+        так: list.value - решение для вывода свелось к простому обращению к свойству объекта чтобы получить 
+        его значение. <br>
+        За шаг рекурсии будет вывод значения свойства следующего листа, которое находится в свойстве 
+        этого же листа printList(list) и чтобы обратится к нему нам надо снова обратится к значению свойства 
+        текущего листа, вот так: printList(list.next).<br>
+        И решением задачи  через рекурсию. будет:
+    </p><br>
+
+    <p class="code-ex">Решение через рекурсию:<br>
+        <code>
+            function printList(list) {<br>
+              <br>
+              <b>console.log(list.value)</b>; -здесь выводим текущий элемент<br>
+              <br>
+              <b>if (list.next) {<br>
+                printList(list.next);</b> -делаем то же самое для остальной части списка<br>
+              <b>}</b>
+              
+            }
+            <br>
+            // вызовем функцию<br>
+            printList(list); // 1 на другой строчке 2, затем 3 и 4<br>
+        </code>
+    </p><br>
+
+    <script>
+        'use strict';
+
+        function printList1(list) {
+
+            console.log(list.value); // выводим текущий элемент
+
+            if (list.next) {
+            printList1(list.next); // делаем то же самое для остальной части списка
+            }
+        }
+
+        printList1(list); // 1, 2, 3, 4
+    </script>
+
+    <p>
+
+    <p>Рассмотрим вариант решения через цикл. Тут лучше всего подойдёт цикл while.<br>
+        На вход функция получает один параметр - односвязный список и пока это истинна, выводить значение
+        свойства value. Потом переопределяем лист как next и делаем в цикле для него тоже самое.<br>
+        Параметр 'list' здесь – это сам список, его первый элемент. Так и должно быть, это просто и понятно.
+    </p><br>
+
+    <p class="code-ex">Решение с использованием цикла:<br>
+        <code>
+            function printList(list) {<br>
+                <br>
+                <b>while(list) {<br>
+                  console.log(list.value);<br>
+                  list = list.next; }</b><br>
+              }<br>
+        </code>
+    </p><br>
+
+    <p>
+        Но использование как параметра функции 'list' неблагоразумно в связи с тем, что код выполнения 
+        может изменится. В будущем нам может понадобиться расширить функцию, сделать что-нибудь ещё со 
+        списком. Если мы меняем list, то теряем такую возможность. Поэтому, мы можем использовать временную 
+        переменную, например 'tmp' для перемещения по списку. Здесь 'tmp' используется исключительно для 
+        обхода списка, как i в цикле for, вот так:<br>
+        
+    </p><br>
+
+
+    <p class="code-ex">Решение с использованием цикла:<br>
+        <code>
+            function printList(list) {<br>
+                <b>let tmp = list;</b><br>
+                <br>
+                while (tmp) {<br>
+                  console.log(tmp.value);<br>
+                  tmp = tmp.next;<br>
+                }<br>
+                <br>
+              }<br>
+              <br>
+              printList(list);<br>
+              <br>
+              // вызовем функцию<br>
+              printList(list); // 1 на другой строчке 2, затем 3 и 4<br>
+        </code>
+    </p><br>
+
+    <script>
+        function printList2(list) {
+          let tmp = list;
+
+          while (tmp) {
+            console.log(tmp.value);
+            tmp = tmp.next;
+          }
+        }
+
+        printList2(list);
+    </script>
+
+    <p>Технически, способ с циклом более эффективный. В обеих реализациях делается то же самое, но 
+        для цикла не тратятся ресурсы для вложенных вызовов. С другой стороны, рекурсивный вариант 
+        более короткий и, возможно, более простой.
+    </p><br>
+
+
+</body>
+
+</html>

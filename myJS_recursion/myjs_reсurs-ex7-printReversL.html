@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs_recursion: exercise Вывод односвязного списка в обратном порядке</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs_reqursion: Вывод односвязного списка в обратном порядке</h2>
+
+    <h4 class="task">Допустим, у нас есть односвязный список см ниже. Напишите функцию printReverseList(list), 
+        которая выводит элементы списка в обратном порядке:<br>
+        Сделайте два варианта решения: используя цикл и через рекурсию.<br>
+    </h4>
+
+    <p class="code-ex">Односвязнный список<br>
+        <code>
+            let list = {<br>
+                value: 1,<br>
+                next: {<br>
+                  value: 2,<br>
+                  next: {<br>
+                    value: 3,<br>
+                    next: {<br>
+                      value: 4,<br>
+                      next: null}<br>
+                  } } };<br>
+        </code>
+    </p><br>
+
+    <script>
+        let list = {
+          value: 1,
+          next: {
+            value: 2,
+            next: {
+              value: 3,
+              next: {
+                value: 4,
+                next: null
+              }
+             }
+          }
+        };
+    </script>
+
+    <p><b>Решение</b>:<br>
+        <br>
+        Рекурсивно определяемая структура данных – это структура данных, которая может быть определена 
+        с использованием самой себя.<br>
+        Например, связанный список, который мы имеем в задании, может быть определён как рекурсивно 
+        определяемая структура данных, состоящая из объекта, содержащего ссылку на список (или null):
+         <b>list = { value, next -> list }</b>
+    </p><br>
+
+    <p>Рекурсивный вариант следует простой логике: для вывода списка мы должны вывести 
+        текущий list, затем сделать то же самое для list.next:<br>
+        Но это хорошо для вывода элементов листа один за другим в нормальном порядке. Для вывода элементов 
+        в обратном порядке, рекурсивная логика немного сложнее.<br>
+        Сначала надо вывести оставшуюся часть списка (или list.next), а затем текущий элемент:
+        И решением задачи  через рекурсию. будет:
+    </p><br>
+
+    <p class="code-ex">Решение через рекурсию:<br>
+        <code>
+            function printReverseList(list) {<br>
+                <br>
+                <b>if (list.next) {<br>
+                  printReverseList(list.next);<br>
+                }</b><br>
+                <br>
+                <b>console.log(list.value);</b><br>
+            }<br>
+            <br>
+            // вызовем функцию<br>
+            printReverseList(list) // 4 на другой строчке 3, затем 2 и 1<br>
+        </code>
+    </p><br>
+
+    <script>
+        'use strict';
+
+        function printReverseList(list) {
+                
+                if (list.next) {
+                  printReverseList(list.next);
+                }
+                
+                console.log(list.value);
+            }
+            
+            printReverseList(list) // 4 на другой строчке 3, затем 2 и 1
+    </script>
+
+    <p>
+
+    <p>Рассмотрим вариант решения через цикл. Тут лучше всего подойдёт цикл while.<br>
+        На вход функция получает один параметр - односвязный список и пока это истинна, выводить значение
+        свойства value. Потом переопределяем лист как next и делаем в цикле для него тоже самое.<br>
+        Параметр 'list' здесь – это сам список, его первый элемент. Так и должно быть, это просто и понятно.
+    </p><br>
+
+    <p class="code-ex">Решение с использованием цикла:<br>
+        <code>
+            function printList(list) {<br>
+                <br>
+                <b>while(list) {<br>
+                  console.log(list.value);<br>
+                  list = list.next; }</b><br>
+              }<br>
+        </code>
+    </p><br>
+
+    <p>
+        Но использование как параметра функции 'list' неблагоразумно в связи с тем, что код выполнения 
+        может изменится. В будущем нам может понадобиться расширить функцию, сделать что-нибудь ещё со 
+        списком. Если мы меняем list, то теряем такую возможность. Поэтому, мы можем использовать временную 
+        переменную, например 'tmp' для перемещения по списку. Здесь 'tmp' используется исключительно для 
+        обхода списка, как i в цикле for, вот так:<br>
+        
+    </p><br>
+
+
+    <p class="code-ex">Решение с использованием цикла:<br>
+        <code>
+            function printList(list) {<br>
+                <b>let tmp = list;</b><br>
+                <br>
+                while (tmp) {<br>
+                  console.log(tmp.value);<br>
+                  tmp = tmp.next;<br>
+                }<br>
+                <br>
+              }<br>
+              <br>
+              printList(list);<br>
+              <br>
+              // вызовем функцию<br>
+              printList(list); // 1 на другой строчке 2, затем 3 и 4<br>
+        </code>
+    </p><br>
+
+    <p>Вариант вывода элементов с использованием цикла while, сложнее чем в предыдущем виде.
+        Нет способа сразу получить последнее значение в списке list. Мы также не можем «вернуться назад», 
+        к предыдущему элементу списка.<br>
+        Поэтому мы можем:<br>
+         сначала перебрать элементы в прямом порядке используя цикл while <br>
+         и запомнить их в массиве используя метод массивов .push()<br>
+        вывести то, что мы запомнили, в обратном порядке, используя метод перебора элементов массива for<br>
+        при этом отсчёт вести от последнего элемента arr.length - 1 в обратном порядке на уменьшение i--<br>
+        вот так:
+    </p><br>
+
+    <p class="code-ex">Решение с использованием цикла для элементов в обратном порядке:<br>
+        <code>
+            function printReverseList(list) {<br>
+                let arr = [];<br>
+                let tmp = list;<br>
+                <br>
+                while (tmp) {<br>
+                  arr.push(tmp.value);<br>
+                  tmp = tmp.next;<br>
+                }<br>
+                <br>
+                for (let i = arr.length - 1; i >= 0; i--) {<br>
+                  console.log( arr[i] ); }<br>
+              }<br>
+              <br>
+              // вызовем функцию<br>
+              printReverseList(list); // 4, 3, 2, 1
+        </code>
+    </p><br>
+
+    <script>
+        function printReverseList2(list) {
+          let arr = [];
+          let tmp = list;
+
+          while (tmp) {
+            arr.push(tmp.value);
+            tmp = tmp.next;
+          }
+
+          for (let i = arr.length - 1; i >= 0; i--) {
+            console.log( arr[i] );
+          }
+        }
+
+        printReverseList2(list);
+    </script>
+
+    <p>Обратите внимание, что рекурсивное решение на самом деле делает то же самое: проходит 
+        список, запоминает элементы в цепочке вложенных вызовов (в контексте выполнения), а 
+        затем выводит их.
+    </p><br>
+
+
+</body>
+
+</html>
