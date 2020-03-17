@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs_funcAdv: exercise IIFE</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs_funcAdv: exercise IIFE</h2>
+
+    <h4 class="task">Дайте определение что такое  IIFE? Покажите на примере работу. Какие пути создания IIFE?</h4>
+
+    <p><b>Ответ</b>:<br>
+        <br>
+        В прошлом в JavaScript не было лексического окружения на уровне блоков кода. Так что программистам 
+        пришлось что-то придумать. И то, что они сделали, называется «immediately-invoked function expressions» 
+        (аббревиатура IIFE), что означает <b>функцию, запускаемую сразу после объявления</b>.<br>
+        Это не то, что мы должны использовать сегодня, но, так как вы можете встретить это в старых скриптах, 
+        полезно понимать принцип работы.<br>
+        Покажем IIFE на примере:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            <b>(</b>function() {<br>
+                <br>
+                let message = 'Hello';<br>
+                <br>
+                console.log(message); // Hello<br>
+                <br>
+            }<b>)</b>();<br>
+        </code>
+    </p><br>
+
+    <script>
+        (function() {
+
+        let message = "Hello";
+
+        console.log(message); // Hello
+
+        })();
+    </script>
+
+    <p>Здесь создаётся и немедленно вызывается Function Expression. Так что код выполняется сразу же и 
+        у него есть свои локальные переменные.
+    </p><br>
+
+    <p>Function Expression обёрнуто в скобки (function {...}), потому что, когда JavaScript встречает 
+        'function' в основном потоке кода, он воспринимает это как начало Function Declaration. Но у Function 
+        Declaration должно быть имя, так что такой код вызовет ошибку.
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            function() { // <-- Error: Unexpected token (<br>
+            <br>
+              let message = 'Hello';<br>
+              <br>
+              console.log(message); // Hello<br>
+              <br>
+            }();<br>
+        </code>
+    </p><br>
+
+    <p>Даже если мы скажем: «хорошо, давайте добавим имя», – это не сработает, потому что JavaScript 
+        не позволяет вызывать Function Declaration немедленно.
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            // ошибка синтаксиса из-за скобок ниже<br>
+            function go() {<br>
+            <br>
+            }(); // <-- не можете вызывать Function Declaration немедленно<br>
+        </code>
+    </p><br>
+
+    <p>Так что, скобки вокруг функции – это трюк, который позволяет показать JavaScript, что функция 
+        была создана в контексте другого выражения, и, таким образом, это функциональное выражение: ей 
+        не нужно имя и её можно вызвать немедленно.<br>
+        Кроме скобок, существуют и другие пути показать JavaScript, что мы имеем в виду Function Expression:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            // Пути создания IIFE<br>
+            <br>
+            (function() {<br>
+                console.log('Скобки вокруг функции');<br>
+            })();<br>
+            <br>
+            (function() {
+                console.log('Скобки вокруг всего');<br>
+            }());<br>
+            <br>
+            !function() {<br>
+                console.log('Выражение начинается с побитового оператора NOT');<br>
+            }();<br>
+            <br>
+            +function() {<br>
+                console.log('Выражение начинается с унарного плюса');<br>
+            }();<br>
+        </code>
+    </p><br>
+
+    <script>
+        // Пути создания IIFE
+        
+        (function() {
+            console.log("Скобки вокруг функции");
+        })();
+           
+        (function() {
+            console.log("Скобки вокруг всего");
+        }());
+        
+        !function() {
+            console.log("Выражение начинается с побитового оператора NOT");
+        }();
+            
+        +function() {
+            console.log("Выражение начинается с унарного плюса");
+        }();
+    </script>
+
+    <p>Во всех перечисленных случаях мы объявляем Function Expression и немедленно выполняем его. Ещё 
+        раз заметим, что в настоящий момент нет необходимости писать подобный код.
+    </p><br>
+
+</body>
+
+</html>

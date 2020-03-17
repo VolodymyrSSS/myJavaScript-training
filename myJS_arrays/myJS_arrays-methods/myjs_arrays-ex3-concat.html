@@ -82,13 +82,13 @@
             let arr = [1, 2];<br>
             <br>
             // создать массив из: arr и [3,4]<br>
-            console.log( <b>arr.concat([3, 4])</b> ); // 1,2,3,4<br>
+            console.log( <b>arr.concat([3, 4])</b> ); // [1,2,3,4]<br>
             <br>
             // создать массив из: arr и [3,4] и [5,6]<br>
-            console.log( <b>arr.concat([3, 4], [5, 6])</b> ); // 1,2,3,4,5,6<br>
+            console.log( <b>arr.concat([3, 4], [5, 6])</b> ); // [1,2,3,4,5,6]<br>
             <br>
             // создать массив из: arr и [3,4], потом добавить значения 5 и 6<br>
-            console.log( <b>arr.concat([3, 4], 5, 6)</b> ); // 1,2,3,4,5,6<br>
+            console.log( <b>arr.concat([3, 4], 5, 6)</b> ); // [1,2,3,4,5,6]<br>
         </code>
     </p><br>
 
@@ -118,7 +118,7 @@
                 length: 1<br>
             };<br>
             <br>
-            console.log( <b>arr2.concat(arrayLike)</b> ); // <em>1,2,[1,2,{...}]</em><br>
+            console.log( <b>arr2.concat(arrayLike)</b> ); // <em>[ 1,2,{...} ]</em><br>
         </code>
     </p><br>
 
@@ -140,15 +140,15 @@
 
     <p class="code-ex" style="width: 60%;">
         <code>
-            let arr = [1, 2];
-
-        let arrayLike = {
-            0: 'что-то',
-            1: 'ещё',
-            [Symbol.isConcatSpreadable]: true,
-            length: 2
-        };
-
+            let arr = [1, 2];<br>
+            <br>
+        let arrayLike = {<br>
+            0: 'что-то',<br>
+            1: 'ещё',<br>
+            [Symbol.isConcatSpreadable]: true,<br>
+            length: 2<br>
+        };<br>
+        <br>
         console.log( <b>arr.concat(arrayLike)</b> ); // [1, 2, 'что-то', 'ещё']<br>
         </code>
     </p><br>

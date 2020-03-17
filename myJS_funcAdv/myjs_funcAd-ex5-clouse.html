@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs_funcAdv: exercise Замыкание</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs_funcAdv: exercise Замыкание</h2>
+
+    <h4 class="task">У нас есть функция 'sayHiBye', которая получает на вход два параметра firstName, lastName.
+        Мы знаем, что функция может получить доступ к переменным из внешнего окружения, эта возможность используется очень часто.
+        Создайте функцию-помощник 'getFullName' которая должна получить доступ к внешним переменным firstName, lastName.
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            function sayHiBye(firstName, lastName) {<br>
+            <br>
+            // функция-помощник, которую мы используем ниже<br>
+            function getFullName() {<br>
+                // .. ваш код ..
+            }<br>
+            <br>
+            console.log( 'Hello, ' + getFullName() );<br>
+            console.log( 'Bye, ' + getFullName() );<br>
+            <br>
+            }<br>
+        </code>
+    </p><br>
+
+    <p><b>Решение</b>:<br>
+        <br>
+        Функция называется «вложенной», когда она создаётся внутри другой функции. 
+        Здесь вложенная функция getFullName() может получить доступ к внешним переменным 
+        firstName, lastName и, значит, вывести полное имя. 
+    </p><br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            function sayHiBye(firstName, lastName) {<br>
+                <br>
+                // функция-помощник, которую мы используем ниже<br>
+                function getFullName() {<br>
+                  <b>return firstName + " " + lastName;</b><br>
+                }<br>
+                <br>
+                console.log( 'Hello, ' + getFullName() );<br>
+                console.log( 'Bye, ' + getFullName() );<br>
+            }<br>
+            <br>
+            // проверим работу функции:<br>
+            sayHiBye('Modest', 'Dumbue'); // Hello, Modest Dumbue и  Bye, Modest Dumbue
+        </code>
+    </p><br>
+
+    <script>
+        function sayHiBye(firstName, lastName) {
+            // функция-помощник
+            function getFullName() {
+                return firstName + " " + lastName;
+            }
+            console.log( "Hello, " + getFullName() );
+            console.log( "Bye, " + getFullName() );
+        }
+        // проверим работу функции:
+        sayHiBye("Modest", "Dumbue");
+    </script>
+
+
+
+</body>
+
+</html>

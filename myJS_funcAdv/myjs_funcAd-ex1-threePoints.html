@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs_funcAdv: exercise Остаточные параметры</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs_funcAdv: exercise Остаточные параметры (...)</h2>
+
+    <h4 class="task">На вход функция sumAll() получает аргументы - это числа. Количество аргументов может 
+        быть любое. Cоберите все аргументы в массив args и получите сумму из этих чисел.
+    </h4>
+
+    <p class="code-ex">Пример работы функции<br>
+        <code>
+            console.log( sumAll(1) ); // 1<br>
+            console.log( sumAll(1, 2, 3) ); // 6<br>
+            console.log( sumAll(18, 10, 46, 26) ); // 100<br>
+        </code>
+    </p><br>
+
+
+    <p><b>Решение</b>:<br><br>
+        Если мы используем для сложения аргументов оператор +, то функция прибавит первых два аргумента. 
+        Но если на вход поступило несколько аргументов, функция всё равно посчитает первых два, остальные 
+        аргументы не будут учтены, хотя это и не вызовет ошибки.
+    </p><br>
+
+    <p class="code-ex">Например:<br>
+        <code>
+            function sum(a, b) {<br>
+                return a + b;<br>
+              }<br>
+              <br>
+              sum(1, 2, 3, 4, 5); == 3<br>
+        </code>
+    </p><br>
+
+    <p>Вызывать функцию можно с любым количеством аргументов независимо от того, как она была определена.<br>
+        Поэтому, для использования всех аргументов и получения их суммы, используем структуру 'остаточные 
+        параметры'. Остаточные параметры могут быть обозначены через три точки (...), буквально это значит: 
+        «собери оставшиеся параметры и положи их в массив». Далее, мы используем оператор + для получения 
+        суммы аргументов-чисел, вот так:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            function sumAll(...args) { -здесь args — имя массива<br>
+                let sum = 0;<br>
+                <br>
+                <b>for (let arg of args) sum += arg;</b><br>
+                <br>
+                return sum;<br>
+            }<br>
+            <br>
+
+            // проверим работу функции:<br>
+            console.log( sumAll(1) ); // 1<br>
+            console.log( sumAll(1, 2, 3) ); // 6<br>
+            console.log( sumAll(18, 10, 46, 26) ); // 100<br>
+        </code>
+    </p><br>
+
+    <script>
+        function sumAll(...args) {
+            let sum = 0;
+                
+            for (let arg of args) sum += arg;
+
+            return sum;
+        }
+            
+            // проверим работу функции:
+            console.log( sumAll(1) ); // 1
+            console.log( sumAll(1, 2, 3) ); // 6
+            console.log( sumAll(18, 10, 46, 26) ); // 100
+            
+    </script>
+
+</body>
+
+</html>

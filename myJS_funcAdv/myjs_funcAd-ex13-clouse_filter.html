@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs_funcAdv: exercise Замыкание filters</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs_funcAdv_clouse: exercise - фильтрация с помощью функции</h2>
+
+    <h4 class="task">У нас есть встроенный метод arr.filter(f) для массивов. Он фильтрует 
+        все элементы с помощью функции f. Если она возвращает true, то элемент добавится в 
+        возвращаемый массив.<br>
+        Сделайте набор «готовых к употреблению» фильтров:<br>
+        inBetween(a, b) – между a и b (включительно)<br>
+        inArray([...]) – находится в данном массиве<br>
+        Они должны использоваться таким образом:<br>
+        arr.filter(inBetween(3,6)) – выбирает только значения между 3 и 6 (включительно).<br>
+        arr.filter(inArray([1,2,3])) – выбирает только элементы, совпадающие с одним из элементов массива</h4>
+
+    <p class="code-ex">Например:<br>
+        <code>
+            /* .. ваш код для inBetween и inArray */<br>
+            let arr = [1, 2, 3, 4, 5, 6, 7];<br>
+            <br>
+            console.log( arr.filter(inBetween(3, 6)) ); // 3,4,5,6<br>
+            <br>
+            console.log( arr.filter(inArray([1, 2, 10])) ); // 1,2<br>
+        </code>
+    </p><br>
+
+    <p><b>Решение</b>: для фильтра inBetween<br></p><br>
+
+    <p class="code-ex">
+        <code>
+            function inBetween(a, b) {<br>
+                return <b>function(x) {<br>
+                  return x >= a && x <= b; }</b>;<br>
+              }<br>
+              <br>
+              let arr = [1, 2, 3, 4, 5, 6, 7];<br>
+              console.log( arr.filter(inBetween(3, 6)) ); // 3,4,5,6<br>
+        </code>
+    </p><br>
+
+    <script>
+        'use strict';
+
+        function inBetween(a, b) {
+          return function(x) {
+            return x >= a && x <= b;
+          };
+        }
+
+        let arr = [1, 2, 3, 4, 5, 6, 7];
+        console.log( arr.filter(inBetween(3, 6)) ); // 3,4,5,6
+    </script>
+
+<p><b>Решение</b>: для фильтра inArray<br></p><br>
+
+<p class="code-ex">
+    <code>
+        function inArray(arr) {<br>
+            return <b>function(x) {<br>
+              return arr.includes(x); }</b>;<br>
+          }<br>
+          <br>
+          let arr = [1, 2, 3, 4, 5, 6, 7];<br>
+          console.log( arr.filter(inArray([1, 2, 10])) ); // 1,2<br>
+    </code>
+</p><br>
+
+<script>
+
+    function inArray(arr) {
+      return function(x) {
+        return arr.includes(x);
+      };
+    }
+
+    console.log( arr.filter(inArray([1, 2, 10])) ); // 1,2
+</script>
+
+</body>
+
+</html>

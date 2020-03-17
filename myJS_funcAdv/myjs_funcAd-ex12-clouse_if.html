@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs_funcAdv: exercise Замыкание</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs_funcAdv: exercise Замыкание c if</h2>
+
+    <h4 class="task">Посмотрите на код. Какой будет результат у вызова на последней строке?</h4>
+
+    <p class="code-ex">
+        <code>
+            'use strict';<br>
+            let phrase = "Hello";<br>
+            <br>
+            <b>if (true) {</b><br>
+              let user = "John";<br>
+            <br>
+              function sayHi() {<br>
+                console.log(`${phrase}, ${user}`); }<br>
+            <b>}</b><br>
+            <br>
+            sayHi(); // <b>???</b><br>
+        </code>
+    </p><br>
+
+    <p><b>Решение</b>:<br>
+        <br>
+        ReferenceError: sayHi is not defined - pезультатом будет ошибка.<br>
+        Функция sayHi объявлена внутри if, так что она живёт только внутри этого блока. Снаружи 
+        нет sayHi.
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            'use strict';<br>
+            sayHi(); // ReferenceError: sayHi is not defined<br>
+        </code>
+    </p><br>
+
+    <script>
+        'use strict';
+        let phrase = "Hello";
+
+        if (true) {
+        let user = "John";
+
+            function sayHi() {
+                alert(`${phrase}, ${user}`);
+            }
+        }
+
+        sayHi();// ReferenceError: sayHi is not defined
+    </script>
+
+</body>
+
+</html>

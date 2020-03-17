@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs_funcAdv: exercise Замыкание</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs_funcAdv: exercise Замыкание</h2>
+
+    <h4 class="task">Здесь объект счётчика создан с помощью функции-конструктора.<br>
+        Будет ли он работать? Что покажет?
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            function Counter() {<br>
+                let count = 0;<br>
+              <br>
+                this.up = function() {<br>
+                  return ++count;<br>
+                };<br>
+                this.down = function() {<br>
+                  return --count;<br>
+                };<br>
+              }<br>
+              <br>
+              let counter = new Counter();<br>
+              <br>
+              console.log( counter.up() ); // <b>???</b><br>
+              console.log( counter.up() ); // <b>???</b><br>
+              console.log( counter.down() ); // <b>???</b><br>
+        </code>
+    </p><br>
+
+    <p><b>Решение</b>:<br>
+        <br>
+        Несомненно, он отлично будет работать.<br>
+        Обе вложенные функции были созданы с одним и тем же внешним лексическим окружением, так что они 
+        имеют доступ к одной и той же переменной count:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            function Counter() {
+                let count = 0;<br>
+                <br>
+                this.up = function() {<br>
+                  return ++count;<br>
+                };<br>
+                <br>
+                this.down = function() {<br>
+                  return --count; };<br>
+              }<br>
+              <br>
+              let counter = new Counter();<br>
+              <br>
+              console.log( counter.up() ); // 1<br>
+              console.log( counter.up() ); // 2<br>
+              console.log( counter.down() ); // 1<br>
+        </code>
+    </p><br>
+
+    <script>
+        function Counter() {
+            let count = 0;
+
+            this.up = function() {
+                return ++count;
+            };
+
+            this.down = function() {
+                return --count;
+            };
+        }
+
+        let counter = new Counter();
+
+        console.log( counter.up() ); // 1
+        console.log( counter.up() ); // 2
+        console.log( counter.down() ); // 1
+    </script>
+
+</body>
+
+</html>

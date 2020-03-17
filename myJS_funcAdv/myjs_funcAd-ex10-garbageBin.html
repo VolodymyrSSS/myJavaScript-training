@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs_funcAdv: exercise garbageBin</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs_funcAdv: exercise garbageBin</h2>
+
+    <h4 class="task">Когда удаляестся лексическое окружение?</h4>
+
+    <p><b>Ответ</b>:<br>
+        <br>
+        Обычно лексическое окружение очищается и удаляется после того, как функция выполнилась.<br>
+        Например: здесь два значения, которые технически являются свойствами лексического окружения. 
+        Но после того, как f() завершится, это лексическое окружение станет недоступно, поэтому оно 
+        удалится из памяти.
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            function f() {<br>
+                let value1 = 123;<br>
+                let value2 = 456;<br>
+              }<br>
+              <br>
+              f();<br>
+        </code>
+    </p><br>
+
+    <p>Но, если есть вложенная функция, которая всё ещё доступна после выполнения f, то у неё есть 
+        свойство [[Environment]], которое ссылается на внешнее лексическое окружение, тем самым оставляя 
+        его достижимым, «живым»:</p>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            function f() {<br>
+                let value = 123;<br>
+                <br>
+                function g() { console.log(value); }<br>
+                <br>
+                return g;<br>
+                }<br>
+                <br>
+                let g = f(); // g доступно и продолжает держать внешнее лексическое окружение в памяти<br>
+        </code>
+    </p><br>
+
+    <p>Обратите внимание, если f() вызывается несколько раз и возвращаемые функции сохраняются, тогда все 
+        соответствующие объекты лексического окружения продолжат держаться в памяти. Вот три такие функции 
+        в коде ниже:
+    </p><br>
+
+    <p class="code-ex" style="width: 65%;">
+        <code>
+            function f() {<br>
+              let value = Math.random();<br>
+              <br>
+              return function() { console.log(value); };<br>
+            }<br>
+            <br>
+            // три функции в массиве, каждая из них ссылается на лексическое окружение из соответствующего 
+            вызова f()<br>
+            let arr = [f(), f(), f()];<br>
+            console.log(arr);
+        </code>
+    </p><br>
+
+    <script>
+        function f() {
+          let value = Math.random();
+        
+          return function() { console.log(value); };
+        }
+        
+        // три функции в массиве, каждая из них ссылается на лексическое окружение из соответствующего вызова f()
+        let arr = [f(), f(), f()];
+        console.log(arr); // [ƒ, ƒ, ƒ]
+    </script>
+
+    <p>Объект лексического окружения умирает, когда становится недоступным (как и любой другой объект). 
+        Другими словами, <b>он существует только до того момента, пока есть хотя бы одна вложенная функция, 
+        которая ссылается на него</b>.
+    </p><br>
+
+    <p>В следующем коде, после того как g станет недоступным, лексическое окружение функции (и, соответственно, 
+        value) будет удалено из памяти;
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            function f() {<br>
+                let value = 123;<br>
+                <br>
+                function g() { alert(value); }<br>
+                <br>
+                return g;<br>
+            }<br>
+            <br>
+            let g = f(); // пока g существует,<br>
+            // соответствующее лексическое окружение существует<br>
+            <br>
+            g = null; // ...а теперь память очищается<br>
+        </code>
+    </p><br>
+
+</body>
+
+</html>

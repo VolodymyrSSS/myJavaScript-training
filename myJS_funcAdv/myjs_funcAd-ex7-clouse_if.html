@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs_funcAdv: exercise Замыкание</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs_funcAdv: exercise Замыкание c if</h2>
+
+    <h4 class="task">Лексическое окружение существует для любых блоков кода {...}.
+        У нас есть блок кода c if. Покажите, что лексическое окружение содержит локальные переменные 
+        только для этого блока.
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            let phrase = 'Hello my dear '';<br>
+            if (true) <b>{</b><br>
+                let user = 'Kate';<br>
+                console.log (`${phrase} ${user}`); // <b>???</b><br>
+            <b>}</b><br>
+            console.log (`${phrase} ${user}`); // <b>???</b><br>
+        </code>
+    </p><br>
+
+    <p><b>Решение</b>:<br>
+        <br>
+        Лексическое окружение создаётся при выполнении блока кода и содержит локальные переменные 
+        для этого блока.<br> 
+        То есть, когда выполнение попадает в блок if, для этого блока создаётся новое лексическое 
+        окружение. У него есть ссылка на внешнее окружение, так что phrase будет найдена. Но 
+        все переменные и Function Expression, объявленные внутри if, остаются в его лексическом 
+        окружении и не видны снаружи.<br>
+        В этом коде, после завершения if второй console.log не увидит user, и вызовет ошибку
+        так как нет такой переменной - она не видна снаружи.
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let phrase = 'Hello my dear ';<br>
+            if (true) {<br>
+                let user = 'Kate';<br>
+                <b>console.log (`${phrase} ${user}`);</b> // Hello my dear  Kate<br>
+            }<br>
+            // здесь покажет ошибку так как лексическое окружение созданно только для блока {...}<br>
+            console.log (`${phrase} ${user}`); // <b>user is not defined</b><br>
+        </code>
+    </p><br>
+
+    <script>
+        let phrase = "Hello my dear ";
+        if (true) {
+            let user = "Kate";
+            console.log (`${phrase} ${user}`); // Hello my dear  Kate
+        }
+        // console.log (`${phrase} ${user}`); // ReferenceError: user is not defined
+    </script>
+
+    <p>Мы также можем использовать «простые» блоки кода {...}, чтобы изолировать переменные в «локальной 
+        области видимости».<br>
+        Например, в браузере все скрипты (кроме type="module") разделяют одну общую глобальную область. Так 
+        что, если мы создадим глобальную переменную в одном скрипте, она станет доступна и в других. Но это 
+        становится источником конфликтов, если два скрипта используют одно и то же имя переменной и перезаписывают 
+        друга друга.<br>
+        Это может произойти, если название переменной – широко распространённое слово, а авторы скрипта не знают 
+        друг о друге. Если мы хотим этого избежать, мы можем использовать блок кода для изоляции всего скрипта 
+        или какой-то его части, как здесь:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            <b>{</b><br>
+                // сделать какую-нибудь работу с локальными переменными, которые не должны быть видны снаружи<br>
+              <br>
+                let message = 'Hello';<br>
+              <br>
+                console.log(message); // Hello<br>
+            <b>}</b><br>
+            <br> 
+            console.log(message); // Ошибка: переменная message не определена<br>
+        </code>
+    </p><br>
+
+    <p>Из-за того, что у блока есть собственное лексическое окружение, код снаружи него (или в другом 
+        скрипте) не видит переменные этого блока.
+    </p><br>
+
+</body>
+
+</html>

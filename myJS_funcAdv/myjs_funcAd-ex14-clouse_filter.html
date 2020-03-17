@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs_funcAdv: exercise Замыкание filters</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs_funcAdv_clouse: exercise - cортировать по полю</h2>
+
+    <h4 class="task">У нас есть массив объектов (ниже), который нужно отсортировать указав функции
+        поле как здесь: byField(fieldName) ?</h4>
+
+    <p class="code-ex">массив объектов:<br>
+        <code>
+            let users = [<br>
+              { name: "John", age: 20, surname: "Johnson" },<br>
+              { name: "Pete", age: 18, surname: "Peterson" },<br>
+              { name: "Ann", age: 19, surname: "Hathaway" }<br>
+            ];<br>
+        </code>
+    </p><br>
+
+    <p>Обычный способ был бы таким:</p><br>
+
+    <p class="code-ex">массив объектов:<br>
+        <code>
+            // по имени (Ann, John, Pete)<br>
+            users.sort((a, b) => a.name > b.name ? 1 : -1);<br>
+            <br>
+            // по возрасту (Pete, Ann, John)<br>
+            users.sort((a, b) => a.age > b.age ? 1 : -1);<br>
+        </code>
+    </p><br>
+
+    <h4 class="task">Можем ли мы сделать его короче? То есть, чтобы вместо функции, 
+        мы просто писали byField(fieldName).<br>
+        Напишите функцию byField, которая может быть использована для этого.</h4>
+
+    <p class="code-ex">скажем, вот так?<br>
+        <code>
+            users.sort(byField('name'));<br>
+            users.sort(byField('age'));<br>
+        </code>
+    </p><br>
+
+    <p><b>Решение</b>:<br></p><br>
+
+    <p class="code-ex">
+        <code>
+            <b>function byField(field) {<br>
+                return (a, b) => a[field] > b[field] ? 1 : -1;<br>
+            }</b><br>
+            <br>
+            users.sort(byField('name'));<br>
+            users.forEach(user => console.log(user.name)); // Ann, John, Pete<br>
+            <br>
+            users.sort(byField('age'));<br>
+            users.forEach(user => console.log(user.name)); // Pete, Ann, John<br>
+        </code>
+    </p><br>
+
+    <script>
+        'use strict';
+
+        let users = [
+          { name: "John", age: 20, surname: "Johnson" },
+          { name: "Pete", age: 18, surname: "Peterson" },
+          { name: "Ann", age: 19, surname: "Hathaway" }
+        ];
+
+        function byField(field) {
+          return (a, b) => a[field] > b[field] ? 1 : -1;
+        }
+
+        users.sort(byField('name'));
+        users.forEach(user => console.log(user.name)); // Ann, John, Pete
+
+        users.sort(byField('age'));
+        users.forEach(user => console.log(user.name)); // Pete, Ann, John
+    </script>
+
+
+
+</body>
+
+</html>

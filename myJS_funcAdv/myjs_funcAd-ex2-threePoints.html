@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs_funcAdv: exercise Остаточные параметры</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs_funcAdv: exercise Остаточные параметры (...)</h2>
+
+    <h4 class="task">На вход функции showName() получает аргументы-строки из которых первые два - это
+        имя и фамилия. Нам нужно отделить остальные аргументы от первых двух и поместить их в отдельный массив. 
+        Так же, надо показать количество элементов в этом массиве.<br>
+        Объясните разницу между структурой Остаточные параметры и псевдомассивом arguments?
+
+    </h4>
+
+    <p><b>Решение</b>:<br><br>
+        Как известно, вызывать функцию можно с любым количеством аргументов независимо от того, как 
+        она была определена. Для решения этой задачи используем структуру 'остаточные параметры', которые
+        могут быть обозначены через три точки (...), что буквально значит: «собери оставшиеся параметры и 
+        положи их в массив». <br>
+        Таким образом, в аргументах функции, первые два параметра обозначим как имя и фамилия а для остальных 
+        параметров определим название массива, например 'titles', с тремя точками. 
+        Остаточные параметры собирают все остальные аргументы, поэтому бессмысленно писать что-либо после 
+        них. Это вызовет ошибку. Далее, в контексте выполнения выведем в консоль отдельно имя и фамилию, и 
+        отдельно элементы массива с остаточными параметрами, так же и количество элементов используя свойство 
+        массивов arr.length вот так:
+    </p><br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            function showName(firstName, lastName, <b>...titles</b>) {<br>
+                console.log( firstName + ' ' + lastName ); // Юлий Цезарь<br>
+                <br>
+                // Оставшиеся параметры пойдут в массив titles = ['Консул', 'Император']<br>
+                console.log( titles[0] ); // Консул<br>
+                console.log( titles[1] ); // Император<br>
+                console.log( titles.length ); // 2<br>
+              }<br>
+              <br>
+              showName('Юлий', 'Цезарь', 'Консул', 'Император');<br>
+        </code>
+    </p><br>
+
+    <script>
+        function showName(firstName, lastName, ...titles) {
+            console.log( firstName + " " + lastName ); // Юлий Цезарь
+            console.log( titles[0] ); // Консул
+            console.log( titles[1] ); // Император
+            console.log( titles.length ); // 2
+        }
+              
+        showName("Юлий", "Цезарь", "Консул", "Император");
+            
+    </script>
+
+    <p>Все аргументы функции находятся в псевдомассиве arguments под своими порядковыми номерами.<br>
+       Раньше в языке не было остаточных параметров, и получить все аргументы функции можно было только 
+       с помощью arguments. Этот способ всё ещё работает, мы можем найти его в старом коде.<br>
+    </p><br>
+
+    <p class="code-ex" style="width: 60%;">
+        <code>
+            function showName() {<br>
+                console.log( <b>arguments.length</b> ); // 2<br>
+                console.log( <b>arguments[0]</b> ); // Сигизмунд<br>
+                console.log( <b>arguments[1]</b> ); // Евстафиевич<br>
+                <br>
+                // Объект arguments можно перебирать<br>
+                // <b>for (let arg of arguments) alert(arg);</b> // Сигизмунд, Евстафиевич<br>
+              }<br>
+              <br>
+              showName('Сигизмунд', 'Евстафиевич'); // 2, Сигизмунд, Евстафиевич<br>
+              <br>
+              showName('Модест'); // 1, Модест, undefined - второго аргумента нет<br>
+        </code>
+    </p><br>
+
+    <script>
+        function showName2() {
+            console.log( arguments.length ); // 2
+            console.log( arguments[0] ); // Сигизмунд
+            console.log( arguments[1] ); // Евстафиевич
+
+            // Объект arguments можно перебирать
+            // for (let arg of arguments) console.log(arg); // Сигизмунд, Евстафиевич
+        }
+
+        showName2("Сигизмунд", "Евстафиевич"); // 2, Сигизмунд, Евстафиевич
+
+        showName2("Модест"); // 1, Модест, undefined
+            
+    </script>
+
+    <p>Хотя arguments похож на массив, и его тоже можно перебирать, это всё же не массив. Он не поддерживает 
+        методы массивов. К тому же, arguments всегда содержит все аргументы функции — мы не можем получить 
+        их часть. А остаточные параметры позволяют это сделать.<br>
+        Соответственно, для более удобной работы с аргументами лучше использовать остаточные параметры.
+    </p><br>
+
+</body>
+
+</html>
