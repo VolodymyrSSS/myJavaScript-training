@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs_funcAdv: exercise NFE - Сумма с произвольным количеством скобок</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs_funcAdv: exercise Замыкание, NFE cумма с произвольным количеством скобок</h2>
+
+    <h4 class="task">Напишите функцию sum, которая бы работала таким образом, как показано ниже.<br>
+        Подсказка: возможно стоит сделать особый метод преобразования в примитив для функции.<br>
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            sum(1)(2) == 3; // 1 + 2<br>
+            sum(1)(2)(3) == 6; // 1 + 2 + 3<br>
+            sum(5)(-1)(2) == 6<br>
+            sum(6)(-1)(-2)(-3) == 0<br>
+            sum(0)(1)(2)(3)(4)(5) == 15<br>
+        </code>
+    </p><br>
+
+    <p><b>Решение</b>:<br>
+        <br>
+        В общем, чтобы это хоть как-нибудь заработало, результат, возвращаемый sum, должен быть функцией.<br>
+        Между вызовами эта функция должна удерживать в памяти текущее значение счётчика.<br>
+        Согласно заданию, функция должна преобразовываться в число, когда она используется с оператором ==. 
+        Функции – объекты, так что преобразование происходит, как определено при Преобразовании объектов 
+        в примитивы, поэтому можно создать наш собственный метод, возвращающий число.
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            function sum(a) {<br>
+                <br>
+                let currentSum = a;<br>
+                <br>
+                function f(b) {<br>
+                  currentSum += b;<br>
+                  return f;<br>
+                }<br>
+                <br>
+                f.toString = function() {<br>
+                  return currentSum;<br>
+                };<br>
+                <br>
+                return f;<br>
+              }<br>
+              <br>
+              console.log( sum(1)(2) ); // 3<br>
+              console.log( sum(5)(-1)(2) ); // 6<br>
+              console.log( sum(6)(-1)(-2)(-3) ); // 0<br>
+              console.log( sum(0)(1)(2)(3)(4)(5) ); // 15<br>
+        </code>
+    </p><br>
+
+    <script>
+        function sum(a) {
+
+        let currentSum = a;
+
+        function f(b) {
+          currentSum += b;
+          return f;
+        }
+
+        f.toString = function() {
+          return currentSum;
+        };
+
+        return f;
+        }
+
+        console.log( sum(1)(2) ); // 3
+        console.log( sum(5)(-1)(2) ); // 6
+        console.log( sum(6)(-1)(-2)(-3) ); // 0
+        console.log( sum(0)(1)(2)(3)(4)(5) ); // 15
+    </script>
+
+    <p>Обратите внимание на то, что функция sum выполняется лишь однажды и просто возвращает функцию f.
+        Далее, при каждом последующем вызове, f суммирует свой аргумент со значением currentSum и возвращает 
+        себя же.<br>
+        В последней строке f нет никакой рекурсии. Но вот как выглядит рекурсия:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            function f(b) {<br>
+                currentSum += b;<br>
+                <b>return f();</b> <--рекурсивный вызов (есть круглые скобки)<br>
+            }<br>
+        </code>
+    </p><br>
+
+    <p>В нашем случае мы просто возвращаем функцию, не вызывая её (т.е. нету круглых скобок).<br>
+        Функция f будет использоваться в последующем вызове и снова возвращать себя столько раз, сколько 
+        будет необходимо. Затем, при использовании в качестве числа или строки, метод toString возвращает 
+        currentSum – число. Также здесь мы можем использовать Symbol.toPrimitive или valueOf для 
+        преобразования.
+    </p><br>
+    
+</body>
+
+</html>

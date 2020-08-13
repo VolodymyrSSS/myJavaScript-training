@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs_funcAdv: exercise объект функции, NFE</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs_funcAdv: exercise объект функции, NFE</h2>
+
+    <h4 class="task">Посмотрите на код ниже - это функция. Как мы уже знаем, в JavaScript 
+        функция – это значение, а тип – объект. Покажите на примерах что функцию можна 
+        использовать как обычные объекты.
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            function sayHi() {<br>
+                console.log('Hi');<br>
+              }<br>
+              console.log(typeof sayHi); // function<br>
+        </code>
+    </p><br>
+
+    <script>
+        function sayHi() {
+          console.log('Hi');
+        }
+        console.log(typeof sayHi); // function
+    </script>
+
+    <p><b>Ответ</b>:<br>
+        <br>
+        Как мы уже знаем, по типу, функция это объект. То есть, функции можно не только вызывать, 
+        но и использовать как обычные объекты: добавлять/удалять свойства, передавать их по ссылке и т.д.
+    </p><br>
+
+    <p>1. Например, имя функции нам доступно как <b>свойство «name»:</b></p><br>
+
+    <p class="code-ex">
+        <code>
+            function sayHi() {<br>
+              console.log('Hi');<br>
+            }<br>
+            <br> 
+            console.log(<b>sayHi.name</b>); // <b>sayHi</b><br>
+        </code>
+    </p><br>
+
+    <script>
+        function sayHi() {
+          console.log('Hi');
+        }
+              
+        console.log(sayHi.name); // sayHi
+    </script>
+
+    <p>Что довольно забавно, логика назначения name весьма умная. Она присваивает корректное 
+        имя даже в случае, когда функция создаётся без имени и тут же присваивается, вот так:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let sayHello = function() {<br>
+                console.log('Hello, my dear');<br>
+            };<br>
+            <br>
+            console.log(<b>sayHello.name</b>); // <b>sayHello</b> - это имя назначено и тут же присвоено<br>
+        </code>
+    </p><br>
+
+    <script>
+        let sayHello = function() {
+            console.log("Hello, my dear");
+        };
+
+        console.log(sayHello.name); // sayHello
+    </script>
+
+    <p>Это работает даже в случае присваивания значения по умолчанию:</p><br>
+
+    <p class="code-ex">
+        <code>
+            function f(sayHi = function() {}) {<br>
+                console.log(<b>sayHi.name</b>); // <b>sayHi</b> (работает!)<br>
+            }<br>
+            <br> 
+            f();<br>
+        </code>
+    </p><br>
+
+    <script>
+        function f(sayHi = function() {}) {
+            console.log(sayHi.name); // sayHi (работает!)
+        }
+
+        f();
+    </script>
+
+    <p>В спецификации это называется «контекстное имя»: если функция не имеет name, 
+        то JavaScript пытается определить его из контекста.
+    </p><br>
+
+    <p>Также имена имеют и методы объекта:</p><br>
+
+    <p class="code-ex">
+        <code>
+            let user = {<br>
+                <br>
+                sayHi() {<br>
+                  // ...<br>
+                },<br>
+                <br>
+                sayBye: function() {<br>
+                  // ...}<br>
+                
+              }<br>
+              <br>
+              console.log(user.sayHi.name); // sayHi<br>
+              console.log(user.sayBye.name); // sayBye<br>
+        </code>
+    </p><br>
+
+    <script>
+        let user = {
+
+          sayHi() {
+            // ...
+          },
+
+          sayBye: function() {
+            // ...
+          }
+
+        }
+
+        console.log(user.sayHi.name); // sayHi
+        console.log(user.sayBye.name); // sayBye
+    </script>
+
+    <p>Бывает, что корректное имя определить невозможно. В таких случаях свойство name имеет 
+        пустое значение. Например:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let arr = [function() {}]; - функция объявлена внутри массива<br>
+            <br>
+            console.log( <b>arr[0].name</b> ); // пустая строка - здесь отсутствует возможность определить имя, поэтому его нет<br>
+        </code>
+    </p><br>
+
+    <script>
+        let arr = [function() {}];
+
+        console.log( arr[0].name ); // пустая строка
+    </script>
+
+    <p>Впрочем, на практике такое бывает редко, обычно функции имеют name.</p><br>
+
+    <p>2. Ещё одно встроенное <b>свойство «length»</b> содержит количество параметров функции 
+        в её объявлении. Например:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            function f1(a) {}<br>
+            function f2(a, b) {}<br>
+            function many(a, b, ...more) {}<br>
+            <br>
+            console.log(<b>f1.length</b>); // 1<br>
+            console.log(<b>f2.length</b>); // 2<br>
+            console.log(<b>many.length</b>); // 2  <br>      
+        </code>
+    </p><br>
+
+    <script>
+        function f1(a) {}
+        function f2(a, b) {}
+        function many(a, b, ...more) {}
+
+        console.log(f1.length); // 1
+        console.log(f2.length); // 2
+        console.log(many.length); // 2
+    </script>
+
+    <p>Как мы видим, троеточие, обозначающее «остаточные параметры», здесь как бы «не считается»
+       Свойство length иногда используется для интроспекций в функциях, которые работают с другими 
+       функциями.
+    </p><br>
+
+    <p>Например, в коде ниже функция ask принимает в качестве параметров вопрос question и произвольное 
+        количество функций-обработчиков ответа. Когда пользователь отвечает на вопрос, функция вызывает обработчики.<br>
+     </p><br>
+
+    <p>Мы можем передать два типа обработчиков:<br>
+        Функцию без аргументов, которая будет вызываться только в случае положительного ответа.<br>
+        Функцию с аргументами, которая будет вызываться в обоих случаях и возвращать ответ.
+    </p><br>
+
+    <p>Чтобы вызвать обработчик handler правильно, будем проверять свойство handler.length.<br>
+        Идея состоит в том, чтобы иметь простой синтаксис обработчика без аргументов для положительных 
+        ответов (наиболее распространённый случай), но также и возможность передавать универсальные 
+        обработчики:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            function ask(question, ...handlers) {<br>
+                let isYes = confirm(question);<br>
+                <br>
+                for(let handler of handlers) {<br>
+                  if (<b>handler.length == 0</b>) {<br>
+                    if (isYes) handler();<br>
+                  } else {<br>
+                    handler(isYes);}<br>
+                }}<br>
+                <br>
+              // для положительных ответов вызываются оба типа обработчиков<br>
+              // для отрицательных - только второго типа<br>
+              ask('Вопрос?', () => alert('Вы ответили да'), result => alert(result));<br>      
+        </code>
+    </p><br>
+
+    <script>
+        function ask(question, ...handlers) {
+          let isYes = confirm(question);
+          for(let handler of handlers) {
+            if (handler.length == 0) {
+              if (isYes) handler();
+            } else {
+            handler(isYes);
+            }
+          }
+        }
+
+        // для положительных ответов вызываются оба типа обработчиков
+        // для отрицательных - только второго типа
+        ask("Вопрос?", () => alert('Вы ответили да'), result => alert(result));
+    </script>
+
+    <p>Это частный случай так называемого Ad-hoc-полиморфизма – обработка аргументов в зависимости 
+        от их типа или, как в нашем случае – от значения length. Эта идея имеет применение в 
+        библиотеках JavaScript.
+    </p><br>
+
+    <p>3. Мы также можем добавить свои <b>собственные свойства</b>.</p><br>
+
+    <p>Давайте добавим свойство counter для отслеживания общего количества вызовов:</p><br>
+
+    <p class="code-ex">
+        <code>
+            function sayHi() {<br>
+                console.log('Hi');<br>
+                <br>
+                <b>sayHi.counter++;</b> -давайте посчитаем, сколько вызовов мы сделали<br>
+              }<br>
+              <b>sayHi.counter = 0;</b> -начальное значение<br>
+              <br>
+              sayHi(); // Hi<br>
+              sayHi(); // Hi<br>
+              <br>
+              console.log( `Вызвана ${sayHi.counter} раза` ); // Вызвана 2 раза<br>      
+        </code>
+    </p><br>
+
+    <script>
+        function sayHi() {
+          console.log("Hi");
+            sayHi.counter++; // давайте посчитаем, сколько вызовов мы сделали
+        }
+        sayHi.counter = 0; // начальное значение
+        sayHi(); // Hi
+        sayHi(); // Hi
+        console.log( `Вызвана ${sayHi.counter} раза` ); // Вызвана 2 раза
+    </script>
+
+    <p>Свойство функции, назначенное как sayHi.counter = 0, не объявляет локальную переменную counter 
+        внутри неё. Другими словами, свойство counter и переменная let counter – это две независимые вещи.
+        Мы можем использовать функцию как объект, хранить в ней свойства, но они никак не влияют на её 
+        выполнение. Переменные – это не свойства функции и наоборот. Это два параллельных мира.
+    </p><br>
+
+    <p>Иногда свойства функции могут использоваться вместо замыканий. Например, мы можем переписать 
+        функцию-счётчик из главы Замыкание, используя её свойство:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            function sayHi() {<br>
+                function makeCounter() {<br>
+                    // вместо let count = 0<br>
+                    // пишим функцию
+                    <br>
+                    <b>function counter() {<br>
+                        return counter.count++;<br>
+                    };</b><br>
+                    <br>
+                    counter.count = 0;<br>
+                    <br>
+                    return counter;}<br>
+                }<br>
+                let counter = makeCounter();<br>
+                <br>
+                console.log( counter() ); // 0<br>
+                console.log( counter() ); // 1<br>
+                console.log( counter() ); // 2<br>
+                console.log( counter() ); // 3<br>
+                console.log( counter() ); // 4<br>      
+        </code>
+    </p><br>
+
+    <script>
+        function makeCounter() {
+        // вместо
+        // let count = 0
+        function counter() {
+            return counter.count++;
+        };
+        counter.count = 0;
+        return counter;
+        }
+        let counter = makeCounter();
+
+        console.log( counter() ); // 0
+        console.log( counter() ); // 1
+        console.log( counter() ); // 2
+        console.log( counter() ); // 3
+        console.log( counter() ); // 4
+    </script>
+
+    <p>Свойство count теперь хранится прямо в функции, а не в её внешнем лексическом окружении.<br>
+        Основное отличие в том, что если значение count живёт во внешней переменной, то оно не доступно 
+        для внешнего кода. Изменить его могут только вложенные функции. А если оно присвоено как свойство 
+        функции, то мы можем его получить:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            function makeCounter() {<br>
+                <br>
+                function counter() {<br>
+                  return counter.count++;<br>
+                };<br>
+                <br>
+                counter.count = 0;<br>
+                <br>
+                return counter;<br>
+              }<br>
+              <br>
+              let counter = makeCounter();<br>
+              <br>
+              counter.count = 10;<br>
+              alert( counter() ); // 10<br>      
+        </code>
+    </p><br>
+
+</body>
+
+</html>

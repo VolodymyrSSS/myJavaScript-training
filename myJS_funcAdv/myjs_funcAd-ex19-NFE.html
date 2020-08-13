@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs_funcAdv: Установка и уменьшение значения счётчика</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs_funcAdv: exercise Установка и уменьшение значения счётчика</h2>
+
+    <h4 class="task">Измените код makeCounter() так, чтобы счётчик мог увеличивать и устанавливать значение:<br>
+        counter() должен возвращать следующее значение (как и раньше)<br>
+        counter.set(value) должен устанавливать счётчику значение value<br>
+        counter.decrease() должен уменьшать значение счётчика на 1<br>
+        P.S. Для того, чтобы сохранить текущее значение счётчика, можно воспользоваться как замыканием, 
+        так и свойством функции. Или сделать два варианта решения: и так, и так.
+    </h4>
+
+    <p><b>Решение</b>:<br>
+        <br>
+        Используем локальную переменная count, а методы сложения запишем прямо в counter. 
+        Они разделяют одно и то же лексическое окружение и также имеют доступ к текущей переменной count.
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            function makeCounter() {<br>
+                let count = 0;<br>
+                <br>
+                function counter() {<br>
+                  return count++;<br>
+                }<br>
+                <br>
+                counter.set = value => count = value;<br>
+                <br>
+                counter.decrease = () => count--;<br>
+                <br>
+                return counter;<br>
+            }<br>
+        </code>
+    </p><br>
+
+    <script>
+        function makeCounter() {
+            let count = 0;
+            
+            function counter() {
+                return count++;
+            }
+            
+            counter.set = value => count = value;
+            
+            counter.decrease = () => count--;
+            
+            return counter;
+        }
+    </script>
+
+
+</body>
+
+</html>

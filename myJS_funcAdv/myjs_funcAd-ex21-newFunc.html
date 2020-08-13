@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs_funcAdv: exercise Синтаксис "new Function"</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs_funcAdv: exercise Замыкание, Синтаксис 'new Function'</h2>
+
+    <h4 class="task">Напишите функцию, которая на вход получает два аргумента (два числа) и 
+        возвращает результат их сложения при этом используйте вариант объявления 
+        функции по синтаксису 'new Function'.
+    </h4>
+
+    <p><b>Решение</b>:<br>
+        <br>
+        Синтаксис для объявления такого типа функции имеет вид:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            <b>let func = new Function([arg1, arg2, ...argN], functionBody);</b><br>
+        </code>
+    </p><br>
+
+    <p>Функция создаётся с заданными аргументами arg1...argN и телом functionBody.<br>
+        Но главное отличие от других способов объявления функции, которые были рассмотрены ранее, 
+        заключается в том, что функция создаётся полностью «на лету» из строки, переданной во время 
+        выполнения. Предыдущие объявления требовали писать объявление функции в скрипте.<br>
+        Поэтому, используем указанный cинтаксис для решения первого задания:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let sum = new Function('a', 'b', 'return a + b');<br>
+            <br>
+            console.log( sum(1, 2) ); // 3<br>
+        </code>
+    </p><br>
+
+    <script>
+        let sum = new Function('a', 'b', 'return a + b');
+        console.log( sum(1, 2) ); // 3
+    </script>
+
+    <p>По историческим причинам аргументы также могут быть объявлены через запятую в одной строке.</p><br>
+
+        <p class="code-ex" style="width: 60%;">Эти 3 объявления ниже эквивалентны:<br>
+            <code>
+                new Function('a', 'b', 'return a + b'); // стандартный синтаксис<br>
+                new Function('a,b', 'return a + b'); // через запятую в одной строке<br>
+                new Function('a , b', 'return a + b'); // через запятую с пробелами в одной строке<br>
+            </code>
+        </p><br>
+
+    <h4 class="task">Напишите функцию, которая на вход не получает никаких аргументов но 
+        возвращает результат работы этой функции, например выводит в консоль фразу; и так же 
+        используйте вариант объявления функции по синтаксису 'new Function'.
+    </h4>
+
+    <p><b>Решение</b>:<br>
+        <br>
+        Используем всё тот же синтаксис для объявления такого типа функции, но только укажем 
+        одно тело без аргументов, вот так:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let sayHi = new Function('console.log("Hello")');<br>
+            <br>
+            sayHi(); // Hello<br>
+        </code>
+    </p><br>
+
+    <script>
+        let sayHi = new Function('console.log("Hello")');
+        
+        sayHi(); // Hello
+    </script>
+
+    <p>Как видно, синтаксис 'new Function' позволяет превратить любую строку в функцию. Представьте, 
+        что нужно создать функцию из строки. Код этой функции неизвестен во время написания скрипта 
+        (поэтому не используем обычные функции), а будет определён только в процессе выполнения. Мы 
+        можем получить код с сервера или с другого ресурса. Например, 
+        можно получить новую функцию с сервера и затем выполнить её, вот так:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let str = ... код, полученный с сервера динамически ...<br>
+            <br>
+            let func = <b>new Function(str);</b><br>
+            <b>func();</b><br>
+        </code>
+    </p><br>
+
+    <p>Это используется в очень специфических случаях, например, когда мы получаем код с сервера 
+        для динамической компиляции функции из шаблона, в сложных веб-приложениях.
+    </p><br>
+
+    <h4 class="task">Посмотрите на код ниже. Что будет в результате работы функции которая имеет 
+        вложенную функцию объявленную с использованием синтаксиса 'new Function'?</h4>
+
+    <p class="code-ex">
+        <code>
+            function getFunc() {<br>
+                let value = 'test';<br>
+                <br>
+                let func = new Function('console.log(value)');<br>
+                <br>
+                return func;<br>
+              }<br>
+              <br>
+              getFunc()(); <b>???</b><br>
+        </code>
+    </p><br>
+
+    <p><b>Решение</b>:<br>
+        <br>
+        Обычно функция запоминает, где родилась, в специальном свойстве [[Environment]]. Это ссылка 
+        на лексическое окружение (Lexical Environment), в котором она создана. Но когда функция создаётся 
+        с использованием new Function, в её [[Environment]] записывается ссылка не на внешнее лексическое 
+        окружение, в котором она была создана, а на глобальное. Поэтому такая функция имеет доступ только 
+        к глобальным переменным и ответом к заданию будет ошибка:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            getFunc()(); // <b>ошибка: value не определено</b><br>
+        </code>
+    </p><br>
+
+    <script>
+        function getFunc() {
+          let value = "test";
+
+          let func = new Function('console.log(value)');
+
+          return func;
+        }
+
+        getFunc()(); // ReferenceError: value is not defined
+    </script>
+
+    <p>Сравним это с обычным объявлением:</p><br>
+
+    <p class="code-ex">
+        <code>
+            function getFunc() {<br>
+                let value = 'test';<br>
+                <br>
+                let func = function() { console.log(value); };<br>
+                <br>
+                return func;<br>
+              }<br>
+              <br>
+              getFunc()(); // 'test', из лексического окружения функции getFunc<br>
+        </code>
+    </p><br>
+
+
+
+
+</body>
+
+</html>

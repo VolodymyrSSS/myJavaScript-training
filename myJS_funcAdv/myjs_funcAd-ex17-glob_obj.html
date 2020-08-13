@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs_funcAdv: Глобальный объект</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs_funcAdv: exercise Глобальный объект</h2>
+
+    <h4 class="task">Что такое глобальный объект?<br>
+        Как обратится к свойствам глобального объекта напрямую?</h4>
+
+    <p><b>Ответ</b>:<br>
+        <br>
+        Глобальный объект предоставляет переменные и функции, доступные в любом месте программы.<br> 
+        По умолчанию это те, что встроены в язык или среду исполнения.<br>
+        Глобальный объект имеет универсальное имя – globalThis. Но чаще на него ссылаются по-старому, 
+        используя имя, характерное для данного окружения, такое как window (браузер) и global (Node.js). 
+        Так как globalThis появился недавно, он не поддерживается в IE и Edge (не-Chromium версия), но 
+        можно использовать полифил.
+    </p><br>
+
+    <p>
+        Ко всем свойствам глобального объекта можно обращаться напрямую (используя простой метод обращения 
+        к свойству объекта - через точку где свойстом будет выступать window):
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            console.log("Hello!"); // Hello!<br>
+            // это то же самое, что и<br>
+            window.console.log("Hello!"); // Hello!<br>
+        </code>
+    </p><br>
+
+    <script>
+        console.log("Hello!"); // Hello!
+            // это то же самое, что и
+        window.console.log("Hello!"); // Hello!
+    </script>
+
+    <p>В браузерах, если только мы не используем модули, глобальные функции и переменные, объявленные 
+        с помощью var, становятся свойствами глобального объекта:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            var gVar = 5;<br>
+            <br>
+            console.log(window.gVar); // 5 -становится свойством глобального объекта<br>
+        </code>
+    </p><br>
+
+    <script>
+        var gVar = 5;
+
+        console.log(window.gVar); // 5 (становится свойством глобального объекта)
+    </script>
+
+    <p>Пожалуйста, не полагайтесь на это. Такое поведение поддерживается для совместимости. В современных 
+        проектах, использующих JavaScript-модули, такого не происходит.
+        Если бы мы объявили переменную при помощи let, то такого бы не произошло:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let gLet = 5;<br>
+            <br>
+            console.log(window.gLet); // undefined (не становится свойством глобального объекта)<br>
+        </code>
+    </p><br>
+
+    <p>Следует хранить значения в глобальном объекте, только если они действительно глобальны для нашего 
+        проекта. И стараться свести их количество к минимуму.</p>
+
+    <p>Если свойство настолько важное, что вы хотите сделать его доступным для всей программы, 
+        запишите его в глобальный объект напрямую:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            // сделать информацию о текущем пользователе глобальной, для предоставления доступа всем скриптам<br>
+            <b>window.currentUser = {<br>
+              name: 'John'<br>
+            };</b><br>
+            <br>
+            // где угодно в коде<br>
+            console.log(currentUser.name); // John<br>
+            <br>
+            // или, если у нас есть локальная переменная с именем "currentUser",<br>
+            // получим её из window явно (безопасно!)<br>
+            console.log(window.currentUser.name); // John<br>
+        </code>
+    </p><br>
+
+    <script>
+        window.currentUser = {
+            name: 'John'
+        };
+
+        // где угодно в коде
+        console.log(currentUser.name); // John
+
+        // или, если у нас есть локальная переменная с именем "currentUser",
+        // получим её из window явно (безопасно!)
+        console.log(window.currentUser.name); // John
+    </script>
+
+    <p>Глобальный объект можно использовать, чтобы проверить поддержку современных возможностей языка.<br>
+        Например, проверить наличие встроенного объекта Promise (такая поддержка отсутствует в очень 
+        старых браузерах):
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            if (!window.Promise) {
+                alert('Ваш браузер очень старый!');
+            }<br>
+        </code>
+    </p><br>
+
+    <p>Если нет (скажем, используется старый браузер), мы можем создать полифил: добавить функции, 
+        которые не поддерживаются окружением, но существуют в современном стандарте.
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            if (!window.Promise) {<br>
+                window.Promise = ... // собственная реализация современной возможности языка<br>
+            }<br>
+        </code>
+    </p><br>
+
+</body>
+
+</html>

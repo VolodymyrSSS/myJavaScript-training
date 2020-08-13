@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs_funcAdv: exercise Отмена setTimeout через clearTimeout</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs_funcAdv: exercise Отмена setTimeout через clearTimeout</h2>
+
+    <h4 class="task">Что такое clearTimeout? Приведите пример его использования.<br></h4>
+
+    <p><b>Ответ</b>:<br>
+        <br>
+        Вызов setTimeout возвращает «идентификатор таймера» timerId, который можно использовать 
+        для отмены дальнейшего выполнения.
+    </p><br>
+
+    <p>Синтаксис setTimeout:</p><br>
+
+    <p class="code-ex">
+        <code>
+            let timerId = setTimeout(...);<br>
+            clearTimeout(timerId);<br>
+        </code>
+    </p><br>
+
+    <p>В коде ниже планируем вызов функции и затем отменяем его (просто передумали). В результате ничего 
+        не происходит:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            let timerId = setTimeout(() => console.log('rien à signaler'), 1000);<br>
+            console.log(timerId); // идентификатор таймера<br>
+            <br>
+            clearTimeout(timerId);<br>
+            console.log(timerId); // тот же идентификатор (не принимает значение null после отмены)<br>
+        </code>
+    </p><br>
+
+    <script>
+        let timerId = setTimeout(() => console.log("rien à signaler"), 1000);
+        console.log(timerId); // идентификатор таймера
+
+        clearTimeout(timerId);
+        console.log(timerId); // тот же идентификатор (не принимает значение null после отмены)
+    </script>
+
+    <p>Как мы видим из вывода console.log, в браузере идентификатором таймера является число. В 
+        других средах это может быть что-то ещё. Например, Node.js возвращает объект таймера с 
+        дополнительными методами.
+    </p><br>
+
+</body>
+
+</html>

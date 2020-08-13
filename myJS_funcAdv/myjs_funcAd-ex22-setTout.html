@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs_funcAdv: exercise Планирование: setTimeout</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs_funcAdv: exercise Планирование: setTimeout</h2>
+
+    <h4 class="task">Посмотрите на код ниже. Спланируйте вызов sayHi() через 1 секунду.<br></h4>
+
+    <p class="code-ex">
+        <code>
+            function sayHi() {<br>
+              console.log('Salut!');<br>
+            }<br>           
+        </code>
+    </p><br>
+
+    <p><b>Решение</b>:<br>
+        <br>
+        Мы можем вызвать функцию не в данный момент, а позже, через заданный интервал времени. Это 
+        называется «планирование вызова».<br>
+        Для этого существуют два метода:<br>
+        <b>setTimeout</b> позволяет вызвать функцию один раз через определённый интервал времени.<br>
+        setInterval позволяет вызывать функцию регулярно, повторяя вызов через определённый интервал времени.<br>
+        Эти методы не являются частью спецификации JavaScript. Но большинство сред выполнения JS-кода имеют 
+        внутренний планировщик и предоставляют доступ к этим методам. В частности, они поддерживаются во 
+        всех браузерах и Node.js.
+    </p><br>
+
+    <p>Синтаксис setTimeout:</p><br>
+
+    <p class="code-ex">
+        <code>
+            <b>let timerId = setTimeout(func|code, [delay], [arg1], [arg2], ...)</b><br>
+        </code>
+    </p><br>
+
+    <p>где <b>func|code</b> - Функция или строка кода для выполнения. Обычно это функция. По историческим 
+        причинам можно передать и строку кода, но это не рекомендуется;<br>
+        <b>delay</b> - Задержка перед запуском в миллисекундах (1000 мс = 1 с). Значение по умолчанию – 0.<br>
+        <b>arg1, arg2…</b> - Аргументы, передаваемые в функцию (не поддерживается в IE9-)<br>
+    </p><br>
+
+    <p>Используем метод setTimeout для решения задачи:</p><br>
+
+    <p class="code-ex">
+        <code>
+            function sayHi() {<br>
+                console.log('Salut!');<br>
+            }<br>
+              <br>
+            setTimeout(sayHi, 1000);<br>
+        </code>
+    </p><br>
+
+    <script>
+        function sayHi() {
+                console.log("Salut!");
+            }
+              
+            setTimeout(sayHi, 1000);
+    </script>
+
+    <p>Начинающие разработчики иногда ошибаются, добавляя скобки () после функции -> sayHi()<br>
+        Это не работает, потому что setTimeout ожидает ссылку на функцию. Здесь sayHi() запускает 
+        выполнение функции, и результат выполнения отправляется в setTimeout.</p>
+
+    <h4 class="task">Функция sayRegards() получает на вход два аргумента в виде строки. Спланируйте 
+        вызов sayRegards() через 2 секунды.
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            function sayRegards(phrase, whom) {<br>
+                console.log( phrase + ' ' + whom );<br>
+            }<br>
+        </code>
+    </p><br>
+
+    <p>Снова используем синтаксис метода setTimeout для решения задачи указав аргументы функции через запятую:</p><br>
+
+    <p class="code-ex">
+        <code>
+            function sayRegards(phrase, whom) {<br>
+                console.log( phrase + ' ' + whom );<br>
+            }<br>
+            <br>
+            setTimeout(sayRegards, 2000, 'Bonjour à', 'Madame Dubois'); // Bonjour à Madame Dubois<br>
+        </code>
+    </p><br>
+
+    <script>
+        function sayRegards(phrase, whom) {
+          console.log( phrase + ' ' + whom );
+        }
+            
+        setTimeout(sayRegards, 2000, "Bonjour à", "Madame Dubois"); // Bonjour à Madame Dubois
+    </script>
+
+    <p>Если первый аргумент является строкой, то JavaScript создаст из неё функцию.
+        Это также будет работать:
+    </p><br>
+    
+    <p class="code-ex">
+        <code>
+            setTimeout("console.log('Привiт, друзі')", 3000);<br>
+        </code>
+    </p><br>
+
+    <script>
+        setTimeout("console.log('Привiт, друзі')", 3000);
+    </script>
+
+    <p>Но использование строк не рекомендуется. Вместо этого используйте функции. Например, так:</p><br>
+
+    <p class="code-ex">
+        <code>
+            setTimeout(() => console.log('ça va?'), 4000);
+        </code>
+    </p><br>
+
+    <script>
+        setTimeout(() => console.log('ça va?'), 4000);
+    </script>
+
+</body>
+
+</html>

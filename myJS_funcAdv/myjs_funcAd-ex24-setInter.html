@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs_funcAdv: exercise setInterval</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs_funcAdv: exercise setInterval</h2>
+
+    <h4 class="task">Напишите код чтобы сообщение 'tick' выводилась в консоль каждые 2 секунды. 
+        Через 5 секунд вывод должен прекратится.
+    </h4>
+
+    <p><b>Решение</b>:<br>
+        <br>
+        Мы можем вызвать функцию не в данный момент, а позже, через заданный интервал времени. 
+        Это называется «планирование вызова».  Для этого существуют два метода:<br>
+        setTimeout позволяет вызвать функцию один раз через определённый интервал времени.<br>
+        <b>setInterval</b> позволяет вызывать функцию регулярно, повторяя вызов через определённый интервал времени.
+    </p><br>
+
+    <p>Синтаксис setInterval:</p><br>
+
+    <p class="code-ex">
+        <code>
+            let timerId = setInterval(func|code, [delay], [arg1], [arg2], ...)
+        </code>
+    </p><br>
+
+    <p>Ещё раз, отличие этого метода от setTimeout в том, что функция запускается не один раз, 
+        а периодически через указанный интервал времени. Далее, чтобы остановить дальнейшее выполнение 
+        функции, необходимо вызвать clearInterval(timerId).<br>
+        Таким образом, используем для решения задания все эти методы: для вывода фразы каждые 2 секунды,
+        будем использовать setInterval вместе с clearInterval, а для прекращения этих выводов - setTimeout:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            // повторить с интервалом 2 секунды<br>
+            let timerId = setInterval(() => console.log('tick'), 2000);<br>
+            <br>
+            // остановить вывод через 5 секунд<br>
+            setTimeout(() => { clearInterval(timerId); console.log('stop'); }, 5000);<br>
+        </code>
+    </p><br>
+
+    <script>
+        let timerId = setInterval(() => console.log('tick'), 2000);
+
+        setTimeout(() => { clearInterval(timerId); console.log('stop'); }, 5000);
+    </script>
+
+    <p>В большинстве браузеров, включая Chrome и Firefox, внутренний счётчик продолжает тикать 
+        во время показа alert/confirm/prompt.
+    </p><br>
+
+</body>
+
+</html>

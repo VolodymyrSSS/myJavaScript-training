@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs_funcAdv: old var</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">myjs_funcAdv: exercise устаревшее ключевое слово 'var'</h2>
+
+    <h4 class="task">Посмотрите на код, и покажите похожесть и различия поведения var с let?<br>
+    Что такое всплытие?</h4>
+
+    <p class="code-ex">
+        <code>
+            function sayHi() { <br>
+                var phrase = 'O! Mama Mia!'; // локальная переменная, 'var' вместо 'let'<br>
+              }<br>
+              <br>
+              sayHi();<br>
+        </code>
+    </p><br>
+
+    <p><b>Решение</b>:<br>
+        <br>
+        На первый взгляд, поведение var похоже на let. Например, при объявление переменной когда она видна
+        только в диапазоне фигурных скобок.
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            function sayHi() { <br>
+                var phrase = 'O! Mama Mia!'; // локальная переменная, 'var' вместо 'let'<br>
+                <br>
+                console.log(phrase); // O! Mama Mia!<br>
+              }<br>
+              <br>
+              sayHi();<br>
+              
+              console.log(phrase); // Ошибка: phrase не определена<br>
+        </code>
+    </p><br>
+
+    <script>
+        function sayHi() {
+          var phrase = 'O! Mama Mia!'; // локальная переменная, 'var' вместо 'let'
+          console.log(phrase); // O! Mama Mia!
+        }
+        sayHi();
+              
+        console.log(phrase); // ReferenceError: phrase is not defined
+    </script>
+
+    <p>Но для 'var' не существует блочной области видимости! <b>Первое отличие</b> - область видимости 
+        переменных 'var' ограничивается либо функцией (как в примере выше), либо, если переменная глобальная, 
+        то скриптом; такие переменные доступны за пределами блока. Вот пример:
+    </p>
+
+    <p class="code-ex">
+        <code>
+          if (true) {<br>
+            var test = true; // используем var вместо let<br>
+          }<br>
+          <br>     
+          alert(test); // <b>true</b>, переменная существует вне блока if<br>
+        </code>
+    </p><br>
+
+    <p>Так как var игнорирует блоки, мы получили глобальную переменную test.<br>
+        А если бы мы использовали let test вместо var test, тогда переменная была бы видна только внутри if:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            if (true) {<br>
+              let test = true; // используем let<br>
+            }<br>
+            <br>  
+            alert(test); // Error: test is not defined<br>
+        </code>
+    </p><br>
+
+    <p>Аналогично для циклов: var не может быть блочной или локальной внутри цикла:</p><br>
+
+    <p class="code-ex">
+        <code>
+            for (var i = 0; i < 10; i++) {<br>
+                // ...<br>
+              }<br>
+              <br>
+              alert(i); // 10, переменная i доступна вне цикла, т.к. является глобальной переменной<br>
+        </code>
+    </p><br>
+
+    <p>Если блок кода находится внутри функции, то var становится локальной переменной в этой функции:</p>
+
+    <p class="code-ex">
+        <code>
+            function sayHi() {<br>
+                if (true) {<br>
+                  var phrase = 'От холера!';<br>
+                }<br>
+                <br>
+                console.log(phrase); // срабатывает и выводит 'От холера!'<br>
+              }<br>
+              <br>
+              sayHi();<br>
+              console.log(phrase); // Ошибка: phrase не определена (видна в консоли разработчика)<br>
+        </code>
+    </p><br>
+
+    <script>
+        function sayHi() {
+          if (true) {
+            var phrase = "От холера!";
+          }
+        
+          console.log(phrase); // срабатывает и выводит 'От холера!'
+        }
+        
+        sayHi();
+        console.log(phrase); // ReferenceError: phrase is not defined
+    </script>
+
+    <p>Как мы видим, var выходит за пределы блоков if, for и подобных. Это происходит потому, что 
+        на заре развития JavaScript блоки кода не имели лексического окружения. Поэтому можно сказать, 
+        что var – это пережиток прошлого.
+    </p><br>
+
+    <p><b>Второе отличее</b> - 'var' обрабатываются в начале запуска функции.<br>
+        Другими словами, переменные var считаются объявленными с самого начала исполнения функции 
+        вне зависимости от того, в каком месте функции реально находятся их объявления (при условии, 
+        что они не находятся во вложенной функции). Т.е. этот код:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            function sayHi() {<br>
+                phrase = '¡hasta la vista!';<br>
+                <br>
+                console.log(phrase); // ¡hasta la vista<br>
+                <br>
+                <b>var phrase;</b><br>
+              }<br>
+              sayHi();<br>
+        </code>
+    </p><br>
+
+    <script>
+        function sayHi() {
+          phrase = '¡hasta la vista!';
+              
+          console.log(phrase); // ¡hasta la vista
+              
+          var phrase;
+        }
+        sayHi();
+    </script>
+
+    <p>.. технически полностью эквивалентен следующему (объявление переменной var phrase 
+        перемещено в начало функции):
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            function sayHi() {<br>
+                <b>var phrase;</b><br>
+                <br>
+                phrase = '¡hasta la vista!'; // ¡hasta la vista<br>
+                <br>
+                console.log(phrase);<br>
+              }<br>
+            sayHi();<br>
+        </code>
+    </p><br>
+
+    <script>
+        function sayHi() {
+          var phrase;
+              
+          phrase = "¡hasta la vista!";
+              
+          console.log(phrase);
+        }
+        sayHi();
+    </script>
+
+    <p>..и даже коду ниже (как вы помните, блочная область видимости игнорируется):</p><br>
+
+    <p class="code-ex">
+        <code>
+            function sayHi() {<br>
+                phrase = "¡hasta la vista!"; // (*)<br>
+                <br>
+                if (false) {<br>
+                  <b>var phrase;</b><br>
+                }<br>
+                <br>
+                console.log(phrase); // ¡hasta la vista!<br>
+              }<br>
+              sayHi();<br>
+        </code>
+    </p><br>
+
+    <script>
+        function sayHi() {
+          phrase = "¡hasta la vista!"; // (*)
+        
+          if (false) {
+            var phrase;
+          }
+
+          console.log(phrase);// ¡hasta la vista!
+        }
+        sayHi();
+    </script>
+
+    <p>Это поведение называется «hoisting» (всплытие, поднятие), потому что все объявления 
+        переменных var «всплывают» в самый верх функции.
+        В примере выше if (false) условие никогда не выполнится. Но это никаким образом 
+        не препятствует созданию переменной var phrase, которая находится внутри него, 
+        поскольку объявления var «всплывают» в начало функции. Т.е. в момент присвоения 
+        значения (*) переменная уже существует.
+    </p><br>
+
+    <p>Объявления переменных «всплывают», но присваивания значений – нет.
+        Это проще всего продемонстрировать на примере:
+    </p><br>
+
+    <p class="code-ex">
+        <code>
+            function sayHi() {<br>
+                alert(phrase);<br>
+                <br>
+                var phrase = 'Привет';<br>
+              }<br>
+              <br>
+              sayHi();<br>
+        </code>
+    </p><br>
+
+    <p>Строка var phrase = 'Привет' состоит из двух действий: 1.Объявление переменной var
+        2.Присвоение значения в переменную =. Объявление переменной обрабатывается в начале 
+        выполнения функции («всплывает»), однако присвоение значения всегда происходит в той 
+        строке кода, где оно указано.
+    </p><br>
+
+    <p>Т.е. код выполняется по следующему сценарию:</p><br>
+
+    <p class="code-ex">
+        <code>
+            function sayHi() {<br>
+                var phrase; // объявление переменной срабатывает вначале...<br>
+              <br>
+                alert(phrase); // undefined<br>
+              <br>
+                phrase = 'Привет'; // ...присвоение - в момент, когда исполнится данная строка кода.<br>
+            }<br>
+              <br>
+            sayHi();<br>
+        </code>
+    </p><br>
+
+    <p>Поскольку все объявления переменных var обрабатываются в начале функции, мы можем ссылаться на них 
+        в любом месте. Однако, переменные имеют значение undefined до строки с присвоением значения.<br>
+        В обоих примерах выше вызов alert происходил без ошибки, потому что переменная phrase уже 
+        существовала. Но её значение ещё не было присвоено, поэтому мы получали undefined.
+    </p><br>
+
+    <p>Таким образом, блочная область видимости – это удобно. Поэтому много лет назад let и const были 
+        введены в стандарт и сейчас являются основным способом объявления переменных.</p>
+
+
+
+</body>
+
+</html>
