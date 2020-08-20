@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs_dataTypes: JSON</title>
+    <style>
+        body {
+            background-color: tan;
+            margin: 0;
+            font-family: Verdana, sans-serif;
+        }
+
+        .title {
+            color: red;
+            text-align: center;
+            font-weight: 700;
+        }
+
+
+        .task {
+            width: 50%;
+            padding: 15px 25px;
+            color: navy;
+            background-color: #e2e2e2;
+            margin: 35px auto;
+        }
+
+        pre {
+            width: 50%;
+            background-color: #bebebe;
+            padding-top: 20px;
+            margin: 0 auto;
+        }
+
+        code {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: large;
+        }
+
+        p {
+            width: 80%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2 class="title">Data Types: exercise JSON</h2>
+
+    <h4 class="task">В нас є масив об'єктів 'people'. Виведіть в консоль значення -
+        35 років Юлі; потім курс 'css' для Івана. Далі, пройдіться по елементам масива та виведіть в консоль усі статуси
+        і потім, на сторінку, усі імена
+        у виді списку.
+    </h4>
+
+    <p>
+        <code>
+            <pre>
+                let people = [
+                    {
+                        name: 'John',
+                        age: 50,
+                        isAdmin: true,
+                        courses: ['html', 'css', 'js']
+                    },
+                    {
+                        name: 'Julia',
+                        age: 35,
+                        isAdmin: false,
+                        courses: ['html', 'css']
+                    },
+                    {
+                        name: 'Mayson',
+                        age: 45,
+                        isAdmin: false,
+                        courses: ['js']
+                    }
+                ];
+            </pre>
+        </code>
+    </p><br>
+
+    <p><b>Рішення</b>:<br>
+        <br>
+        <em>JSON (JavaScript Object Notation)</em> - це загальний формат для представлення значень і об'єктів.<br>
+        Спочатку він був створений для JavaScript, але багато інших мов також мають бібліотеки, які можуть працювати з
+        ним.<br>
+        <br>
+        JavaScript має такі методи для роботи в цьому форматі:<br>
+        <b>JSON.stringify(obj)</b> - для перетворення об'єктів в JSON<br>
+        <b>obj = JSON.parse()</b> - для перетворення JSON назад в об'єкт.<br>
+        <br>
+        Таким чином, для виведення значення елементу массиву, ми вказуємо індекс цього елементу в квадратних дужках. А
+        для отримання значення властивості об'єкту, ми звертаємось через крапку, отже отримуємо значення:
+    </p><br>
+
+    <p>
+        <code>
+            <pre>
+                console.log(people[1].age); // 35
+                
+                console.log(people[0].courses[1]); // css
+            </pre>
+        </code>
+    </p><br>
+
+    <p>Для ітерації по елементам масиву, використаємо цикл 'for'. Отже, для отримання усіх статусів, напишемо код:
+    </p><br>
+
+    <p><br>
+        <code>
+            <pre>
+                for (let i = 0; i < people.length; i++) {
+                    console.log(people[i].isAdmin);
+                }
+            </pre>
+        </code>
+        <br>
+    </p>
+
+    <p>Також, використаємо цикл 'for' для перебору елементів масиву та властивітьс Length. А для виведення імен,
+        використаємо DOM, ось так:
+    </p><br>
+
+    <p><br>
+        <code>
+            <pre>
+                // в html запишемо:
+                ul id="people" /ul
+
+                // в  script
+                let output = '';
+
+                for (let i = 0; i < people.length; i++) {
+                    output += 'li>' + people[i].name + '/li>';
+                }
+
+                document.getElementById('people').innerHTML = output;
+            </pre>
+        </code>
+        <br>
+    </p>
+
+    <ul id="people"></ul>
+
+    <script>
+        let people = [{
+                name: 'John',
+                age: 50,
+                isAdmin: true,
+                courses: ['html', 'css', 'js']
+            },
+            {
+                name: 'Julia',
+                age: 35,
+                isAdmin: false,
+                courses: ['html', 'css']
+            },
+            {
+                name: 'Mayson',
+                age: 45,
+                isAdmin: false,
+                courses: ['js']
+            }
+        ];
+
+        console.log(people[1].age); // 35
+
+        console.log(people[0].courses[1]); // css
+
+        let output = '';
+
+        for (let j = 0; j < people.length; j++) {
+            console.log(people[j].isAdmin);
+        }
+
+        for (let i = 0; i < people.length; i++) {
+            output += '<li>' + people[i].name + '</li>';
+        }
+        document.getElementById('people').innerHTML = output;
+    </script>
+
+</body>
+
+</html>

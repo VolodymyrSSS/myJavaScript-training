@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs_dataTypes: JSON</title>
+    <style>
+        body {
+            background-color: tan;
+            margin: 0;
+            font-family: Verdana, sans-serif;
+        }
+
+        .title {
+            color: red;
+            text-align: center;
+            font-weight: 700;
+        }
+
+
+        .task {
+            width: 50%;
+            padding: 15px 25px;
+            color: navy;
+            background-color: #e2e2e2;
+            margin: 35px auto;
+        }
+
+        pre {
+            width: 50%;
+            background-color: #bebebe;
+            padding-top: 20px;
+            margin: 0 auto;
+        }
+
+        code {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: large;
+        }
+
+        p {
+            width: 80%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2 class="title">Data Types: exercise JSON</h2>
+
+    <h4 class="task">В нас є об'єкт 'student'. Виведіть в консолі цей об'єкт в форматі JSON. Який тип даних ми отримаємо
+        в результаті переведення у цей формат? Які є відмінності при переведенні в цей формат? Які типи даних підтримує,
+        а які не підтримує JSON-формат?<br>
+        І на кінець, поверніть JSON-трансформований об'єкт 'student' у звичайний об'єкт.
+    </h4>
+
+    <p>
+        <pre>
+        let student = {
+            name: 'John',
+            age: 30,
+            isAdmin: false,
+            courses: ['html', 'css', 'js'],
+            wife: null
+        };
+        </pre>
+    </p><br>
+
+    <p><b>Рішення</b>:<br>
+        <br>
+        <em>JSON (JavaScript Object Notation)</em> - це загальний формат для представлення значень і об'єктів.<br>
+        Спочатку він був створений для JavaScript, але багато інших мов також мають бібліотеки, які можуть працювати з
+        ним.<br>
+        <br>
+        JavaScript має такі методи для роботи в цьому форматі:<br>
+        <b>JSON.stringify(obj)</b> - для перетворення об'єктів в JSON<br>
+        <b>obj = JSON.parse()</b> - для перетворення JSON назад в об'єкт.<br>
+        <br>
+        Таким чином, для рішення першої підчастини задачі використаємо метод JSON.stringify; для перевірки типу,
+        використаємо метод 'typeof' ось так:
+    </p><br>
+
+    <p>
+        <code>
+            <pre>
+                let json = JSON.stringify(student);
+
+                console.log(json); // { "name":"John",
+                                            "age":30,
+                                            "isAdmin":false,
+                                            "courses":["html","css","js"],
+                                            "wife":null
+                                        }
+
+                console.log(typeof json); // string - ми отримали рядок!
+            </pre>
+        </code>
+    </p><br>
+
+    <p>Тобто, метод JSON.stringify(student) бере об'єкт і перетворює його в рядок. Отриманий рядок json називається
+        JSON-форматованим або серіалізованим об'єктом. Ми можемо відправити його по мережі або помістити в звичайне
+        сховище даних.
+        Але є кілька важливих відмінностей від об'єктного літерала:<br>
+        Рядки використовують <em>подвійні лапки</em>! Ніяких одинарних лапок або зворотніх лапок в JSON немає; імена
+        властивостей об'єктів також беруть в подвійні лапки. Це обов'язково.<br>
+        Крім того, JSON не підтримує коментарі. Додавання коментаря в JSON робить його недійсним.
+    </p><br>
+
+    <p>JSON підтримує такі типи даних:<br>
+        1.Об'єкти { ... }<br>
+        2.Масиви [ ... ]<br>
+        3.Примітиви: рядки, числа, булеві значення true/false та null<br>
+    </p><br>
+
+    <p><b>Наприклад</b>:<br>
+        <code>
+            <pre>
+                // число в JSON залишається числом
+                console.log( JSON.stringify(1) ) // 1
+
+                // рядок в JSON так і залишається рядком, але в подвійних лапках
+                console.log( JSON.stringify('test') ) // "test"
+
+                console.log( JSON.stringify(true) ); // true
+
+                console.log( JSON.stringify([1, 2, 3]) ); // [1,2,3]<br>
+            </pre>
+        </code>
+        <br>
+    </p>
+
+    <p>
+        JSON є незалежною від мови специфікацією для даних, тому JSON.stringify пропускає деякі специфічні властивості
+        об'єктів JavaScript. А саме:<br>
+        <br>
+        - Властивості-функції (методи).<br>
+        - Символьні властивості.<br>
+        - Властивості, що містять undefined<br>
+    </p><br>
+
+    <p><b>Наприклад</b>:<br>
+        <code>
+            <pre>
+                let user = {
+                    sayHi() { // буде пропущено
+                        console.log("Hello");
+                    },
+                    [Symbol("id")]: 123, // також буде пропущено
+                    something: undefined // як і це - пропущено
+                  };
+                  
+                  console.log( JSON.stringify(user) ); // {} - пустий об'єкт<br>
+            </pre>
+        </code>
+        <br>
+    </p>
+
+    <p>Для рішення другої підчастини задачі використаємо метод JSON.parse або можна це показати ось так obj2 =
+        JSON.parse(JSON.stringify(obj));<br>
+    </p><br>
+
+    <script>
+        let student = {
+            name: 'John',
+            age: 30,
+            isAdmin: false,
+            courses: ['html', 'css', 'js'],
+            wife: null
+        };
+
+        let json = JSON.stringify(student);
+
+        console.log(json); // {"name":"John","age":30,"isAdmin":false,"courses":["html","css","js"],"wife":null}
+
+        console.log(typeof json); // string
+
+        console.log(JSON.stringify(1)) // 1
+
+        console.log(JSON.stringify('test')) // "test"
+
+        console.log(JSON.stringify(true)); // true
+
+        console.log(JSON.stringify([1, 2, 3])); // [1,2,3]
+
+        let user = {
+            sayHi() { // буде пропущено
+                console.log("Hello");
+            },
+            [Symbol("id")]: 123, // також буде пропущено
+            something: undefined // як і це - пропущено
+        };
+
+        console.log(JSON.stringify(user)); // {}
+
+        let student2 = JSON.parse(json);
+        console.log(student2);
+    </script>
+
+</body>
+
+</html>

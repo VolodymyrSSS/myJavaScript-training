@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs_dataTypes: JSON</title>
+    <style>
+        body {
+            background-color: tan;
+            margin: 0;
+            font-family: Verdana, sans-serif;
+        }
+
+        .title {
+            color: red;
+            text-align: center;
+            font-weight: 700;
+        }
+
+
+        .task {
+            width: 50%;
+            padding: 15px 25px;
+            color: navy;
+            background-color: #e2e2e2;
+            margin: 35px auto;
+        }
+
+        pre {
+            width: 50%;
+            background-color: #bebebe;
+            padding-top: 20px;
+            margin: 0 auto;
+        }
+
+        code {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: large;
+        }
+
+        p {
+            width: 80%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2 class="title">Data Types: exercise JSON.parse</h2>
+
+    <h4 class="task">В нас є рядок який містить об'єкт, однією властивістю якого є масив. Виведіть в консолі значення
+        третьої властивості та третій елемент масиву.<br>
+    </h4>
+
+    <p>
+        <pre>
+            let user = '{ 
+                  "name": "John", "age": 35, "isAdmin": false, "friends": [0,1,2,3] 
+                }';
+        </pre>
+    </p><br>
+
+    <p><b>Рішення</b>:<br>
+        <br>
+        JavaScript має такі методи для роботи в JSON-форматі:<br>
+        <b>JSON.stringify()</b> - для перетворення об'єктів в JSON<br>
+        <b>JSON.parse()</b> - для перетворення JSON назад в об'єкт.<br>
+        <br>
+        Проте тут необхідно зазначити, що повний синтаксис саме метода JSON.parse має вид:<br>
+        <b>let value = JSON.parse(str, [reviver]);</b><br>
+        де str - це JSON-рядок для перетворення в об'єкт; а reviver - це необов'язкова функція, яка буде викликатися для
+        кожної пари (ключ, значення) і може перетворювати значення. Давайте, поки, розглянемо приклад тільки з одним
+        параметром - str:<br>
+    </p><br>
+
+    <p><b>Приклад</b>:<br>
+        <code>
+            <pre>
+                let numbers = "[0, 1, 2, 3]";
+
+                numbers = JSON.parse(numbers);
+
+                console.log( numbers[1] ); // 1
+            </pre>
+        </code>
+        <br>
+    </p>
+
+    <p>
+        Отже, для рішення задачі, вистачає мати один параметр, тому використаємо метод JSON.parse і після перетворення
+        виведемо в консоль потрібні значення властивостей об'єктів через крапку, ось так:
+    </p><br>
+
+    <p>
+        <code>
+            <pre>
+                user = JSON.parse(user);
+                console.log( user.isAdmin ); // false 
+                console.log( user.friends[2] ); // 2
+            </pre>
+        </code>
+    </p><br>
+
+    <p>JSON може бути настільки складним, наскільки це необхідно, об'єкти і масиви можуть включати інші об'єкти і
+        масиви. Але вони повинні бути в тому ж JSON-форматі.
+    </p><br>
+
+    <h4 class="task">Уявіть, що ми отримали об'єкт 'meetup' з сервера у вигляді рядка даних.<br>
+        А тепер нам потрібно цей рядок даних перетворити в об'єкт JavaScript.
+    </h4>
+
+    <p>
+        <pre>
+            let str = '{ 
+                  "title":"Conference","date":"2017-11-30T12:00:00.000Z" 
+                }';
+        </pre>
+    </p><br>
+
+    <p><b>Рішення</b>:<br>
+        Давайте зробимо це, викликавши JSON.parse врахувавши повний синтаксис метода JSON.parse:<br>
+        <em>let value = JSON.parse(str, [reviver]);</em>
+    </p><br>
+
+    <p>
+        <code>
+            <pre>
+                let meetup = JSON.parse(str);
+
+                console.log( meetup.date.getDate() ); // Error!
+            </pre>
+        </code>
+    </p><br>
+
+    <p>Але чому помилка? А от чому: значенням meetup.date є рядок, а не Date-об'єкт. От і
+        як JSON.parse міг знати, що він повинен був перетворити цей рядок в Date?<br>
+        Тому потрібно передати в JSON.parse функцію відновлення другого аргумента, яка, також, повертає всі значення «як
+        є», але date стане Date-об'єкт. Ось для цього і призначений другий параметр синтаксису 'reviver'. Перепишемо код
+        ось так:</p><br>
+
+    <p>
+        <code>
+            <pre>
+                let meetup = JSON.parse(str, function(key, value) {
+                    if (key == 'date') return new Date(value);
+                    return value;
+                });
+                  
+                console.log( meetup.date.getDate() ); // 30 - теперь працює!<br>
+            </pre>
+        </code>
+        <br>
+    </p>
+
+    <p>
+        Це працює і для вкладених об'єктів<br>
+    </p><br>
+
+    <p><b>Наприклад</b>:<br>
+        <code>
+            <pre>
+                let schedule = `{
+                    "meetups": [
+                      {"title":"Conference","date":"2017-11-30T12:00:00.000Z"},
+                      {"title":"Birthday","date":"2017-04-18T12:00:00.000Z"}
+                    ]
+                  }`;
+
+                  schedule = JSON.parse(schedule, function(key, value) {
+                    if (key == 'date') return new Date(value);
+                    return value;
+                  });
+                  
+                  console.log( schedule.meetups[1].date.getDate() ); // 18<br>
+            </pre>
+        </code>
+        <br>
+    </p>
+
+    <script>
+        let user = '{ "name": "John", "age": 35, "isAdmin": false, "friends": [0,1,2,3] }';
+
+        user = JSON.parse(user);
+        console.log(user.isAdmin); // false 
+        console.log(user.friends[1]); // 1
+
+        let numbers = "[0, 1, 2, 3]";
+
+        numbers = JSON.parse(numbers);
+        console.log(numbers[2]); // 2
+
+        let str = '{"title":"Conference","date":"2017-11-30T12:00:00.000Z"}';
+
+        let meetup = JSON.parse(str, function (key, value) {
+            if (key == 'date') return new Date(value);
+            return value;
+        });
+        console.log(meetup.date.getDate()); // 30
+
+        let schedule = `{
+            "meetups": [
+                {"title":"Conference","date":"2017-11-30T12:00:00.000Z"},
+                {"title":"Birthday","date":"2017-04-18T12:00:00.000Z"}
+            ]
+        }`;
+
+        schedule = JSON.parse(schedule, function (key, value) {
+            if (key == 'date') return new Date(value);
+            return value;
+        });
+
+        console.log(schedule.meetups[1].date.getDate()); // 18
+    </script>
+
+</body>
+
+</html>
