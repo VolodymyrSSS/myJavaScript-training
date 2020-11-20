@@ -69,13 +69,13 @@
                 this.down = function() {<br>
                   return --count;<br>
                 };<br>
-              }<br>
-              <br>
-              let counter = new Counter();<br>
-              <br>
-              console.log( counter.up() ); // <b>???</b><br>
-              console.log( counter.up() ); // <b>???</b><br>
-              console.log( counter.down() ); // <b>???</b><br>
+            }<br>
+            <br>
+            let counter = new Counter();<br>
+            <br>
+            console.log( counter.up() ); // <b>???</b><br>
+            console.log( counter.up() ); // <b>???</b><br>
+            console.log( counter.down() ); // <b>???</b><br>
         </code>
     </p><br>
 
@@ -104,6 +104,21 @@
               console.log( counter.up() ); // 1<br>
               console.log( counter.up() ); // 2<br>
               console.log( counter.down() ); // 1<br>
+        </code>
+    </p><br>
+
+    <p>
+        <code>
+            <pre>
+                .circle {
+                    transition-property: width, height, margin-left, margin-top;
+                    transition-duration: 2s;
+                    position: fixed;
+                    transform: translateX(-50%) translateY(-50%);
+                    background-color: red;
+                    border-radius: 50%;
+                }
+            </pre>
         </code>
     </p><br>
 

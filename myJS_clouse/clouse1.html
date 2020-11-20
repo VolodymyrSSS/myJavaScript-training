@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>The essence of Closure</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .title {
+        color: red;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: larger;
+        font-weight: 700;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Closure</h2>
+
+    <h4 class="task">
+      Що буде виведено в консолі при запуску цієї функції?<br>
+    </h4>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function createCalcFunction(n){
+            return function() {
+              console.log(1000 * n);
+            }
+          }
+
+          createCalcFunction(4) // ???
+          const calc = createCalcFunction(4);
+
+          console.log(calc); // ???
+          calc(); // ???
+        </pre>
+      </code>
+  </p><br>
+
+    <p><b>Відповідь</b>:</p>
+
+    <p>Замикання - це комбінація функції і лексичного оточення, в якому ця функція була визначена (створена).<br>
+      Іншими словами, це функція в функції, або замикання дає вам доступ до Scope зовнішньої функції з внутрішньої функції.</p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          createCalcFunction(4); // Нічого. Тут зовнішня функція тільки 'замкнула' цифру 4, а її результат роботи - це внутрішня функція яка ще не викликана.
+          console.log(calc); // тільки тіло внутрішньої функції - ƒ () {console.log(1000 * n)}
+          calc(); // результат роботи внутрішньої функції - 4000, яка має доступ до зовнішньої змінної n.
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <h4 class="task">
+      Що буде виведено в консолі при запуску цієї функції?<br>
+    </h4>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function createIncrementor(n) {
+            return function(num) {
+              return n + num
+            }
+          }
+    
+          const addOne = createIncrementor(1);
+          console.log(addOne(21)); // ???
+
+          const addTen = createIncrementor(10);
+          console.log(addTen(12)); // ???
+        </pre>
+      </code>
+  </p><br>
+
+  <p><b>Відповідь</b>:</p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          console.log(addOne(21)); // 22
+          console.log(addTen(12)); // 22
+        </pre>
+      </code>
+    </p>
+    <br>
+
+
+    <h4 class="task">
+      Створіть функцію 'urlGenerator' яка буде генерувати ссилку на будь-який сайт з доменом 'com'.<br>
+      Перевірте роботу функції на прикладах.
+    </h4>
+
+    <p class="code-ex"><br>
+      Приклад<br><code>
+        <br>
+        function urlGenerator(domain) {<br>
+          // ..ваш код..<br>
+        }<br>
+        <br>
+      </code>
+    </p>
+    <br>
+
+    <p><b>Відповідь</b>:</p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function urlGenerator(domain) {
+            return function(url) {
+              return `https://${url}.${domain}`
+            }
+          }
+    
+          const comUrl = urlGenerator('com');
+          console.log(comUrl('google')); // https://google.com
+          console.log(comUrl('netflix')); // https://netflix.com
+        </pre>
+      </code>
+  </p><br>
+
+  <h4 class="task">
+    Ми маємо функцію 'logPerson', яка, використовуючи метод bind, виводить в консоль заданий контекст.<br>
+    Написати власну функцію 'bind', яка 'прив'яже' цей контекст до себе і зможе вивисти його в консоль також.<br>
+  </h4>
+
+  <p class="code-ex"><br>
+    Приклад<br><code>
+      <br>
+      function logPerson() {<br>
+        console.log(`Person: ${this.name}, ${this.age}, ${this.job}`)<br>
+      }<br>
+      const person1 = {name: 'Samuel', age: 45, job: 'fullStack'}<br>
+      const person2 = {name: 'Julia', age: 35, job: 'front-end'}<br>
+      const person3 = {name: 'Elis', age: 36, job: 'back-end'}<br>
+      <br>
+      logPerson.bind(person1)(); // Person: Samuel, 45, fullStack<br>
+      logPerson.bind(person2)(); // Person: Julia, 35, front-end<br>
+      logPerson.bind(person3)(); // Person: Elis, 36, back-ends<br>
+      <br>
+      // створити власну функцію 'bind' резузультатом якої є<br>
+      bind(person1, logPerson)<b>()</b>; // Person: Samuel, 45, fullStack<br>
+      bind(person2, logPerson)<b>()</b>; // Person: Julia, 35, front-end<br>
+      bind(person3, logPerson)<b>()</b>; // Person: Elis, 36, back-end<br>
+      <br />
+    </code>
+  </p>
+  <br />
+
+  <p><b>Відповідь</b>:</p>
+  <p>Метод bind () створює нову функцію, яка при виклику встановлює в якості контексту виконання this надане значення. У метод також передається набір аргументів, які будуть встановлені перед переданими в прив'язану функцію аргументами при її виклику.</p>
+
+  <p class="code-ex">
+    <code>
+      <pre>
+        function bind(context, func) {
+          return function(...args) {
+            func.apply(context, args)
+          }
+        }
+      </pre>
+    </code>
+  </p>
+  <br />
+
+
+    
+    <script>
+      function createCalcFunction(n) {
+        return function() {
+          console.log(1000 * n);
+        }
+      }
+
+      createCalcFunction(4); // нічого
+      const calc = createCalcFunction(4);
+      console.log(calc); // ƒ () {console.log(1000 * n)}
+      calc(); // 4000s
+
+      // =================================================
+
+      function createIncrementor(n) {
+        return function(num) {
+          return n + num
+        }
+      }
+
+      const addOne = createIncrementor(1);
+      console.log(addOne(21)); // 22
+
+      const addTen = createIncrementor(10);
+      console.log(addTen(12)); // 22
+
+      // ==================================================
+
+      function urlGenerator(domain) {
+        return function(url) {
+          return `https://${url}.${domain}`
+        }
+      }
+
+      const comUrl = urlGenerator('com');
+      console.log(comUrl('google')); // https://google.com
+      console.log(comUrl('netflix')); // https://netflix.com
+
+      // ===================================================
+
+      function logPerson() {
+        console.log(`Person: ${this.name}, ${this.age}, ${this.job}`)
+      }
+      const person1 = {name: 'Samuel', age: 45, job: 'fullStack'}
+      const person2 = {name: 'Julia', age: 35, job: 'front-end'}
+      const person3 = {name: 'Elis', age: 36, job: 'back-end'}
+
+      logPerson.bind(person1)(); // Person: Samuel, 45, fullStack
+      logPerson.bind(person2)(); // Person: Julia, 35, front-end
+      logPerson.bind(person3)(); // Person: Elis, 36, back-ends
+
+      function bind(context, func) {
+        return function(...args) {
+          func.apply(context, args)
+        }
+      }
+
+      bind(person1, logPerson)(); // Person: Samuel, 45, fullStack
+      bind(person2, logPerson)(); // Person: Julia, 35, front-end
+      bind(person3, logPerson)(); // Person: Elis, 36, back-end
+
+    </script>
+  </body>
+</html>
