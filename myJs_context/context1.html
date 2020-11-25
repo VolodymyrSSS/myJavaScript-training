@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>The essence of context - this</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .title {
+        color: red;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: larger;
+        font-weight: 700;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Context - this</h2>
+
+    <h4 class="task">
+      У нас є масив arr та функція яка множить кожен елемент масиву на якесь число n використовуючи метод для масивів - map.<br>
+      Необхідно переписати функцію застосувавши ключове слово this з метою передачі контексту з різних масивів для швидкого введення та обчислення результату.<br>
+    </h4>
+
+    <p class="code-ex"><br>
+      Приклад<br>
+      <code><br>
+          const arr = [1, 2, 3, 4, 5]<br>
+          <br>
+          function multBy(arr, n) {<br>
+            return arr.map(function(i){<br>
+              return i * n<br>
+            }) }<br>
+          <br>
+          console.log(multBy(arr, 2)) // [2, 4, 6, 8, 10]<br>
+          <br>
+      </code>
+  </p><br>
+
+    <p><b>Відповідь</b>:</p><br>
+
+    <p>Для вирішення спочатку створимо в глобальному прототипі масивів Array метод або функцію, ось так:<br>
+      </p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          Array.prototype.multBy = function(n) {
+            return arr.map(function(i){
+              return i * n
+          }
+        </pre>
+      </code>
+    </p>
+
+    <p>І вже потім можемо застосувати ключове слово this для передачі контексту від різних масивів:<br>
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          const array1 = [1, 2, 3, 4, 5]
+          const array2 = [2, 4, 8, 16]
+
+          Array.prototype.multBy = function(n) {
+            return this.map(function(i) {
+              return i * n
+            })
+          }
+    
+          array1.multBy(2) // [2, 4, 6, 8, 10]
+          array2.multBy(2) // [4, 8, 16, 32]
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Можна одразу передавати масив замість ключового слова this що є досить зручно і значно розширює функціонал застосування функції(методу) із застосуванням this:<br>
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          [4, 6, 8].multBy(4) // [16, 24, 32]
+          [5, 10, 15].multBy(3) // [15, 30, 45]
+        </pre>
+      </code>
+    </p><br>
+    
+    <script>
+      // const arr = [1, 2, 3, 4, 5]
+
+      // function multBy(arr, n) {
+      //   return arr.map(function(i){
+      //     return i * n
+      //   })
+      // }
+
+      // console.log(arr.multBy(5))
+
+      // =================================================
+
+      const array1 = [1, 2, 3, 4, 5]
+      const array2 = [2, 4, 8, 16]
+
+      Array.prototype.multBy = function(n) {
+        return this.map(function(i) {
+          return i * n
+        })
+      }
+
+      console.log(array1.multBy(2)) // [2, 4, 6, 8, 10]
+      console.log(array2.multBy(2)) // [4, 8, 16, 32]
+
+      console.log([4, 6, 8].multBy(4)) // [16, 24, 32]
+      console.log([5, 10, 15].multBy(3)) // [15, 30, 45]
+      
+    </script>
+  </body>
+</html>
