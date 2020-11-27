@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Method includes - working with Strings</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: larger;
+        font-weight: 700;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Working with strings - use the method <span class="emph"> str.includes(substr, pos)</span></h2>
+
+    <h4 class="task">
+      У нас є рядок слово-виразу. Hеобхідно просто дізнатись чи є в ньому слововираз 'Widget' і якщо є то вивести підтвердження цього на екран (alert).
+      <br>
+    </h4>
+
+    <p class="code-ex"><br>
+      Приклад<br>
+      <code><br>
+        let str = "Widget with id";<br>
+        <br>
+        alert('Співпадіння є!');<br>
+        <br>
+      </code>
+    </p><br>
+
+    <p><b>Відповідь</b>:</p><br>
+
+    <p>Спробуємо вирішити застосувавши просту перевірку на <b>if</b> та метод <b>str.indexOf(substr, pos)</b>, що дозволяє шукати слововираз substr з позиції pos у рядку str і повертає позицію слово-виразу в рядку чи -1, якщо не має. Отже, якщо нема такого слово-виразу в рядку, повернется -1. Спробуємо:
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          let str = 'Widget with id';
+
+          if (str.indexOf('Widget')) {
+            alert('Співпадіння є!'); // НЕ ПРАЦЮЄ!
+          }
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Хоч слово-вираз існує але підтвердження немає, чому? Якшо шукаємий слово-вираз починається з позиції 0, що в нашому випадку, то alert сприйме цей 0 як 'false' і як такий, що не проходить перевірку, а тому не виводить підтвердежння. І для вирішення цього потрібно порівняння робити не з 0, а з -1, ось так:
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          let str = 'Widget with id';
+
+          if (str.indexOf('Widget') != -1) {
+              alert('Співпадіння є!'); // тепер працює
+          }
+        </pre>
+      </code>
+    </p>
+
+    <p>Є ще один старий метод для вирішення подібної задачі - із застосуванням побітового НЕ '~'. Він перетворює число в 32-розрядне ціле число зi знаком (signed 32-bit integer) - усі біти інвертуються в ціле 32-розрядне ціле число при цьому дрібна частина відкидається. А для 32-розрядних цілих чисел значення ~n рівне -(n+1) і ~n дорівнює 0 тільки при n == -1. Але для практики, потрібно тільки знати вираз<br>
+      <b>if (~str.indexOf(…))</b> означаеє <b>'якщо знайдено'</b> i код рішення може бути таким:<br>
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          let str = "Widget";
+
+          if (~str.indexOf('Widget')) {
+            alert( 'Співпадіння є' ); // також працює!
+          }
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Проте, найкращим і сучасним способом вирішення цієї задачі є застосування методу <b>str.includes(substr, pos)</b>, який повертає true якщо такий слово-вираз є в рядку/параграфі і false - якщо немає. При цьому потрібно зауважити, що нам не важливо знати позицію а просто знати чи є слово-вираз в рядку чи не має. Крим того, давайте виведемо це не на екран, а в консоль для того щоб бачити true/false. I, код рішення буде:<br>
+    </p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          console.log('Widget with id'.includes('Widget')); // true
+
+          let str2 = 'These publications developed new ways of laying out and presenting stories, creating the narrative not with slabs of text but with photographs, captions and short pieces of text.';
+          let substr2 = 'text';
+          let pos = 0;
+
+          let result2 = str2.includes(substr2, pos);
+          console.log(`It is '${result2}'`); // It is 'true'
+        </pre>
+      </code>
+    </p>
+
+    <p>Необов'язковий другий параметр pos може задавати умову з якої позиції починати шукати.<br>
+    Так, у рядку що був вище str2, перший слово-вираз був знайдений на 117 позиції, але нам, наприклад, потрібно знати чи зустрічається він далі після цієї позиції. І рішення буде також із застосуванням методу <b>str.includes(substr, pos)</b> зазначивши в другому параметрі, з якої позиції розпочинати шукати (в нас це 118).</p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          let result3 = str2.includes(substr2, 118);
+
+          console.log(`It is '${result3}'`);
+        </pre>
+      </code>
+    </p>
+    
+    <script>
+      let str = 'Widget with id';
+
+      if (str.indexOf('Widget')) {
+          alert('Співпадіння є!'); // HE ПРАЦЮЄ!
+      }
+
+      // if (str.indexOf('Widget') != -1) {
+      //     alert('Співпадіння є!'); // тепер працює
+      // }
+
+      // =================================================
+
+      console.log('Widget with id'.includes('Widget')); 
+      
+      let str2 = 'These publications developed new ways of laying out and presenting stories, creating the narrative not with slabs of text but with photographs, captions and short pieces of text.';
+      let substr2 = 'text';
+      let pos = 0;
+
+      let result2 = str2.includes(substr2, pos);
+      console.log(`It is '${result2}'`);
+
+      // =================================================
+
+      let result3 = str2.includes(substr2, 118);
+
+      console.log(`It is '${result3}'`);
+      
+    </script>
+  </body>
+</html>
