@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>The essence of context - this and method bind</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .title {
+        color: red;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: larger;
+        font-weight: 700;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Context - this, method bind</h2>
+
+    <h4 class="task">
+      Тут в об'єкті place містяться географічні координати міста Мінська, які відображаються при виклику методу об'єкта showCoordinates().<br>
+      Покажіть як за допомогою методу bind(), метод showCoordinates() винести в самостійну функцію showMinskCoordinates() та збереженим контекстом, тобто де в якості значення this буде передаватись об'єкт place.<br>
+    </h4>
+
+    <p class="code-ex"><br>
+      Приклад<br>
+      <code><br>
+        let place = {<br>
+          latitude: 53.9,<br>
+          longitude: 27.56667,<br>
+          showCoordinates: function(){<br>
+            alert(`Latitude: ${this.latitude}\nLongitude: ${this.longitude}`); }<br>
+        };<br>
+        place.showCoordinates(); // Latitude: 53.9 на іншому рядку Longitude: 27.56667<br>
+        <br>
+        створити окрему функцію виклик якої матиме такий самий результат<br>
+        showMinskCoordinates(); // Latitude: 53.9 на іншому рядку Longitude: 27.56667<br>
+        <br>
+      </code>
+  </p><br>
+
+    <p><b>Відповідь</b>:</p><br>
+
+    <p>Функція, яка постійно викликається із значенням this, називається прив'язаною функцією.<br>
+      Власне метод bind() і використовується для створення нової функції на основі вже наявної, але з 'жорстко' заданим значенням this і (або) визначеним набором параметрів, і приймає два аргументи:<br>
+      - значення this;<br>
+      - визначений набір параметрів по типу REST-аргументів (але це не обов'язково)<br>
+      <br>
+      Отже, давайте створемо функцію showMinskCoordinates() з використанням методу bind() в якій аргументом буде об'єкт place - тобто this - це жорсто привязаний контекст для цієї функції. Ось так:
+      </p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          let showMinskCoordinates = place.showCoordinates.bind(place);
+
+          showMinskCoordinates(); // Latitude: 53.9 на іншому рядку Longitude: 27.56667
+        </pre>
+      </code>
+    </p>
+
+    <p>Так, незалежно від того, де і як буде ініційовано виклик showMinskCoordinates(), вона завжди буде звертатися за даними саме до об'єкта place.
+    </p>
+
+    
+    <script>
+      let place = {
+      latitude: 53.9,
+      longitude: 27.56667,
+      showCoordinates: function() {
+        console.log(`Latitude: ${this.latitude}\nLongitude: ${this.longitude}`);
+        }
+      };
+      
+      place.showCoordinates(); // Latitude: 53.9 на іншому рядку Longitude: 27.56667 
+
+      let showMinskCoordinates = place.showCoordinates.bind(place);
+
+      showMinskCoordinates(); // Latitude: 53.9 на іншому рядку Longitude: 27.56667
+      
+    </script>
+  </body>
+</html>
