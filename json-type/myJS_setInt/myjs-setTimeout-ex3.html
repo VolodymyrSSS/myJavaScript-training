@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>myjs_funcAdv: exercise setTimeout</title>
+    <style>
+        body {
+            background-color: tan;
+            margin: 0;
+            font-family: Verdana, sans-serif;
+        }
+
+        .title {
+            color: red;
+            text-align: center;
+            font-weight: 700;
+        }
+
+
+        .task {
+            width: 50%;
+            padding: 15px 25px;
+            color: navy;
+            background-color: #e2e2e2;
+            margin: 35px auto;
+        }
+
+        pre {
+            width: 50%;
+            background-color: #bebebe;
+            padding-top: 20px;
+            margin: 0 auto;
+        }
+
+        code {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: large;
+        }
+
+        p {
+            width: 80%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2 class="title">Advanced functions: exercise setTimeout/setInterval</h2>
+
+    <h4 class="task">Що виведеться в консолі першим?</h4>
+
+    <p class="task">
+        setTimeout( () => console.log("World") );<br>
+        console.log("Hello");
+    </p><br>
+
+
+    <p><b>Рішення</b>: "Hello"<br>
+        <br>
+        Тут приклад особливого варіанту використання <b>setTimeout з нульовою затримкою</b>: <br>
+        Синтаксис: <em>setTimeout (func, 0)</em> або просто <em>setTimeout(func)</em>.<br>
+        Застосування планує виклик func настільки швидко, наскільки це можливо. Але надасть право викликати функцію
+        тільки після завершення виконання поточного коду.<br>
+        Перший рядок ставить виклик в «календар» через 0 мс. Але планувальник перевірить «календар» тільки після того,
+        як поточний код завершиться. Тому "Hello" виводиться першим, а "World" - після нього.
+    </p><br>
+
+    <h4 class="task">У наведеному нижче коді запланований виклик setTimeout, а потім виконується складне обчислення, для
+        завершення якого потрібно більше 100 мс.<br>
+        Коли буде виконана запланована функція:<br>
+        -Після циклу?<br>
+        -Перед циклом?<br>
+        -На початку циклу?<br>
+        Що покаже консоль?
+    </h4><br>
+
+    <p class="task">
+        let i = 0;
+        setTimeout(() => console.log(i), 100);<br>
+
+        for(let j = 0; j < 100000000; j++) { i++; } </p> <br>
+
+            <p><b>Рішення</b>: Після циклу<br>
+                <br>
+                Будь-який виклик setTimeout буде виконаний тільки після того, як поточний код завершиться.
+                Останнім значенням i буде: 100000000.
+            </p>
+
+            <script>
+                setTimeout(() => console.log("World"));
+                console.log("Hello");
+
+                let i = 0;
+                setTimeout(() => console.log(i), 100); // ?
+
+                for (let j = 0; j < 100000000; j++) {
+                    i++;
+                }
+            </script>
+
+</body>
+
+</html>
