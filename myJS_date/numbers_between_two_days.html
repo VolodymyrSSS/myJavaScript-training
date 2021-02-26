@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>numbers - working with Date</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: larger;
+        font-weight: 700;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Working with JS object Date - use the methods <span class="emph">getTime()</span> and <span class="emph">new Date(dateString)</span>
+    </h2>
+
+    <h4 class="task">
+      Обчислення кількості днів між двома датами.<br> 
+      Створіть функцію 'daysBetweenDates' яка буде принймати на вхід дві дати і повертати різницю кількості днів між цими датами. При введенні дат, порядок їх введення не повинен впливати на результат.
+    </h4>
+
+    <p class="code-ex"><br>
+      Приклад<br>
+      <code><br>
+        let dateA = new Date('2020/10/21');<br>
+        let dateB = new Date('2020/10/29');<br>
+        daysBetweenDates(dateA, dateB); // Result: 8<br>
+        <br>
+        або ось так<br>
+        daysBetweenDates(new Date('2020/10/21'), new Date('2021/10/29'));<br>
+        // Result: 373<br>
+        <br>
+      </code>
+  </p><br>
+
+    <p><b>Відповідь</b>:</p><br>
+
+    <p>Щоб вірішити це завдання потрібно спочатку визначити кількість днів яку має найближча дата від початку відліку, потім визначити кількість днів для попередньої дати і вже потім дізнатись різницю (віднявши від найближчої попередню).<br>
+    <br>
+    Крім того, враховуючи вимогу визначення який з аргументів буде найближчою датою, а який попередньою датою, можемо застосувати функцію <b>Math.abs()</b> при якій порядок аргументів не має значення.<br>
+    <br>
+    Відлік часу в JavaScript починається з опівночі 1 січня 1970 року. Тому, щоб дізнатись скільки часу пройшло з того часу до визначеної дати, в МІЛІСЕКУНДАХ, існує метод <b>getTime()</b> <br>
+    <br>
+    А щоб перетворити отримані мілісекунди, наприклад в кількість діб/днів, треба отримані мілісекунди розділити на 1000 * 3600 * 24  де: <br>
+    1000 - кількість мілісекунд в 1 секунді;<br>
+    3600 - кількість секунд в 1 годині;<br>
+    24 - кількість годин в 1 добі;<br>
+    <br>
+    Також пам'ятаємо, що є 4 способа задати саму дату:<br>
+    var d = new Date(); - без аргументів, створити об'єкт Date з поточними датою і часом<br>
+    var d = new Date(milliseconds); - створити об'єкт Date з часом, що дорівнює кількості мілісекунд (тисячна доля секунди), що пройшли з 1 січня 1970 року UTC + 0<br>
+    <b>var d = new Date(dateString);</b> - якщо аргумент всього один, і це слово-вираз, то з нього ,'прочитується' дата<br>
+    var d = new Date(year, month, day, hours, minutes, seconds, milliseconds); - створити об'єкт Date з заданими компонентами в місцевому часовому поясі. Обов'язкові тільки перші два аргументи.<br>
+    <br>
+    Отже, щоб визначити скільки часу пройшло з початку відліку до наприклад поточного дня, треба наприклад зробити так: <br>
+    var d = new Date();<br>
+    var n = d.getTime();<br>
+    <br>
+      Код рішення буде:
+    </p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          const daysBetweenDates = (dateA, dateB) => {
+            const timeDifference = Math.abs(dateA.getTime() - dateB.getTime())
+            
+            // Seconds * hours * miliseconds
+            return Math.floor(timeDifference / (3600 * 24 * 1000))
+          }          
+        </pre>
+      </code>
+    </p>
+    
+    <script>
+      let dateA = new Date('2020/10/21');
+      let dateB = new Date('2020/10/29');
+
+      const daysBetweenDates = (dateA, dateB) => { 
+        const timeDifference = Math.abs(dateA.getTime() - dateB.getTime())
+        
+        // Seconds * hours * miliseconds
+        return Math.floor(timeDifference / (3600 * 24 * 1000));
+      }    
+      console.log(daysBetweenDates(dateA, dateB)); // 8
+
+      console.log(daysBetweenDates(new Date('2020/10/21'), new Date('2021/10/29'))); // 373  
+
+    </script>
+  </body>
+</html>
