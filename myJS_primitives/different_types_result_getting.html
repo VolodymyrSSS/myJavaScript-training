@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Data types</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: larger;
+        font-weight: 700;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Working with types - use operator <span class="emph">typeof</span>
+    </h2>
+
+    <h4 class="task">
+      Дайте відповідь, які типи даних є в JS та як дізнатись який тип має значення?<br> 
+      Яким чином можна здійснювати перетворення одного типу даних в інший?<br>
+      Крім того, що буде виведено в консолі  в прикладах наданих нижче при перетворенні значення в числовий тип ?
+    </h4>
+
+    <p class="code-ex"><br>
+      Вирази<br>
+      <code><br>
+        console.log(Number("")); // ?<br>
+        console.log(Number(" ")); // ?<br>
+        console.log(Number("\r\n\t")); // ?<br>
+        console.log(Number("0")); // ?<br>
+        console.log(Number("-0")); // ?<br>
+        console.log(JSON.parse("-0")); // ?<br>
+        console.log(-0); // ?<br>
+        console.log(Number("- 0")); // ?<br>
+        console.log(-0 + ""); // ?<br>
+        <br>
+        // working with dot<br>
+        console.log(Number("0.")); // ?<br>
+        console.log(Number(".0")); // ?<br>
+        console.log(Number(".")); // ? <br>
+        <br>
+        console.log(Number(undefined)); // ?<br>
+        console.log(Number(null)); // ?<br>
+        <br>
+        console.log(Number("0O0")); // ?<br>
+        console.log(Number("0X0")); // ?<br>
+        <br>
+        console.log(Number({})); //  ?<br>
+        console.log(Number([])); //  ?<br>
+        <br>
+      </code>
+  </p><br>
+
+    <p><b>Відповідь</b>:</p><br>
+
+    <p>З теорії відомо, що в JavaScript є 8 основних типів:<br>
+      1) <b>number</b> для будь-яких чисел: цілочисельних або чисел з плаваючою точкою; цілочисельні значення обмежені діапазоном ± (253-1)8;<br>
+      2) <b>bigint</b> для цілих чисел довільної довжини;<br>
+      3) <b>string</b> для слово-виразів чи рядків. Рядок може містити нуль або більше символів, В JS немає окремого символьного типу;<br>
+      4) <b>boolean</b> для true / false;<br>
+      5) <b>null</b> для невідомих значень - окремий тип, який має одне значення null;<br>
+      6) <b>undefined</b> для змінних неприсвоєння значень - окремий тип, який має одне значення undefined;<br>
+      7) <b>symbol</b> для створення унікальних ідентифікаторів в об'єктах;<br>
+      8) <b>object</b> для зберігання колекцій даних або більш складних структур даних;<br> 
+    </p>
+    <br>
+    <p>Оператор <b>typeof</b> повертає тип аргументу. Це корисно, коли ми хочемо обробляти значення різних типів по-різному або просто хочемо зробити перевірку. Виклик typeof x повертає рядок з ім'ям типу. Ось як він працює по основним типам JS:<br>
+      typeof undefined // "undefined"<br>
+      typeof 0 // "number"<br>
+      typeof 10n // "bigint"<br>
+      typeof true // "boolean"<br>
+      typeof "foo" // "string"<br>
+      typeof Symbol("id") // "symbol"<br>
+      typeof Math // "object" - це вбудований об'єкт, який надає математичні операції і константи.<br>
+      typeof null // "object" - це офіційно визнана помилка в typeof, ведуча початок з часів створення JavaScript і збережена для сумісності.<br>
+      typeof alert // "function" - Функції відносяться до об'єктного типу. Але typeof обробляє їх особливим чином, повертаючи "function". Так теж повелося від створення JavaScript. Формально це невірно, але може бути зручним на практиці.<br>
+    </p>
+    <br>
+    <p>Необхідно зазначити, що є випадки, коли нам потрібно явно перетворити значення в очікуваний тип.<br> 
+      Рядкове (слово-виразове) перетворення відбувається, коли потрібне представлення чогось у вигляді рядка (слово-виразу). Для цього використовують функцію <b>String(value)</b>. Перетворення відбувається очевидним чином. false стає "false", null стає "null" і т.п.
+      Ось, для прикладу: let str = String(123); // перетворює число 123 у слово-вираз "123";
+      ще приклади:<br>
+      String(false)  в 'false'<br>
+      String(true) в 'true'<br>
+      String(null); в  'null'<br>
+      String(undefined); в  'undefined'<br>
+      String({}); в  [object Object]<br>
+      String([]); в пустий рядок ''<br>
+      а ось особливості при використанні в масивах:<br>
+      String([null]); в пустий рядок ''<br>
+      String([undefined]); в пустий рядок ''<br>
+      String([null, null,]); в ','<br>
+      String([undefined, undefined,]); в ','<br>
+      String([,,]); в ','<br>
+      і пара цих прикладів
+      String(-0); в 0'<br>
+      JSON.stringify(-0)); // 0<br>
+      <br>
+      Коли необхідно перетворити значення у число, ми можемо використовувати функцію <b>Number(value)</b>. Ось, для прикладу: let num = Number("123"); // перетворює слово-вираз "123" в число 123<br>
+      ще приклади:<br>
+      Number("   123   ")  в 123<br>
+      Number("123z") в NaN бо тут помилка считування числа на місці z<br>
+      Number(true) в 1<br>
+      Number(false) в 0<br>
+      Number(null) в 0<br>
+      Number(undefined) в NaN (не в 0!)<br>
+      Якщо рядок не може бути явно приведений до числа, то результатом перетворення буде NaN.<br>
+      <br>
+      Логічне перетворення найпростіше, тут викорисовується функція <b>Boolean(value)</b>.
+      Правила перетворення у цьому випадку такі, ті значення, які інтуїтивно 'порожні', на кшталт 0, порожнього рядка, null, undefined і NaN, стають false, усі інші, стають true.<br>
+      Boolean("Приiт!") в true<br>
+      Boolean(1) в true<br>
+      Boolean(0) в false<br>
+      Boolean("") в false<br>
+      Boolean(" ") в true бо пробіл є спецсимвол<br>
+      Boolean("0") в true хоч і 0 але це символ<br>
+      <br>
+      Отже використання функцій(методів): String / Number / Boolean (увага - без оператора new!) - можливо  і корисно. Вони перетворюють значення у відповідний примітивний тип: в рядок, в число, в булевий тип.<br>
+      <br>
+      </p>
+    
+    <br>
+      Відповідь буде:
+    </p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          console.log(Number("")); // 0
+          console.log(Number(" ")); // 0
+          console.log(Number("\r\n\t")); // 0
+          console.log(Number("0")); // 0
+          console.log(Number("-0")); // -0
+          console.log(JSON.parse("-0")); // -0
+          console.log(-0); // -0
+          console.log(Number("- 0")); // NaN
+          console.log(-0 + ""); // 0
+
+          // working with dot
+          console.log(Number("0.")); // 0
+          console.log(Number(".0")); // 0
+          console.log(Number(".")); // NaN
+
+          console.log(Number(undefined)); // NaN
+          console.log(Number(null)); // 0
+
+          console.log(Number("0O0")); // 0
+          console.log(Number("0X0")); // 0
+
+          console.log(Number({})); //  NaN
+          console.log(Number([])); //  0
+        </pre>
+      </code>
+    </p>
+    
+    <script>
+      console.log(Number("")); // 0
+      console.log(Number(" ")); // 0
+      console.log(Number("\r\n\t")); // 0
+      console.log(Number("0")); // 0
+      console.log(Number("-0")); // -0
+      console.log(JSON.parse("-0")); // -0
+      console.log(-0); // -0
+      console.log(Number("- 0")); // NaN
+      console.log(-0 + ""); // 0
+
+      // working with dot
+      console.log(Number("0.")); // 0
+      console.log(Number(".0")); // 0
+      console.log(Number(".")); // NaN
+
+      console.log(Number(undefined)); // NaN
+      console.log(Number(null)); // 0
+
+      console.log(Number("0O0")); // 0
+      console.log(Number("0X0")); // 0
+
+      console.log(Number({})); //  NaN
+      console.log(Number([])); //  0
+
+    </script>
+  </body>
+</html>

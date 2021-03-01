@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>comparison == vs === </title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: larger;
+        font-weight: 700;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Working with types - use comparing <span class="emph">==</span> and <span class="emph">===</span>
+    </h2>
+
+    <h4 class="task">
+      Дайте відповідь, які результати отримують при строгому і нестрогому порівнянні виразів, які надані нижче.<br> 
+      Також, що ми отримаємо, коли будемо порівнювати при нестрогому порівнянні число 0 із виразами false, слово-виразом '0' та числом 0 ?<br>
+      Крім того, що ми отримаємо при нестрогому порівнянні виразів false, пустий рядок'' та числа 0 із пустим масивом, пустим об'єктом та null ?
+    </h4>
+
+    <p class="code-ex"><br>
+      Вирази<br>
+      <code><br>
+        console.log(2 == '2'); // ? <br>
+        console.log(2 === '2'); // ? <br>
+        console.log(undefined == null); // ? <br>
+        console.log(undefined === null); // ? <br>
+        <br>
+        console.log(0 == false); // ? <br>
+        console.log(0 == '0'); // ? <br>
+        console.log(0 == 0); // ? <br>
+        <br>
+        console.log(false == ''); // ? <br>
+        console.log(false == []); // ? <br>
+        console.log(false == {}); // ? <br>
+        <br>
+        console.log('' == 0); // ? <br>
+        console.log('' == []); // ? <br>
+        console.log('' == {}); // ? <br>
+        <br>
+        console.log(0 == []); // ? <br>
+        console.log(0 == {}); // ? <br>
+        console.log(0 == null); // ? <br>
+        <br>
+      </code>
+  </p><br>
+
+    <p><b>Відповідь</b>:</p><br>
+
+    <p>Попередньо необхідно зазначити, що коли з'явився ECMAScript 5 (ES5) у 2009 році, було додано нові можливості в мову. Але щоб нові можливості використовувались і застарілий код працював як і раніше, потрібно було явно активувати це за допомогою спеціальної директиви: <b>"use strict"</b>.<br>
+    <br>
+    Щоб підключити строгий режим, потрібно помістити фразу "use strict" на самому горі - в першому рядку скрипта, інакше він може не включитися. Як тільки ми входимо в строгий режим, скасувати його неможливо. Але коли весь код складається з класів і модулів, директиву можна буде опустити.</p>
+    <br>
+    <p>Отже, щоб правельно відповісти на питання треба зазначити, що в JS при <b>== здійснюється порівняння значень із приведенням їх до типів</b>, в той же час <b>=== здійснює порівняння значень без приведення їх до типів</b>. Ще кажуть і так: == порівнює тільки по значенню, а === порівнює і по типу і по значенню.</p>
+    <br>
+    <p>Отже, для запобігання помилок, потрібно завжди використовувати ===</p>
+    <br>
+    <br>
+      Відповідь:
+    </p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          console.log(2 == '2'); // true
+          console.log(2 === '2'); // false
+          console.log(undefined == null); // true
+          console.log(undefined === null); // false
+          
+          console.log(0 == false); // true
+          console.log(0 == '0'); // true
+          console.log(0 == 0); // true
+
+          console.log(false == ''); // true
+          console.log(false == []); // true
+          console.log(false == {}); // false
+
+          console.log('' == 0); // true
+          console.log('' == []); // true
+          console.log('' == {}); // false
+
+          console.log(0 == []); // true
+          console.log(0 == {}); // false
+          console.log(0 == null); // false
+        </pre>
+      </code>
+    </p>
+    
+    <script>
+
+      console.log(2 == '2'); // true
+      console.log(2 === '2'); // false
+      console.log(undefined == null); // true
+      console.log(undefined === null); // false
+      
+      console.log(0 == false); // true
+      console.log(0 == '0'); // true
+      console.log(0 == 0); // true
+      
+      console.log(false == ''); // true
+      console.log(false == []); // true
+      console.log(false == {}); // false
+
+      console.log('' == 0); // true
+      console.log('' == []); // true
+      console.log('' == {}); // false
+
+      console.log(0 == []); // true
+      console.log(0 == {}); // false
+      console.log(0 == null); // false
+
+    </script>
+  </body>
+</html>
