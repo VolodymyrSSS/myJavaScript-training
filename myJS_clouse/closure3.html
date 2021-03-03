@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>The essence of closure</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      pre2 {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: larger;
+        font-weight: 700;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">The essence of  <span class="emph"> closure</span></h2>
+
+    <h4 class="task">
+      Нам потрібно вітати різних людей. Дана функція 'sayHelloTo', яка на вхід отримує ім'я та повертає анонімну функцію. Допишіть код щоб можна було вітати різних людей.
+      <br>
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          function sayHelloTo(name) {
+            const message = 'Hello' + name;
+    
+            return function() {
+              console.log(message);
+            }
+          }
+        </pre>
+      </code>
+    </p><br>
+
+    <p><b>Відповідь</b>:</p><br>
+
+    <p>Замикання - це функція, яка має доступ до змінних з вищестоячого скоупа.<br>
+      В нашому випадку анонімна функція (яка повертається) має доступ до змінної 'message'.<br>
+      Давайте допишимо код і створимо змінну 'HelloToWalter', яка має як значенням, результат роботи функції 'sayHelloTo', але на вхід якої заходить потрібне ім'я, ось так:
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          const HelloToWalter = sayHelloTo('Walter');
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Функція 'sayHelloTo' повертає нам функцію, отже функція 'HelloToWalter' дорівнює нашій анонімній функції, яка має доступ до змінної 'message', яка ніби <b>'замкнула'</b> цю анонімну функцію. Якщо хочемо пересвідчитись, що функція 'HelloToWalter' дорівнює анонімній функції, виведемо її в консоль, і в результаті ми отримаємо тіло анонімної функції.
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          console.log(HelloToWalter); // ƒ () { console.log(message) }
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Якщо функцію 'HelloToWalter' викликати для виконання то в консоль анонімної функції виведе  результат роботи</p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          HelloToWalter(); // Hello Walter
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Подібно до цього ми можемо створити функцію для привітання людини з іншим ім'ям, ось так:<br>
+    </p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          const HelloToElis = sayHelloTo('Elis');
+        </pre>
+      </code>
+    </p><br>
+
+    <h4 class="task">
+      Ми маємо функцію, яка в своєму тілі має список фреймворків та два методи, які дозволяють додавати до списку новий фреймворк чи просто виводити наявний список. Напишіть функцію, яка буде взаємодіяти з списком фреймворків.
+      <br>
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          function createFrameworkManager() {
+            const fw = ['Angular', 'React'];
+    
+            return {
+              print: function() {
+                console.log(fw.join(' '));
+              },
+              add: function(framework) {
+                fw.push(framework);
+              }
+            }
+          }
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Якщо ми напряму звернемось до списку фреймворків і спробуємо вивести їх в консоль, то отримаємо помилку. Тому необхідно створити таку функцію 'manager', яка буде мати посилання на функцію 'createFrameworkManager' і яка відповідно буде мати через замикання доступ до списку, ось так:
+    </p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          console.log(fw); // ReferenceError: fw is not defined
+
+          const manager = createFrameworkManager();
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Тобто, завдяки посиланню створеної змінної на функцію 'createFrameworkManager', ми зможемо використати методи функції, які через замикання мають доступ до списку фркймворків, ось, виведемо список:</p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          console.log(manager); // {print: ƒ, add: ƒ}
+
+          manager.print(); // Angular React
+        </pre>
+      </code>
+    </p><br>
+
+    <p>А ось додамо до списку новий фреймворк і знову виведемо в консоль:</p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          manager.add('VueJS');
+
+          manager.print(); // Angular React VueJS
+        </pre>
+      </code>
+    </p><br>
+
+    <h4 class="task">
+      Ми маємо масив чисел Фібоначчі. Виведіть усі числа Фібоначчі у консоль з затримкою в 1,5 секунди.
+      <br>
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          const fib = [1, 2, 3, 5, 8, 13];
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Для рішення, спочатку потрібно пройтись по масиву за допомогою цикла <b>for</b> і далі передати функцію для визначення затримки 'setTimeout' у якій визначимо колбек функцію яка буде виводити просто число Фібоначі по індексу і, яке дорівнює значенню і, ось так: </p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          for(var i = 0; i < fib.length; i++) {
+            setTimeout(function() {
+              console.log(`fib[${i}] = ${fib[i]}`);
+            }, 1500)
+          } // шість раз fib[6] = undefined
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Але ми отримаємо шість раз fib[6] = undefined, причому як видно йде постійне звернення до шостого індексу, значення якого є undefined (невизначено): </p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          fib[6] = undefined
+          fib[6] = undefined
+          fib[6] = undefined
+          fib[6] = undefined
+          fib[6] = undefined
+          fib[6] = undefined
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Це відбувається тому, що у нас є тільки одна змінна 'і', яка (тільки вона) послідовно змінюється (як ссилка) та приймає значення від 0 до 5 і коли стає шостою, то умова в циклі стає false, а значення 'і' =  undefined. Цик for відпрацьовує дуже швидко, а тому не видно зміну значень 'і' та тільки через 1,5 сек ми отримуєм одразу шість значень undefined. Отже, щоб виправити це, потрібно 'і' задавати через <b>let</b>, що надасть можливість для кожного значення 'і' бути доступним в межах видимості дії цикла (від дужки '{' до дужки '}'), тобто для кожної ітерації цикла 'і' буде мати тільки одне своє значення, ось так:</p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          for(<b>let</b> i = 0; i < fib.length; i++) {
+            setTimeout(function() {
+              console.log(`fib[${i}] = ${fib[i]}`);
+            }, 1500)
+          }
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Є ще другий спосіб, коли синтаксис ES5 не можливо застосувати. Ми огортаємо усе в круглі дужки та одразу викликаємо ці круглі дужки, ось так: <b>()()</b>. В перших дужках визначаємо анонімну функцію з нашим циклом - <b>(function() {})()</b>. На вхід анонімної функції будем подавати другу велечину 'j', (не повинна співпадати з 'i') та виводити її в циклі. Але, звідки вона буде братись? А ми її будемо моментально барти з текучої ітерації 'і'. Ми ніби замикаємо ці значення на 'i'. Таким чином, код буде таким:</p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          for(var i = 0; i < fib.length; i++) {
+            (function(<b>j</b>) {
+              setTimeout(function() {
+                console.log(`fib[${<b>j</b>}] = ${fib[<b>j</b>]}`);
+              }, 1500)
+            })(<b>i</b>)
+          }
+        </pre>
+      </code>
+    </p><br>
+ 
+    <script>
+      function sayHelloTo(name) {
+        const message = 'Hello' + ' ' + name;
+
+        return function() {
+          console.log(message);
+        }
+      }
+
+      const HelloToWalter = sayHelloTo('Walter');
+
+      HelloToWalter(); // 'Hello' Walter
+
+      const HelloToElis = sayHelloTo('Elis');
+
+      HelloToElis();
+
+      // ==============================================
+
+      function createFrameworkManager() {
+        const fw = ['Angular', 'React'];
+
+        return {
+          print: function() {
+            console.log(fw.join(' '));
+          },
+          add: function(framework) {
+            fw.push(framework);
+          }
+        }
+      }
+
+      // console.log(fw); // ReferenceError: fw is not defined
+
+      const manager = createFrameworkManager();
+
+      console.log(manager); // {print: ƒ, add: ƒ}
+
+      manager.print(); // Angular React
+
+      manager.add('VueJS');
+
+      manager.print(); // Angular React VueJS
+
+      // ==============================================
+
+      const fib = [1, 2, 3, 5, 8, 13]
+
+      // for(let i = 0; i < fib.length; i++) {
+      //   setTimeout(function() {
+      //     console.log(`fib[${i}] = ${fib[i]}`);
+      //   }, 1500)
+      // }
+
+      for(var i = 0; i < fib.length; i++) {
+        (function(j) {
+          setTimeout(function() {
+            console.log(`fib[${j}] = ${fib[j]}`);
+          }, 1500)
+        })(i)
+      }
+      
+    </script>
+  </body>
+</html>
