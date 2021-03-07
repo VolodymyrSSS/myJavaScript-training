@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Numbers - the Random number</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 70%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Numbers - the <span class="emph"> Random</span> number</h2>
+
+    <h4 class="task">
+      Отримати випадкове значення в JavaScript можна легко за допомогою функції Math.random(). Але як щодо випадкового числа в визначеному діапазоні, та ще й тільки цілих чисел? Тобто, нам потрібно отримати псевдовипадкове ціле число, наприклад, від 2 до 8 включно. Як це зробити?
+      <br>
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          getRandomIntInclusive(2, 8); // маємо отримати: 2 чи 3, чи 4, чи 5, чи 6, чи 7, чи 8
+        </pre>
+      </code>
+    </p><br>
+
+    <p><b>Відповідь</b>:</p><br>
+
+    <p>Давайте подивимось на функцію 'getRandom' в якій використаєм стандартну фукнцію Math.random() і яка буде генерувати псевдовипадкове число з плаваючою комою у діапазоні від 0 (включно) до 1 (невключаючи). Оскільки число в JavaScript є числом із плаваючою крапкою стандарту IEEE 754 з округленням до найближчого парного числа, то усі генерації випадкових чисел будуть не зовсім точні. Крім того, якщо задані дуже великі межі діапазону (253 і вище), можливість генерації крайнє-верхнього числа є ексклюзивно рідко або майже неможливо.
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function getRandom() {
+            return Math.random();
+          }
+          console.log(getRandom());// 0.9798717214144306, 0.288311579238843 ..і т.д. але ніколи не буде включати 1
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Тепер, якщо створимо функцію 'getRandomArbitrary' яка буде генерувати псевдовипадкове число з плаваючою комою в заданому інтервалі. Проте, значення числа, яке повертається є не менше (або дорівнює) min і не більше (не дорівнює) max, ось так:
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function getRandomArbitrary(min, max) {
+            return Math.random() * (max - min) + min; 
+          }
+          console.log(getRandomArbitrary(2, 8)); // 7.7425818850460235, 4.988781579238123 ..і т.д. але ніколи не включає 8
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Далі, створимо функцію 'getRandomIntOne', яка буде генерувати випадкове <em><b>ціле</b></em> число і візьмем верхню границю діапазону - 3. Але у цьому випадку Метод Math.random() повертає випадкове ціле число від 0 (включно) до 3 (але не включаючи 3), ось так:
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function getRandomIntOne(max) {
+            return Math.floor(Math.random() * Math.floor(max));
+          }
+
+          console.log(getRandomIntOne(3)); // 0, 1 чи 2 але ніколи не включає 3
+        </pre>
+      </code>
+    </p><br>
+
+    
+
+    <p>Функцію для генерації псевдовипадкового <em><b>цілого</b></em> числа в заданому діапазоні. Але значення, яке повертається, буде не менше min (або наступне ціле число, яке більше min, якщо min не цілое) і не більше (але не рівне) max та буде виглядати ось так:</p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function getRandomIntTwo(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min)) + min; // Максимум не включається, мінімум включається
+          }
+
+          console.log(getRandomIntTwo(2, 8)); // 4, 3, 3, 2, 7, 5..і т.д. але ніколи не включає 8
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Врешті, функцію для генерації псевдовипадкового <em><b>цілого</b></em> числа в заданому діапазоні (з включенням верхньої та нижньої границь діапазону) буде виглядати ось так:</p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function getRandomIntInclusive(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min + 1)) + min; // Максимум і мінімум включаються
+          }
+
+          console.log(getRandomIntInclusive(2, 8)); // 4, 2, 3, 8, 6, 7, 5, 8, 2..і т.д.
+        </pre>
+      </code>
+    </p><br>
+
+    
+ 
+    <script>
+      function getRandom() {
+        return Math.random();
+      }
+
+      console.log(getRandom());// 0.9798717214144306, 0.288311579238843 ..і т.д. але ніколи не буде включати 1
+
+      // ==============================================
+
+      function getRandomArbitrary(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      console.log(getRandomArbitrary(2, 8)); // 7.7425818850460235, 4.988781579238123 ..і т.д. але ніколи не включає 8 
+
+      // ==============================================
+
+      function getRandomIntOne(max) {
+        return Math.floor(Math.random() * Math.floor(max));
+      }
+
+      console.log(getRandomIntOne(3)); // 1, 0, 2, 2, ......і т.д. але ніколи не включає 3
+
+      // ==============================================
+
+      function getRandomIntTwo(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min;
+      }
+
+      console.log(getRandomIntTwo(2, 8)); // 4, 3, 3, 2, 7, 5..і т.д. але ніколи не включає 8
+
+      // ==============================================
+
+      function getRandomIntInclusive(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min; // Максимум і мінімум включаються
+      }
+
+      console.log(getRandomIntInclusive(2, 8)); // 4, 2, 8, 3, 6, 7, 5, 8, 2..і т.д.
+
+      
+    </script>
+  </body>
+</html>
