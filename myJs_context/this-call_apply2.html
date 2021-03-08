@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>The essence of context - this and methods call/apply</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Context - keyword <span class="emph">this</span>, the methods <span class="emph">Call</span> та <span class="emph">Apply</span></h2>
+
+    <h4 class="task">
+      В нас є об'єкт 'person' у якого контекстом є властивості 'surname' та метод 'knows'. Поясніть як було отримано контекст - властивість surname, використовуючи ключове слово this. Потім покажіть, як використати контекст - метод knows, з контекстом іншого об'єкта 'john'?
+      <br>
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          person = {
+            surname: 'Старк',
+            knows: function(what, name){
+              console.log(`Ти ${what} знаєш, ${name} ${this.surname}`);
+            }
+          }
+
+          // інший об'єкт
+          const john = {surname: 'Сноу'};
+        </pre>
+      </code>
+    </p><br>
+
+    <p><b>Відповідь</b>:</p><br>
+
+    <p>У більшості випадків значення this визначається тим, яким чином викликана функція. Значення this не може бути встановлено шляхом присвоєння під час виконання коду і може мати різне значення при кожному виклику функції.<br>
+    Наперед необхідно зазначити, що в ES5 представлений метод bind (), який використовується для прив'язки значення ключового слова this незалежно від того, як викликана функція. Також в ES2015 представлені стрілочні функції, які не створюють власні прив'язки до this (вони зберігають значення this лексичного оточення, в якому були створені). Отже, використання ключового слова this можна показати на ось такому простому прикладі:
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          const test = {
+            prop: 42,
+            func: function() {
+              return <b>this.prop;</b>
+            },
+          };
+          
+          console.log(test.func()); // 42
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Розглянемо нашу задачу де для отримання контексту - surname ми і використали ключове слово this, яке вказує на контекст - властивість 'surname' ось так:
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          console.log(`Ти ${what} знаєш, ${name} ${this.surname}`);
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Контекст - метод 'knows', будем викликатись в контексті об'єкта 'john' через метод <b>call</b>, який першим аргументом отримує сам об'єкт прив'язки (на який і буде вказувати ключове слово this) і далі інші аргументи для виконання метода 'knows'. Ще раз зазначимо, що ключове слово this тут вказує на прив'язаний контент 'surname' об'єкта 'john', ось так:
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          person.knows.<b>call</b>(john, 'нічого не', 'Джон');// Ти нічого не знаєш, Джон Сноу;
+        </pre>
+      </code>
+    </p><br>
+
+    <p>По аналогії, контекст - метод 'knows', будем викликатись в контексті об'єкта 'john' через метод <b>apply</b>, який першим аргументом отримує також сам об'єкт прив'язки але далі другий аргумент у виді масива куда і передаються потрібні аргументи для виконання метода 'knows'. Ключове слово this тут також вказує на прив'язаний контент 'surname' об'єкта 'john', ось так:
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          person.knows.<b>apply</b>(john, ['нічого не', 'Джон']);// Ти нічого не знаєш, Джон Сноу;
+        </pre>
+      </code>
+    </p><br>
+
+ 
+    <script>
+
+      person = {
+        surname: 'Старк',
+        knows: function(what, name){
+          console.log(`Ти ${what} знаєш, ${name} ${this.surname}`);
+        }
+      }
+
+      person.knows('все', 'Бран'); // Ти все знаєш, Бран Старк
+
+      const john = {surname: 'Сноу'};
+
+      person.knows.call(john, 'нічого не', 'Джон');// Ти нічого не знаєш, Джон Сноу;
+
+      person.knows.apply(john, ['нічого не', 'Джон']);// Ти нічого не знаєш, Джон Сноу;
+
+    </script>
+  </body>
+</html>

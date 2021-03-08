@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>The essence of context - this and methods call/apply</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Context - keyword <span class="emph">this</span>, the methods <span class="emph">Call</span> та <span class="emph">Apply</span></h2>
+
+    <h4 class="task">
+      Поясніть значення ключового слова 'this'? Дайте розуміння глобального контексту? Потім покажіть на прикладах, як використати контекст - методи call/apply, та отримати контекст одного об'єкта в контексті іншого?
+      <br>
+    </h4>
+
+    <p><b>Відповідь</b>:</p><br>
+
+    <p>Перш за все, необхідно сказати, що у глобальному контексті виконання (за межами будь-яких функцій) <b><em>this</em></b> посилається на глобальний об'єкт незалежно від режиму (строгий чи нестрогий).<br>
+      console.log(this === window); // true<br>
+      або<br>
+      a = 37;<br>
+      console.log(window.a); // 37<br>
+      або ось так<br>
+      this.b = "MDN";<br>
+      console.log(window.b)  // "MDN"  чи  console.log(b) // "MDN"
+    </p><br>
+
+    <p>Проте, в межах функції значення this залежить від того, яким чином викликана функція. Якщо подивитись на дію this під час простого виклику і не в строгому режимі де значення this не встановлюється викликом, то по-замовчуванню буде використовуватись об'єкт global, який в браузері буде дорівнювати window, ось так:</p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function f1(){
+            return this;
+          }
+          
+          // В браузері:
+          f1() === window; // window - глобальний об'єкт в браузері
+          
+          // В Node:
+          f1() === global; // global - глобальний об'єкт в Node
+        </pre>
+      </code>
+    </p><br>
+
+    <p>У строгому режимі, якщо значення this не встановлено в контексті виконання, воно залишається undefined, як показано тут нижче. Крім того, тут this повинно мати значення undefined, ще і тому, що функція f2 була викликана безпосередньо, а не як метод або властивість об'єкта типу window.f2 (); бо так знову отримуємо глобальний об'єкт Window.</p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function f2(){
+            "use strict";
+            return this;
+          }
+          
+          f2() === undefined; // true
+
+          window.f2(); // Window {window: Window, self: Window, …}
+
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Отже, для того, щоб при виконанні функції встановити this в певне значення, використовуйте call () або apply (),</p>
+
+    <p>Ось розглянемо приклад1, щоб при виконанні функції встановити this в певне значення. <br>
+      <br>
+      Використання методу <b>call</b> та <b>apply</b>:
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          var obj = {a: 'Custom'};
+          var a = 'Global';
+
+          function whatsThis() {
+            return this.a; // тут значення this залежить від контексту виклику функції
+          }
+
+          console.log(whatsThis()); // Global
+          console.log(whatsThis.call(obj)); // Custom
+          console.log(whatsThis.apply(obj)); // Custom
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Ось приклад2, щоб при виконанні функції встановити this в певне значення. <br>
+      Використання методу <b>call</b> та <b>apply</b>:
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function add(c, d) {
+            return this.a + this.b + c + d;
+          }
+    
+          var o = {a: 1, b: 3};
+
+          // Перший параметр - це об'єкт для використання в якості 'this', 
+          // наступні параметри передаються як аргументи функції call
+          console.log(add.call(o, 5, 7)); // 16
+
+          // Перший параметр - це об'єкт для використання в якості 'this', 
+          // другий - масив, чиї члени використовуються в якості аргументів функції apply
+          console.log(add.apply(o, [10, 20])); // 34
+        </pre>
+      </code>
+    </p><br>
+ 
+    <script>
+
+      function f2(){
+        "use strict";
+          return this;
+      }
+          
+      console.log(f2() === undefined); // true
+
+      console.log(window.f2()); // Window {window: Window, self: Window, …}
+
+      // =======================================================
+
+      var obj = {m: 'Custom'};
+      var m = 'Global';
+
+      function whatsThis() {
+        return this.m; // тут значення this залежить від контексту виклику функції
+      }
+
+      console.log(whatsThis()); // Global
+      console.log(whatsThis.call(obj)); // Custom
+      console.log(whatsThis.apply(obj)); // Custom
+
+      // =======================================================
+
+      function add(c, d) {
+        return this.a + this.b + c + d;
+      }
+
+      var o = {a: 1, b: 3};
+
+      console.log(add.call(o, 5, 7)); // 16
+
+      console.log(add.apply(o, [10, 20])); // 34
+
+    </script>
+  </body>
+</html>
