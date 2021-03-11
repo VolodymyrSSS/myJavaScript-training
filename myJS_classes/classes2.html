@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>ES6 classes -</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .title {
+        color: red;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: larger;
+        font-weight: 700;
+        margin-left: 95px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Classes: practical use of classes</h2>
+
+    <h4 class="task">
+      Створити клас 'Component'. Визначити в його конструкторі приватну змінну з доступом до вузлів DOM, та створити 2 методи які будуть або ховати або показувати елементи.<br>
+      Потім створити клас 'Вох' який успадковує методи від класу 'Component'. На основі класу 'Вох', створити об'єкти 'box1' та 'box2' з полями .<br>
+      Перевірте дію успадкованих властивостей від батьківського класу 'Component' і застосуйте до створених об'єктів на основі класу 'Box', методи 'hide' та 'show' як показано в зразку.<br>
+      Cтворимо клас 'Circle', а на його основі об'єкт 'с' з параметрами для круга.
+    </h4>
+
+    <p class="code-ex"><br>
+      Методи для перевірки успадкованих властивостей:<br>
+      <code><br>
+        box1.hide() або box2.hide() -> скривати елементи<br>
+        box1.show() або box2.show() -> показувати елементи<br>
+        <br>
+      </code>
+  </p><br>
+
+    <p><b>Рішення</b>:</p><br>
+
+    <p>
+      Створюєм клас 'Component', який на вхід отримує параметр 'selectors'. Після цього задаєм в конструктору ці параметри і створимо приватне поле через '$el', що значить що це змінна, яка містить в собі вузол DOM.<br>
+      У цю приватну змінну покладемо результат роботи функції document.querySelector, куда передамо той селектор який ми передаємо в конструкторі. Таким чином, ми можемо використовувати цю приватну змінну далі.<br>
+      Потім, ми створимо два метода: 'hide' та 'show', які дозволять або ховати елементи або їх показувати. Для їх реалізації, ми звертаємось до приватної змінної this.$el і до його поля 'style' (воно доступне для любих DOM-елементів) де визначаємо в методі display або 'hide' або 'block', ось так:
+       <br><br>
+      Ось так:
+    </p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          class Component {
+            constructor(selector) {
+              this.$el = document.querySelector(selector)
+            }
+            hide() {
+              this.$el.style.display = 'none'
+            }
+            show() {
+              this.$el.style.display = 'block'
+            }
+          }
+        </pre>
+      </code>
+    </p>
+
+    <p>Потім створюєм клас 'Вох' який успадковує методи від класу 'Component'. А в його конструкторі визначаємо набір опцій, які мають параметри 'options' від створених на основі класу 'Box' об'єктів. Але, зважаючи на те, що від батьківського класу приходить до нього тільки параметр 'selector' у виді слово-виразу/рядка, то у методі super ми повинні визначити параметр 'options.selector'.<br> 
+    Коли ми визначили метод 'super' ми маємо доступ до приватної змінної 'this.$el' і звернувшись до нього, ми визначаємо розміри елементів, колір елементів, навіть задамо для них ліву границю, ось так: <br>
+    this.$el.style.width = this.$el.style.height = options.size + 'px'<br>
+    this.$el.style.background = options.color<br>
+    this.$el.style.marginLeft = '250px'<br>
+    <br>
+    І вже на основі класу 'Вох', створюємо об'єкти 'box1' та 'box2', де визначаємо їх параметри (options): перше - це 'selector', далі 'size' і потім колір елемента через 'background', ось так:
+    </p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          class Box extends Component {
+            constructor(options) {
+              super(options.selector)
+              this.$el.style.width = this.$el.style.height = options.size + 'px'
+              this.$el.style.background = options.color
+              this.$el.style.marginLeft = '250px'
+            }
+          }
+    
+          const box1 = new Box({
+            selector: '#box1',
+            size: 200,
+            color: 'brown'
+          });
+    
+          const box2 = new Box({
+            selector: '#box2',
+            size: 200,
+            color: 'green'
+          });
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Не забути визначити елементи в html з відповідними селекторами 'box1' та 'box2', типу: <br>
+      div id="box1" Box1 /div та  div id="box2" Box2 /div</p><br>
+
+    <div id="box1">Box1</div>
+    <br>
+    <div id="box2">Box2</div>
+    <br>
+
+    <p>Якщо перевірити чи успадковані властивості від батьківського класу 'Component', то можна задати для створених об'єктів виконання методів 'hide' i 'show'. При цьому буде:<br>
+      box1.hide() або box2.hide() скривати елементи<br>
+      box1.show() або box2.show() відтворювати елементи<br>
+    </p><br>
+
+    <p>
+      Далі, на основі класу 'Box', створимо клас 'Circle', який в своєму конструкторі також буде отримувати параметри 'options', а в звязку з тим, що цей клас наслідується від класу 'Box', то в 'super' він також буде отримувати 'options'. Вже після цього, задамо йому параметри для круга та лівоїграниці. Потім, на основі класу 'Circle', створимо об'єкт 'с' з визначеними  параметрами для круга, ось так:
+    </p><br>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          class Circle extends Box {
+            constructor(options) {
+              super(options)
+              this.$el.style.borderRadius = '50%'
+              this.$el.style.marginLeft = '650px'
+            }
+          }
+
+          const c = new Circle({
+            selector: '#circle',
+            size: '300',
+            color: 'yellow'
+          });
+        </pre>
+      </code>
+    </p>
+
+    <div id="circle" style="text-align:center;">Circle</div>
+    <br>
+    <br>
+    
+    <script>
+      class Component {
+        constructor(selector) {
+          this.$el = document.querySelector(selector)
+        }
+        hide() {
+          this.$el.style.display = 'none'
+        }
+        show() {
+          this.$el.style.display = 'block'
+        }
+      }
+
+      class Box extends Component {
+        constructor(options) {
+          super(options.selector)
+          this.$el.style.width = this.$el.style.height = options.size + 'px'
+          this.$el.style.background = options.color
+          this.$el.style.marginLeft = '250px'
+        }
+      }
+
+      const box1 = new Box({
+        selector: '#box1',
+        size: 200,
+        color: 'brown'
+      });
+
+      const box2 = new Box({
+        selector: '#box2',
+        size: 200,
+        color: 'green'
+      });
+
+      class Circle extends Box {
+        constructor(options) {
+          super(options)
+          this.$el.style.borderRadius = '50%'
+          this.$el.style.marginLeft = '650px'
+        }
+      }
+
+      const c = new Circle({
+        selector: '#circle',
+        size: '300',
+        color: 'yellow'
+      });
+      
+    </script>
+  </body>
+</html>

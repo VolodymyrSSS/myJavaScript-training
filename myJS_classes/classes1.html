@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>ES6 classes -</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .title {
+        color: red;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: larger;
+        font-weight: 700;
+        margin-left: 95px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Classes: The essence of working with classes</h2>
+
+    <h4 class="task">
+      В нас є об'єкт для зразка 'animal' із властивостями, які є в більшості для усіх тварин. По цьому об'єкту потрібно створити клас 'Animal'; на основі створеного класу створити об'єкт 'саt'.<br>
+      Далі, додайте до створеного класу метод типу 'voice'. Подивіться в консолі де цей метод знаходиться: в прототипі об'єкта чи на рівні створеного класу?<br>
+      Додайте до створеного класу 'Animal' статичну властивість, яка буде належати тільки цьому класу, 'type' із значенням "ANIMAL".<br>
+      Створіть на основі класу 'Animal' клас 'Cat', тобто не об'єкт, а клас який повинен успадкувати усі властивості батьківського класу. Потім, створимо на основі класу 'Cat' новий об'єкт 'саtTwo'.<br>
+      Додайте нову властивість в клас 'Сat', і ця властивість має належати тільки цьому класу та отримайте її значенням в об'єкті 'catTwo'.<br>
+      Також, змініть метод 'voice' та додайте статичну властивість до класу 'Cat'; перевірте зміни.<br>
+      Якщо можна змінити метод в дочірного класу, то змініть його і виведіть в консоль результат.<br>
+      Покажіть, як використовувати get/set в класах?
+    </h4>
+
+    <p class="code-ex"><br>
+      Об'єкт для зразка:<br>
+      <code><br>
+        const animal = {<br>
+          &nbsp name: 'Animal',<br>
+          &nbsp age: 5,<br>
+          &nbsp hasTail: true<br>
+        } <br>
+        <br>
+      </code>
+  </p><br>
+
+    <p><b>Рішення</b>:</p><br>
+
+    <p>В об'єктно-орієнтованому програмуванні клас - це розширюваний шаблон коду для створення об'єктів, який встановлює в них початкові значення (властивості) і реалізацію поведінки (методи).<br>  В JavaScript клас - це різновид функції.<br>
+      Отже, спочатку необхідно створити клас, а для цього використовуєм метод конструктора 'constructor', який отримує параметр 'options' і далі використовуючи ключове слово 'this' ми задамо необхідні властивості для стврення на базі класу 'Animal' норвого об'єкту 'cat',<br>  
+      або наввіть так, об'єкту 'cat', який успадковує від 'Animal' його властивості.<br>
+      Ось так:
+    </p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          class Animal {
+            constructor(options) {
+              this.name = options.name;
+              this.age = options.age;
+              this.hasTail = options.hasTail;
+            }
+          }
+    
+          const cat = new Animal({
+            name: 'Мурчик',
+            age: 2,
+            hasTail: true
+          });
+        </pre>
+      </code>
+    </p>
+
+    <p>Потім, додамо до створеного класу 'Animal' нижче конструктора, метод 'voice', ось так:</p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          voice() {
+            console.log('I am animal');
+          }
+        </pre>
+      </code>
+    </p><br>
+
+    <p>
+      Якщо подивитись на об'єкт 'cat', то ми одразу побачимо в прототипі клас на основі якого був створений цей об'єкт: Animal {name: "Мурчик", age: 2, hasTail: true}, і якщо його розкрити, то тільки в кінці можна побачити прототип самого об'єкта __proto__: Object. Якщо і його далі розкрити, то ми зможемо побачити методи об'єкта 'cat': constructor: class Animal, voice: ƒ voice() і метод глобального класу Object __proto__: Object
+    </p><br>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          console.log(cat); // Animal {name: "Мурчик", age: 2, hasTail: true}
+        </pre>
+      </code>
+    </p><br>
+
+    <p>
+      Об'єкт 'cat', отримав усі властивості, які має клас 'Animal', ось виведемо ім'я та метод:
+    </p><br>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          console.log(cat.name); // Пушок
+          cat.voice(); // I am animal
+        </pre>
+      </code>
+    </p><br>
+
+    <p>
+      Далі, задамо статичну властивість 'type', яка буде належати тільки класу 'Animal' через використання слова 'static' і перевіримо це отримавши в консолі його значення, ось так:
+    </p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          class Animal {
+            static type = 'ANIMAL'
+            ....
+          }
+          console.log(Animal.type); // "ANIMAL"
+        </pre>
+      </code>
+    </p><br>
+
+    <p>
+      Створюємо новий клас 'Cat', на основі батьківського класу 'Animal', свого роду підклас основного класу. А для того щоб він успадкував усі властивості батьківського класу, додаємо слово extends, ось так:
+    </p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          class Cat extends Animal {};
+        </pre>
+      </code>
+    </p><br>
+    <p>
+      Додамо до класу 'Cat' статичну властивість 'type' із значенням 'CATS', а для перевірки успадкованих властивостей від класу 'Cat' створимо новий об'єкт 'catTwo' на основі класу 'Cat', який і успадкував усі властивості від батьківського класу 'Animal', ось так:
+    </p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          class Cat extends Animal {
+            static type = 'CATS'
+            constructor(options) ...
+            ...
+          }
+          const catTwo = new Cat({
+            name: 'Мурочка',
+            age: 2,
+            hasTail: true
+          });
+          
+          console.log(Cat.type); // CATS
+
+          console.log(catTwo.name); // Мурочка
+          console.log(catTwo.hasTail); // true
+        </pre>
+      </code>
+    </p><br>
+
+    <p>
+      А тепер додамо нову властивість в клас 'Сat', ця властивість має належати тільки цьому класу і задамо її одразу для об'єкта 'catTwo' як 'color' із значенням 'black'. Для цього необхідно додати метод конструктора 'constructor' та метод 'super', який викликає спочатку конструктор батьківського класу, а потім вже задає в совєму конструкторі нову властивість для цього класу, ось так:
+    </p> 
+    
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          class Cat extends Animal {
+            static type = 'CATS'
+            constructor(options) {
+              super(options)
+              this.color = options.color
+            }
+          };
+
+          const catTwo = new Cat({
+            name: 'Мурочка',
+            age: 2,
+            hasTail: true,
+            color: 'black' -> задаєм значення для нової властивості
+          });
+
+          // для перевірки:
+          console.log(catTwo);// Cat {name: "Мурочка", age: 2, hasTail: true, color: "black"}
+        </pre>
+      </code>
+    </p><br>
+
+    <p>
+      Класи дозволяють переписувати методи, які визначені в батьківському класі, тобто метод в дочірному класі перетирає метод який є в батьківському класі. Ось так:
+    </p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          class Cat extends Animal {
+            static type = 'CATS'
+            constructor(options) {
+              super(options)
+              this.color = options.color
+            }
+            voice() {
+              console.log('I am cat and say "Moor-miay" '); -> перезаписали метод
+            }
+          };
+          // для перевірки:
+          catTwo.voice(); // I am cat and say "Moor-miay"
+        </pre>
+      </code>
+    </p><br>
+
+    <p>
+      Але якщо нам все ж таки потрібен також і метод з батьківського класу, то ми можемо його отримати через впровадження слова 'super' через крапку назву того метода, який хочемо отримати. Ось так:
+    </p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          class Cat extends Animal {
+            static type = 'CATS'
+            constr...
+            ...
+            voice() {
+              super.voice() -> отримаєм метод з батьківського класу
+              console.log('I am cat and say "Moor-miay" '); -> перезаписали метод
+            }
+          };
+          // для перевірки:
+          catTwo.voice(); // I am animal; на другому рядку // I am cat and say "Moor-miayи
+        </pre>
+      </code>
+    </p><br>
+
+    <p>
+      При використанні get/set в класах, ми спочатку визначаємо ці методи, а потім звертаємось як до значень властивостей об'єкта (не як до методів). Ось так:
+    </p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          class Cat extends Animal {
+            static type = 'CATS'
+            constructor(options) {
+              super(options)
+              this.color = options.color
+            }
+
+            voice() {
+              super.voice()
+              console.log('I am cat and say "Moor-miay" ');
+            }
+
+            get ageInfo() { -> ми спочатку визначаємо метод get
+              return this.age * 7 
+            }
+    
+            set ageInfo(newAge) { -> тут визначаємо метод set
+              this.age = newAge
+            }
+          };
+    
+          // для перевірки:
+          console.log(catTwo.ageInfo); // 14 -> отримуємо значення через get
+
+          catTwo.ageInfo = 3; // -> змінюємо значення через set
+
+          console.log(catTwo.ageInfo); // 21 -> отримуємо змінене значення через get
+        </pre>
+      </code>
+    </p><br>
+    <br>
+
+    
+    <script>
+      
+      class Animal {
+        static type = 'ANIMAL'
+
+        constructor(options) {
+          this.name = options.name;
+          this.age = options.age;
+          this.hasTail = options.hasTail;
+        }
+        voice() {
+          console.log('I am animal');
+        }
+      }
+
+      const cat = new Animal({
+        name: 'Пушок',
+        age: 4,
+        hasTail: true
+      });
+
+      console.log(cat.name); // Пушок
+      cat.voice(); // I am animal
+
+      class Cat extends Animal {
+        static type = 'CATS'
+        constructor(options) {
+          super(options)
+          this.color = options.color
+        }
+        voice() {
+          super.voice()
+          console.log('I am cat and say "Moor-miay" ');
+        }
+        get ageInfo() {
+          return this.age * 7
+        }
+
+        set ageInfo(newAge) {
+          this.age = newAge
+        }
+      };
+
+      const catTwo = new Cat({
+        name: 'Мурочка',
+        age: 2,
+        hasTail: true,
+        color: 'black'
+      });
+      
+      console.log(Cat.type); // CATS
+
+      console.log(catTwo.name); // Мурочка
+      console.log(catTwo.hasTail); // true
+
+      console.log(catTwo);// Cat {name: "Мурочка", age: 2, hasTail: true, color: "black"}
+
+      catTwo.voice(); // I am animal; на другому рядку // I am cat and say "Moor-miay
+
+      console.log(catTwo.ageInfo); // 14
+
+      catTwo.ageInfo = 3;
+
+      console.log(catTwo.ageInfo); // 21
+    </script>
+  </body>
+</html>
