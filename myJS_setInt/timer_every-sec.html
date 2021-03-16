@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>myjs-arrays: -</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .title {
+        color: red;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: larger;
+        font-weight: 700;
+        margin-left: 95px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Advanced functions: exercise setTimeout/setInterval</h2>
+
+    <h4 class="task">
+      Напишіть функцію, яка буде виводити кожної секунди в консоль цифри починаючи від 1 і далі. Тобто, виводиться 1, через 1 секунду 2, через секунду 3 і т. д.<br>
+    </h4>
+
+    <p><b>Рішення</b>:</p><br>
+
+    <p>Для рішення завдання використоаєм рекурсивний виклик setTimeout<br>
+      Ось так:
+    </p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          const func = () => {
+            //   setTimeout(() => func(), 1000);
+            // }
+            // func();
+        </pre>
+      </code>
+    </p>
+
+    <p>Але більш простий метод, через setInterval, ось так:</p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          const func = () => {
+            let i = 1;
+            setInterval(() => {
+              console.log(i);
+              i++;
+            }, 1000);
+          }
+
+          func();
+        </pre>
+      </code>
+    </p><br>
+
+    <h4 class="task">
+      Ускладнимо завдання. Напишіть функцію, яка буде виводити кожної секунди в консоль цифри від 1 і далі, але вивід наступного числа повинен відбуватись із збільшенням затримки починаючи з 10 мілісекунд? Тобто виводиться число 1, далі виводиться через 20 мілісекунд число 2, далі через 30 мілісекунд число 3 і т. д.
+    </h4>
+
+    <p>Для рішення завдання використоаєм так само setTimeout<br>
+      Ось так:
+    </p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          const func = () => {
+            let a = 1;
+            console.log(a);
+            a += 1;
+            setTimeout(() => func(), 1000 + a * 10);
+          }
+          func();
+        </pre>
+      </code>
+    </p>
+
+    <p>Але тут як варіанд можливо забезпечити модульність і використати setTimeout<br>
+      Ось так:
+    </p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          const func = (n = 1) => {
+            console.log(n);
+            setTimeout(() => func(n + 1), 1000 + n * 10);
+          }
+          func();
+        </pre>
+      </code>
+    </p>
+
+    <script>
+      // const func = () => {
+      //   setTimeout(() => func(), 1000);
+      // }
+      // func();
+      // =====================================
+      // const func = () => {
+      //   let i = 1;
+      //   setInterval(() => {
+      //     console.log(i);
+      //     i++;
+      //   }, 1000);
+      // }
+      // func();
+      // =====================================
+      // const func2 = () => {
+      //   let a = 1;
+      //   console.log(a);
+      //   a += 1;
+      //   setTimeout(() => func2(), 1000 + a * 10);
+      // }
+      // func2();
+      // =====================================
+      // const func3 = (n = 1) => {
+      //   console.log(n);
+      //   setTimeout(() => func3(n + 1), 1000 + n * 10);
+      // }
+      // func3();
+    </script>
+  </body>
+</html>
