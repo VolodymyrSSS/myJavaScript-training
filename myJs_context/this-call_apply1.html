@@ -166,6 +166,8 @@
  
     <script>
 
+      console.log(this === window); // trues
+
       function f2(){
         "use strict";
           return this;
@@ -199,6 +201,22 @@
       console.log(add.call(o, 5, 7)); // 16
 
       console.log(add.apply(o, [10, 20])); // 34
+      
+      // ==========================
+
+      const foo = {
+          a : 1,
+          bar() { 
+            return this.a
+          }
+      }
+
+      const x = foo.bar;
+
+      const y = x.bind(foo);
+
+      console.log(y());
+
 
     </script>
   </body>

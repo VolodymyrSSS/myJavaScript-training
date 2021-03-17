@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>myjs-arrays: Methods split, sort, join</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .title {
+        color: red;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: larger;
+        font-weight: 700;
+        margin-left: 95px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">ARRAYS, arrays_methods: split, sort, join</h2>
+
+    <h4 class="task">
+      В нас є слово-вирази які містять в собі одинакові букви, але букви розташовані в різному порядку; а є такі, які мають різні букви. Також в нас є слово-вирази, які містять різну кількість букв. Потрібно визначити ті слововирази, які мають одинакову кількість букв і містять одинакові букви незважаючи на їх порядок.<br>
+    </h4>
+
+    <p class="code-ex"><br>
+      Вихідні дані:<br>
+      <code><br>
+        dog dgo -> true<br>
+        dog dfo -> false<br>
+        doog ddog -> false<br>
+        <br>
+      </code>
+  </p><br>
+
+    <p><b>Рішення</b>:</p><br>
+
+    <p>Для рішення завдання використоаєм метод split() який розіб'є слово-вирази з пробільним розподільником.<br>
+      Потім нам їх потрібно відсортувати для того щоб мати одинакову послідовність. Це можна зробити методом sort().<br> 
+      І далі вивести строгим порівнянням посортовані букви перевівши їх назад з елемента масива в букви методом join().<br>
+      Ось так:
+    </p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          const isSame = (s1, s2) => {
+            const letters1 = s1.split('').sort();
+            const letters2 = s2.split('').sort();
+    
+            if(letters1.length !== letters2.length) {
+              return false;
+            }
+    
+            return letters1.join() === letters2.join();
+          }
+    
+          console.log(isSame('dog', 'dgo')); // true
+          console.log(isSame('dog', 'dfo')); // false
+          console.log(isSame('doog', 'ddgo')); // false
+        </pre>
+      </code>
+    </p>
+    
+    <script>
+      const isSame = (s1, s2) => {
+        const letters1 = s1.split('').sort();
+        const letters2 = s2.split('').sort();
+
+        if(letters1.length !== letters2.length) {
+          return false;
+        }
+
+        return letters1.join() === letters2.join();
+      }
+
+      console.log(isSame('dog', 'dgo')); // true
+      console.log(isSame('dog', 'dfo')); // false
+      console.log(isSame('doog', 'ddgo')); // false
+      
+    </script>
+  </body>
+</html>
