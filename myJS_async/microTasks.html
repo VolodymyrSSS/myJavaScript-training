@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Tasks-MicroTasks</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      pre2 {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: larger;
+        font-weight: 700;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Understanding of Tasks-Microtasks</h2>
+
+    <h4 class="task">
+      Що буде виведено за чим і в якій послідовності?<br>
+      <br>
+    </h4>
+    
+
+    <p>
+      <code>
+        <pre>
+          console.log('script Starts');
+
+          setTimeout(function(){
+            console.log('setTimeout is working');
+          }, 0);
+
+          Promise.resolve().then(function() {
+            console.log('promise1');
+          }).then(function() {
+            console.log('promise2');
+          });
+          
+          console.log('script Ends');
+        </pre>
+      </code>
+    </p><br>
+
+    <p><b>Відповідь</b>:</p><br>
+    <br>
+    <p>
+      Функція - найвагоміша концепція JavaScript, представляє собою спеціальний тип об'єктів, який дозволяє формалізувати певну логіку поведінки і обробки даних.
+      Інформація про процес виконання запущеної функції зберігається в її контексті виконання - execution context. Контекст виконання - спеціальна внутрішня структура даних, яка містить дані про виклик функціЇ: конкретне місце в коді, локальні змінні, ключове слово  this. Один виклик функції має рівно один контекст виконання.<br>
+      Коли будь-яка функція виконується, то пов'язаний з нею контекст виконання запам'ятовується в спеціальній структурі даних - стеці контекстів виконання.<br>
+      У разі, якщо є декілька функцій, то послідовність їх виконання здійснюється за принципом 'перша викликана перша виконується'. <br>
+      <br>
+      А, якщо функція містить в собі ще функції, то коли функція виконує вкладений виклик, відбувається наступне:<br>
+      виконання поточної функції припиняється;<br>
+      пов'язаний з нею контекст виконання, запам'ятовується в стеці контекстів виконання;<br>
+      виконуються вкладені виклики, для кожного з яких створюється свій контекст виконання;<br>
+      після їх завершення старий контекст дістається з стека, і виконання зовнішньої функції поновлюється з того місця, де вона була зупинена.<br>
+      Отже, послідовність виконання в даній задачі буде така:<br>
+    </p><br><br>
+
+    <p>Спочатку виконається перший console.log - вбудована внутрішня функція в JS.
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          console.log('script Starts');
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Далі виконається дргуга функція - другий console.log
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          console.log('script Ends');
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Потім Проміси, з яких першим - перший проміс, другим - другий проміс.<br>
+      Це є виконання асинхронних задач бо обробники промісів .then/.catch/.finally завжди асинхронні. Через те, що в нас є 2 проміса, необхідно зазначити про поняття внутрішньої черги, більш відомої як 'черга мікрозадач' (microtask queue). Проміс, який потрапив у внутрішню чергу першим, буде також виконаний першим.<br>
+      Інакше кажучи, коли проміс виконаний, його обробники .then/catch/finally попадають в чергу. Вони поки не виконуються. Двигун JavaScript бере задачу з черги і виконує її, і коли він звільниться від виконання поточного коду, бере з черги наступну задачу і виконує її.<br>
+      Обробники промісів завжди проходять через внутрішню чергу. Якщо є ланцюжок з декількох .then/catch/finally, то кожний виконається асинхронно. Тобто спочатку поміщається у внутрішню чергу, а потім виконується, коли виконання поточного коду звершено і додані раніше в чергу обробники також виконані.<br> 
+      Ось чому першими будуть виконані console.log, а потім проміси.
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          console.log('promise1');
+
+          console.log('promise2');
+        </pre>
+      </code>
+    </p><br>
+
+    <p>
+      І останнім буде виконаний setTimeout як сторонній Web API. Це є також виконання асинхроної задачі.<br>
+      Тут необхідно зазначити, що хоча він іде другим за списком, але після його виклику він реєструється в стеці викликів, визначає, що функція setTimeout є стороннім кодом, поміщає його для виконання в сторонню Web API, яка виконуючи setTimeout і поміщає його у внутрішню чергу. Після того як в стеці завершиться виконання поточний код (задача), в нього буде переміщений код (підзадача) з внутрішньої черги.
+    </p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          console.log('setTimeout is working');
+        </pre>
+      </code>
+    </p><br>
+
+    <script>
+      
+    </script>
+  </body>
+</html>
