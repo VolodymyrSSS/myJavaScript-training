@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Using try..catch and finally</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .emph2 {
+        color: navy;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: larger;
+        font-weight: 700;
+        margin-left: 95px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">try..catch: using <span class="emph">try..catch and finally</span></h2>
+
+    <h4 class="task">
+      Змоделюємо ситуацію, ми хочемо заміряти час, який буде у результаті дії функції чисел Фібоначчі fib(n). Ми можемо починаємо вимірювання до того, як функція почне виконуватися і закінчити після. Але що робити, якщо при виконанні функції виникла помилка? Зокрема, реалізація fib(n) в коді нижче повертає помилку для негативних і для нецілих чисел?
+    </h4>
+
+    <p class="code-ex"><br>
+      Вихідні дані:<br>
+      <code><br>
+        let num = +prompt("Введіть позитивне ціле число?", 35)<br>
+        <br>
+        let diff, result;<br>
+        <br>
+        function fib(n) {<br>
+          &nbsp if (n < 0 || Math.trunc(n) != n) {<br>
+          &nbsp  throw new Error("Повинно бути ціле невідємне число");<br>
+          }<br>
+          &nbsp return n <= 1 ? n : fib(n - 1) + fib(n - 2);<br>
+        }<br>
+        <br>
+        let start = Date.now();<br>
+        result = fib(num);<br>
+        diff = Date.now() - start;<br>
+        <br>
+        console.log (result || "виникла помилка");<br>
+        <br>
+        console.log (`Виконання заняло ${diff}ms`);<br>
+        <br>
+      </code>
+  </p><br>
+
+    <p><b>Рішення</b>:</p><br>
+
+    <p>Як ми знаємо, конструкція try..catch може містити ще одну секцію: finally.<br>
+      Якщо ця секція є то вона виконається в любому випадку: чи після try, якщо не було помилок, чи після catch, якщо були помилки. Це можна переглянути на дії цього коду:
+      <br>
+    </p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          try {
+            alert( 'try' );
+            if (confirm('Згенерувати помилку?')) BAD_CODE();
+          } catch (e) {
+            alert( 'catch' );
+          } finally {
+            alert( 'finally' );
+          }
+        </pre>
+      </code>
+    </p>
+
+    <p>Якщо ми підтвердимо запитання 'Згенерувати помилку?' то відпрацюють alert-и в такій послідовності: try -> catch -> finally;<br>
+      якщо ми відхилимо запитання 'Згенерувати помилку?' то відпрацюють alert-и в такій послідовності: try -> finally;<br>
+      <br>
+      Крім того, конструкція try..finally без секції catch також корисна. Ми застосовуємо її, коли не хочемо тут обробляти помилки (нехай випадуть), але хочемо бути впевнені, що розпочаті процеси закінчились. У наведеному нище коді помилка завжди випадає назовні, тому що таким немає блоку catch. Але finally відпрацьовує до того, як потік управління вийде з функції, ось:
+    </p><br>
+    <br>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          function func() {
+            // почати робити щось, що потребує завершення (наприклад, заміри чогось)
+            try {
+              // ...
+            } finally {
+              // закінчити це, навіть якщо все 'впаде'
+            }
+          }
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Блок finally спрацьовує при будь-якому виході з try..catch, в тому числі і return.
+      У прикладі нижче з try відбувається return, але finally отримує управління до того, як контроль повертається в зовнішній код:
+    </p><br>
+    <br>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          function func() {
+
+            try {
+              return 1;
+          
+            } catch (e) {
+              /* ... */
+            } finally {
+              alert( 'finally' );
+            }
+          }
+          
+          alert( func() ); // спочатку спрацює alert з finally, а потім цей код
+        </pre>
+      </code>
+    </p><br>
+
+
+    <p>
+      Секцію finally часто використовують, коли ми почали щось робити і хочемо завершити це незалежно від того, буде помилка чи ні. Отже, для вирішення нашого завдання повністю підійде конструкція try..catch..finallyи, ось так:
+    </p><br>
+
+      <p class="code-ex" style="width: 70%">
+        <code>
+          <pre>
+            let num = +prompt("Введіть позитивне ціле число?", 35)
+
+            let diff, result;
+
+            function fib(n) {
+              if (n < 0 || Math.trunc(n) != n) {
+                throw new Error("Повинно бути ціле невід'ємне число");
+              }
+              return n <= 1 ? n : fib(n - 1) + fib(n - 2);
+            }
+
+            let start = Date.now();
+
+            try {
+              result = fib(num);
+            } catch (e) {
+              result = 0;
+            } finally {
+              diff = Date.now() - start;
+            }
+
+            console.log (result || "виникла помилка");
+
+            console.log (`Виконання заняло ${diff}ms`);
+          </pre>
+        </code>
+      </p><br>
+
+      <p>Тут в дійсності неважливо як завершилася функція: через return або throw. Секція finally спрацьовує в обох випадках.
+      Зверніть увагу, що змінні result і diff в коді вище оголошені до try..catch. Якщо змінну оголосити в блоці, наприклад, в try, то вона не буде доступна після цього.
+      </p><br>
+      <br>
+
+    <script>
+
+      let num = +prompt("Введіть ціле позитивне число?", 35)
+
+      let diff, result;
+
+      function fib(n) {
+        if (n < 0 || Math.trunc(n) != n) {
+          throw new Error("Повинно бути ціле невід'ємне число");
+        }
+        return n <= 1 ? n : fib(n - 1) + fib(n - 2);
+      }
+
+      let start = Date.now();
+
+      try {
+        result = fib(num);
+      } catch (e) {
+        result = 0;
+      } finally {
+        diff = Date.now() - start;
+      }
+
+      console.log(result || "виникла помилка");
+
+      console.log(`Виконання зайняло ${diff}ms`);
+
+    </script>
+  </body>
+</html>

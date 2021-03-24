@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Using try..catch with json</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .emph2 {
+        color: navy;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: larger;
+        font-weight: 700;
+        margin-left: 95px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">try..catch: using <span class="emph">try..catch with json</span></h2>
+
+    <h4 class="task">
+      Змоделюємо ситуацію, коли ми з сервера отримуємо якісь дані у вигляді json-рядка.<br>
+      Якщо все добре, то через метод parse - ми повинні отримати JS-об'єкт, який нам дасть можливість отримати властивості цього об'єкта та працювати з ними далі.<br>
+      Але, якщо сталась помилка, то код може завалитись, а тому використайте конструкцію try..catch для того, щоб дізнатись про помилку, вивести її в консоль та продивитись усі деталі цієї помилки?<br>
+    </h4>
+
+    <p class="code-ex"><br>
+      Вихідні дані:<br>
+      <code><br>
+        let json = '{"name":"John", "age": 30}'; // дані з сервера<br>
+        <br>
+        let user = JSON.parse(json); // перетворили в JS-об'єкт з json-рядка<br>
+        <br>
+        // тепер user - JS-об'єкт<br>
+        console.log( user.name ); // John<br>
+        console.log( user.age );  // 30<br>
+        <br>
+        // що буде коли ми отримали помилку з json-рядка ?<br>
+        <br>
+        let json = "{ некоректний JSON }"; // !?<br>
+        <br>
+      </code>
+  </p><br>
+
+    <p><b>Рішення</b>:</p><br>
+
+    <p>Необхідно зазначити, що JavaScript-двигун спочатку читає код, а потім виконує його. І під час фази читання коду, помилки, які виникають, називають помилками парсінга. Їх код не може обробити (з середини коду) бо двигун не розуміє код. <span class="emph2"><em>Тому try..catch ловить тільки помилки, які виникають під час виконання коду</em></span>! Тобто, конструкція try..catch не спрацює коли код синтаксично не правильний. Також, через те, що конструкція try..catch працює синхронно, помилки, які можуть статись в коді запланованому «на майбутнє», наприклад в setTimeout, try..catch не зрозуміє, а тому потрібно try..catch перемістити всередину самої функції setTimeout.<br>
+    <br>
+    Отже, при використанні try..catch, спочатку виконується код всередині блоку try {...}.<br>
+    Якщо в ньому не має помилок, то блок catch(err) ігнорується: виконання доходить до кінця try і потім далі, повністю пропускаючи catch.<br>
+    Якщо в ньому виникає помилка, то виконання try преривається, і потік управління переходить на початок блоку catch(err). Змінна err (можна використовувати будь-яке ім'я) містить об'єкт помилки з деталями помилки.<br>
+    <br>
+    Для усіх вбудованих помилок, цей об'єкт (об'єкт помилки) має дві основні властивості:<br>
+    -  name - ім'я помилки. Наприклад для невизначеної змінної помилка буде "ReferenceError".<br>
+    -  message - текстове повідомлення про деталі помилки.<br>
+    Крім того серед широко вживаних:<br>
+    -  можна просто вивести усю помилку цілком, тобто вона буде показана типу "name: message"<br>
+    -  stack - поточний стек виклику: рядок, який містить інформацію про послідовність вкладених викликів, які призвели до помилки. Використовується в цілях відлагодження коду в цілому. <br>
+    <br>
+      Ось так:
+    </p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          try {
+            let user = JSON.parse(json); // <-- тут виникла помилка ...
+            console.log( user.name ); // не спрацює
+          } catch (err) {
+            // ...виконання перескакує сюди
+            console.log( "Sorry, we have got NOT correct data, we would try again" );
+            console.log( err.name ); // SyntaxError
+            console.log( err.message ); // Unexpected token н in JSON at position 2
+            console.log( err ); // SyntaxError: Unexpected token н in JSON at position 2
+            console.log( err.stack ); // SyntaxError: Unexpected token н in JSON at position 2 
+                                          at JSON.parse 
+                                          at try-catch.html
+          }
+        </pre>
+      </code>
+    </p>
+
+    <p>Тут ми використовуємо блок catch тільки для виведення повідомлення, але ми також можемо зробити набагато більше: відправити новий запит в мережу, запропонувати відвідувачеві альтернативний спосіб, відіслати інформацію про помилку на сервер для логування, створити свою власну помилку, і т. д.</p><br>
+    <br>
+
+    <script>
+      
+      // let json = '{"name":"John", "age": 30}'; // данные с сервера
+
+      // let user = JSON.parse(json); // преобразовали текстовое представление в JS-объект
+
+      // // теперь user - объект со свойствами из строки
+      // console.log( user.name ); // John
+      // console.log( user.age );  // 30
+
+      let json = "{ некоректний JSON }";
+
+      try {
+        let user = JSON.parse(json); // <-- тут возникает ошибка...
+        console.log( user.name ); // не сработает
+      } catch (err) {
+        // ...выполнение прыгает сюда
+        console.log( "Sorry, we have got NOT correct data, we would try again" );
+        console.log( err.name );
+        console.log( err.message );
+        console.log( err );
+        console.log( err.stack );
+      }
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Using try..catch with outer try..catch</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .emph2 {
+        color: navy;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: larger;
+        font-weight: 700;
+        margin-left: 95px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">try..catch: using <span class="emph">try..catch with outer try..catch</span></h2>
+
+    <h4 class="task">
+      Змоделюємо ситуацію, коли ми з сервера отримуємо якісь дані у вигляді json-рядка.<br>
+      Якщо все добре, то через метод parse - ми повинні отримати JS-об'єкт, який нам дасть можливість отримати властивості цього об'єкта та працювати з ними далі.<br>
+      Також, ми передбачили обробку помилок, коли дані є неповні.<br>
+      А що, якщо виникає крім тієї ще і інша помилка в блоці try ? Наприклад, програмна (невизначена змінна) або якась ще, а не помилка, пов'язана з некоректними даними. Як її зловити ?
+    </h4>
+
+    <p class="code-ex"><br>
+      Вихідні дані:<br>
+      <code><br>
+        function readData() {<br>
+          // let json = '{"name":"John", "age": 30}';<br>
+          let json = '{ "age": 30 }'; // тут дані не повні - немає імені<br>
+          <br>
+            try {<br>
+              <br>
+              let user = JSON.parse(json); // <-- виконається без помилки<br>
+              <br>
+              if (!user.name) {<br>
+                &nbsp throw new SyntaxError("Дані неповні: немає імені");<br>
+              }<br>
+              <br>
+              blabla(); // зненацька інша помилка!!!<br>
+              <br>
+              console.log( user.name );<br>
+              <br>
+            } catch(err) {<br>
+              &nbsp console.log( "JSON Error: " + err.message ); // JSON Error: Дані неповні: немає імені}<br>
+        }<br>
+        <br>
+      </code>
+  </p><br>
+
+    <p><b>Рішення</b>:</p><br>
+
+    <p>За своєю природою catch отримує всі свої помилки з try. А тут він отримує несподівану помилку, але все також показує те ж саме повідомлення "JSON Error". Це неправильно бо є помилка та і ускладнює налагодження коду в подальшому.
+    <br>
+    Згадаємо, щоб визначити, яку помилку ми отримуємо, ми використовуємо конструкцію try..catch по її властивості name, ось так:<br>
+    </p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          try {
+            user = { /*...*/ };
+          } catch(err) {
+            console.log(err.name);
+          }
+        </pre>
+      </code>
+    </p>
+
+    <p>Але вернемось до нашого випадку, і як нам отримати іншу помилку, яка зненацька виникла, але блок  catch знає як обробляти тільки ті, які ми описали та стандартні і не знає як обробляти ту - іншу помилку.<br>
+    І тому є просте правило: <span class="emph2"><em>блок catch повинен обробляти тільки ті помилки, які йому відомі, і «прокидати» всі інші</em></span>. А прокидаємо ми за допомогою оператора throw в блоці catch, ось так:
+    </p><br>
+    <br>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          function readData() {
+            let json = '{ "age": 30 }'; // тут дані не повні, немає імені
+          
+            try {
+              if (!user.name) {
+                throw new SyntaxError("Дані неповні: немає імені");
+              }
+
+              blabla(); // зненацька інша помилка!!!
+
+              
+            } catch (err) {
+              // ...
+              if (err.name != 'SyntaxError') {
+                throw err; // тут прокидується помилка/виключення бо не знає як її обробити
+              }
+            }
+          }
+        </pre>
+      </code>
+    </p><br>
+
+    <p>
+      Але що далі?<br>
+      Помилка, яка обробляється оператором throw блока catch 'випадає назовні' і може бути спіймана іншою зовнішньою конструкцією try..catch (якщо є така), чи завалить скрипт.
+      Отже, остаточне рішення буде мати такий вигляд:
+      </p><br>
+      <br>
+
+      <p class="code-ex" style="width: 70%">
+        <code>
+          <pre>
+            function readData() {
+              let json = '{"name":"John", "age": 30}';
+
+              try {
+                let user = JSON.parse(json);
+  
+                if (!user.name) {
+                  throw new SyntaxError("Дані неповні: немає імені");
+                }
+  
+                blabla(); // зненацька помилка!!!
+  
+                console.log( user.name );
+  
+              } catch(err) {
+                if (err.name == "SyntaxError") {
+                  console.log( "JSON Error: " + err.message );
+                } else {
+                  throw err; // прокидання помилки/виключення назовні
+                }
+              }
+            }
+            
+            try {
+              readData();
+            } catch (err) {
+              console.log( "Зовнішній catch спіймав: " + err ); // Зовнішній catch спіймав: ReferenceError: blabla is not defined
+            }
+          </pre>
+        </code>
+      </p><br>
+
+      <p>
+        Тут readData знає тільки, як обробити SyntaxError, тоді як зовнішній блок try..catch знає, як обробити все.
+      </p><br>
+
+      <p>
+        Давайте уявимо, що сталася фатальна помилка (програмна або щось ще жахливіше) зовні try..catch, і скрипт впав.<br>
+        Чи існує спосіб відреагувати на такі ситуації? Ми можемо захотіти показати щось користувачеві (зазвичай вони не бачать повідомлення про помилку)  і т.д.<br>
+        Такого способу немає в специфікації, але зазвичай середовища надають його, тому що це дуже корисно. Наприклад, в браузері ми можемо присвоїти функцію спеціальним властивості window.onerror, яка буде викликана в разі необробленої помилки.<br>
+        <br>
+        Синтаксис такий:<br>
+        window.onerror = function(message, url, line, col, error) {<br>
+          &nbsp// ...<br>
+        }; <br>
+        <br>
+        де message - повідомлення про помилку;<br>
+        url - URL скрипта, в якому сталася помилка;<br>
+        line, col - Номери рядка і стовпця, в яких сталася помилка;<br>
+        error - об'єкт помилки;<br>
+        Роль глобального обробника window.onerror зазвичай полягає не у відновленні виконання скрипта - це швидше за все неможливо в разі програмної помилки, а у відправці повідомлення про помилку розробникам.<br>
+        Приклад використання:<br>
+      </p>
+
+      <p class="code-ex" style="width: 70%">
+        <code>
+          <pre>
+            window.onerror = function(message, url, line, col, error) {
+              &nbsp alert(`${message}\n В ${line}:${col} на ${url}`);
+            };
+          
+            function readData() {
+              &nbsp badFunc(); // Ой, щось пішло не так!
+            }
+          
+            readData();
+          </pre>
+        </code>
+      </p><br>
+
+      <p>Навіть якщо у нас немає try..catch, більшість середовищ дозволяють налаштувати «глобальний» обробник помилок, щоб ловити помилки, які «випадають назовні». У браузері це window.onerror.</p><br>
+      <br>
+
+    <script>
+
+      function readData() {
+        let json = '{"name":"John", "age": 30}';
+        try {
+          let user = JSON.parse(json);
+          if (!user.name) {
+            throw new SyntaxError("Дані неповні: немає імені");
+          }
+          blabla(); // зненацька інша помилка!!!
+          console.log( user.name );
+        } catch(err) {
+          if (err.name == "SyntaxError") {
+            console.log( "JSON Error: " + err.message );
+          } else {
+            throw err; // прокидання помилки/виключення назовні
+          }
+        }
+      }
+      
+      try {
+        readData();
+      } catch (err) {
+        console.log( "Зовнішній catch спіймав: " + err ); // Зовнішній catch спіймав: ReferenceError: blabla is not defined
+      }
+
+    </script>
+  </body>
+</html>

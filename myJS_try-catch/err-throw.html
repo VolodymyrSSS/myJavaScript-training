@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Using try..catch and throw</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .emph2 {
+        color: navy;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: larger;
+        font-weight: 700;
+        margin-left: 95px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">try..catch: using <span class="emph">try..catch and throw</span></h2>
+
+    <h4 class="task">
+      Змоделюємо ситуацію, коли ми з сервера отримуємо якісь дані у вигляді json-рядка.<br>
+      Якщо все добре, то через метод parse - ми повинні отримати JS-об'єкт, який нам дасть можливість отримати властивості цього об'єкта та працювати з ними далі.<br>
+      Але, якщо дані в json-рядку передані правильно, проте відсутня якась частина даних і для нас це є помилка! Тобто ми використовуємо конструкцію try..catch для того, щоб відловити помилку але ми її не отримуємо бо консрукція не ловить таку помилку.<br>
+      Створіть свою помилку, щоб на ряду із вбудованими помилками, ловилась і ця.<br>
+    </h4>
+
+    <p class="code-ex"><br>
+      Вихідні дані:<br>
+      <code><br>
+        let json = '{"name":"John", "age": 30}'; // дані з сервера<br>
+        <br>
+        let user = JSON.parse(json); // перетворили в JS-об'єкт з json-рядка<br>
+        <br>
+        // тепер user - JS-об'єкт<br>
+        console.log( user.name ); // John<br>
+        console.log( user.age );  // 30<br>
+        <br>
+        // як отримати помилку коли json-рядок правельний але не має усіх даних ?<br>
+        <br>
+        let json = '{ "age": 30 }'; // дані неповні - немає імені<br>
+        <br>
+        user.name -- не маємо цієї властивості в об'єкті<br>
+        <br>
+      </code>
+  </p><br>
+
+    <p><b>Рішення</b>:</p><br>
+
+    <p>Технічно, в якості об'єкта помилки можна передавати що завгодно. Це може бути навіть примітив, число чи слово-вираз, але краще, щоб це був об'єкт, бажано з властивостями name та message для сумісності з вбудованими об'єктами помилки.<br>
+    Отже можна використовувати і їх для створення власного об'єкта помилки.
+    <br>
+    В JavaScript є безліч вбудованих конструкторів для стандартних помилок: Error, SyntaxError, ReferenceError, TypeError і інші. Ось синтаксис деяких:<br>
+    let error = new Error(message);<br>
+    let error = new SyntaxError(message);<br>
+    let error = new ReferenceError(message);<br>
+    // ...<br>
+    <br>
+    Для вбудованих помилок (підкреслимо, тільки для помилок!), властивість name – це в точності ім'я конструктора, а властивість message береться з аргумента конструктора.<br>
+    <br>
+      Ось так:
+    </p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          let error = new Error(" Ого, є помилка! o_O");
+
+          alert(error.name); // Error
+          alert(error.message); //  Ого, є помилка! o_O
+        </pre>
+      </code>
+    </p>
+
+    <p>Але вернемось до нашого випадку, відсутність властивості name - це помилка, адже користувачі повинні мати імена. З досвіду та практики використання конструкції try..catch можна виявити, шр така помилка відноситься до SyntaxError (наприклад використавши в блоці catch(err)метод err.name).<br>
+    Зауважимо, що для створення власної помилки, її потрібно генерувати в блоці try, бо саме тут не ловиться помилка. А для генерації помилки як такої, будемо використовувати оператор throw < об'є'кт помилки >. І щоб її згенерувати, можна використати оператор if, задавши умову, якщо відсутнє поле з іменем, то генерувати помилку, ось так:
+    </p><br>
+    <br>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          if (!user.name) {
+            throw new SyntaxError("Дані неповні: немає імені");
+          }
+        </pre>
+      </code>
+    </p><br>
+
+    <p>
+      Таким чином, оператор throw генерує помилку SyntaxError з повідомленням message. Точно такого ж виду, як генерує сам JavaScript.<br>
+      Отже, остаточне рішення буде таким:
+      </p><br>
+      <br>
+
+      <p class="code-ex" style="width: 70%">
+        <code>
+          <pre>
+            let json = '{ "age": 30 }'; // тут дані неповні
+
+            try {
+
+              let user = JSON.parse(json); // <-- виконається без помилки
+
+              if (!user.name) {
+                throw new SyntaxError("Дані неповні: немає імені");
+              }
+
+              console.log( user.name );
+
+            } catch(err) {
+              console.log( "JSON Error: " + err.message ); // JSON Error: Дані неповні: немає імені
+            }
+          </pre>
+        </code>
+      </p><br>
+
+      <p>
+        І в цьому випадку, виконання блоку try негайно зупиняється, і потік управління стрибає в catch.
+        Тепер блок catch стає єдиним місцем для обробки всіх помилок: і для JSON.parse і для інших випадків.
+        </p><br>
+        <br>
+
+    <script>
+      
+      // let json = '{"name":"John", "age": 30}'; // данные с сервера
+
+      // let user = JSON.parse(json); // преобразовали текстовое представление в JS-объект
+
+      // // теперь user - объект со свойствами из строки
+      // console.log( user.name ); // John
+      // console.log( user.age );  // 30
+
+      let json = '{ "age": 30 }'; // дані неповні
+
+      try {
+
+        let user = JSON.parse(json); // <-- виконається без помилки
+
+        if (!user.name) {
+          throw new SyntaxError("Дані неповні: немає імені");
+        }
+
+        console.log( user.name );
+
+      } catch(err) {
+        console.log( "JSON Error: " + err.message ); // JSON Error: Дані неповні: немає імені
+      }
+
+    </script>
+  </body>
+</html>
