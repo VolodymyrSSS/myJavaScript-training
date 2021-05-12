@@ -12,19 +12,14 @@
         font-family: Verdana, sans-serif;
       }
 
-      .title {
+      .emph {
         color: red;
-        text-align: center;
-        font-weight: 700;
       }
 
-      .code-ex {
-        width: 50%;
-        font-family: sans-serif;
-        background-color: #bebebe;
-        font-size: large;
-        padding-left: 15px;
-        margin: 0 auto;
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
       }
 
       .task {
@@ -33,6 +28,23 @@
         color: navy;
         background-color: #e2e2e2;
         margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
       }
 
       .code-ex {
@@ -44,28 +56,17 @@
         padding-left: 15px;
         margin: 0 auto;
       }
-
-      p {
-        width: 80%;
-        margin: 0 auto;
-      }
-
-      pre {
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: larger;
-        font-weight: 700;
-      }
     </style>
   </head>
 
   <body>
-    <h2 class="title">Closure</h2>
+    <h2 class="title">The essence of  <span class="emph"> closure</span></h2>
 
     <h4 class="task">
       Що буде виведено в консолі при запуску цієї функції?<br>
     </h4>
 
-    <p class="code-ex">
+    <p>
       <code>
         <pre>
           function createCalcFunction(n){
@@ -83,21 +84,46 @@
       </code>
   </p><br>
 
-    <p><b>Відповідь</b>:</p>
+    <p><b>Відповідь: </b></p><br>
 
-    <p>Замикання - це комбінація функції і лексичного оточення, в якому ця функція була визначена (створена).<br>
-      Іншими словами, це функція в функції, або замикання дає вам доступ до Scope зовнішньої функції з внутрішньої функції.</p>
+    <p>Замикання - це функція в функції або це доступ до Scope зовнішньої функції з внутрішньої функції. Це комбінація функції і лексичного оточення, в якому ця функція була визначена (створена).
+    </p>
 
-    <p class="code-ex" style="width: 70%">
+    <p>
+      При виклику функції createCalcFunction(4), зовнішня функція тільки 'замкнула' цифру 4, а її результат роботи - це внутрішня функція яка ще не викликана. Тому на цьому етапі нічого не маємо:
+    </p>
+    
+    <p class="code-ex">
       <code>
         <pre>
-          createCalcFunction(4); // Нічого. Тут зовнішня функція тільки 'замкнула' цифру 4, а її результат роботи - це внутрішня функція яка ще не викликана.
-          console.log(calc); // тільки тіло внутрішньої функції - ƒ () {console.log(1000 * n)}
-          calc(); // результат роботи внутрішньої функції - 4000, яка має доступ до зовнішньої змінної n.
+          createCalcFunction(4) // Нічого
         </pre>
       </code>
+    </p><br>
+
+    <p>Далі ми створюємо нову функцію 'calc' та присвоюємо їй результат роботи createCalcFunction(4), що має значенням тільки тіло внутрішньої функції (не її виклик). Тобто вкладена функція є результатом роботи 'createCalcFunction', але вона все ще не викликана. Можна написати таку рівність:<br>
+      <b><i>const calc = function() {console.log(1000 * n)}</i></b>
     </p>
-    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          console.log(calc); // тільки тіло: function() {console.log(1000 * n)}
+        </pre>
+      </code>
+    </p><br>
+
+    <p>І тільки викликавши функцію calc(); ми зможемо отримати результат роботи внутрішньої функції, яка має доступ до зовнішньої змінної 4, ось так:
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          calc(); // 4000
+        </pre>
+      </code>
+    </p><br>
+
 
     <h4 class="task">
       Що буде виведено в консолі при запуску цієї функції?<br>
@@ -212,8 +238,6 @@
   </p>
   <br />
 
-
-    
     <script>
       function createCalcFunction(n) {
         return function() {
@@ -224,7 +248,7 @@
       createCalcFunction(4); // нічого
       const calc = createCalcFunction(4);
       console.log(calc); // ƒ () {console.log(1000 * n)}
-      calc(); // 4000s
+      calc(); // 4000
 
       // =================================================
 
@@ -254,19 +278,24 @@
 
       // ===================================================
 
-      function logPerson() {
+      function logPerson(name) {
+        if(name) {
+          this.name = name;
+        }
         console.log(`Person: ${this.name}, ${this.age}, ${this.job}`)
       }
+
       const person1 = {name: 'Samuel', age: 45, job: 'fullStack'}
       const person2 = {name: 'Julia', age: 35, job: 'front-end'}
       const person3 = {name: 'Elis', age: 36, job: 'back-end'}
 
-      logPerson.bind(person1)(); // Person: Samuel, 45, fullStack
+      logPerson.bind(person1)(); // Person: Samuel, 45, fullStacks
       logPerson.bind(person2)(); // Person: Julia, 35, front-end
       logPerson.bind(person3)(); // Person: Elis, 36, back-ends
 
       function bind(context, func) {
         return function(...args) {
+          console.log('args', args);
           func.apply(context, args)
         }
       }
@@ -274,6 +303,7 @@
       bind(person1, logPerson)(); // Person: Samuel, 45, fullStack
       bind(person2, logPerson)(); // Person: Julia, 35, front-end
       bind(person3, logPerson)(); // Person: Elis, 36, back-end
+      // ===================================================
 
     </script>
   </body>
