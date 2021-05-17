@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Working with strings</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Working with strings <span class="emph">str.slice(pos)</span></h2>
+
+    <h4 class="task">
+      Виділити число: є вартість у вигляді слово-виразу '$120'. Тобто спочатку йде знак валюти, а потім - число. Створіть функцію extractCurrencyValue(str), яка буде з такого слово-виразу виділяти числове значення і повертати його?
+      <br>
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          console.log( extractCurrencyValue('$120') === 120 ); // true
+        </pre>
+      </code>
+    </p><br>
+
+    <p><b>Відповідь:</b></p><br>
+
+    <p>Значення слово-виразу в JavaScript не можна змінити. Тому треба взяти тільки частину слово-виразу без першого символу за допомогою методу <b>str.slice(start [, end])</b>, який повертає частину взятого слово-виразу від start до, не включаючи, end. В нашому випадку візьмемо частину від першого символу (не нульового) і до кінця. А щоб перевести слово-вираз в число, використовуємо унарний +. Ось так:
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function extractCurrencyValue(str) {<br>
+            <b>return +str.slice(1);</b><br>
+          }<br>
+          
+          // перевірка роботи функції:<br>
+          console.log( extractCurrencyValue('$120') ); // 120<br>
+        </pre>
+      </code>
+    </p><br>
+
+    <script>
+      // ===========================================
+
+      function extractCurrencyValue(str) {
+        return +str.slice(1);
+      }
+      
+      // перевірка роботи функції:
+      console.log( extractCurrencyValue('$120') ); // 120
+
+    </script>
+  </body>
+</html>

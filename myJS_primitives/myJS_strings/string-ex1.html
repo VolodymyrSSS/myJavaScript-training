@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Working with strings</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Working with strings <span class="emph"> str[pos], str.charAt(pos), for..of</span></h2>
+
+    <h4 class="task">
+      Створіть змінну 'str' і присвойте їй значення 'abcde'. Звертаючись до окремих символів слово-виразу, виведіть в консоль символ 'а', символ 'b' та символ 'е'. Використайте інший спосіб виведення символів, та виведіть ним символ 'с' і символ 'd'. В чому різниця між методами?
+      <br>
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          let str = 'abcde';
+        </pre>
+      </code>
+    </p><br>
+
+    <p><b>Відповідь:</b></p><br>
+
+    <p>В JavaScript отримати символ, який займає позицію pos, можна за допомогою квадратних дужок: <b>[pos]</b>. Вивидемо в консолі символи використавши квадратні дужки:<br>
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          console.log(str[0]); //виведе символ 'a'
+          console.log(str[1]); //виведе символ 'b'
+          console.log(str[4]); //виведе символ 'e'
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Крім того, для отримання символа слово-виразу можна використати інший метод <b>str.charAt(pos)</b>. Застосуємо цей метод та вивидемо символи 'с' і 'd':</p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          console.log(str.charAt(2)); //виведе символ 'c'
+          console.log(str.charAt(3)); //виведе символ 'd'
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Але, різниця між ними така: якщо символ з позицією [pos] відсутній тоді метод поверене, undefined, а charAt — порожній рядок, ось:</p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          console.log(str[5]); //виведе undefined
+          console.log(str.charAt(6)); //нічого не виведе або порожній рядок
+        </pre>
+      </code>
+    </p>
+
+
+    <h4 class="task">
+      Створіть змінну 'str' і присвойте їй значення 'abcde'. 'Пройдіться' по слово-виразу 'str' та виведіть кожен його символ в окремому рядку.
+      <br>
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          a,b,c,d,e - вивести окремо кожен символ в рядку
+        </pre>
+      </code>
+    </p><br>
+
+    <p><b>Відповідь:</b></p><br>
+
+    <p>Якщо потрібно 'перебрати' посимвольно будь-який слововираз, використовують <b>for..of</b>, ось так: <br>
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          let str = 'abcde';
+
+          for (let char of str) {
+            console.log(char); // a,b,c,d,e (char —  'a', потiм 'b', потiм 'c' i т. д.)
+          }
+        </pre>
+      </code>
+    </p><br>
+
+    
+    <script>
+      // ===========================================
+
+      let str = "abcde";
+
+      console.log(str[0]); // 'a'
+      console.log(str[1]); // 'b'
+      console.log(str[4]); // 'e'
+
+      console.log(str.charAt(2)); // 'c'
+      console.log(str.charAt(3)); // 'd'
+
+      console.log(str[5]); // undefined
+      console.log(str.charAt(6)); //нічого не виведе
+
+      // ===========================================
+
+      for (let char of str) {
+        console.log(char); // a,b,c,d,e на окремому рядку кожен
+      }
+
+      // ===========================================
+    </script>
+  </body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Working with strings</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Working with strings <span class="emph">  str.indexOf(substr, pos)</span></h2>
+
+    <h4 class="task">
+      В нас є слово-вираз str із значенням 'Віслюк Іа-Іа подивився на віадук.'. Напишіть код, який буде шукати у цьому слово-виразі усі частини із значенням 'Іа' та виводити індекс символу, де така частина була знайдена.
+      <br>
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+           let str = 'Віслюк Іа-Іа подивився на віадук.'
+
+          // потрібно знайти частини Ia та вивесті їх позиції розташування в слово-виразі
+          // Знайдено частину тут 7
+          // Знайдено частину тут 10
+        </pre>
+      </code>
+    </p><br>
+
+    <p><b>Відповідь:</b></p><br>
+
+    <p>Для рішення цієї задачі використаємо метод <b> str.indexOf(substr, pos)</b>, який шукає частину слово-виразу substr в цілому слово-виразі str, починаючи з позиції pos, і повертає позицію, на якій розташовується частина його, або -1 при відсутності збігів. Крім того, ще є необов'язковий другий аргумент, який дозволяє почати пошук з вже визначеної позиції.<br>
+    Таким чином, спочатку визначаємо ціль пошуку та позицію від якої починати шукати - це самий початок слово-виразу:
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          let str = 'Віслюк Іа-Іа подивився на віадук.';
+          let target = 'Іа'; // ціль пошуку
+          let pos = 0; // початкова позиція пошуку
+        </pre>
+      </code>
+    </p><br>
+
+    <script>
+      let str = 'Віслюк Іа-Іа подивився на віадук.';
+      let target = 'Іа';
+      let pos = 0;
+    </script>
+
+    <p>Тепер можна використати метод <i>str.indexOf(substr, pos)</i> але він знайде тільки одну позицію, а нам потрібно знайти усі позиції. Тому тут доцільно застосувати цикл <b>while</b>, який буде здійснювати пошук до тих пір доки не пройде через усі позиції всього слово-виразу. І для цього в тілі циклу необхідно визначити збільшення позиції на один. Ось так:</p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          while (true) {
+            let foundPos = str.indexOf(target, pos);
+            if (foundPos == -1) break;
+    
+            console.log(`Знайдено частину тут ${foundPos}`);
+            pos = foundPos + 1; // продовжити з наступної позиції
+          }
+        </pre>
+      </code>
+    </p><br>
+
+    <script>
+      while (true) {
+        let foundPos = str.indexOf(target, pos);
+        if (foundPos == -1) break;
+
+        console.log(`Знайдено частину тут ${foundPos}`);
+        pos = foundPos + 1; // продовжити з наступної позиції
+      }
+    </script>
+
+    <p>Але, давайте запишимо це по іншому, і будемо брати за початок пошуку позицію, коли частини слово-виразу немає, а в циклі задамо пошук шукати до тих пір доки буде позиція відсутня, ось:</p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          let str = 'Віслюк Іа-Іа подивився на віадук.';
+          let target = 'Іа';
+          let pos = -1;
+
+          while ((pos = str.indexOf(target, pos + 1)) != -1) {
+            console.log(pos); // 7, 10
+          }          
+        </pre>
+      </code>
+    </p>
+  
+    <script>
+      // ===========================================
+
+      pos = -1;
+
+      while ((pos = str.indexOf(target, pos + 1)) != -1) {
+        console.log(pos);
+      }
+
+      // ===========================================
+
+    </script>
+  </body>
+</html>

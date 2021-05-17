@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Working with strings</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Working with strings <span class="emph">str.toLowerCase(), str.includes('substring')</span></h2>
+
+    <h4 class="task">
+      Перевірка на спам: напишіть функцію checkSpam(str), що повертає true, якщо str містить 'viagra' або 'XXX', а інакше false.<br>
+      Функція повинна бути нечутлива до регістру.
+      <br>
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          checkSpam('buy ViAgRA now') == true<br>
+          checkSpam('free xxxxx') == true<br>
+          checkSpam('innocent rabbit') == false<br>
+        </pre>
+      </code>
+    </p><br>
+
+    <p><b>Відповідь:</b></p><br>
+
+    <p>Перше що треба зробити, це перевести рядок в нижній регістр, що дасть нам можливість здійснювати пошук без урахування регістру. Ось так:
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          let str = 'buy ViAgRA now';<br>
+          let lowerStr = str.toLowerCase();<br>
+          console.log( lowerStr );<br>
+        </pre>
+      </code>
+    </p><br>
+
+    <p>А потім, використовувати метод <b>str.includes()</b> для пошуку необхідної частини слово-виразу в результаті якого виводиться або true (значить є частана) або false (частини немає), ось так:</p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          console.log( lowerStr.includes('viagra') ); // true
+        </pre>
+      </code>
+    </p><br>
+
+    <p>При цьому, будемо використовувати оператор || (АБО) для отримання умови пошуку ще однієї частин варіанту слово-виразу. Ось так:</p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          console.log( lowerStr.includes('viagra') || lowerStr.includes('xxx') ); // true
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Далі, огорнемо все у функцію checkSpam(str). Ця функція повинна повертати роботу методу str.includes() де отримаємо або true або false, ось так:</p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function checkSpam(str) {<br>
+            let lowerStr = str.toLowerCase();<br>
+            return lowerStr.includes('viagra') || lowerStr.includes('xxx');<br>
+        }<br>
+        <br>
+        // перевірим роботу функції:<br>
+        console.log( checkSpam('buy ViAgRA now') ); // true<br>
+        console.log( checkSpam('free xxxxx') ); // true<br>
+        console.log( checkSpam('innocent rabbit') ); // false<br>
+        </pre>
+      </code>
+    </p><br>
+
+    <script>
+      // ===========================================
+
+      function checkSpam(str) {
+        let lowerStr = str.toLowerCase();
+
+        return lowerStr.includes('viagra') || lowerStr.includes('xxx');
+      }
+          
+      console.log( checkSpam('buy ViAgRA now') ); // true
+      console.log( checkSpam('free xxxxx') ); // true
+      console.log( checkSpam('innocent rabbit') ); // false
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Working with strings</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Working with strings <span class="emph">str.toUpperCase() str.slice(start [, end])</span></h2>
+
+    <h4 class="task">
+      Напишіть функцію ucFirst(str), що повертає cлово-вираз 'str' у якого перший символ починається з великої літери. Функція повинна працювати також і в разі, якщо слово-виразу немає - порожній рядок.
+      <br>
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          ucFirst('margo') == 'Margo';
+          ucFirst('') == ''; - нічого не має - пустий рядок
+        </pre>
+      </code>
+    </p><br>
+
+    <p><b>Відповідь:</b></p><br>
+
+    <p>Вміст рядка в JavaScript не можна змінити. Не можна взяти символ посередині і замінити його на інший, типу:
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          let str = 'Hi';
+          str[0] = 'h'; тут буде помилка
+          alert( str[0] ); - не буде працювати
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Як тільки слово-вираз створений - він такий буде назавжди. Тому щоб його змінити, потрібно створити новий слово-вираз на основі існуючого. <br>
+    Далі, щоб взяти перший символ, використаємо квадратні дужки, і щоб символ був з великої літери використаємо метод <b>str.toUpperCase()</b>, інші символи додамо за допомогою методу <b>str.slice(start [, end])</b> при цьому зазначимо лише один аргумент - початок звідки брати (в нашому випадку - починаючи з другого символу) і автоматично до кінця. Ось так:</p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          let newStr = str[0].toUpperCase() + str.slice(1);
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Однак є невелика проблемка. Якщо слово-вираз, це порожній рядок, або нічого не має то str[0] поверне undefined, а у undefined немає методу toUpperCase(), і ми знову отримаємо помилку.<br>
+    Для вирішення цього, перший символом берем не квадратними дужками, а методом <b>str.charAt(0)</b>, оскільки він завжди повертає слово-вираз, і для порожнього рядка - порожній рядок а не undefined, ось так:</p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          let str = 'margo';
+          let newStr = str.charAt(0).toUpperCase() + str.slice(1);
+          console.log( newStr ); // Margo
+          також:
+          console.log(str.charAt(6)); //нічого не виведе, буде порожній рядок
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Але якщо все ж використовувати квадратні дужки, треба зробити перевірку на порожній рядок, а для цього використовуємо умову в <b>if</b>. Завернём все в функцію ucFirst(str) за умовою задачі, ось так:</p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function ucFirst(str) {
+            if (!str) { -тут перевірка на пустий слово-вираз
+              return str; - поверне його
+            } else { - в іншому випадку створюємо новий слово-вираз
+              return str[0].toUpperCase() + str.slice(1); 
+            }
+          }
+
+          // перевіримо роботу функції:
+          let str = 'walter';
+          console.log( ucFirst(str) ); // Walter
+          let str = '';
+          console.log( ucFirst(str) ); // ничого (пустий рядок)
+          let str = 'sue';
+          console.log( ucFirst(str) ); // Sue
+        </pre>
+      </code>
+    </p>
+
+    <script>
+      // ===========================================
+
+      let str = 'margo';
+      let newStr = str.charAt(0).toUpperCase() + str.slice(1);
+      console.log( newStr ); // Margo
+      console.log(str.charAt(6)); //нічого не виведе, буде порожній рядок
+
+      // ===========================================
+
+      function ucFirst(str) {
+        if (!str) {
+          return str;
+        } else {
+          return str[0].toUpperCase() + str.slice(1); 
+        }
+      }
+
+      let str1 = 'walter';
+      console.log( ucFirst(str1) ); // Walter
+      let str2 = '';
+      console.log( ucFirst(str2) ); // нічого (пустий рядок)
+      let str3 = 'sue';
+      console.log( ucFirst(str3) ); // Sue
+    </script>
+  </body>
+</html>

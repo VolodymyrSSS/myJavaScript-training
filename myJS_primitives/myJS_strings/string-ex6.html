@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Working with strings</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Working with strings <span class="emph"> str.length, str.slice(start [, end])</span></h2>
+
+    <h4 class="task">
+      Cтворіть функцію truncate(str, maxlength), яка перевіряє довжину слово-виразу str і, якщо вона перебільшує maxlength, замінює закінчення str на '…' так, що її довжина стає дорівнювати maxlength. Результатом функції повинен бути або обрізаний слово-вираз, або той самий, якщо обрізання не потрібно.
+      <br>
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          truncate('Ось, що мені хотілось би сказати на цю тему:'', 20); // Ось, що мені хотіло…
+          <br>
+          truncate('Всім привіт!', 20); // Всім привіт!
+        </pre>
+      </code>
+    </p><br>
+
+    <p><b>Відповідь:</b></p><br>
+
+    <p>Для вирішення задачі потрібно, щоб функція порівнювала довжину слово-виразу str із maxlength. Якщо довжина більша, то маємо обрізати та додати спеціальний Юнікодний символ '…'. І для цього потрібно визначити як правельно взяти довжину слова з урахуванням maxlength щоб її порівняти.<br>
+    Щоб визначити будь-яку довжину, використаємо числову властивість <b>str.length</b>. Але в умовах задачі дано також і maxlength, тому будемо брати її для порівняння. Потрібно врахувати і те, що в кінець потрібно додати спеціальний Юнікодний символ '…', тобто довжину при цьому потрібно визначати як <i>maxlength - 1</i> щоб вистачило місця на додавання трьох крапок (доречі, це не те ж саме, що такі ... - три крапки).<br>
+    Таким чином, щоб порівнювати довжину слово-виразу <i>str.length</i> з <i>maxlength - 1</i> використаємо виконання умови через тернарний оператор <b>? :</b>, в якому якщо порівняння не задовільняє умову, то беремо тільки частину слово-виразу за допомогою методу <b>str.slice(start [, end])</b> і в кінець додаєм '…', а якщо задовільняє - то повертаємо слово-вираз цілком. Ось так:
+    </p><br>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function truncate(str, maxlength) {
+            return (str.length > maxlength ? str.slice(0, maxlength - 1) +  '…' : str);
+          }
+
+          // перевірка роботи функції
+          let string = 'Ось, що мені хотілось би сказати на цю тему:';
+          console.log(truncate(string, 20)); // Ось, що мені хотіло…
+          string = 'Всім привіт!';
+          console.log(truncate(string, 20)); // Всім привіт!
+        </pre>
+      </code>
+    </p><br>
+    <br>
+
+    <script>
+      // ===========================================
+      let string = 'Ось, що мені хотілось би сказати на цю тему:';
+
+      function truncate(str, maxlength) {
+        return (str.length > maxlength) ? str.slice(0, maxlength - 1) + '…' : str;
+      }
+
+      // перевірка роботи функції
+      console.log(truncate(string, 20)); // Ось, що мені хотіло…
+
+      string = 'Всім привіт!';
+
+      console.log(truncate(string, 20)); // Всім привіт!
+
+      // ===========================================
+    </script>
+  </body>
+</html>

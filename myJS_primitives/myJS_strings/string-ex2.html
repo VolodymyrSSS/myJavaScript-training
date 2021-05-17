@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Working with strings</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Working with strings:<span class="emph"> quotes, special characters, `вираз${}`</span></h2>
+
+    <h4 class="task">
+      Створіть змінні str1 = 'Привіт, ' і str2 = 'хлопаче!'. За допомогою цих змінних і операції додавання рядків виведіть спочатку в консолі вираз 'Привіт, хлопаче'. Потім, створіть змінну str3 і присвойте їй слово-вираз: 'Привіт хлопаче! Як ся маєш?'. Зробіть так, щоб друга частирна слово-виразу 'Як ся маєш?' розміщалась окремо на рядку нижче.<br>
+      Зробіть це саме з використанням зворотніх лапок (теговий шаблон: `вираз${}`). Дізнайтесь скільки символів містить останній слово-вираз?
+      <br>
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          let str = 'abcde';
+        </pre>
+      </code>
+    </p><br>
+
+    <p><b>Відповідь:</b></p><br>
+
+    <p>В JavaScript маємо можливість додавати слово-вирази один до одного за допомогою оператора конкатенації '+'. Отже, створимо змінні і додамо їх конкатенацією, ось так:<br>
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          let str1 = 'Привіт, ';
+          let str2 = 'хлопаче!';
+          console.log(str1+str2); // Привіт, хлопаче!
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Щоб отримати вирази на різних рядках із використанням одинарних чи подвійних лапок, використовують так званий 'символ переводу рядка', який записується як '\n'. Отже, даний слово-вираз одразу присвоїмо в змінну str3 і далі використаємо цей спецсимвол між частинами слововиразу, а в кінці додамо спецсимвол копірайта і виведемо в консоль, ось так:</p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          let str3 = 'Привіт, хлопаче!\n Як ся маєш? \u00A9';
+      
+          console.log(str3);
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Це все можна зробити використовуючи зворотні лапки, або теговий шаблон, який має вид `вираз${}` Ми також можемо доадти в кінці сурогатну пару 'лице з посмішкою з очима сердечками',  ось так:</p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          let str1 = 'Привіт, ';
+          let str2 = 'хлопаче!';
+          let str4 = 'Як ся маєш?'
+
+          let str5 = `${str1}${str2}
+          ${str4} \u{1F60D}`
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Для того, щоб дізнатись кількість символів у слово-виразі, використаємо властивість <b>length</b>, причому необхідно врахувати, що довжина сурогатної пари = 2, ось:</p>
+    <p>
+      <code>
+        <pre>
+          console.log(str5.length); // 37
+        </pre>
+      </code>
+    </p><br>
+    
+    <script>
+      // ===========================================
+
+      let str1 = 'Привіт, ';
+      let str2 = 'хлопаче!';
+      console.log(str1+str2); // Привіт, хлопаче!
+
+      // ===========================================
+
+      let str3 = 'Привіт, хлопаче!\n Як ся маєш? \u00A9';
+      
+      console.log(str3);
+
+      // ===========================================
+
+      let str4 = 'Як ся маєш?'
+
+      let str5 = `${str1}${str2}
+      ${str4} \u{1F60D}`
+
+      console.log(str5);
+      console.log(str5.length);
+
+    </script>
+  </body>
+</html>
