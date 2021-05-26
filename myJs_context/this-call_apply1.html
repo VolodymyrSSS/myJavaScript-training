@@ -61,7 +61,7 @@
   </head>
 
   <body>
-    <h2 class="title">Context - keyword <span class="emph">this</span>, the methods <span class="emph">Call</span> та <span class="emph">Apply</span></h2>
+    <h2 class="title">Working with context - keyword <span class="emph">this</span>, the methods <span class="emph">Call</span> and <span class="emph">Apply</span></h2>
 
     <h4 class="task">
       Поясніть значення ключового слова 'this'? Дайте розуміння глобального контексту? Потім покажіть на прикладах, як використати контекст - методи call/apply, та отримати контекст одного об'єкта в контексті іншого?
@@ -73,12 +73,22 @@
     <p>Перш за все, необхідно сказати, що у глобальному контексті виконання (за межами будь-яких функцій) <b><em>this</em></b> посилається на глобальний об'єкт незалежно від режиму (строгий чи нестрогий).<br>
       console.log(this === window); // true<br>
       або<br>
-      a = 37;<br>
-      console.log(window.a); // 37<br>
+      a = 42;<br>
+      console.log(window.a); // 42<br>
       або ось так<br>
       this.b = "MDN";<br>
       console.log(window.b)  // "MDN"  чи  console.log(b) // "MDN"
     </p><br>
+
+    <script>
+      console.log(this === window); // true
+
+      a = 42;
+      console.log(window.a); // 42
+
+      this.b = "MDN";
+      console.log(b) // "MDN"
+    </script>
 
     <p>Проте, в межах функції значення this залежить від того, яким чином викликана функція. Якщо подивитись на дію this під час простого виклику і не в строгому режимі де значення this не встановлюється викликом, то по-замовчуванню буде використовуватись об'єкт global, який в браузері буде дорівнювати window, ось так:</p>
 
@@ -90,7 +100,7 @@
           }
           
           // В браузері:
-          f1() === window; // window - глобальний об'єкт в браузері
+          console.log(f1() === window); // true бо window - глобальний об'єкт в браузері
           
           // В Node:
           f1() === global; // global - глобальний об'єкт в Node
@@ -98,7 +108,15 @@
       </code>
     </p><br>
 
-    <p>У строгому режимі, якщо значення this не встановлено в контексті виконання, воно залишається undefined, як показано тут нижче. Крім того, тут this повинно мати значення undefined, ще і тому, що функція f2 була викликана безпосередньо, а не як метод або властивість об'єкта типу window.f2 (); бо так знову отримуємо глобальний об'єкт Window.</p>
+    <script>
+      function f1(){
+        return this;
+      }
+
+      console.log(f1() === window); // true
+    </script>
+
+    <p>У строгому режимі, якщо значення this не встановлено в контексті виконання, воно залишається undefined, як показано тут нижче. Крім того, тут this повинно мати значення undefined, ще і тому, що функція f2 була викликана безпосередньо, а не як метод або властивість об'єкта типу window.f2(); бо так знову отримуємо глобальний об'єкт Window.</p>
 
     <p class="code-ex">
       <code>
@@ -116,7 +134,19 @@
       </code>
     </p><br>
 
-    <p>Отже, для того, щоб при виконанні функції встановити this в певне значення, використовуйте call () або apply (),</p>
+    <script>
+      function f2(){
+        "use strict";
+          return this;
+      }
+          
+      console.log(f2() === undefined); // true
+
+      console.log(window.f2()); // Window {window: Window, self: Window, …}
+
+    </script>
+
+    <p>Таким чином, для того, щоб при виконанні функції встановити this в певне значення, використовуємо call() або apply(),</p>
 
     <p>Ось розглянемо приклад1, щоб при виконанні функції встановити this в певне значення. <br>
       <br>
@@ -140,7 +170,21 @@
       </code>
     </p><br>
 
+    <script>
+      var obj = {m: 'Custom'};
+      var m = 'Global';
+
+      function whatsThis() {
+        return this.m;
+      }
+
+      console.log(whatsThis()); // Global
+      console.log(whatsThis.call(obj)); // Custom
+      console.log(whatsThis.apply(obj)); // Custom
+    </script>
+
     <p>Ось приклад2, щоб при виконанні функції встановити this в певне значення. <br>
+      <br>
       Використання методу <b>call</b> та <b>apply</b>:
     </p>
 
@@ -153,45 +197,19 @@
     
           var o = {a: 1, b: 3};
 
-          // Перший параметр - це об'єкт для використання в якості 'this', 
-          // наступні параметри передаються як аргументи функції call
           console.log(add.call(o, 5, 7)); // 16
-
-          // Перший параметр - це об'єкт для використання в якості 'this', 
-          // другий - масив, чиї члени використовуються в якості аргументів функції apply
+          // тут перший параметр - це об'єкт для використання в якості 'this', 
+          // наступні параметри передаються як аргументи функції call
+          
           console.log(add.apply(o, [10, 20])); // 34
+          // тут перший параметр - це об'єкт для використання в якості 'this', 
+          // другий - масив, чиї члени використовуються в якості аргументів функції apply
+          
         </pre>
       </code>
     </p><br>
  
     <script>
-
-      console.log(this === window); // trues
-
-      function f2(){
-        "use strict";
-          return this;
-      }
-          
-      console.log(f2() === undefined); // true
-
-      console.log(window.f2()); // Window {window: Window, self: Window, …}
-
-      // =======================================================
-
-      var obj = {m: 'Custom'};
-      var m = 'Global';
-
-      function whatsThis() {
-        return this.m; // тут значення this залежить від контексту виклику функції
-      }
-
-      console.log(whatsThis()); // Global
-      console.log(whatsThis.call(obj)); // Custom
-      console.log(whatsThis.apply(obj)); // Custom
-
-      // =======================================================
-
       function add(c, d) {
         return this.a + this.b + c + d;
       }
@@ -215,9 +233,7 @@
 
       const y = x.bind(foo);
 
-      console.log(y());
-
-
+      console.log(y()); // 1
     </script>
   </body>
 </html>

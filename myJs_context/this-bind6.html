@@ -12,19 +12,14 @@
         font-family: Verdana, sans-serif;
       }
 
-      .title {
+      .emph {
         color: red;
-        text-align: center;
-        font-weight: 700;
       }
 
-      .code-ex {
-        width: 50%;
-        font-family: sans-serif;
-        background-color: #bebebe;
-        font-size: large;
-        padding-left: 15px;
-        margin: 0 auto;
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
       }
 
       .task {
@@ -33,6 +28,23 @@
         color: navy;
         background-color: #e2e2e2;
         margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
       }
 
       .code-ex {
@@ -44,72 +56,63 @@
         padding-left: 15px;
         margin: 0 auto;
       }
-
-      p {
-        width: 80%;
-        margin: 0 auto;
-      }
-
-      pre {
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: larger;
-        font-weight: 700;
-      }
     </style>
   </head>
 
   <body>
-    <h2 class="title">Context - this, method bind</h2>
+    <h2 class="title">Working with context - keyword <span class="emph">this</span>, the method <span class="emph">bind</span></h2>
 
     <h4 class="task">
-      Ми маємо визначений набір параметрів в виді масиву arr де елементи - це об'єкти в кожному з яких властивостями виступають назви країн та імена, які перераховані також в масиві.<br>
-      Виведіть усі країни та відповідні для кожної країни імена в консоль створивши для цього функції, які будуть брати необхідні значення з полів масиву arr.<br>
+      Ми маємо визначений набір параметрів в виді масиву arrSetPresentation де елементи - це об'єкти в кожному з яких властивостями виступають назви країн та імена, які перераховані також в масиві відповідно до країни.<br>
+      Допишіть код для забезпечення роботи функції getPersonPresentation(), яка отримує на вхід параметри country та name і повертає їх у потрібному форматі.
+      <br>
     </h4>
 
-    <p class="code-ex"><br>
-      Приклад<br>
-      <code><br>
-        let arr = [<br>
-          {<br>
-            country: 'Germany',<br>
-            people: ['Martin', 'Nocile', 'Sebastian']<br>
-          },<br>
-          {<br>
-            country: 'Italy',<br>
-            people: ['Alessandro', 'Lorenzo', 'Riccardo']<br>
-          }<br>
-        ];<br>
-        <br>
-        function getPersonPresentation(country, name){<br>
-          return `My name is ${name}. I'm from ${country}`;<br>
-        }<br>
-        <br>
+    <p class="code-ex">
+      <code>
+        <pre style="width:40%">
+        let arrSetPresentation = [
+          {
+            country: 'Germany',
+            people: ['Martin', 'Nocile', 'Sebastian']
+          },
+          {
+            country: 'Italy',
+            people: ['Alessandro', 'Lorenzo', 'Riccardo']
+          }
+        ];
+        
+        function getPersonPresentation(country, name){
+          return `My name is ${name}. I'm from ${country}`;
+        }
+        </pre>
       </code>
   </p><br>
 
     <p><b>Відповідь</b>:</p><br>
 
-    <p>Функція, яка завжди викликається з вже визначеним набором параметрів, називається власною (часною) функцією.<br>
-      Для вирішення, потрібно спочатку перебрати елементи масиву arr шляхом використання методу для перебору елементів масиву for of і записати в функцію використавши метод bind() для 'жорстої' прив'язки контексту значення поля країни. Ось так:
-      </p>
+    <p>Ми маємо тут часну функцію, бо функція, яка завжди викликається з вже визначеним набором параметрів, називається власною або часною функцією.<br>
+    Для рішення задачі, потрібно отримати з заданого масиву значення полів, причому, спочатку країн а потім відповідні їм імена людей.<br>
+    Крім того, початкові дані ми маємо у вигляді масива у якого елементами є об'єкти які ключами мають значення, які потрібно отримати. Отже, щоб переберати елементи масиву ми можемо використати один з методів для перебору елементів масиву, а так, як нам цікаво мати тільки значення (позиція нам не цікава), то доцільно тут використати метод перебору <b>for of</b>. <br>
+    Спочатку потрібно перебрати елементи масиву та отримати значення по країнaм. А для цього кожен елемент позначимо як item і будемо брати потрібні значення полів для назви країни і заносити іх у масив <i>getPersonPresentationWithCountrySet</i>. А для отримання контексту, використаємо метод bind() де першим аргументом ми не передаємо нічого, а другим - значення поля з назвою країни, яке ми отримали шляхом перебору масиву. Ось так:</p><br>
 
-    <p class="code-ex" style="width: 70%">
+    <p class="code-ex" style="width: 80%">
       <code>
-        <pre>
-          for (let item of arr) {
+        <pre style="width:60%">
+          for (let item of arrSetPresentation) {
             let getPersonPresentationWithCountrySet = getPersonPresentation.bind(null, item.country)
           }
         </pre>
       </code>
-    </p>
+    </p><br>
 
-    <p>Далі, необхідно вже з функцією, яка вже прив'язала країну, перебрати елементи масиву властивості кожного елемента 'people', використавши так само метод для перебору масивів for of та вивести кожне перебираєме значення в консоль, ось так:
-    </p>
+    <p>Далі, необхідно вже з функцією, яка вже прив'язала країну, перебрати елементи масиву з іменами людей 'people', використавши так само метод для перебору масивів <i>for of</i> та вивести кожне перебираєме значення в консоль, ось так:
+    </p><br>
 
-    <p class="code-ex" style="width: 70%">
+    <p class="code-ex">
       <code>
-        <pre>
-          for (let item of arr) {
+        <pre style="width: 60%">
+          for (let item of arrSetPresentation) {
             let getPersonPresentationWithCountrySet = getPersonPresentation.bind(null, item.country)
 
             for (let person of item.people) {
@@ -118,11 +121,11 @@
           }
         </pre>
       </code>
-    </p>
+    </p><br>
+    <br>
 
-    
     <script>
-      let arr = [
+      let arrSetPresentation = [
         {
           country: 'Germany',
           people: ['Martin', 'Nocile', 'Sebastian']
@@ -133,11 +136,11 @@
         }
       ];
     
-      function getPersonPresentation(country, name){
+      function getPersonPresentation(country, name) {
         return `My name is ${name}. I'm from ${country}`;
       }
       
-      for(let item of arr){
+      for(let item of arrSetPresentation){
         let getPersonPresentationWithCountrySet = getPersonPresentation.bind(null, item.country);
         
         for(let person of item.people)

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Working with strings</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Working with context <span class="emph"> =>, bind</span></h2>
+
+    <h4 class="task">
+      В нас є об'єкт obj, який має ключами число а та метод say, який виводить через секунду в консоль значення цього числа а. Але виклик методу obj.say() виведе undefined. Чому? Як зробити щоб функція все таки вивела значення числа 42? Покажіть щонайменше 2 різних способа як зробити це?
+      <br>
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+           const obj = {
+            a: 42,
+            say: function() {
+              setTimeout(function() {
+                console.log(this.a);
+              }, 1000);
+            }
+          }
+    
+          obj.say(); // undefined - чому ???
+        </pre>
+      </code>
+    </p><br>
+
+    <p><b>Відповідь:</b></p><br>
+
+    <p> Функція всередині setTimeout не має в своїй області видимості контексту<i>а: 42</i>, а отже виклик функції <i>obj.say()</i> виведе undefined.
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          say: function() {
+            setTimeout(function() {
+              console.log(this.a);
+            }, 1000);
+          }
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Для того, щоб вивести значення числа, можемо використати стрілкову функцію, бо вона не має свого контексту і бере його з області видимості вище. Тобто, якщо всередині setTimeout функцію переробити на стрілкову, то контекст буде братись з області видимості вище, у якої є контекст <i>а: 42</i> що і виведе його значення в консоль, ось так:</p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          const obj = {
+            a: 42,
+            say: function() {
+              setTimeout(() => {
+                console.log(this.a);
+              }, 1000);
+            }
+          }
+    
+          obj.say(); // 42
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Іншим методом для виведення значення числа, можем використати метод bind та впишемо його окремою функцією handler в setTimeout. В bind першим аргументом передамо або об'єкт obj, який власне і має контекст або ключове слово this, який і вкаже на контекст <i>а: 42</i> при виклику метода obj.say() і виведе його значення в консоль, ось так:</p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          const obj = {
+            a: 42,
+            say: function() {
+              function handler() {
+                console.log(this.a);
+              }
+              setTimeout(handler.bind(obj), 1000);
+              // можна і так: setTimeout(handler.bind(this), 1000);
+            }
+          }
+    
+          obj.say(); // 42
+        </pre>
+      </code>
+    </p><br>
+s  
+    <script>
+      // ===========================================
+
+      const obj = {
+        a: 42,
+        say: function() {
+          setTimeout(function() {
+            console.log(this.a);
+          }, 1000);
+        }
+      }
+
+      obj.say();
+
+      // ===========================================
+
+      const obj2 = {
+        a: 42,
+        say: function() {
+          setTimeout(() => {
+            console.log(this.a);
+          }, 1000);
+        }
+      }
+
+      obj2.say();
+
+      // ===========================================
+
+      const obj3 = {
+        a: 42,
+        say: function() {
+          function handler() {
+            console.log(this.a);
+          }
+          setTimeout(handler.bind(obj3), 1000);
+        }
+      }
+
+      obj3.say();
+
+      // ===========================================
+
+    </script>
+  </body>
+</html>

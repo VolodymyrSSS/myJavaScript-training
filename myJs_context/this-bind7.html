@@ -12,19 +12,14 @@
         font-family: Verdana, sans-serif;
       }
 
-      .title {
+      .emph {
         color: red;
-        text-align: center;
-        font-weight: 700;
       }
 
-      .code-ex {
-        width: 50%;
-        font-family: sans-serif;
-        background-color: #bebebe;
-        font-size: large;
-        padding-left: 15px;
-        margin: 0 auto;
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
       }
 
       .task {
@@ -35,8 +30,25 @@
         margin: 35px auto;
       }
 
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 40%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
       .code-ex {
-        width: 50%;
+        width: 40%;
         font-family: sans-serif;
         font-style: italic;
         background-color: #bebebe;
@@ -44,22 +56,11 @@
         padding-left: 15px;
         margin: 0 auto;
       }
-
-      p {
-        width: 80%;
-        margin: 0 auto;
-      }
-
-      pre {
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: larger;
-        font-weight: 700;
-      }
     </style>
   </head>
 
   <body>
-    <h2 class="title">Context - this</h2>
+    <h2 class="title">Working with context - keyword <span class="emph">this</span>, the array method <span class="emph">map</span></h2>
 
     <h4 class="task">
       У нас є масив arr та функція яка множить кожен елемент масиву на якесь число n використовуючи метод для масивів - map.<br>
@@ -83,8 +84,7 @@
 
     <p><b>Відповідь</b>:</p><br>
 
-    <p>Для вирішення спочатку створимо в глобальному прототипі масивів Array метод або функцію, ось так:<br>
-      </p>
+    <p>Для вирішення спочатку створимо в глобальному прототипі масивів Array метод або функцію, ось так:</p><br>
 
     <p class="code-ex" style="width: 70%">
       <code>
@@ -95,10 +95,9 @@
           }
         </pre>
       </code>
-    </p>
+    </p><br>
 
-    <p>І вже потім можемо застосувати ключове слово this для передачі контексту від різних масивів:<br>
-    </p>
+    <p>І вже потім можемо застосувати ключове слово this для передачі контексту від різних масивів:</p><br>
 
     <p class="code-ex">
       <code>
@@ -119,7 +118,7 @@
     </p><br>
 
     <p>Можна одразу передавати масив замість ключового слова this що є досить зручно і значно розширює функціонал застосування функції(методу) із застосуванням this:<br>
-    </p>
+    </p><br>
 
     <p class="code-ex">
       <code>

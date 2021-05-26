@@ -12,19 +12,14 @@
         font-family: Verdana, sans-serif;
       }
 
-      .title {
+      .emph {
         color: red;
-        text-align: center;
-        font-weight: 700;
       }
 
-      .code-ex {
-        width: 50%;
-        font-family: sans-serif;
-        background-color: #bebebe;
-        font-size: large;
-        padding-left: 15px;
-        margin: 0 auto;
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
       }
 
       .task {
@@ -33,6 +28,23 @@
         color: navy;
         background-color: #e2e2e2;
         margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
       }
 
       .code-ex {
@@ -44,48 +56,35 @@
         padding-left: 15px;
         margin: 0 auto;
       }
-
-      p {
-        width: 80%;
-        margin: 0 auto;
-      }
-
-      pre {
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: larger;
-        font-weight: 700;
-      }
     </style>
   </head>
 
   <body>
-    <h2 class="title">Context - this, method bind</h2>
+    <h2 class="title">Working with context - keyword <span class="emph">this</span>, the method <span class="emph">bind</span></h2>
 
     <h4 class="task">
-      У нас є певна функція f, яка своїм контекстом посилається на глобальний об'єкт window через ключове слово this. Ми також маємо функціональний вираз user, який має функцію g яка прив'язує через bind виклик функції f. Що буде виведено в результаті виклику g?
+      У нас є функція 'f', що визначена в строгому режимі та яка своїм контекстом посилається на глобальний об'єкт 'window' через ключове слово 'this'. Ми також маємо функціональний вираз 'user', який має функцію 'g' яка прив'язує через 'bind' функцію 'f'. Що буде виведено в результаті виклику 'g'?
     </h4>
 
-    <p class="code-ex"><br>
-      Приклад<br>
-      <code><br>
-        function f() {<br>
-          console.log( this );<br>
-        }<br>
-        <br>
-          let user = {<br>
-            g: f.bind(null)<br>
-          };<br>
-          <br>
-          user.g(); // ???<br>
-          <br>
+    <p class="code-ex">
+      <code>
+        <pre>
+          function f() {
+            return this;
+          }
+          
+          let user = {
+            g: f.bind(null)
+          };
+            
+          user.g(); // ???
+        </pre>
       </code>
   </p><br>
 
     <p><b>Відповідь</b>: буде виведено null</p><br>
 
-    <p>Якщо контекст пов'язаний через bind то його змінити вже не можна, він жорсто фіксований. І тому хоча ми викликаємо user.g(), який повинен викликати запустити вихідну функцію f і через this, по ідеї, отримати глобальний об'єкт window, функція f буде викликана з контекстом null (this = null) і ми отримаємо в результаті null а не глобальний об'єкт window. По суті, функції g без різниці який this вона отримала, її головна задача - викликати функцію f разом із заздалегідь переданим вже контекстом null.<br>
-    Необхідно також зазначити, що не в строгому режимі, ми все ж таки отримаємо глобальний об'єкт window а не null.
-    </p>
+    <p>Якщо розглядати спочатку нестрогий режим, то виклик user.g(), яка прив'язана через bind до контексту функції f, викличе її та через ключове слово this отримаємо глобальний об'єкт window.<br> У цьому випадку, хоча прив'язкою bind ми передаємо контекст null (this = null), двигун JavaScript бере його далі, з глобального об'єкта window, ось так:</p><br>
 
     <p class="code-ex" style="width: 70%">
       <code>
@@ -98,28 +97,55 @@
             g: f.bind(null)
           };
     
+          user.g(); // Window {window: Window, self: Window, …}
+        </pre>
+      </code>
+    </p><br>
+
+    <script>
+      function f2() {
+        return this;
+      }
+
+      let user2 = {
+        g: f2.bind(null)
+      };
+
+      console.log(user2.g()); // Window {window: Window, self: Window, document: document, name: "", location: Location, …}
+    </script>
+
+    <p>Проте, якщо розглядати дію функції в строгому режимі, то спочатку необхідно зазначити, що контекст пов'язаний через bind, змінити вже не можна, він жорсто фіксований. І тому хоча ми викликаємо user.g(), який запустить вихідну функцію f і через this, по ідеї, отримати глобальний об'єкт window, функція f буде викликана з контекстом null (бо контекст this = null) і ми отримаємо в результаті null, а не глобальний об'єкт window.<br>
+    По суті, функції g без різниці який this вона отримала, її головна задача - викликати функцію f разом із заздалегідь переданим вже контекстом null, ось так:</p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          function f() {
+            'use strict'
+            return this;
+          }
+    
+          let user = {
+            g: f.bind(null)
+          };
+    
           user.g(); // null
         </pre>
       </code>
-    </p>
-    
+    </p><br>
+  
     <script>
-      'use strict'
-
       function f() {
-        console.log( this );
+        'use strict'
+        return this;
       }
 
       let user = {
         g: f.bind(null)
       };
 
-      user.g(); // null
-
-      // =================================================
-
-      
-      
+      console.log(user.g()); // null
     </script>
+
   </body>
 </html>

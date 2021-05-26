@@ -61,7 +61,7 @@
   </head>
 
   <body>
-    <h2 class="title">Context - keyword <span class="emph">this</span>, the methods <span class="emph">Call</span> та <span class="emph">Apply</span></h2>
+    <h2 class="title">Working with context - keyword <span class="emph">this</span>, the methods <span class="emph">Call</span> and <span class="emph">Apply</span></h2>
 
     <h4 class="task">
       В нас є об'єкт 'person' у якого контекстом є властивості 'surname' та метод 'knows'. Поясніть як було отримано контекст - властивість surname, використовуючи ключове слово this. Потім покажіть, як використати контекст - метод knows, з контекстом іншого об'єкта 'john'?
@@ -105,13 +105,32 @@
       </code>
     </p><br>
 
+    <script>
+      const test = {
+        prop: 42,
+        func: function() {
+          return this.prop;
+        },
+      };
+          
+      console.log(test.func()); // 42
+    </script>
+
     <p>Розглянемо нашу задачу де для отримання контексту - surname ми і використали ключове слово this, яке вказує на контекст - властивість 'surname' ось так:
     </p>
 
     <p class="code-ex">
       <code>
         <pre>
-          console.log(`Ти ${what} знаєш, ${name} ${this.surname}`);
+          person = {
+            surname: 'Старк',
+            knows: function(what, name){
+              console.log(`Ти ${what} знаєш, ${name} ${this.surname}`);
+            }
+          };
+
+          person.knows('все', 'Бран'); // Ти все знаєш, Бран Старк
+
         </pre>
       </code>
     </p><br>
@@ -122,6 +141,13 @@
     <p class="code-ex">
       <code>
         <pre>
+          person = {
+            surname: 'Старк',
+            knows: function(what, name){
+              console.log(`Ти ${what} знаєш, ${name} ${this.surname}`);
+            }
+          };
+
           person.knows.<b>call</b>(john, 'нічого не', 'Джон');// Ти нічого не знаєш, Джон Сноу;
         </pre>
       </code>
@@ -133,6 +159,13 @@
     <p class="code-ex">
       <code>
         <pre>
+          person = {
+            surname: 'Старк',
+            knows: function(what, name){
+              console.log(`Ти ${what} знаєш, ${name} ${this.surname}`);
+            }
+          };
+          
           person.knows.<b>apply</b>(john, ['нічого не', 'Джон']);// Ти нічого не знаєш, Джон Сноу;
         </pre>
       </code>
