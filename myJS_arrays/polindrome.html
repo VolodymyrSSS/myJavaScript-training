@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Arrays, methods</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Working with arrays: property <span class="emph"> arr.length</span> and methods: <span class="emph">split, reverce, join, replace, toLowerCase</span></h2>
+
+    <h4 class="task">
+      В нас є слово-вирази str деякі з яких є слова-поліндроми - тобто ті які можна прочитати і з початку, і з кінця одинаково.<br>
+      Потрібно написати функцію polindrome(str), яка визначає чи слово-вираз є поліндромом true чи ні false. Покажіть, щонайменше, два різних варіанти вирішення.
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          polindrome('racecar'); // true
+          polindrome('table'); // false
+          polindrome('Анна'); // true
+          polindrome('А роза упала на лапу Азора'); // true
+          polindrome('The sky's emptiness lets birds fly'); // false
+        </pre>
+      </code>
+    </p><br>
+
+    <p><b>Відповідь:</b></p><br>
+
+    <p>
+    Отже, на вхід функція отримує слово-вираз str, і повинна повернути якщо слово-вирах є поліндром true. А для цього перетворимо слово-вираз на масив де елементами будуть або букви слово-виразу, або слова речення за допомогою методу <b>split('')</b>. Причому роздільником задамо як порожній рядок. Отримавши масив, ми одразу перевернем його методом <b>reverse()</b> та знову повернем у початкову форму слово-виразу методом <b>join('')</b>. Накінець, порівняємо перетворений слово-вираз із вхідним слово-виразом оператором строгого порівняння <b>===</b> для отримання true-false, ось так:
+    </p><br>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function polindrome(str) {
+            return str === str.split('').reverse().join('');
+          };
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Проте, що робити якщо в слово-виразі є велика буква, а слово-вираз таки є поліндромом? Тут необхідно спочатку підготувати, або уніфікувати слово-вираз до чогось єдиного. Тому, давайте спочатку переведемо увесь слово-вираз до нижнього або верхнього регістру методом <b>toLowerCase()/toUpperCase()</b>. Але і це не вирішить остаточно уніфікацію, бо проміжок між буквами/словами можуть порівнюватисть із самими буквами/словами. Для цього, потрібно методом <b>replace()</b> у який регулярними виразом <b>/\s/g,'' </b>забрати/видалити усі проміжки, ось так:</p><br>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          str = str.toLowerCase().replace(/\s/g,'');
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Ось так виглядає кінцевий код цим методом. Він є найбільш коротшим і найбільш очевидним - перевертаємо початковий слово-вираз та порівнюємо його з тим який був на початку:</p><br>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function polindrome(str) {
+            str = str.toLowerCase().replace(/\s/g,'');
+            return str === str.split('').reverse().join('');
+          };
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Тепер, вирішимо задачу іншим способом: розділимо слово пополам та пройдемся по буквам першої половини від почакту до середини та порівняєм їх із буквами які будуть братись з кінця другої половини до середини - якщо одинакові, то слово поліндром.<br>
+    Отже, визначаємо середину слово-виразу з використанням властивості <b>length</b>, а щоб точно, використаємо вбудований оператор <b>Math.floor</b>, ось так:</p><br>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+           const len = Math.floor(str.length / 2);
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Потім потрібно пройтись по розділеним частинам слово-виразу циклом <b>for</b>, де задати умову щоб порівнювались букви/слова першої частини із буквами/словами другої частини, які будуть братись з кінця, ось так:</p><br>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          for(let i = 0; i < len; i++)
+            if(str[i] !== str[str.length - i - 1]) {
+              return false;
+            }
+          return true;
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Ось так виглядає кінцевий код цим методом:</p><br>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function polindrome(str) {
+            str = str.toLowerCase().replace(/\s/g,'');
+            const len = Math.floor(str.length / 2);
+            for(let i = 0; i < len; i++)
+              if(str[i] !== str[str.length - i - 1]) {
+                return false;
+              }
+            return true;
+          };
+        </pre>
+      </code>
+    </p><br>
+
+    <h4 class="task">
+      Цього разу необхідно визначити, чи є число (не слово-вираз) поліндромом. Тобто якщо інвертувати порядок всіх цифр, чи отримаємо ми те ж саме число, що було спочатку. Додаткова умова при вирішенні цього завдання - необхідно її вирішити з константою по пам'яті (тобто варіант конвертувати число в рядок не підійде). При цьому, необхідно розуміти, що: від'ємне число не буде поліндромом і повинно видати false, ну і число, яке ділиться на 10 (кратне 10) також не буде поліндромом і видасть false. Напишіть функцію isPolindromeNumber(х), яке буде перевіряти число х на поліндром.
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          isPolindromeNumber(1221); // true
+          isPolindromeNumber(121); // true
+          isPolindromeNumber(i-121); // false
+          isPolindromeNumber(10); // false
+          isPolindromeNumber(24542); // true
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Отже, задамо умови в <b>if</b>, які одразу очевидні: від'ємне число, число кратне 10 та перевірка на число, яке менше 10 і повинне повертати true, ось так:</p><br>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function isPolindromeNumber(x) {
+            if (x < 0) return false;
+            if (x % 10 === 0) return false;
+            if (x < 10) return true;
+          };
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Далі, визначаємо спосіб: будемо "відривати" число з кінця початкового числа 'х' і ставимо його як перша складова іншого числа. Поступово, будемо формувати інше число шляхом "підклеювання" наступного "відірваного" від 'х' числа. І так, дійшовши до середини початкового числа 'х', ми автоматично формуємо інше число (це перевернута половина числа 'х'). Позначимо її як 'rev'. В кінці порівняємо половину від того, що залишилось від числа 'х' з половиною "склеєного" іншого числа rev: якщо рівні половинки - то це поліндром.<br>
+    Далі, необхідно визначити спосіб формування числа 'rev'. В циклі <b>while</b> на кожній ітерації, ми "відіраване" число будемо переводити на один розряд більше (множити на 10), щоб оператором <b>+</b> додавати до нього наступне "відірване" число. Одночасно, "відірване" число переводимо на розряд нижче (будемо ділити на 10), щоб можна було "підклеїти" (додати) його як складову до rev. При цьому, функцією <b>Math.trunc()</b>, відсікаємо залишок від початкового числа 'х', ось так:</p><br>
+
+    <p class="code-ex">
+      <code>
+        <pre style="width:60%">
+          let rev = 0; // створюємо інше число
+
+          while(x > rev) {
+            rev *= 10; // переводимо його на більший розряд
+            rev += x % 10; // підклеюємо до нього наступне відірване число
+            x = Math.trunc(x / 10); // відрізаємо від початкового числа 'х' залишок
+          }
+          return x === rev; // порівнюємо - автоматично отримуємо true якщо половинки співпадають
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Але, потрібно розглянути випадок, коли початкове число 'x' непарне. У цьому випадку нас не цікавить середина, бо решта половинок співпадає. Тому при порівнянні, потрібно задати цю умову, порівнюючи початкове число 'x' з іншим числом без врахування середнього числа - лише 'склеєну' половинку, ось так:</p><br>
+
+    <p class="code-ex">
+      <code>
+        <pre style="width:60%">
+          return x === rev || x === Math.trunc(rev/10) // порівнюємо - автоматично отримуємо true
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Ось так виглядає кінцевий код цим методом:</p><br>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function isPolindromeNumber(x) {
+            if (x < 0) return false;
+            if (x % 10 === 0) return false;
+            if (x < 10) return true;
+
+            let rev = 0;
+
+            while(x > rev) {
+              rev *= 10;
+              rev += x % 10;
+              x = Math.trunc(x / 10);
+            }
+            return x === rev || x === Math.trunc(rev/10);
+          };
+        </pre>
+      </code>
+    </p><br><br><br>
+
+    <script>
+
+      function polindrome(str) {
+        str = str.toLowerCase().replace(/\s/g,'');
+        return str === str.split('').reverse().join('');
+      };
+
+      console.log(polindrome('racecar')); // true
+      console.log(polindrome('table')); // false
+      console.log(polindrome('Анна')); // true
+      console.log(polindrome('А роза упала на лапу Азора')); // true
+      console.log(polindrome('The sky\'s emptiness lets birds fly')); // false
+      
+      // ===========================================
+
+      function polindrome2(str) {
+        str = str.toLowerCase().replace(/\s/g,'');
+        const len = Math.floor(str.length / 2);
+        for(let i = 0; i < len; i++)
+          if(str[i] !== str[str.length - i - 1]) {
+            return false;
+          }
+        return true;
+      };
+
+      console.log(polindrome2('racecar')); // true
+      console.log(polindrome2('table')); // false
+      console.log(polindrome2('Анна')); // true
+      console.log(polindrome2('А роза упала на лапу Азора')); // true
+      console.log(polindrome2('The sky\'s emptiness lets birds fly')); // falses
+
+      // ===========================================
+
+      function isPolindromeNumber(x) {
+        if (x < 0) return false;
+        if (x % 10 === 0) return false;
+        if (x < 10) return true;
+
+        let rev = 0;
+
+        while(x > rev) {
+          rev *= 10;
+          rev += x % 10;
+          x = Math.trunc(x / 10);
+        }
+        return x === rev || x === Math.trunc(rev/10);
+      };
+
+      console.log(isPolindromeNumber(1221)); // true
+      console.log(isPolindromeNumber(121)); // true 
+      console.log(isPolindromeNumber(-121)); // false
+      console.log(isPolindromeNumber(10)); // false
+      console.log(isPolindromeNumber(24542)); // true
+
+    </script>
+  </body>
+</html>
