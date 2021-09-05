@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Arrays, methods, sequence of perenthes is valid</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">
+      Working with arrays: methods <span class="emph"> push</span>, та
+      <span class="emph">pop</span>, essence of <span class="emph">stack</span>
+    </h2>
+
+    <h4 class="task">
+      В нас є три вида відкриваючих дужок: '(', '{', '[', та відповідні їм типи
+      закриваючих дужок: ')', '}', ']'.<br />
+      Також, ми маємо певну послідовність таких типів дужок. І якщо відкриваюча
+      дужка в певній послідовності має свою пару - закриваючу дужку такого
+      самого типу, то така послідовність вважається правельною. Відкриваючі та
+      закриваючі дужки можуть стояти в різних місцях послідовності, вкладуватись
+      одна в одну.<br />
+      Зважаючи на це, необхідно визначити, що в заданій послідовності дужок - ця
+      послідовність правельна?<br />
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          let s1 = '()'; // true
+          let s2 = '(){}[]'; // true
+          let s3 = '(['; // false
+          let s4 = '{[]}'; // true
+          let s5 = '([)]'; // false
+          let s6 = '{[[]{}]}()()'; // true
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Відповідь:</b></p>
+    <br />
+
+    <p>
+      Нагадаємо, що в стеці: перший зайшов, останній вийшов.<br />
+      Отже, створимо спочатку функцію, яка буде визначати певну послідовність
+      дужок і назвем її 'isValid'. Для цього, необхідно визначити стек, куда
+      будемо тимчасово поміщати дужку для подальшої її порівняння з іншою
+      дужкою, це можна зробити задавши пустий масив. А для того, щоб брати
+      елементи масиву, нам потрібно проходитись по його елементам - це робимо за
+      допомогою циклу <b>for</b>, але також і визначимо змінну поточного
+      елементу масиву - дужка, яка буде братись, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function isValid(s) {
+            let stack = [];
+
+            for(let i = 0; i < s.length; i++) {
+              const current = s[i];
+            }
+
+          }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Далі, потрібно визначати чи дужка є відкриваюча чи закриваюча. Це робимо з
+      використанням умови <b>if</b>.<br />
+      Але перед цим, давайте створимо окрему функцію 'isClosedBracket', яка буде
+      визначати чи дужка, наприклад, закриваючого типу. На вхід функція отримує
+      якийсь символ (ch - character), а в її тілі будемо робити пeрeвірку. Вона
+      заключається в тому, що повертається булеве значення true у разі, якщо
+      індекс символа не дорівнює -1, тобто в перерахованому масиві закриваючих
+      типів дужок, за допомогою методу <b>indexOf()</b>, що бере індекс символа
+      масиву (типів дужок), та порівнює з -1. Якщо повертається true - це
+      значить, що ми маємо закриваючий тип дужки, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function isClosedBracket(ch) {
+            return [')', '}', ']'].indexOf(ch) > -1;
+          }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Вже після цього, ми задаєм умову через <b>if</b>, в якій задаєм: якщо це
+      закриваючі дужки, то відпрацьовується одна умова, якщо ні - інша умова (це
+      відкриваюча дужка). Раніше, ми зазначали, що якщо дужка є відкриваюча то
+      нам необхідно її покласти в стек. Це можна зробити за допомогою метода
+      <b>push</b> і помістити її в другу умову, яка визначає умови виконання
+      коду для відкриваючої дужки, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          if(isClosedBracket(current)) {
+
+          } else {
+            stack.push(current);
+          }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      А тепер розберем умову, якщо дужка є закриваючою. Тут необхідно зробити
+      перевірку і визначити чи тип поточної закриваючої дужки відповідає типу
+      відкриваючої дужки? Для цього створимо певний <i>mapping</i>. Тобто,
+      спочатку створюємо об'єкт 'breckets', в якому ключами визначаємо
+      закриваючі дужки, які мають відповідні їм значення - відкриваючі дужки.
+      Його треба помістити на рівень тіла головної функції, щоб був до нього
+      доступ:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          let breckets = {
+            ')': '(',
+            '}': '{',
+            ']': '['
+          }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Далі для перевірки в умові закриваючої дужки, потрібно спочатку з стека
+      забрати відкриваючу дужку і далі порівняти її з закриваючою. Для цього
+      використаєм метод <b>pop</b>, який і візьме верхній елемент зі стека (наша
+      відкриваюча дужка) і далі порівняється ключем об'єкта 'breckets'. Якщо
+      вони не рівні, то повертаємо false, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          if(isClosedBracket(current)) {
+            if(brackets[current] !== stack.pop()) return false;
+          } else {
+            stack.push(current);
+          }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Але ми не можемо просто залишити в основній функції return true, оскільки
+      в стеці може залишатись ще елемент який не має пари. Тому тут також
+      потрібно задати перевірку на відсутність елемента в стеці, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          return stack.length === 0; // повертає тут true при відсутності елементів в стеці
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>Остаточний код має вигляд:</p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function isValid(s) {
+            let stack = [];
+            let breckets = {
+              ')': '(',
+              '}': '{',
+              ']': '['
+            }
+
+            for(let i = 0; i < s.length; i++) {
+              const current = s[i];
+
+              if(isClosedBracket(current)) {
+                if(brackets[current] !== stack.pop()) return false;
+              } else {
+                stack.push(current);
+              }
+            }
+
+            return stack.length === 0;
+          }
+
+          function isClosedBracket(ch) {
+            return [')', '}', ']'].indexOf(ch) > -1;
+          }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      // ===========================================
+
+      function isValid(s) {
+        let stack = [];
+        let brackets = {
+          ')': '(',
+          '}': '{',
+          ']': '[',
+        };
+
+        for (let i = 0; i < s.length; i++) {
+          const current = s[i];
+
+          if (isClosedBracket(current)) {
+            if (brackets[current] !== stack.pop()) return false;
+          } else {
+            stack.push(current);
+          }
+        }
+
+        return stack.length === 0;
+      }
+
+      function isClosedBracket(ch) {
+        return [')', '}', ']'].indexOf(ch) > -1;
+      }
+
+      let s1 = '()';
+      let s2 = '(){}[]';
+      let s3 = '([';
+      let s4 = '{[]}';
+      let s5 = '([)]';
+      let s6 = '{[[]{}]}()()';
+
+      console.log(s1, isValid(s1)); // true
+      console.log(s2, isValid(s2)); // true
+      console.log(s3, isValid(s3)); // false
+      console.log(s4, isValid(s4)); // true
+      console.log(s5, isValid(s5)); // false
+      console.log(s6, isValid(s6)); // true
+
+      // ===========================================
+    </script>
+  </body>
+</html>
