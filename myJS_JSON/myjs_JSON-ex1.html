@@ -1,110 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>myjs-JSON: exercise Преобразуйте объект в JSON, а затем обратно в обычный объект</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>myjs-JSON: exercise1</title>
     <style>
-    body {
+      body {
         background-color: tan;
         margin: 0;
         font-family: Verdana, sans-serif;
-    }
+      }
 
-    .title {
+      .title {
         color: red;
         text-align: center;
-        font-weight:700;
-    }
+        font-weight: 700;
+      }
 
-    .code-ex {
+      .code-ex {
         width: 50%;
         font-family: sans-serif;
         background-color: #bebebe;
         font-size: large;
         padding-left: 15px;
         margin: 0 auto;
-    }
+      }
 
-    .task{
+      .task {
         width: 50%;
         padding: 15px 25px;
         color: navy;
         background-color: #e2e2e2;
         margin: 35px auto;
-    }
+      }
 
-    .code-ex {
+      .code-ex {
         width: 50%;
         font-family: sans-serif;
         background-color: #bebebe;
         font-size: large;
         padding-left: 15px;
         margin: 0 auto;
-    }
+      }
 
-    p {
+      p {
         width: 80%;
         margin: 0 auto;
-    }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
+    <h2 class="title">
+      json-type: Перетворіть об'єкт в JSON, а потім назад в звичайний об'єкт.
+    </h2>
 
-    <h2 class="title">myjs-JSON: exercise Преобразуйте объект в JSON, а затем обратно в обычный объект</h2>
+    <h4 class="task">
+      Перетворіть user в JSON, потім прочитайте цей JSON в іншій змінній.
+    </h4>
 
-    <h4 class="task">Преобразуйте user в JSON, затем прочитайте этот JSON в другую переменную.</h4>
+    <p class="code-ex" style="width: 55%">
+      <code>
+        let user = {<br />
+        name: 'Modest',<br />
+        age: 50<br />
+        };<br />
+      </code>
+    </p>
+    <br />
 
-    <p class="code-ex" style="width: 55%;">
-        <code>
-            let user = {<br>
-                name: 'Modest',<br>
-                age: 50<br>
-            };<br>
-        </code>
-    </p><br>
-
-
-    <p><b>Решение</b>:<br><br>
-        Для для преобразования объектов в JSON используют метод  <b>JSON.stringify</b>. Сразу определим другую переменную.
-    </p><br>
-
-    <p class="code-ex">
-        <code>
-            let user2 = JSON.stringify(user);<br>
-            <br>
-            console.log( user2 );<br>
-        </code>
-    </p><br>
-
-    <script>
-        let user = {
-            name: 'Modest',
-            age: 50
-        };
-
-        let user2 = JSON.stringify(user);
-
-        console.log( user2 );      
-    </script>
-
-    <p>Что бы обратно преобразовать в обычный объект необходимо использовать метод <b>JSON.parse</b>, вот так:</p><br>
+    <p>
+      <b>Решение</b>:<br /><br />
+      Для перетворення об'єктів в JSON використовують метод
+      <b>JSON.stringify</b>. Одразу визначимо іншу змінну для такого
+      перетворення.
+    </p>
+    <br />
 
     <p class="code-ex">
-        <code>
-            let user2 = <b>JSON.parse(JSON.stringify(user));</b><br>
-            <br>
-            console.log( user2 );<br>
-        </code>
-    </p><br>
+      <code>
+        let user2 = JSON.stringify(user);<br />
+        <br />
+        console.log( user2 );<br />
+      </code>
+    </p>
+    <br />
 
     <script>
-        let user3 = JSON.parse(JSON.stringify(user));
+      let user = {
+        name: 'Modest',
+        age: 50,
+      };
 
-        console.log( user3 );      
+      let user2 = JSON.stringify(user);
+
+      console.log(user2);
     </script>
 
-</body>
+    <p>
+      А щоб назад перетворити в звичайний об'єкт потрібно застосувати метод
+      <b>JSON.parse</b>, ось так:
+    </p>
+    <br />
 
+    <p class="code-ex">
+      <code>
+        let user2 = <b>JSON.parse(JSON.stringify(user));</b><br />
+        <br />
+        console.log( user2 );<br />
+      </code>
+    </p>
+    <br />
+
+    <script>
+      let user3 = JSON.parse(JSON.stringify(user));
+
+      console.log(user3);
+    </script>
+  </body>
 </html>
