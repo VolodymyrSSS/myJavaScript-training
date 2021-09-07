@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/modal.css" />
+    <title>modal in pure JS</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h2 class="title">
+        JavaScript practice: <span class="emph"> push</span>, та
+        <span class="emph">pop</span>, essence of
+        <span class="emph">stack</span>
+      </h2>
+
+      <h4 class="task">
+        В нас є три вида відкриваючих дужок: '(', '{', '[', та відповідні їм
+        типи закриваючих дужок: ')', '}', ']'.<br />
+        Також, ми маємо певну послідовність таких типів дужок. І якщо
+        відкриваюча дужка в певній послідовності має свою пару - закриваючу
+        дужку такого самого типу, то така послідовність вважається правельною.
+      </h4>
+
+      <p>
+        <code>
+          <pre>
+            let s1 = '()'; // true
+            let s2 = '(){}[]'; // true
+            let s3 = '(['; // false
+            let s4 = '{[]}'; // true
+            let s5 = '([)]'; // false
+            let s6 = '{[[]{}]}()()'; // true
+          </pre>
+        </code>
+      </p>
+      <br />
+
+      <p class="code-ex">
+        <code>
+          <pre>
+            function isClosedBracket(ch) {
+              return [')', '}', ']'].indexOf(ch) > -1;
+            }
+          </pre>
+        </code>
+      </p>
+    </div>
+
+    <p>
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad, veritatis?
+      Possimus pariatur mollitia ipsa iste beatae quae eum architecto accusamus
+      voluptas? Ex nam temporibus tempore, mollitia excepturi quaerat modi qui!
+      Quia nisi velit eius tempore in facilis voluptate, repudiandae voluptas
+      voluptatibus omnis facere natus enim minima, dolorem expedita quibusdam
+      mollitia aliquam sequi minus reiciendis quas saepe? Provident placeat ex
+      et? Magnam consequuntur sint impedit quod porro officiis quo consequatur
+      illum maiores. Eaque quis cumque laudantium quos placeat repellat
+      accusantium facilis illum molestiae distinctio? Maxime sint assumenda
+      culpa mollitia magni ut! Distinctio eius a consequatur delectus optio
+      ducimus hic corporis doloremque aut eaque sunt ea nihil nobis
+      voluptatibus, quibusdam provident culpa temporibus debitis, voluptatum
+      excepturi asperiores sequi facilis iusto ad? Fugit. Veniam maxime vero
+      quaerat obcaecati!
+    </p>
+
+    <script src="base.js"></script>
+    <script src="plugins/modal.js"></script>
+    <script src="index.js"></script>
+  </body>
+</html>
