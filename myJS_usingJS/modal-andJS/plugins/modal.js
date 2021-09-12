@@ -1,5 +1,7 @@
 $.modal = function (options) {
   const $modal = _createModal(options);
+  const ANIMATION_SPEED = 200;
+  let closing = false;
 
   function _createModal(options) {
     const modal = document.createElement('div');
@@ -30,8 +32,17 @@ $.modal = function (options) {
   }
 
   return {
-    open() {},
-    close() {},
+    open() {
+      !closing && $modal.classList.add('open');
+    },
+    close() {
+      closing = true;
+      $modal.classList.remove('open');
+      $modal.classList.add('close');
+      setTimeout(() => {
+        $modal.classList.remove('close');
+      }, ANIMATION_SPEED);
+    },
     destroy() {},
   };
 };
