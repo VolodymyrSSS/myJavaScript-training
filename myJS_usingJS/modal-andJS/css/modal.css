@@ -13,18 +13,12 @@
   z-index: 1000;
 }
 
-.modal-overlay,
-.modal-window {
-  opacity: 0;
-  z-index: -1;
-}
-
 .vmodal.open .modal-window {
-  transform: translateY(150px);
+  transform: translateY(200px);
 }
 
 .vmodal.open .modal-overlay {
-  background: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .vmodal.close .modal-window {
@@ -32,7 +26,13 @@
 }
 
 .vmodal.close .modal-overlay {
-  background: rgba(0, 0, 0, 0);
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.modal-window,
+.modal-overlay {
+  opacity: 0;
+  z-index: -1;
 }
 
 .modal-overlay {
@@ -42,7 +42,7 @@
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0);
-  transition: background 0.2s ease-in;
+  transition: background-color 0.2s ease-in;
 }
 
 .modal-window {
@@ -52,7 +52,7 @@
   background: #fff;
   margin: 0 auto;
   transform: translateY(-200px);
-  translate: transform 0.4s ease-in;
+  transition: transform 0.2s ease-in;
 }
 
 .modal-header {

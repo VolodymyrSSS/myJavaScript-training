@@ -41,6 +41,7 @@ $.modal = function (options) {
       $modal.classList.add('close');
       setTimeout(() => {
         $modal.classList.remove('close');
+        closing = false;
       }, ANIMATION_SPEED);
     },
     destroy() {},
