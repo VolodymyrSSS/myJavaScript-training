@@ -1,3 +1,7 @@
+Element.prototype.appendAfter = function (element) {
+  element.parentNode.insertBefore(this, element.nextSibling);
+};
+
 $.modal = function (options) {
   const $modal = _createModal(options);
   const ANIMATION_SPEED = 200;
@@ -20,7 +24,15 @@ $.modal = function (options) {
         closing = false;
       }, ANIMATION_SPEED);
     },
-    // destroy() {}, -> you can put this method here or use Object.assign
+    // to remove whole modal, clean and save memory
+    destroy() {
+      destroyed = true;
+      // to remove elements from DOM-tree
+      $modal.parentNode.removeChild($modal);
+      // to remove eventListener
+      $modal.removeEventListener('click', listener);
+    },
+    // setContent(html), -> you can put this method here or use Object.assign
   };
 
   const listener = (event) => {
@@ -30,6 +42,28 @@ $.modal = function (options) {
   };
 
   $modal.addEventListener('click', listener);
+
+  function _createModalFooter(buttons = []) {
+    if (buttons === 0) {
+      return document.createElement('div');
+    }
+
+    const btnWrap = document.createElement('div');
+    btnWrap.classList.add('modal-footer');
+
+    function noop() {}
+
+    buttons.forEach((btn) => {
+      const $btn = document.createElement('button');
+      $btn.textContent = btn.text;
+      $btn.classList.add('btn');
+      $btn.classList.add(`btn-${btn.color || 'secondary'}`);
+      $btn.onclick = btn.handler || noop;
+      btnWrap.appendChild($btn);
+    });
+
+    return btnWrap;
+  }
 
   function _createModal(options) {
     const DEFAULT_WIDTH = '600px';
@@ -55,27 +89,20 @@ $.modal = function (options) {
             <div class="modal-body" data-content>
               ${options.content || ''}
             </div>
-            <div class="modal-footer">
-              <button>OK</button>
-              <button>Cansel</button>
-            </div>
           </div>
         </div>
       `
     );
+
+    const footer = _createModalFooter(options.footerButtons);
+    footer.appendAfter(modal.querySelector('[data-content]'));
+
     document.body.appendChild(modal);
     return modal;
   }
 
   return Object.assign(modal, {
-    // to remove whole modal, clean and save memory
-    destroy() {
-      destroyed = true;
-      // to remove elements from DOM-tree
-      $modal.parentNode.removeChild($modal);
-      // to remove eventListener
-      $modal.removeEventListener('click', listener);
-    },
+    // dynamically add content into modal
     setContent(html) {
       $modal.querySelector('[data-content]').innerHTML = html;
     },
