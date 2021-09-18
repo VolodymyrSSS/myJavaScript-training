@@ -68,7 +68,7 @@ $.modal = function (options) {
   function _createModal(options) {
     const DEFAULT_WIDTH = '600px';
     const modal = document.createElement('div');
-    modal.classList.add('vmodal');
+    modal.classList.add('v-modal');
     modal.insertAdjacentHTML(
       'afterbegin',
       `
