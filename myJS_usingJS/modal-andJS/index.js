@@ -19,36 +19,7 @@ const fruits = [
   },
 ];
 
-/* ------ More classical way to create modal window ------- */
-
-// const modal = $.modal({
-//   title: "Volodymyr's Modal",
-//   closable: true,
-//   content: `<h4>This Modal is shown and is working!</h4>
-//     <p>Lorem ipsum dolor sit amet.</p>`,
-//   width: '400px',
-//   footerButtons: [
-//     {
-//       text: 'Ok',
-//       color: 'primary',
-//       handler() {
-//         console.log('Btn OK was clicked');
-//         modal.close();
-//       },
-//     },
-//     {
-//       text: 'Cancel',
-//       color: 'danger',
-//       handler() {
-//         console.log('Btn Cancel was clicked');
-//         modal.close();
-//       },
-//     },
-//   ],
-// });
-
-/* ------ Dynamical way to create modal window ------- */
-
+/* ------ Dynamically render html part ------- */
 const toHTML = (fruit) => `
   <div class="col">
     <div class="card">
@@ -60,8 +31,8 @@ const toHTML = (fruit) => `
       />
       <div class="card-body">
         <h5 class="card-title">${fruit.title}</h5>
-        <a href="#" class="btn btn-primary">find a Price</a>
-        <a href="#" class="btn btn-danger">decline fruit</a>
+        <a href="#" class="btn btn-primary" data-btn="price" data-id="${fruit.id}">find a Price</a>
+        <a href="#" class="btn btn-danger" data-btn="remove" data-id="${fruit.id}">decline fruit</a>
       </div>
     </div>
   </div>`;
@@ -73,4 +44,73 @@ function render() {
 
 render();
 
-const modal = $.modal({ title: "Volodymyr's Modal" });
+/* ------ Classical way to create modal window ------- */
+
+const priceModal = $.modal({
+  title: 'The fruits price',
+  closable: true,
+  // content: `<h4>This Modal is shown and is working!</h4> // we add this by setContent
+  //   <p>Lorem ipsum dolor sit amet.</p>`, // we add this by setContent
+  width: '400px',
+  footerButtons: [
+    {
+      text: 'Ok',
+      color: 'primary',
+      handler() {
+        console.log('Btn OK was clicked');
+        priceModal.close();
+      },
+    },
+    {
+      text: 'Cancel',
+      color: 'danger',
+      handler() {
+        console.log('Btn Cancel was clicked');
+        priceModal.close();
+      },
+    },
+  ],
+});
+
+const declineModal = $.modal({
+  title: 'Are you sure you want to decline this fruits?',
+  closable: true,
+  width: '400px',
+  footerButtons: [
+    {
+      text: 'Ok',
+      color: 'primary',
+      handler() {
+        console.log('Btn OK was clicked');
+        priceModal.close();
+      },
+    },
+    {
+      text: 'Cancel',
+      color: 'danger',
+      handler() {
+        console.log('Btn Cancel was clicked');
+        priceModal.close();
+      },
+    },
+  ],
+});
+
+document.addEventListener('click', (event) => {
+  event.preventDefault();
+  const btnType = event.target.dataset.btn;
+  const id = +event.target.dataset.id;
+  const fruit = fruits.find((f) => f.id === id);
+
+  if (btnType === 'price') {
+    priceModal.setContent(`
+    <p>The price for ${fruit.title} is: <strong>${fruit.price}$</strong> per 2lb</p>`);
+    priceModal.open();
+  } else if (btnType === 'remove') {
+    declineModal.setContent(`
+      <p>
+        You are removing <strong>${fruit.title}</strong>!
+      </p>`);
+    declineModal.open();
+  }
+});

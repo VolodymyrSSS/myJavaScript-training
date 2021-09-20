@@ -102,7 +102,7 @@ $.modal = function (options) {
   }
 
   return Object.assign(modal, {
-    // dynamically add content into modal
+    // expand methods: adding setContent method into modal
     setContent(html) {
       $modal.querySelector('[data-content]').innerHTML = html;
     },
