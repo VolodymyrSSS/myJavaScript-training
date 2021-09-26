@@ -1,4 +1,4 @@
-const fruits = [
+let fruits = [
   {
     id: 1,
     title: 'apples',
@@ -44,52 +44,15 @@ function render() {
 
 render();
 
-/* ------ Classical way to create modal window ------- */
-
 const priceModal = $.modal({
   title: 'The fruits price',
   closable: true,
-  // content: `<h4>This Modal is shown and is working!</h4> // we add this by setContent
-  //   <p>Lorem ipsum dolor sit amet.</p>`, // we add this by setContent
   width: '400px',
   footerButtons: [
     {
-      text: 'Ok',
+      text: 'Close',
       color: 'primary',
       handler() {
-        console.log('Btn OK was clicked');
-        priceModal.close();
-      },
-    },
-    {
-      text: 'Cancel',
-      color: 'danger',
-      handler() {
-        console.log('Btn Cancel was clicked');
-        priceModal.close();
-      },
-    },
-  ],
-});
-
-const declineModal = $.modal({
-  title: 'Are you sure you want to decline this fruits?',
-  closable: true,
-  width: '400px',
-  footerButtons: [
-    {
-      text: 'Ok',
-      color: 'primary',
-      handler() {
-        console.log('Btn OK was clicked');
-        priceModal.close();
-      },
-    },
-    {
-      text: 'Cancel',
-      color: 'danger',
-      handler() {
-        console.log('Btn Cancel was clicked');
         priceModal.close();
       },
     },
@@ -107,10 +70,20 @@ document.addEventListener('click', (event) => {
     <p>The price for ${fruit.title} is: <strong>${fruit.price}$</strong> per 2lb</p>`);
     priceModal.open();
   } else if (btnType === 'remove') {
-    declineModal.setContent(`
-      <p>
-        You are removing <strong>${fruit.title}</strong>!
-      </p>`);
-    declineModal.open();
+    $.declineOrConfirm({
+      title: 'Are you sure?',
+      content: `
+        <p>
+          You are removing <strong>${fruit.title}</strong>!
+        </p>`,
+    })
+      .then(() => {
+        console.log(`The ${fruit.title} was removed`);
+        fruits = fruits.filter((f) => f.id !== id);
+        render();
+      })
+      .catch(() => {
+        console.log('cancel removing');
+      });
   }
 });

@@ -22,6 +22,10 @@ $.modal = function (options) {
       setTimeout(() => {
         $modal.classList.remove('close');
         closing = false;
+        // hook to delete nodes in DOM-tree
+        if (typeof options.onClose === 'function') {
+          options.onClose();
+        }
       }, ANIMATION_SPEED);
     },
     // to remove whole modal, clean and save memory

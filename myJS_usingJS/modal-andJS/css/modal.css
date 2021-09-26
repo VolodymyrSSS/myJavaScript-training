@@ -1,4 +1,5 @@
 .v-modal {
+  /*class means Volodymyr's modal window*/
 }
 
 .v-modal.open .modal-overlay,
