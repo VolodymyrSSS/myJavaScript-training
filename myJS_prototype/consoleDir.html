@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Builtin prototypes</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        /* width: 80%; */
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">
+      Working with prototypes: builtin prototypes, use
+      <span class="emph"> console.dir</span>
+    </h2>
+
+    <h4 class="task">
+      В нас є масив: [1,2,3]. Як показати усі наявні прототипи, які має цей
+      масив? Як перевірити що ці наявні прототипи дійсно є у цьому масиві?
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          let arr = [1,2,3];
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Відповідь:</b></p>
+    <br />
+
+    <p>
+      Як відомо, вбудовані об'єкти, такі як Array, Date, Function та інші,
+      зберігають свої методи в прототипах.<br />
+      При створенні масиву [1, 2, 3] внутрішньо
+      <em>використовується конструктор масивів Array</em>. Тому прототипом
+      масиву стає <b>Array.prototype</b>, який дозволяє брати свої методи.
+      Згідно зі специфікацією, нагорі ієрархії вбудованих прототипів знаходиться
+      <b>Object.prototype</b>. Тому іноді говорять, що «все успадковується від
+      об'єктів».
+    </p>
+    <br />
+
+    <img
+      src="native-prototypes-classes.svg"
+      alt="image of native-prototypes-classes"
+      width="692"
+      height="411"
+    />;
+
+    <p>
+      У браузерних інструментах, таких як консоль розробника, можна подивитися
+      ланцюжок успадкування а для цього потрібно використати
+      <b>console.dir</b> що використовується для огляду усіх властивостей
+      вбудованих об'єктів, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          console.dir([1,2,3]);
+          або так
+          console.dir(arr);
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      let arr = [1, 2, 3];
+      console.dir(arr);
+    </script>
+
+    <p>В результаті можна виявити, що</p>
+    <br />
+
+    <img
+      src="console_dir_array.png"
+      alt="example of consoleDir"
+      width="592"
+      height="311"
+    /><br />
+
+    <p>
+      А тепер давайте перевіримо, чи успадковує масив arr методи від
+      Array.prototype? Далі від Object.prototype і на вершині має null ? Це
+      можна зробити використавши метод <b>.__proto__</b>, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex" style="width: 55%">
+      <code>
+        <pre>
+          // чи успадковує від Array.prototype
+          console.log( arr.__proto__ === Array.prototype ); // true
+
+          // потім, чи успадковує далі від Object.prototype
+          console.log( arr.__proto__.__proto__ === Object.prototype ); // true
+
+          // і null на вершині
+          console.log( arr.__proto__.__proto__.__proto__ ); // null
+        </pre>
+      </code>
+    </p>
+
+    <script>
+      // чи успадковує від Array.prototype
+      console.log(arr.__proto__ === Array.prototype); // true
+
+      // потім, чи успадковує далі від Object.prototype
+      console.log(arr.__proto__.__proto__ === Object.prototype); // true
+
+      // і null на вершині
+      console.log(arr.__proto__.__proto__.__proto__); // null
+    </script>
+    <br />
+  </body>
+</html>
