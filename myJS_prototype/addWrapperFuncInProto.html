@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Add wrapper function in prototype</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        /* width: 80%; */
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">
+      Working with prototypes: add decorator-method to the
+      <span class="emph">prototype</span>
+    </h2>
+
+    <h4 class="task">
+      Додайте всім функціям в прототип метод-обгортку defer(ms), так званий
+      декоратор, який задається: спочатку вказується затримка, а потім
+      аргументи, які потрібно додати. Тобто, цей метод має повертати результати
+      роботи функції додавання із затримкою в 1.5 секунди з правельно переданими
+      послідовності аргументами.
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          function f(a, b) {
+            console.log( a + b );
+          }
+          
+          f.defer(1500)(1, 2); // виведе 3 через 1.5 секунди.
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Відповідь:</b></p>
+    <br />
+
+    <p>
+      Як відомо, усі функції успадковують методи від свого прототипу функцій -
+      <b>Function.prototype</b>.<br />
+      А для того, щоб створити метод в ньому, потрібно задати його через крапку,
+      як це робиться у звичайних об'єктах, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          Function.prototype.defer
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Далі визначимо сам метод - це буде наша функція-декоратор, яка на вхід
+      буде отримувати кількість секунд (в мілісекундах) та повертати також
+      функцію, яка, в свою чергу, на вхід буде отримувати аргументи та повертати
+      результат додавання цих аргументів, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function f(a, b) {
+            console.log(a + b);
+          }
+    
+          Function.prototype.defer = function (ms) {
+            return function (...args) {
+              console.log('args - ', ...args);
+            };
+          };
+    
+          f.defer(1500)(1, 2); // виведе аргументи 1, 2
+    
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      function f(a, b) {
+        console.log(a + b);
+      }
+
+      Function.prototype.defer = function (ms) {
+        return function (...args) {
+          console.log('args - ', ...args); // 1, 2
+        };
+      };
+
+      f.defer(1500)(1, 2);
+    </script>
+
+    <p>
+      Проте нам необхідно щоб виводилось не просто аргументи, а результат
+      додавання їх та ще й затримкою - через 1.5 секунди, тому спочатку потрібно
+      використати метод setTimeout, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function.prototype.defer = function (ms) {
+            return function (...args) {
+              setTimeout(...args, ms);
+            };
+          };
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      і далі прив'язати додавання аргументів до часу затримки, причому аргументи
+      повинні подаватись на вхід функціі правильно (після часу затримки). Для
+      вирішення цього, потрібно застосувати метод <b>apply</b>, який
+      викликається в функції, яка першим аргументом має значення на яке вказує
+      ключове слово <em>this</em>, а другим - аргумети масиву (або властівості
+      масиво-подібних об'єктів):
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          () => f.apply(this, args)
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Але тоді потрібно в нашій функції визначити на що вказує ключове слово
+      <b>this</b>. А це наша функція-декоратор, а отже можемо створити окрему
+      змінну <em><b>f</b></em> якій присвоїмо це значення this, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function f(a, b) {
+            console.log(a + b);
+          }
+
+          Function.prototype.defer = function (ms) {
+            let f = this; // this -  ƒ f(a, b) {console.log(a + b);}
+            console.log('this - ', this); 
+            return function (...args) {
+              setTimeout(() => (this, args), ms); 
+            };
+          };
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>Таким чином, кінцевий код буде мати вид:</p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function f(a, b) {
+            console.log(a + b);
+          }
+    
+          Function.prototype.defer = function (ms) {
+            let f = this;
+            return function (...args) {
+              setTimeout(() => f.apply(this, args), ms);
+            };
+          };
+    
+          f.defer(1500)(1, 2); // виведе 3 через 1.5 секунди.
+    
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      Function.prototype.defer = function (ms) {
+        let f = this;
+        console.log('this - ', this);
+        return function (...args) {
+          setTimeout(() => f.apply(this, args), ms);
+        };
+      };
+
+      f.defer(1500)(1, 2); // виведе 3 через 1.5 секунди.
+    </script>
+  </body>
+</html>
