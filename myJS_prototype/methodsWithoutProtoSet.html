@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Prototype methods, objects without the __proto__ property</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        /* width: 80%; */
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">
+      Working with prototypes: objects without the __proto__ property,<br />
+      method: <span class="emph">Object.create(proto, [descriptors])</span> and
+      modern setters/getters <br />
+      <span class="emph">Object.getPrototypeOf(obj)</span> /
+      <span class="emph">Object.setPrototypeOf(obj, proto) </span>
+    </h2>
+
+    <h4 class="task">
+      В нас є об'єкт <i>animal</i>, який буде вважатись прототипом для
+      об'єктів.<br />
+      Створіть новий об'єкт <i>rabbit</i> із щонайменше двома власними
+      властивостями, який успадковує методи від прототипу <i>animal</i> без
+      використання властивості __proto__.<br />
+      Створіть новий об'єкт <i>fox</i> із власною властивістю, який успадковує
+      методи від прототипу <i>predators</i> без використання властивості
+      __proto__.<br />
+      Поміняйте прототип для об'єкта <i>fox</i> на <i>animal</i>. Які
+      особливості можна зазначити?<br />
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          let animal = {
+            eats: true
+          };
+          console.log(rabbit.eats); // true
+          console.log(rabbit.jumps); // true
+
+          let predators = {
+            hunts: true,
+          };
+          console.log(fox.predators); // true
+          console.log(fox.isCanny); // true
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Відповідь:</b></p>
+    <br />
+
+    <p>
+      Властивість __proto__ вважається застарілим, і по стандарту воно повинно
+      підтримуватися тільки браузерами. Тепер існують більш сучасні методи
+      роботи з прототипами. Отже, створимо новий об'єкт <i>rabbit</i> з
+      прототипом <i>animal</i> використавши сучасний метод
+      <b>Object.create (proto, [descriptors])</b>, який створює порожній об'єкт
+      з прихованою властивістю [[Prototype]], і необов'язкового параметру
+      опису/задання нових властивостей descriptors, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          let animal = {
+            eats: true,
+          };
+    
+          // створюємо новий об'кт rabbit з прототипом animal та новими властивостями
+          let rabbit = Object.create(animal, {
+            jumps: {
+              value: true,
+            },
+            hides: {
+              value: true,
+            },
+          });
+    
+          // використаємо властивість прототипу
+          console.log(rabbit.eats); // true
+          // використаємо власну властивість
+          console.log(rabbit.hides); // true
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      let animal = {
+        eats: true,
+      };
+
+      // створюємо новий об'кт с прототипом animal та новими властивостями
+      let rabbit = Object.create(animal, {
+        jumps: {
+          value: true,
+        },
+        hides: {
+          value: true,
+        },
+      });
+
+      // використаємо властивість прототипу
+      console.log(rabbit.eats); // true
+      // використаємо власну властивість
+      console.log(rabbit.hides); // true
+    </script>
+
+    <p>
+      Подібно, створюємо новий об'єкт <i>fox</i> із власним методом та
+      прототипом <i>predators</i>, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          let predators = {
+            hunts: true,
+          };
+    
+          let fox = Object.create(predators, {
+            isCanny: {
+              value: true,
+            },
+          });
+    
+          // використаємо властивість прототипу
+          console.log(fox.hunts); // true
+          // використаємо власну властивість
+          console.log(fox.isCanny); // true
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      let predators = {
+        hunts: true,
+      };
+
+      let fox = Object.create(predators, {
+        isCanny: {
+          value: true,
+        },
+      });
+
+      // використаємо властивість прототипу
+      console.log(fox.hunts); // true
+      // використаємо власну властивість
+      console.log(fox.isCanny); // true
+    </script>
+
+    <p>
+      Далі, для заміни об'єкта <i>fox</i> з прототипу <i>predators</i> на
+      прототип <i>animal</i>, використаємо метод
+      <b>Object.setPrototypeOf(obj, proto)</b>, який встановлює властивість
+      [[Prototype]] об'єкта obj як proto, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          Object.setPrototypeOf(fox, animal);
+          // взяли властивість з прототипу animal
+          console.log(fox.eats); // true
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      Object.setPrototypeOf(fox, animal);
+      // взяли властивість з прототипу animal
+      console.log(fox.eats); // true
+    </script>
+
+    <p>
+      Технічно ми можемо встановлювати/отримувати [[Prototype]] в будь-який час.
+      Але зазвичай ми встановлюємо прототип тільки раз під час створення
+      об'єкта, а після не змінюємо.<br />
+      JavaScript двигуни добре оптимізовані для цього. Зміна прототипу 'на
+      льоту' за допомогою Object.setPrototypeOf або obj .__ proto __ = - дуже
+      повільна операція, яка ламає внутрішні оптимізації для операцій доступу до
+      властивостей об'єкта. Так що краще уникайте цього крім тих випадків, коли
+      ви знаєте, що робите, або ж коли швидкість JavaScript для вас не має
+      ніякого значення.
+    </p>
+    <br />
+
+    </script>
+  </body>
+</html>
