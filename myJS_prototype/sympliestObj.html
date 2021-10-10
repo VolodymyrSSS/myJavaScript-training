@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Prototype methods, objects without the __proto__ property</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">
+      Working with prototypes: objects without the __proto__ property,<br />
+      sympliest object with <span class="emph">Object.create(null)</span>
+    </h2>
+
+    <h4 class="task">
+      Як ми знаємо, об'єкти можна використовувати як асоціативні масиви для
+      зберігання пар ключ/значення.<br />
+      Але якщо ми спробуємо зберігати створені користувачами ключі (наприклад,
+      словники коли користувач сам задає значення ключа), можна помітити цікавий
+      збій: всі ключі працюють як очікується, за винятком "__proto__". Тобто,
+      якщо користувач введе __proto__ як ключ, то його значення проігнорується і
+      не буде присвоїно цьому ключу.<br />
+      Яким чином це виправити?
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          let obj = {};
+
+          let key = prompt("What's the key?", "__proto__");
+          obj[key] = "some value";
+
+          console.log(obj[key]); // [object Object], не "some value"!
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Відповідь:</b></p>
+    <br />
+
+    <p>
+      Властивість __proto__ особливе: воно повинно бути або об'єктом, або null,
+      а слово-вираз не може стати прототипом.<br />
+      Але ми і не мали наміру реалізовувати таку поведінку, чи не так? Ми просто
+      хочемо зберегти пару ключ/значення, а значення, яке має ключ з ім'ям
+      '__proto__' не зберігається. А в разі, якщо задати якийсь ключ з об'єкту,
+      чи заданні ключа 'toString' (по замавчуванню це функція), чи інших
+      вбудованих методів, то прототип взагалі може бути змінений і подальше
+      виконання піде абсолютно непередбачуваним чином.<br />
+      Тому можливим рішенням може бути використання колекції 'Мар', але і
+      використання глобального прототипу об'єктів Object також вирішить
+      проблему.
+    </p>
+    <br />
+
+    <p>
+      Властивість __proto__ - це геттер / сетер для властивості [[Prototype]], і
+      знаходиться він в Object.prototype, як і інші методи. Тобто, властивість
+      __proto__ - це аксессор, заданий в Object.prototype:
+    </p>
+    <br />
+
+    <img
+      src="obj-prototype-get-set.svg"
+      alt="object-prototype-get-set"
+      width="692"
+      height="411"
+    />;
+
+    <p>
+      При зчитуванні або установці obj .__ proto__ викликається відповідний
+      геттер/сетер (get.__proto__:function / set.__proto__:function) з прототипу
+      obj, і саме він встановлює/отримує властивість [[Prototype]].<br />
+      __proto__ - це спосіб доступу до властивості [[Prototype]], це не сама
+      властивість [[Prototype]].<br />
+      Тепер, якщо ми хочемо використовувати об'єкт як асоціативний масив, ми
+      можемо зробити це за допомогою невеликого трюку: створювати не літерал
+      об'єкта, а пустий об'єкт без прототипу, або скрита властивість
+      [[Prototype]] буде вказувати на null, ось так:
+      <br />
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          <b>let obj = Object.create(null);</b>
+
+          let key = prompt("What's the key?", "__proto__");
+          obj[key] = "some value";
+
+          console.log(obj[key]); // "some value"
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      let obj = Object.create(null);
+
+      let key = prompt("What's the key?", '__proto__');
+      obj[key] = 'some value';
+
+      console.log(obj[key]); // "some value"
+    </script>
+
+    <p>
+      Таким підходом не буде успадковування геттера/сеттера для властивості
+      __proto__. Тепер ця властивість буде зчитуватись/задаватись як звичайна
+      властивість. <br />
+      Загалом, можна назвати такий об'єкт <b><i>obj</i></b> як
+      <i>'найпростіший об'єкт'</i> бо він ще простіший ніж літерал об'єкта
+      <b><i>{...}</i></b
+      >. Головний недолік таких об'єктів в тому, що у них немає вбудованих
+      методів таких як <i>toString</i>, хоча потрібно сказати, що для
+      асоціативних масивів - це нормально.
+    </p>
+    <br />
+  </body>
+</html>
