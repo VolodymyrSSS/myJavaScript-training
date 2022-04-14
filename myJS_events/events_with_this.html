@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>myjs-events with this</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .title {
+        color: red;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: larger;
+        font-weight: 700;
+        margin-left: 95px;
+      }
+
+      .example {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 30px;
+        padding-right: 30px;
+      }
+
+      div input {
+        margin-right: 30px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Events: events with this</h2>
+
+    <h4 class="task">
+      Сховати себе.<br>
+      Cтворіть кнопку яка сховає саму себе після натискання на неї.<br>
+    </h4>
+
+    <p class="code-ex" style="width: 60%"><br>
+      Вихідні дані:<br>
+      <code><br>
+        &lt;input type="button" value="Натиснути, щоб сховати" /&gt;<br>
+        <br>
+      </code>
+    </p><br>
+    <br>
+
+    <div class="example">
+      <input type="button" onclick="this.hidden=true" value="Натиснути, щоб сховати" />
+    </div>
+
+    <p><b>Рішення</b>:</p><br>
+
+    <p>
+      Події можна призначити виконавця, тобто функцію, яка спрацює як тільки станеться подія. Є декілька способів призначити ("повісити") події виконавця:<br> <em>- використання атрибута HTML</em> та<br> <em>- використання властивості DOM-елемента</em>.<br>
+      <br>
+      Якщо шляхом використання атрибута НTML, то напрклад, назначити виконавця події click на елементе input, можна використавши атрибут onclick, ось так:
+    </p>
+
+    <div class="example">
+      <input value="Натисни мене" onclick="alert('Клік!')" type="button" />
+    </div>
+
+    <p class="code-ex">
+        <code>
+          <pre>
+            input value="Натисни мене" onclick="alert('Клік!')" type="button"
+            // тут при кліці мишкою по кнопці виконається код, вказаний в атрибуті onclick
+          </pre>
+        </code>
+    </p>
+
+    <p>
+      Проте, атрибут HTML-тега – не саме зручне місце для написания великої кількості коду, тому ліпше створити окрему JavaScript-функцію та викликати її там, як показано тут:
+    </p>
+
+    <div class="example">
+      <input type="button" onclick="countRabbits()" value="Рахувати кроликів!" />
+    </div>
+
+    <script>
+      function countRabbits() {
+        for(let i=1; i<=3; i++) {
+          alert("Кролик номер " + i);
+        }
+      }
+    </script>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          script
+            function countRabbits() {
+              for(let i=1; i<=3; i++) {
+                alert("Кролик номер " + i);
+              }
+            }
+          /script
+          
+          input type="button" onclick="countRabbits()" value="Рахувати кроликів!"
+          // Як пам'ятаємо, атрибут HTML-тега не чутливий до регістру, тому ONCLICK як і onClick, onCLICK… теж працює
+        </pre>
+      </code>
+  </p>
+
+    <p>
+      Якщо шляхом використання DOM-елемента, то наприклад на подію onclick "вішають" виконавця на визначене значення властивості DOM-елемента, як ось тут:
+    </p>
+
+    <div class="example">
+      <input id="elem" type="button" value="Натисни мене!" />
+    </div>
+
+    <script>
+      elem.onclick = function() {
+        alert('Нарешті натиснув');
+      };
+    </script>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          input id="elem" type="button" value="Натисни мене!"
+          
+          script
+          elem.onclick = function() {
+            alert('Нарешті натиснув');
+          };
+          /script
+          
+        </pre>
+      </code>
+    </p>
+
+    <p>
+      Якщо виконавець заданий через атрибут, то браузер читає HTML-размітку, створює новую функцію з вмісту атрибута та записує у властивість. Цей спосіб, по суті, такий як і призначення виконавця через атрибут HTML-тега. Але при цьому необхідно зазначити, що виконавець завжди зберігається у властивості DOM-об'екту, а атрибут – лише один із способів його ініціалізації.
+      Крім того, в елемента DOM може бути тільки одна властивість з іменем onclick, і призначити більше ніж одного виконавця неможна. Ось приклад:
+    </p>
+
+    <div class="example">
+      <input type="button" id="elem1" onclick="alert('Було')" value="Натисни мене" />
+    </div>
+
+    <script>
+      elem1.onclick = function() {
+        alert('Стало');
+      };
+    </script>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          input type="button" id="elem" onclick="alert('Було')" value="Натисни мене"
+
+          script
+            elem.onclick = function() { // перезапише існуючий раніше виконавець
+              alert('Стало'); // Виведеться тільки це
+            };
+            // тут призначення через JavaScript перезапише виконавця з атрибута
+          /script
+        </pre>
+      </code>
+    </p>
+
+    <p>
+      Також, виконавця можна призначити і вже існуючій функції, але необхідно пам'ятати, що присвоєння повинно здійснюватись без скобок (виклика функції), а тільки посиланням на назву функції, бо буде призначениц виконавцю результат роботи функції що дорівнює underfined, ось гарний приклад:
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function sayThanks() {
+            alert('Подякував!');
+          }
+          
+          elem.onclick = sayThanks;
+
+          // а це невірно!
+          elem.onclick = sayThanks();
+        </pre>
+      </code>
+    </p>
+
+    <p>
+      Всередині виконавця події, в разі застосування ключового слова this, воно буде посилатись на поточний елемент, тобто на той на якому призначений ("висить") виконавець, ось приклад:
+    </p>
+
+    <div class="example">
+      <button onclick="alert(this.innerHTML)">Натисни мене</button>
+    </div>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          button onclick="alert(this.innerHTML)">Натисни мене /button
+          // тут button виводить свій вміст, використовуючи this.innerHTML
+        </pre>
+      </code>
+    </p>
+
+    <p>
+        Отже, для вирішення цієї задачі можна використати: або style="display:none", або властивість "hidden", причому остання в застосуванні простіша.<br>
+        Властивість "hidden" можна використати як атрибут і як властивість DOM. Як атрибут так і DOM-властивість "hidden" вказують на те, чи бачимо ми елемент чи ні.<br>
+        Ми можемо його використати в HTML - в атрибуті елемента додавши його назву до тегу елемента<br> 
+        <em>&lt;div hidden&gt;</em><br> 
+        Або задати за допомогою JavaScript - присвоївши значення елемента в "true":<br>
+        <em>&lt;div id="elem"&gt; &lt;/div&gt;<br>
+        &lt;script&gt;<br>
+        &nbsp;elem.hidden = true;<br>
+        &lt;/script&gt;</em><br><br>
+        Але спочатку потрібно отримати доступ до елемента де хочемо скрити текст.<br>
+        Якщо в елемента є атрибут id, то ми можема отримати його викликом <em>document.getElementById('text').hidden = true;</em>, але в нашому варіанті відсутній id. Отже, більш оптимальним рішенням є використання атрибута HTML якому задати виконавця події onclick, ось так:<br>
+    </p>
+   
+    <p class="code-ex">
+        <code>
+          <pre>
+            input type="button" onclick="this.hidden=true" value="Натиснути, щоб сховати"
+          </pre>
+        </code>
+    </p><br>
+    <br>
+  </body>
+</html>
