@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>myjs-events:</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .title {
+        color: red;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: larger;
+        font-weight: 700;
+        margin-left: 95px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Events</h2>
+
+    <h4 class="task">
+      Яка функція-виконавець запуститься?<br>
+      В змінній button є кнопка. Спочатку на ній немає виконавця.<br>
+      Котрий з виконавців запуститься? Що буде виведено при кліці після виконання коду?<br>
+    </h4>
+
+    <p class="code-ex" style="width: 60%"><br>
+      Вихідні дані:<br>
+      <code><br>
+        button.addEventListener("click", () => console.log("1"));<br>
+        <br>
+        button.removeEventListener("click", () => console.log("1"));<br>
+        <br>
+        button.onclick = () => console.log(2);<br>
+        <br>
+      </code>
+  </p><br>
+
+    <p><b>Рішення</b>:</p><br>
+
+    <p>У перших двох рядках, виконавець призначається через елементи атрибута. Виконавець в другій функції не буде видалений бо  в removeEventListener передається не така сама функція, а інша, хоча з абсолютно одинаковим кодом.<br>
+    В JavaScript якщо функцію-виконавець окремо не зберегти будь-де, ми не зможемо її і видалити.<br> 
+    Щоб це вирішити потрібно писати код типу такого:
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+            function handler() {
+                console.log( '1' );
+            }
+              
+            input.addEventListener("click", handler);
+            // ....
+            input.removeEventListener("click", handler);
+        </pre>
+      </code>
+    </p>
+
+    <p>
+    Взагалі необхідно сказати, що виконавець завжди зберігається в DOM-об'єкті, а атрибут – лише один зі способів його ініціалізації.<br>
+    В третьому рядку кода виконавець призначений на властивість DOM-елемента onclick. Призначений виконавець в button.onclick виконається незалежно від addEventListener.<br>
+    Таким чином, виконається код з першого і третього рядків та буде виведено в консоль <em>"1"</em> і <em>"2"</em>.
+    </p><br>
+    <br>
+    
+    <script>
+        button.addEventListener("click", () => console.log("1"));
+      
+        button.removeEventListener("click", () => console.log("1"));
+   
+        button.onclick = () => console.log(2); 
+    </script>
+  </body>
+</html>
