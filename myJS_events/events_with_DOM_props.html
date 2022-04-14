@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>myjs-events with DOM-properties</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .title {
+        color: red;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: larger;
+        font-weight: 700;
+        margin-left: 95px;
+      }
+
+      .example {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 30px;
+        padding-right: 30px;
+      }
+
+      div input {
+        margin-right: 30px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Events: events with DOM-properties like elem.onclick</h2>
+
+    <h4 class="task">
+      Приховати елемент при натисненні на кнопку<br>
+      Тобтон, потрібно додати JavaScript код для кнопки button, шоб при натисканні на елемент div id="text" щезав увесь його текст.<br>
+    </h4>
+
+    <p class="code-ex" style="width: 60%"><br>
+      Вихідні дані:<br>
+      <code><br>
+        &lt;input type="button" id="hider" value="Натисніть, щоб заховати якийсь текст" /&gt;<br>
+        <br>
+        &lt;div id="text"&gt;Якийсь текст Якийсь текст Якийсь текст&lt;/div&gt;<br>
+        <br>
+        &lt;script&gt;<br>
+        &nbsp;/* ваш код */<br>
+        &lt;/script&gt;<br><br>
+      </code>
+    </p><br>
+    <br>
+
+    <div class="example">
+        <input type="button" id="hider" value="Натисніть, щоб заховати текст" />
+    
+        <div id="text">Якийсь текст Якийсь текст Якийсь текст</div>
+    </div>
+
+    <p><b>Рішення</b>:</p><br>
+
+    <p>
+        Для вирішення цієї задачі можна використати: або style="display:none", або властивість "hidden", причому остання в застосуванні простіша.<br>
+        Властивість "hidden" можна використати як атрибут і як властивість DOM. Як атрибут так і DOM-властивість "hidden" вказують на те, чи бачимо ми елемент чи ні.<br>
+        Ми можемо його використати в HTML - в атрибуті елемента додавши його назву до тегу елемента<br> 
+        <em>&lt;div hidden&gt;</em><br> 
+        Або задати за допомогою JavaScript - присвоївши значення елемента в "true":<br>
+        <em>&lt;div id="elem"&gt; &lt;/div&gt;<br>
+        &lt;script&gt;<br>
+        &nbsp;elem.hidden = true;<br>
+        &lt;/script&gt;</em><br><br>
+        Але спочатку потрібно отримати доступ до елемента де хочемо скрити текст.<br>
+        Якщо в елемента є атрибут id, то ми можема отримати його викликом <em>document.getElementById(id)</em>, де б він не знаходився, а в нашому варіанті одразу задамо значення властивості DOM-елемента, ось так:<br>
+    </p>
+   
+    <p class="code-ex">
+        <code>
+          <pre>
+            document.getElementById('text').hidden = true;
+          </pre>
+        </code>
+    </p>
+
+    <p>
+        Тепер потрібно навішати на елемент виконавця - тобто функцію, яка виконається у разі будь-якої події з цим елементом.<br>
+        У нашому випадку, подія - це клік по кнопці. Відомо, виконавець може бути назначений прямо в розмітці HTML, в атрибуті чи використавши властивість DOM-елементу типу <em>elem.onclick</em>. Але виконавець завжди зберігається у властивості DOM-елемента, а атрибут – лише один зі способів його ініціалізації. Тому використаєм все ж таки властивість DOM-елемента для навішування на елемент події як тут:
+    </p>
+
+    <p class="code-ex">
+        <code>
+          <pre>
+            input id="elem" type="button" value="Натисни мене!"
+
+            script
+                elem.onclick = function() {
+                    alert('Вже натиснуто');
+                };
+            /script
+          </pre>
+        </code>
+    </p>
+
+    <p>
+        Але знову таки, потрібно спочатку отримати елемент щоб потім навішати на нього виконавця. І тут також використаємо <em>document.getElementById(id)</em> а далі присвоїмо функцію-виконавця для приховання тексту, ось так:
+    </p>
+
+    <p class="code-ex">
+        <code>
+          <pre>
+            document.getElementById('hider').onclick = function() {
+                document.getElementById('text').hidden = true;
+            }
+          </pre>
+        </code>
+    </p>
+
+    <script>
+        document.getElementById('hider').onclick = function() {
+            document.getElementById('text').hidden = true;
+        }
+    </script>
+  </body>
+</html>
