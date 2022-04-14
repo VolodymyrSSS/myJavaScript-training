@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>myjs-events:moving the ball</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .title {
+        color: red;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: larger;
+        font-weight: 700;
+        margin-left: 95px;
+      }
+
+      .example {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 30px;
+        padding-right: 30px;
+      }
+
+      #field {
+      width: 500px;
+      height: 350px;
+      border: 10px solid black;
+      background-color: #00FF00;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    #ball {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 40px;
+      height: 40px;
+      transition: all 1s;
+    }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Events: using event.clientX/event.clientY</h2>
+
+    <h4 class="task">
+      Перемістити м'яч по полю.<br>
+      При кліці по будь-якому місцю поля, м'яч повинен переміститись в місце кліка.<br>
+      При цьому також необхідно дотриматись наступних умов:<br>
+      - центр м'яча повинен співпадати з місцем кліка (де було здійснено натискання лівої кнопки мишки);<br>
+      - м'яч не можемо перетинати жодної границі поля;<br>
+      - при прокрутці сторінки вниз, нічого не повинно поломатись;<br>
+      - при можливості додати CSS-анімацію;<br>
+      - код повинен вміти працювати з різними розмірами м'яча та поля, не прив'язуватись до будь-яких фіксованих значень;<br>
+      - необхідно використати властивість event.clientX/event.clientY для визначення координат кліка мишки.<br>
+      <br>
+    </h4>
+
+
+    <div class="example">
+      <div id="field">
+        <img src="https://ru.js.cx/clipart/ball.svg" id="ball"> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+      </div>
+    </div>
+  
+    <p><b>Рішення</b>:</p><br>
+
+    <p>
+      Щоб добре опрацювати подію, можуть знадобитись деталі того, що сталось. Не просто клік по лівій клавіші миші чи натиск на клавішу, а й координати курсора миші чи яка клавіша натиснуто та інші.
+      Коли виникає якась подія, браузер створює <em>об'єкт події</em>, записує в нього деталі та передає цей об'єкт в якості аргумента функції-виконавцю. Для прикладу:
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          &lt;button id="elem"&gt;Натисни мене&lt;/button&gt;
+          &lt;script&gt;
+          &nbsp;elem.addEventListener('click', {
+          &nbsp;&nbsp;handleEvent(event) {
+          &nbsp;&nbsp;&nbsp;alert(event.type + " на " + event.currentTarget); // приклад - click на [object HTMLButtonElement]
+          &nbsp;&nbsp;}
+          &nbsp;});
+          &lt;/script&gt;
+        </pre>
+      </code>
+    </p>
+
+    <p>
+      Як видно addEventListener отримує об'єкт в якості функції-виконавця, він викликає <i>object.handleEvent(event)</i>, коли виникає подія.<br>
+      Взагалі, ми можемо використовувати і класи для цього. Але для нашої задачі, давайте розглянемо саме у варіанті об'єкта події.<br>
+      Тому у відповідності до умов задачі, ми маємо клікати по полю і там де клікнемо, туда переміститься м'яч. Тобто, визначаємо назву функції, яка буде обробляти подію - клік по полю. Такого виконавця можемо записати як
+      <em>field.onclick</em>, який буде мати вид:
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          field.onclick = function(event) {
+            /...код.../
+          }
+        </pre>
+      </code>
+    </p>
+
+    <p>Наступним кроком є визначення методу для позиціонування м'яча. І зразу визначимо, що ми не можемо використовувати таку властивість CSS як <i>position:fixed</i>, так як при прокрутці сторінки вниз, м'яч буде залишатись на місці, а поле "поїде" вниз, що призведе до виходу м'яча з поля.<br>
+    Правильніше тут буде використання властивості CSS як <i>position:absolute</i>, а щоб це було більш надійним, потрібно зробити саме поле (field) спозиційованим задавши йому властивість <i>position:relativ</i>, а вже відносно нього, буде позиціонуватись м'яч.<br>
+    Тому CSS-властивості для поля і м'яча можна визначити як:<br> 
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          #field {
+            width: 200px;
+            height: 150px;
+            position: relative;
+          }
+          
+          #ball {
+            position: absolute;
+            left: 0; /* по відношенню до найближчого розташування границь поля*/
+            top: 0;
+            transition: 1s all; /* CSS-анімація для значень left/top робить пересування м'яча плавним */
+          }
+        </pre>
+      </code>
+    </p>
+
+    <p>
+      Тепер, потрібно визначити координати самого поля відносно вікна браузера. Визначимо їх в змінній з назвою fieldCoords та отримуємо значення координат як <em>let fieldCoords = this.getBoundingClientRect()</em>.
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          field.onclick = function(event) {
+            // координати поля відносно вікна браузера
+            let fieldCoords = this.getBoundingClientRect();
+            /...інший код.../
+          }
+        </pre>
+      </code>
+    </p>
+
+    <p>
+      Далі потрібно визначити правельні значення координат для м'яча по кліку мишкою, бо значення, які є наразі (left: 0; top: 0;) - це початкові координати відносно найближчих границь самого поля.<br>
+      З теорії відомо, що значення event.clientX/clientY, це – координати кліка мишки відносно вікна браузера (відстань від лівого краю браузера до місця кліка).<br>
+      А тому, щоб отримати значення від, наприклад, лівої границі поля до місця кліка мишки - значення left, потрібно з координати натиснення мишки (event.clientX) відняти координату лівого краю поля (fieldCoords.left) та ширину границі поля (field.clientLeft):
+    </p>
+    
+    <p class="code-ex">
+      <code>
+        <pre>
+          let left = event.clientX - fieldCoords.left - field.clientLeft;
+        </pre>
+      </code>
+    </p>
+
+    <p>
+      Але нам потрібно визначитись також з поправкою на позиціонування центру м'яча, та зазначимо, що значення <i>ball.style.left</i> означає "лівий край елементу" (м'яча). І якщо візьмето такий left для м'яча, тоді його ліва границя, а не центр, буде позиціонуватись під курсором мишки при кліці.<br>
+      Потрібно зсунути м'яч на половину його висоти вверх та на половину його ширини вліво, щоб центр м'яча співпадав з місцем кліку (натискання) мишки.<br>
+      В результаті, значення для left будет таким:
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          let left = event.clientX - fieldCoords.left - field.clientLeft - ball.offsetWidth/2;
+        </pre>
+      </code>
+    </p>
+
+    <p>
+      Вертикальні координати будуть задаватись по такій самій логіці, ось так:
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          let top = event.clientY - fieldCoords.top - field.clientTop - ball.offsetHeight/2;
+        </pre>
+      </code>
+    </p>
+
+    <p>
+      Але необхідно також зазначити, що ширина і висота м'яча повинна бути відома в той момент, коли ми отримуємо значення ball.offsetWidth/ball.offsetHeight. Його можна задати в HTML чи CSS, ну хоча б так:
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          #ball {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 40px;
+            height: 40px;
+            transition: all 1s;
+          }
+        </pre>
+      </code>
+    </p>
+
+    <p>
+      Таким чином, координати м'яча розраховуються відносно внутрішнього лівого верхнього кута поля та записуютья як:<br>
+      <em>let ballCoords = {<br>
+        &nbsp;top: event.clientY - fieldCoords.top - field.clientTop - ball.clientHeight / 2,<br>
+        &nbsp;left: event.clientX - fieldCoords.left - field.clientLeft - ball.clientWidth / 2<br>
+      };</em><br>
+      Ці координати м'яча переносимо в функцію-виконавець, і код наразі буде мати вид:
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          field.onclick = function(event) {
+            // координати поля
+            let fieldCoords = this.getBoundingClientRect();
+            // координати м'яча
+            let ballCoords = {
+              top: event.clientY - fieldCoords.top - field.clientTop - ball.clientHeight / 2,
+              left: event.clientX - fieldCoords.left - field.clientLeft - ball.clientWidth / 2
+            };
+            /...інший код.../
+          }
+        </pre>
+      </code>
+    </p>
+
+    <p>
+      Саме поле та м'яч у ньому також можемо стилізувати за допомогою зображення в svg-форматі, ось так:
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          div id="field"
+            img src="https://ru.js.cx/clipart/ball.svg" id="ball" . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+            . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+          /div
+        </pre>
+      </code>
+    </p>
+
+    <p>
+      Ну і тепер необхідно задати умови для заборони перетину м'ячем границь поля. Це можна зробити використавши умовний оператор "if". Для лівої та верхньої границь поля це здійснити легко, маючи їх координати з ліва та з гори і вони прийняті як такі, які мають початковий відлік - тобто дорівнюють нулю.<br>
+      Для лівої задаєм умову, якщо ліві координати м'яча (ballCoords.left) менше нуля, а ми знаєм що м'яч не може вийти за ліву границю, то присвоюємо йому координати з ліва як такі, що дорівнюють початковому значенню зліва - тобто нулю, ось так:<br>
+      <em>if (ballCoords.left < 0) ballCoords.left = 0;</em><br>
+      Для верхньої задаєм умову, якщо верхні координати м'яча (ballCoords.top) менше нуля, а ми знаєм що м'яч не може вийти за верхню границю, то присвоюємо йому координати з гори як такі, що дорівнюють початковому значенню згори - тобто нулю, ось так:<br>
+      <em>if (ballCoords.top < 0) ballCoords.top = 0;</em><br>
+      <br>
+      А от для правої задаєм умову попередньо вирахувавши, якщо ліві координати м'яча (ballCoords.left) плюс ширина м'яча (ball.clientWidth) більше правої границі поля (field.clientWidth), то присвоюємо м'ячу координати з ліва як такі, що дорівнюють максимальним коодинатам поля з права мінус ширина самого м'яча, ось так:<br>
+      <em>if (ballCoords.left + ball.clientWidth > field.clientWidth) {<br>
+          &nbsp;ballCoords.left = field.clientWidth - ball.clientWidth;<br>
+          }</em><br>
+      А от для нижньої задаєм умову попередньо вирахувавши, якщо координати м'яча по висоті (ballCoords.top) плюс висота самого м'яча (ball.clientHeight) більше максимальної висоти поля (field.clientHeight), то присвоюємо м'ячу координати по висоті як такі, що дорівнюють максимальним коодинатам поля по висоті мінус висота самого м'яча, ось так:
+      <em><br>
+        if (ballCoords.top + ball.clientHeight > field.clientHeight) {<br>
+          ballCoords.top = field.clientHeight - ball.clientHeight;<br>
+        }</em><br>
+        <br>
+      Крім того, задаєм в велечині "рх" значення велечин<br>
+      ball.style.left = ballCoords.left + 'px';<br>
+      ball.style.top = ballCoords.top + 'px';<br>
+      В результаті код функції-виконавця, буде мати вид:<br>
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          field.onclick = function(event) {
+
+            // координаты поля відносно вікна браузера
+            let fieldCoords = this.getBoundingClientRect();
+      
+            // координати м'яча
+            let ballCoords = {
+              top: event.clientY - fieldCoords.top - field.clientTop - ball.clientHeight / 2,
+              left: event.clientX - fieldCoords.left - field.clientLeft - ball.clientWidth / 2
+            };
+      
+            // забороняєм перетинати верхню границю поля
+            if (ballCoords.top < 0) ballCoords.top = 0;
+      
+            // забороняєм перетинати ліву границю поля
+            if (ballCoords.left < 0) ballCoords.left = 0;
+      
+      
+            // забороняєм перетинати праву границю поля
+            if (ballCoords.left + ball.clientWidth > field.clientWidth) {
+              ballCoords.left = field.clientWidth - ball.clientWidth;
+            }
+      
+            // забороняєм перетинати нижню границю поля
+            if (ballCoords.top + ball.clientHeight > field.clientHeight) {
+              ballCoords.top = field.clientHeight - ball.clientHeight;
+            }
+      
+            ball.style.left = ballCoords.left + 'px';
+            ball.style.top = ballCoords.top + 'px';
+          }
+        </pre>
+      </code>
+    </p>
+
+    <script>
+      field.onclick = function(event) {
+
+        // координаты поля относительно окна браузера
+        let fieldCoords = this.getBoundingClientRect();
+
+        // мяч имеет абсолютное позиционирование (position:absolute), поле - относительное (position:relative)
+        // таким образом, координаты мяча рассчитываются относительно внутреннего, верхнего левого угла поля
+        let ballCoords = {
+          top: event.clientY - fieldCoords.top - field.clientTop - ball.clientHeight / 2,
+          left: event.clientX - fieldCoords.left - field.clientLeft - ball.clientWidth / 2
+        };
+
+        // запрещаем пересекать верхнюю границу поля
+        if (ballCoords.top < 0) ballCoords.top = 0;
+
+        // запрещаем пересекать левую границу поля
+        if (ballCoords.left < 0) ballCoords.left = 0;
+
+
+        // // запрещаем пересекать правую границу поля
+        if (ballCoords.left + ball.clientWidth > field.clientWidth) {
+          ballCoords.left = field.clientWidth - ball.clientWidth;
+        }
+
+        // запрещаем пересекать нижнюю границу поля
+        if (ballCoords.top + ball.clientHeight > field.clientHeight) {
+          ballCoords.top = field.clientHeight - ball.clientHeight;
+        }
+
+        ball.style.left = ballCoords.left + 'px';
+        ball.style.top = ballCoords.top + 'px';
+      }
+    </script>
+  </body>
+</html>
