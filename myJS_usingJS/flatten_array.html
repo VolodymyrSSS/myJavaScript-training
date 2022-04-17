@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Convert into flatten array</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 40%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Convert into flatten array</h2>
+    <h4 class="title">Working with arrays: using loops as <span class="emph">for</span>, operators <span class="emph">if spred(...)</span>, arrays methods: <span class="emph">Array.isArray(el), forEach()</span> and recursion</h4>
+
+    <h4 class="task">
+      <br>
+      Потрібно написати функцію flatten(array), яка отримує на вхід масив у якого є також вкладені масиви (або масив з різними рівнями вкладеності) та на виході отримуємо звичайний масив (плоский масив) без ніяких рівнів вкладеності. Покажіть, щонайменше, два різних варіанти вирішення.
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          function flatten(array) {
+            // ..ваш код ..
+          }
+
+          flatten([[1], [[2,3]], [[[4,5,6,7]]]]); // [1,2,3,4,5,6,7]
+          flatten([a, [b, c, [d, e]], [f, g]]); // [a,b,c,d,e,f,g]
+        </pre>
+      </code>
+    </p><br>
+
+    <p><b>Рішення:</b></p><br>
+
+    <p>
+    Отже, нам потрібно вернути простий масив, тому одразу створимо його і будем його вертати в нашій функції, ось так:
+    </p><br>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function flatten(array) {
+            let flat = [];
+
+            return flat;
+          }
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Далі потрібно пройтись по елементах масиву і визначити чи його елементи є також масивом, або чи є ще рівні вкладеності. Для проходу по елементам масиву використаєм звичайний цикл <b>for</b> і якщо елемент не є масивом - додаєм в результуючий масив <em>flat</em> методом <b>push</b>, а для перевірки чи є його елементи також масивами (мають рівень вкладеності), використаємо властивість <b>Array.isArray(el)</b>, ось так:</p><br>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function flatten(array) {
+            const flat = [];
+
+            for(let i = 0; i < array.length; i++) {
+              if(Array.isArray(array[i])) {
+                // подальші дії
+              }
+              else {
+                flat.push(array);
+              }
+            }
+
+            return flat;
+          }
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Отже продовжимо, якщо елемент масиву є також масив, то по його елементам також потрібно пройтись використовуючи знову ж таки цикл <b>for</b> та додаєм його в результуючий масив <em>flat</em> методом <b>push</b>, ось так:</p><br>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          for(let i = 0; i < array.length; i++) {
+            if(Array.isArray(array[i])) {
+              for(let j = 0; j < array[i].length; j++) {
+                flat.push(array[i][j]);
+              }
+            }
+            else {
+              flat.push(array[i]);
+            }
+          }
+
+          flatten([[1], [[2,3]], [[[4,5,6,7]]]]); // [1, [2,3], [[4,5,6,7]] ];
+          flatten(['a', ['b', 'c', ['d', 'e']], ['f', 'g']]) // ['a','b','c', ['d', 'e'], 'f', 'g'];
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Але, в результаті ми отримуємо масиви які не мають всього-навсього тільки першого рівня вкладеності. Ті елементи, або масиви які мали більші рівні вкладеності піднялись тільки на один рівень вище, або позбавились тільки одного рівня вкладеності, решта - залишились. Тому, щоб позбутись навіть і ці рівні вкладеності, а взагалі - щоб не залежали від рівнів вкладеності бо їх може бути багато, можна використати <b>рекурсію</b>.<br/>
+    Нагадаємо, що рекурсія – це прийом програмування, який застосовують у ситуаціях, коли завдання можна розділити на кілька аналогічних, але більш простих завдань. Або коли завдання може бути спрощено до нескладних дій плюс простий варіант тієї самої задачі. Тобто, рекурсію використовують коли обчислення можна привести до більш простого  її виклику, а його - до ще більш простішого, і т. д. доки значення не стане очевидним.<br/>
+    Можна ще так - у процесі виконання завдання у тілі функції можуть бути викликані інші функції для виконання завдань. Окремий випадок виклику – коли функція викликає сама себе. Це якраз і називається рекурсією.<br/>
+    Зважаючи на це, застосуємо рекурсію для нашого виклику. Для цього в місці, після того, як перевірили чи елемент є масивом, створюємо масив <em>res</em> у який присвоємо результат виклику тієї самої функції <em>flatten(array[i])</em>
+    ось так:</p><br>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function flatten(array) {
+            const flat = [];
+
+            for(let i = 0; i < array.length; i++) {
+              if(Array.isArray(array[i])) {
+                const res = flatten(array[i]);
+                for(let j = 0; j < res.length; j++) {
+                  flat.push(res[j]);
+                }
+              }
+              else {
+                flat.push(array[i]);
+              }
+            }
+
+            return flat;
+          }
+        </pre>
+      </code>
+    </p><br>
+
+    <p><b>інший варіант рішення:</b></p><br>
+
+    <p>Спочатку потрібно створити якийсь результуючий масив <em>flat</em>, куда будемо складати результати конкатенації елементів.
+      Для перебора елементів масиву тепер використаєм метод <b>forEach()</b>, який дозволяє запускати функцію для кожного елемента масиву. Крім того, давайте використовувати стрілочні функції.<br>
+      Cпочатку розглянемо  перший рівень вкладеності (перший масив - зовнішні квадратні душки) і якщо перший елемент це не є масив, то конкатенуємо (додаємо) його до результуючого масиву використовуючи оператор <b>spred - ...</b>;<br>
+      Далі, по черзі, розглядаєм  другий елемент, і якщо це масив, то його конкатенують з результуючим масивом, але перед конкатенацією, за допомогою <b>рекурсії</b>, конвертуємо елементи масиву у простий список аргументів і вже цей отриманий результат конкатенують з результуючим масивом.<br>
+      Перевірку чи елемент є масивом здійснюю так само - <b>Array.isArray(value)</b> який повертає true якщо елемент є масивом і false якщо ні.<br>
+      Також, з метою отримання списку аргументів, використаємо <b>оператор розширення - ...</b>, який при виклику функції розширяє масив 'flat' у список аргументів (або берез з масива його аргументи). 
+      Результуючий код буде ось таким:
+    </p><br/>
+
+    <p class="code-ex">
+      <code>
+        <pre style="width: 60%">
+          const flatten = (array) => {
+            let flat = [];
+            array.forEach(el => {
+              if(Array.isArray(el)) {
+                flat = [...flat, ...flatten(el)]; // тут додаєм перетворений рекурісєю масив до результаючого масиву
+              } else {
+                flat = [...flat, el]; // тут дотаємо елементи в результуючий масив
+              }
+            });
+            return flat;
+          }
+        </pre>
+      </code>
+    </p><br><br/>
+
+    <script>
+
+      function flatten(array) {
+        const flat = [];
+
+        for(let i = 0; i < array.length; i++) {
+          if(Array.isArray(array[i])) {
+            const res = flatten(array[i]);
+            for(let j = 0; j < res.length; j++) {
+              flat.push(res[j]);
+            }
+          }
+          else {
+            flat.push(array[i]);
+          }
+        }
+
+        return flat;
+      }
+
+      console.log('using loop in a loop :');
+      console.log('[[1], [[2,3]], [[[4,5,6,7]]]] - ', flatten([[1], [[2,3]], [[[4,5,6,7]]]])); // [1, 2, 3, 4, 5, 6, 7]
+      console.log("['a', ['b', 'c', ['d', 'e']], ['f', 'g']] - ", flatten(['a', ['b', 'c', ['d', 'e']], ['f', 'g']])); // ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+      
+      // ===========================================
+
+      const flatten2 = (array) => {
+        let flat = [];
+        array.forEach(el => {
+          if(Array.isArray(el)) {
+            flat = [...flat, ...flatten(el)]; // тут додаєм перетворений рекурісєю масив до результаючого масиву
+          } else {
+            flat = [...flat, el]; // тут дотаємо елементи в результуючий масив
+          }
+        });
+        return flat;
+      }
+
+      console.log('using spred operator:');
+      console.log('[[1], [[2,3]], [[[4,5,6,7]]]] - ', flatten2([[1], [[2,3]], [[[4,5,6,7]]]])); // [1, 2, 3, 4, 5, 6, 7]
+      console.log("['a', ['b', 'c', ['d', 'e']], ['f', 'g']] - ", flatten2(['a', ['b', 'c', ['d', 'e']], ['f', 'g']])); // ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+
+      // ===========================================
+
+    </script>
+  </body>
+</html>
