@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Find cities with population</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Find cities with population</h2>
+    <h4 class="title">Working with arrays: arrays methods: <span class="emph">map(), filter()</span> and operators <span class="emph"><, &&</span></h4>
+
+    <h4 class="task">
+      В нас є масив об'єктів у якому задані назви міст та кількість населення, що проживає в ньому та його пригородах.<br>
+      Напишіть функцію, яка буде шукати та виводити ті міста, у яких населення складає, наприклад, менше ніж 15 млн. Покажіть, що у функції потрібно змінити, щоб задаовольнялась умова з пошуку тільки тих міст кількість населення яких складає від заданого мінімума до максимума?
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          const cities = [
+          &nbsp;&nbsp;{city: 'Kyiv', population: 5_000_000},
+          &nbsp;&nbsp;{city: 'Tokyo', population: 13_000_000},
+          &nbsp;&nbsp;{city: 'New York', population: 22_000_000},
+          &nbsp;&nbsp;{city: 'London', population: 17_000_000},
+          ]<br/>
+
+          const findCities1 = (population) => {
+            &nbsp;// ..ваш код..
+          };         
+          // отримати міста, населення яких менше ніж 15 млн
+          findCities1(15000000); // ['Kyiv', 'Tokyo'];<br>
+
+          const findCities2 = (15000000, 20000000) => {
+            &nbsp;// ..ваш код..
+          };
+          // отримати міста, населення яких більше ніж 15 млн, але менше ніж 20 млн
+          findCities2(15000000б 20000000); // ['London'];<br>
+        </pre>
+      </code>
+    </p><br>
+
+    <p><b>Рішення:</b></p><br>
+
+    <p>
+      Отже, щоб вирішити задачу, ми повинні вивести новий масив, з іменами міст, який задовільняє певні умови. Для цього в JavaScript є метод масивів <b>arr.map()</b>, який викликає функцію для кожного елементу масиву і повертає масив результатів виконання цієї функції. Нагадаємо його синтаксис:<br/>
+      <em>&nbsp;let result = arr.map(function(item, index, array) {<br>
+        &nbsp;&nbsp;// повертає нове значення замість елемента<br>
+      &nbsp;});</em><br>
+      Тобто ми можемо вивести новий масив, значеннями якого є назви міст, які є результатом виконання якоїсь функції, ось так:<br>
+    </p><br>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          const findCities1 = (population) => {
+            return cities.map(c => c.city);
+          };
+
+          findCities1(15000000); // ['Kyiv', 'Tokyo', 'New York', 'London']
+        </pre>
+      </code>
+    </p><br>
+
+    <p> Але як видно з результатів, ми отримуємо просто назви усіх міст, або по суті ми просто проходимся по елементам масиву та виводимо назву міста по ключу об'єкта. Узагалі, дуже часто використовують метод <em>arr.map()</em> для перебору елементів масиву щоб у парі з якимось іншим методом отримати новий масив.<br/>
+    Таким чином, нам потрібно, після отримання усіх назв міст відфільтрувати ті міста, які задовольняють умову задачі - щоб кількість населення була менше 15млн.<br>
+    Для цього, використаємо ішний метод <b>arr.filter()</b> який знайде і поверне усі елементи масиву, які відповідають умові в функції для кожного елементу масиву. А в ту функцію задамо умову - пропускати тільки ті елементи, які відповідають умові (кількість населення має бути менше 15млн) використавши оператор <b><</b>. Нагадаємо синтаксис для методу <em>arr.filter()</em>:<br/>
+      <em>&nbsp;let result = arr.filter(function(item, index, array) {<br>
+        &nbsp;&nbsp;// якщо true - елемент додасться до результату, і перебір продовжиться
+        &nbsp;&nbsp;// поверне пустий масив, якщо нічого не буде знайдено<br>
+      &nbsp;});</em><br><br>
+      Тоді так виглядає кінцевий код цими методами:
+    </p><br>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          const findCities1 = (population) => {
+            // читати з ліва на право: спочатку виводимо назви міст, а потім фільтруємо за умовою
+            return cities.filter(c => c.population < population).map(c => c.city);
+          };
+
+          findCities1(15000000); // ['Kyiv', 'Tokyo']
+        </pre>
+      </code>
+    </p><br>
+
+    <p>Ну і тепер, щоб задати умову щоб інша функція виводила назви міст в заданому діапазоні задавши мінімальне та максимальне значення діапазону в параметрах функції, достатньо тільки задати умову для функції в методі <em>arr.filter()</em> з використанням оператора <b>&&</b>, ось так:</p><br>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          const findCities2 = (popul_min, popul_max) => {
+            // читати з ліва на право: спочатку виводимо назви міст, а потім фільтруємо за умовою
+            .filter(c => c.population >= popul_min && c.population <= popul_max).map(c => c.city);
+          };
+
+          findCities2(15000000); // ['London']
+        </pre>
+      </code>
+    </p><br>
+
+    <script>
+      const cities = [
+        {city: 'Kyiv', population: 5_000_000},
+        {city: 'Tokyo', population: 13_000_000},
+        {city: 'New York', population: 22_000_000},
+        {city: 'London', population: 17_000_000},
+      ]
+
+      const findCities1 = (population) => {
+        // читати з ліва на право: спочатку виводимо назви міст, а потім фільтруємо за умовою
+        return cities.filter(c => c.population < population).map(c => c.city);
+      };
+
+      console.log('first approach :');
+      console.log('lessThan 15mln - ', findCities1(15000000)); // ['Kyiv', 'Tokyo']
+      
+      // ===========================================
+
+      const findCities2 = (popul_min, popul_max) => {
+        return cities
+          .filter(c => c.population >= popul_min && c.population <= popul_max).map(c =>c.city);
+      };
+      console.log('second approach - compare two parts :');
+      console.log('in diapason - ', findCities2(15000000, 20000000)); // ['London']
+
+      // ===========================================
+
+    </script>
+  </body>
+</html>
