@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Context: method bind</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 30%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Context: working with method <span class="emph">bind()</span>, keyword <span class="emph">this</span></h2>
+
+    <h4 class="task">
+      Тут у нас використовується глобальна змінна var. В нає є також функція foo, яка виводить якийсь результат. У тілі функції є своя змінна var, яка також навіть згодом переприсвоюється іншим значенням. Потім ми в змінну bar прив'язуємо функцію foo із своїм контекстом "a".<br>
+      Який результат буде виведено в консоль? Якщо то не значення змінної 42 то що зробити щоб його все ж таки отримати?
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+           var a = 15;
+
+          function foo() {
+            var a = 25;
+            var result = function() {
+              console.log(a);
+            }
+            result.a = 35;
+            return result;
+          }
+
+          var bar = foo().bind({a: 42});
+
+          bar(); // що буде виведено ?
+    
+        </pre>
+      </code>
+    </p><br/><br/><br/>
+
+    <p><b>Відповідь:</b>  буде виведено значення змінної "а" як 25.</p><br/><br/>
+
+    <p> У тілі функції foo, глобальна змінна "а" присвоєна із своїм значенням 25. Ця змінна видна у своєму скоупі функції foo, а отже якщо просто викликати цю функцію, то в консолі буде виведено 25, не зважаючи на те, що в тілі функції змінна "а" переприсвоюється іншим значенням 35. У консоль буде братись глобальна змінна функції "а", а не та що переприсвоєна згодом.
+    </p><br/>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function foo() {
+            var a = 25;
+
+            var result = function() {
+              console.log(a);
+            }
+
+            result.a = 35;
+
+            return result;
+          }
+
+          foo();
+        </pre>
+      </code>
+    </p><br/>
+
+    <script>
+      function foo() {
+        var a = 25;
+
+        var result = function() {
+          console.log('a in foo: ', a);
+        }
+
+        result.a = 35;
+
+        return result;
+      }
+
+      foo();
+    </script>
+
+    <p>Далі, через метод bind(), прив'язується свій контент "a": 42 до функції bar, але він не виводиться бо в функції foo, контент береться все ще свій - "a": 25. Щоб це виправити і отримати 42, потрібно додати ключове слово <b><em>this</em></b> до контексту функції foo, ось так:</p><br/>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          var a = 15;
+
+          function foo2() {
+            var a = 25;
+
+            var result = function() {
+              console.log(this.a);
+            }
+
+            result.a = 35;
+
+            return result;
+          }
+
+          var bar = foo2().bind({a: 42});
+
+          bar();
+        </pre>
+      </code>
+    </p><br/><br/>
+ 
+    <script>
+
+      var a = 15;
+
+      function foo2() {
+        var a = 25;
+
+        var result = function() {
+          console.log('a: ', a);
+        }
+
+        result.a = 35;
+
+        return result;
+      }
+
+      var bar = foo2().bind({a: 42});
+
+      bar();
+    </script>
+
+  </body>
+</html>
