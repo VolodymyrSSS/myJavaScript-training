@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Context: method bind</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 30%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Context: working with method <span class="emph">bind()</span>, keyword <span class="emph">this</span></h2>
+
+    <h4 class="task">
+      Якщо викликати функційний вираз fn, то в консолі буде виведено "underfined", чому?<br>
+      Як поправити код щоб вивести все ж таки "wut"?
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+           var a = {
+            lol: 'wut',
+            kek: function() {
+              console.log(this.lol);
+            }
+          };
+    
+          var fn = a.kek;
+          fn(); // underfined ?
+    
+        </pre>
+      </code>
+    </p><br/><br/><br/>
+
+    <p><b>Відповідь:</b>  тому що fn не має такого контексту як lol.</p><br/><br/>
+
+    <p>Але для відповіді, спочатку зробимо виклик метода kek. У цьому разі ми отримаємо вираз 'wut', бо ключове слово <b>this</b> посилається на контекст в "a", або так, метод kek був викликаний в контексті "a", ось так:</p><br/>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          var a = {
+            lol: 'wut',
+            kek: function() {
+              console.log(this.lol);
+            }
+          };
+    
+          a.kek(); // wut
+        </pre>
+      </code>
+    </p><br/><br/>
+
+    <p> Але в нашій задачі ми присвоїли тільки посилання на метод в об'єкті "a" при цьому втратили контекст цього об'єкта. І вже виклик здійснюється в контексті fn, яка не має контекста lol:'wut'. Ось чому виведеться underfined.<br/>
+    Для того, щоб fn отримала контекст "a", потрібно його прив'язати якимось чином. Це можна звичайно зробити методом <b>bind()</b>, ось так:
+    </p><br/>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          var a = {
+            lol: 'wut',
+            kek: function() {
+              console.log(this.lol);
+            }
+          };
+
+          var fn = a.kek.bind(a);
+          fn(); // wut
+        </pre>
+      </code>
+    </p><br/>
+
+    
+ 
+    <script>
+
+      var a = {
+        lol: 'wut',
+        kek: function() {
+          console.log(this.lol);
+        }
+      };
+
+      var fn = a.kek;
+      fn();
+
+    </script>
+
+  </body>
+</html>
