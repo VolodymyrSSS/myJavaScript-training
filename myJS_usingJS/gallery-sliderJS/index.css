@@ -1,9 +1,16 @@
 body {
-    margin: 0;
     padding: 1rem;
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: tan;
 }
 
-.slide {
+.slide img {
+    width: 100%;
+    pointer-events: none;
+}
+
+/* .slide {
     height: 20rem;
     display: flex;
     align-items: center;
@@ -24,4 +31,4 @@ body {
 
 .slide-4 {
     background: #ffc43f;
-}
+} */
