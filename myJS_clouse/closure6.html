@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>ex6 - the essence of closure</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">The essence of <span class="emph"> closure</span></h2>
+
+    <h4 class="task">
+      На прикладі функції 'parentFunction', поясніть концепцію 'замикання',
+      створивши дві інші функції 'son' та 'daughter'. Поясніть чому ми отримуємо
+      саме такий результат?
+      <br />
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          const parentFunction = (person) => {
+            let coins = 3;
+
+            return () => {
+              coins -= 1;
+              if (coins > 0) console.log(`${person} has ${coins} coins left`);
+              else console.log(`${person} is out of coins`);
+            };
+          };
+
+          console.log(son()); // Son has 2 coins left
+          console.log(son()); // Son has 1 coins left
+          console.log(doughter()); //  Doughter has 2 coins left
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Відповідь:</b></p>
+    <br />
+
+    <p>
+      Замикання - це доступ до Scope (області видимості) зовнішньої функції з
+      внутрішньої функції після того, як була викликана та зовнішня функція.
+      <br />
+      В нашому випадку, ми маємо батьківську функцію <i>parentFunction</i> із
+      своїм внутрішнім середовищем у якому визначено змінну <i>coins</i> та
+      анонімну функцію (функція повертається, а не викликається). Замикання
+      створюється коли зовнішня функція буде викликана. При цьому внутрішня
+      анонімна функція зробить для себе так званий 'snapshot' - запамятовування
+      лексичного середовища на момент виклику зовнішньої функції, в нашому
+      випадку, запам'ятається змінна <i>coins</i> з відповідним значенням.
+      Зауважте, що змінна <i>coins</i> ніби 'замкнута' в середині функції
+      <i>parentFunction</i>. Після створення пари інших функцій, які будуть мати
+      посилання на батьківську функцію <i>parentFunction</i>, можна пояснити
+      концепцію використання замикання. Ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          const parentFunction = (person) => {
+            let coins = 3;
+
+            return () => {
+              coins -= 1;
+              if (coins > 0) console.log(`${person} has ${coins} coins left`);
+              else console.log(`${person} is out of coins`);
+            };
+          };
+
+          // створимо інстанси з посиланням на основну функцію із 'замиканням'
+          const son = parentFunction('Son');
+          const doughter = parentFunction('Doughter');
+
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Здійснивши перший виклик функції <i>son</i>, яка має посилання на функцію
+      <i>parentFunction</i> повернулась внутрішня функція, яка використала
+      'замкнену' змінну <i>coins</i> для обчислень та вивела в консолі
+      результат. Тут внутрішня функція зробила для себе 'snapshot' із значенням
+      для змінної <i>let coins = 3;</i> та виконала код в тілі функції по
+      зменшенню змінної <i>coins</i> на одиницю і виведення в консолі результату
+      її роботи. Коли було викликано функцію <i>son</i> другий раз, внутрішня
+      функція зробила для себе 'snapshot' із значенням для змінної
+      <i>let coins = 2;</i> та вивела відповідно в консолі результат. І так
+      третій раз доки умова в її тілі відповідає правдивому значенню.<br />
+      Коли викликається функція <i>doughter</i> перший раз, яка також має
+      посилання на функцію <i>parentFunction</i>, внутрішньою функцією
+      створюється свій 'snapshot' із значенням для змінної
+      <i>let coins = 3;</i>. Тобто кожна функція робить для себе 'snapshot'
+      змінної 'coins', або кожна функція створює своє, тільки для неї лексичне
+      оточення. Ці функції мають свої незалежні лексичні оточення. Відповідно ми
+      отримуємо такий результат:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          console.log(son()); // Son has 2 coins left
+          console.log(son()); // Son has 1 coins left
+          console.log(son()); // Son is out of coins
+
+          console.log(doughter()); //  Doughter has 2 coins left
+          console.log(son()); // Son is out of coins
+          console.log(doughter()); //  Doughter has 1 coins left
+        </pre>
+      </code>
+    </p>
+    <br /><br /><br />
+
+    <script>
+      const parentFunction = (person) => {
+        let coins = 3;
+
+        return () => {
+          coins -= 1;
+          if (coins > 0) console.log(`${person} has ${coins} coins left`);
+          else console.log(`${person} is out of coins`);
+        };
+      };
+      const son = parentFunction('Son');
+      const doughter = parentFunction('Doughter');
+
+      console.log(son()); // Son has 2 coins left
+      console.log(son()); // Son has 1 coins left
+      console.log(son()); // Son is out of coins
+
+      console.log(doughter()); //  Doughter has 2 coins left
+      console.log(son()); // Son is out of coins
+      console.log(doughter()); //  Doughter has 1 coins left
+    </script>
+  </body>
+</html>

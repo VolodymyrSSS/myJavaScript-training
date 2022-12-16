@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>ex7 - the essence of closure</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">The essence of <span class="emph"> closure</span></h2>
+
+    <h4 class="task">
+      Функція 'makeWorker' створює іншу функцію, або так - повертає іншу
+      внутрішню функцію.<br />
+      Створена нова функція 'work', яка має посилання на функцію 'makeWorker',
+      викликається з іншого місця. Чи отримає внутрішня функція доступ до
+      зовнішніх змінних з місця їх створення, чи іншого місця їх виклику, чи з
+      обох?
+      <br />
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          function makeWorker() {
+            let worker = "Samuel";
+          
+            return function() {
+              console.log(worker);
+            };
+          }
+              
+          let worker = "Timon";
+              
+          // створюємо нову функцію
+          let work = makeWorker();
+              
+          // викликаємо цю нову функцію
+          work(); // ???
+          
+              що буде виведено? 
+                    "Samuel" (з місця створення) чи "Timon" (з місця виконання)
+
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Відповідь:</b></p>
+    <br />
+
+    <p>
+      Функція <i>makeWorker</i> має всередині вкладену анонімну функцію, яка
+      буде мати доступ до тих самих зовнішніх змінних що і
+      <i>makeWorker</i>.<br />
+      Необхідно загалом зазначити, що вкладена функція може бути повернута: або
+      в якості властивості нового об'єкта (якщо зовнішня функція створює об'єкт
+      з методами), або сама по собі, а результат її виконання вже потім може
+      бути використаний в будь-якому місці виклику батьківської функції.<br />
+      В нашому випадку, вкладена функція має доступ до змінних які знаходяться в
+      зовнішньому її оточенні - тобто до змінної <i>let worker = "Samuel";</i> і
+      в разі виклику батьківської функції 'makeWorker', вона виведе в консоль
+      результат роботи внутрішньої функції - 'Samuel'.<br />
+      Незважаючи на те, що значення <i>worker</i> далі по коду переприсвоюється,
+      проте належить до глобального оточення батьківської функції
+      <i>makeWorker</i> а не вкладеної функції.<br />
+      Дія вкладеної функції має такий порядок: спочатку буде здійснюватись пошук
+      у внутрішньому лексичному оточенні самої вкладеної анонімної функції; не
+      знайде значення змінної
+      <i>worker</i>; вкладена функція перейде до пошуку змінної у своєму
+      зовнішньому оточенні; знайде та візьме його і виведе в консолі.<br />
+      І хоч ми створюємо нову функцію, яка посилається на функцію 'makeWorker',
+      виконання буде здійснюватись вкладеною функцією, яка продовжує мати доступ
+      до свого зовнішнього оточення при якому вона була створена на самому
+      початку. Ось чому виведеться значення:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          work(); // Samuel
+        </pre>
+      </code>
+    </p>
+    <br /><br /><br /><br />
+
+    <script>
+      function makeWorker() {
+        let worker = 'Samuel';
+
+        return function () {
+          console.log(worker);
+        };
+      }
+
+      let worker = 'Timon';
+
+      let work = makeWorker();
+
+      work(); // Samuel
+    </script>
+  </body>
+</html>
