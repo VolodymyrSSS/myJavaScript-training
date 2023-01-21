@@ -1,231 +1,300 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>myjs: инкремент++ / декремент--</title>
     <style>
-    body {
+      body {
         background-color: tan;
         margin: 0;
         font-family: Verdana, sans-serif;
-    }
+      }
 
-    .title {
+      .title {
         color: red;
         text-align: center;
-        font-weight:700;
-    }
+        font-weight: 700;
+      }
 
-    .code-ex {
+      .code-ex {
         width: 50%;
         font-family: sans-serif;
         background-color: #bebebe;
         font-size: large;
         padding-left: 15px;
         margin: 0 auto;
-    }
+      }
 
-    .task{
+      .task {
         width: 50%;
         padding: 15px 25px;
         color: navy;
         background-color: #e2e2e2;
         margin: 35px auto;
-    }
+      }
 
-    .code-ex {
+      .code-ex {
         width: 50%;
         font-family: sans-serif;
         background-color: #bebebe;
         font-size: large;
         padding-left: 15px;
         margin: 0 auto;
-    }
+      }
 
-    p {
+      p {
         width: 80%;
         margin: 0 auto;
-    }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
+    <h2 class="title">Basic JS: інкремент++/дикремент--</h2>
 
-    <h2 class="title">Basic JS: инкремент++/декремент--</h2>
+    <h4 class="task">
+      1. Чому будуть дорівнювати значення a, b, c та d в прикладі нижче?<br />
+      2. Поясніть детально на прикладах, яка різниця між інкрементом та
+      дeкрементом?
+    </h4>
 
-    <h4 class="task">1. Чему будут равны переменные a, b, c и d в примере ниже?<br>
-        2. Объясните детально на примерах какая разница между инкремент и декремент ? </h4>
-
-    <p class="code-ex"><br>
-        <code>
-            let a = 1, b = 1; <br>
-            let c = ++a; <br>
-            let d = b++; <br>
-        </code>
+    <p class="code-ex">
+      <br />
+      <code>
+        Які будуть значення? <br />
+        let a = 1, b = 1; <br />
+        let c = ++a; <br />
+        let d = b++; <br />
+      </code>
     </p>
-    <br>
+    <br />
 
-    <p><b>Ответ1</b>:</p>
+    <p><b>Відповідь на 1е</b>:</p>
 
-    <p class="code-ex"><br>
-        <code>
-            let a = 1, b = 1; <br>
-            let c = ++a; <br>
-            let d = b++; <br>
-            <br>
-            console.log( a ); // 2, значение увеличено один раз<br>
-            console.log( b ); // 2, значение увеличено один раз<br>
-            console.log( c ); // 2<br>
-            console.log( d ); // 1<br>
+    <p class="code-ex">
+      <br />
+      <code>
+        console.log( a ); // 2, значення збільшено один раз<br />
+        console.log( b ); // 2, значення збільшено один раз<br />
+        console.log( c ); // 2, значення збільшено і одразу результат присвоєно
+        змінній<br />
+        console.log( d ); // 1, значення збільшено але присвоєно попереднє
+        значення змінної<br />
 
-            так как:<br>
-            console.log( ++a ); // 2, префиксная форма возвращает новое значение<br>
-            console.log( b++ ); // 1, постфиксная форма возвращает старое значение<br>
-        </code>
+        через те, що:<br />
+        console.log( ++a ); // 2, префіксная форма повертає нове значення<br />
+        console.log( b++ ); // 1, постфіксная форма повертає старе значення<br />
+      </code>
     </p>
-    <br>
+    <br />
 
     <script>
-        let a = 1, b = 1;
-        let c = ++a;
-        let d = b++;
+      let a = 1,
+        b = 1;
+      let c = ++a;
+      let d = b++;
 
-        console.log( a ); // 2
-        console.log( b ); // 2
-        console.log( c ); // 2
-        console.log( d ); // 1
+      console.log(a); // 2
+      console.log(b); // 2
+      console.log(c); // 2
+      console.log(d); // 1
     </script>
 
-    <p><b>Ответ2</b>:</p>
+    <p><b>Відповідь на 2е</b>:</p>
 
     <p>
-        Одной из наиболее частых операций, как и во многих других языках программирования, является увеличение 
-        или уменьшение переменной на единицу.<br>
-        Для этого в JavaScript существуют специальные операторы:<br>
+      Однією з найчастіших операцій, як і в багатьох інших мовах програмування,
+      є збільшення або зменшення змінної на одиницю.<br />
+      Для цього у JavaScript існують спеціальні оператори:<br />
     </p>
-    <br>
+    <br />
 
-    <p><b>Инкремент ++</b> увеличивает на 1:</p>
-    <br>
-    <p class="code-ex"><br>
-        <code>
-            let counter = 2;<br>
-            counter ++; // работает как counter = counter + 1, просто запись короче<br>
-            cosole.log( counter ); // 3<br>
-        </code>
+    <p><b>Інкремент ++</b> збільшує значення на 1:</p>
+    <br />
+    <p class="code-ex">
+      <br />
+      <code>
+        let counter = 2;<br />
+        counter++; // працює як counter = counter + 1, але запис коротший<br />
+        cosole.log( counter ); // -> 3<br />
+      </code>
     </p>
-    <br>
+    <br />
 
-    <p><b>Декремент --</b> уменьшает на 1:</p>
-    <br>
-    <p class="code-ex"><br>
-        <code>
-            let counter = 2;<br>
-            counter--; // работает как counter = counter - 1, просто запись короче<br>
-            cosole.log( counter ); // 1<br>
-        </code>
+    <p><b>Декремент --</b> зменшує значення на 1:</p>
+    <br />
+    <p class="code-ex">
+      <br />
+      <code>
+        let counter = 2;<br />
+        counter--; // працює як counter = counter - 1, але запис коротший<br />
+        cosole.log( counter ); // -> 1<br />
+      </code>
     </p>
-    <br>
+    <br />
 
-    <p>Инкремент/декремент можно применить только к переменной. Попытка использовать его на значении, типа 5++, 
-        приведёт к ошибке.<br>
-        Операторы ++ и -- могут быть расположены не только после, но и до переменной.<br>
-        <b>Когда оператор идёт после переменной – это «постфиксная форма»: counter++.
-        «Префиксная форма» – это когда оператор идёт перед переменной: ++counter</b>
+    <p>
+      Інкремент/декремент можна застосувати лише до змінної. Спроба
+      використовувати його на значенні, типу 5++, призведе до помилки.<br />
+      Оператори ++ і -- можуть ставитись не тільки після, а й до змінної.<br />
+      Коли оператор йде після змінної – це <b>постфіксна форма</b>:
+      <em>counter++</em>.<br />
+      <b>Префіксная форма</b> – це коли оператор ставиться попереду змінної, ось
+      як тут: <em>++counter</em>.
     </p>
 
-    <p>Как мы знаем, все операторы возвращают значение. Операторы инкремент/декремент не исключение. <b>Префиксная 
-        форма возвращает новое значение, в то время как постфиксная форма возвращает старое (до увеличения/уменьшения числа)</b>.<br>
-        Можно разяснить по другому: префиксная форма вначале увеличивает значение велечины а потом присваивает это значение, а 
-        постфиксная форма вначале присваивает значение велечины а потом увеличивает его.
+    <p>
+      Як відомо, всі оператори повертають значення. Оператори
+      інкремент/декремент не є винятком.<br />
+      <b
+        ><em
+          >Префіксна форма повертає одразу нове значення, тоді як постфіксна
+          форма повертає старе (до збільшення/зменшення числа).</em
+        ></b
+      ><br />
+      Можна пояснити інакше: префіксна форма спочатку збільшує значення величини
+      на одиницю і потім надає це значення. А постфіксна форма спочатку
+      привласнює попереднє значення величини, а потім його збільшує на одиницю.
     </p>
-    <br>
-    <p class="code-ex"><br>
-        <code>
-            let counter = 1;<br>
-            let a = ++counter; // Здесь префиксная форма увеличения counter, она возвращает новое значение 2<br>
-            cosole.log(a); // 2<br>
-        </code>
+    <br />
+    <p class="code-ex">
+      <br />
+      <code>
+        let counter = 1;<br />
+        let a = ++counter; // Тут префіксная форма збільшує counter на одиницю і
+        повертає новее значення -> 2<br />
+        cosole.log(a); // -> 2<br />
+      </code>
     </p>
-    <br>
+    <br />
 
-    <p>Теперь посмотрим на постфиксную форму - меняем ++counter на counter++</p>
-    <br>
-    <p class="code-ex"><br>
-        <code>
-            let counter = 1;
-            let a = counter++; // Здесь постфиксная форма counter++ также увеличивает counter, но возвращает старое значение (которое было до увеличения). 
-            cosole.log(a); // 1<br>
-        </code>
+    <p>Тепер подивимось на постфіксну форму - міняемо ++counter на counter++</p>
+    <br />
+    <p class="code-ex">
+      <br />
+      <code>
+        let counter = 1; let b = counter++; // Тут постфіксна форма counter++
+        також збільшує величину counter на одиницю, проте повертає старе
+        значення (яке було до збільшення). cosole.log(b); // -> 1<br />
+      </code>
     </p>
-    <br>
+    <br />
 
-    <p>Подведём итоги:</p>
-    <br>
-    <p>Если результат оператора не используется, а нужно только увеличить/уменьшить переменную – без разницы, какую форму использовать:</p>
-
-    <p class="code-ex"><br>
-        <code>
-            let counter = 0;
-            counter++;
-            ++counter;
-            console.log( counter ); // 2, обе строки сделали одно и то же<br>
-        </code>
+    <p>Таким чином:</p>
+    <br />
+    <p>
+      Якщо результат оператора не використовується, а потрібно лише
+      збільшити/зменшити змінну – не має значення, яку форму використовувати:
     </p>
-    <br>
 
-    <p>Если хочется тут же использовать результат, то нужна префиксная форма:</p>
-    <br>
-    <p class="code-ex"><br>
-        <code>
-            let counter = 0;<br>
-            console.log( ++counter ); // 1<br>
-        </code>
+    <p class="code-ex">
+      <br />
+      <code>
+        let counter = 0;<br />
+        counter++;<br />
+        ++counter;<br />
+        console.log( counter ); // -> 2,<br />
+        В обох випадках було збільшено значення counter на одиницю, і в
+        результаті отримали 2<br />
+      </code>
     </p>
-    <br>
+    <br />
+    <script>
+      let counter = 0;
+      counter++;
+      ++counter;
+      console.log(counter); // 2
+    </script>
 
-    <p>Если нужно увеличить и при этом получить значение переменной до увеличения – постфиксная форма:</p>
-    <br>
-    <p class="code-ex"><br>
-        <code>
-            let counter = 0;<br>
-            console.log( counter++ ); // 0<br>
-        </code>
+    <p>
+      Якщо одразу потрібно взяти результат, то застосовують префіксну форму:
     </p>
-    <br>
-
-    <p>Операторы ++/-- могут также использоваться внутри выражений. Их приоритет выше, чем у арифметических операций. Например:</p>
-    <br>
-    <p class="code-ex"><br>
-        <code>
-            let counter = 1;<br>
-            console.log( 2 * ++counter ); // 4<br>
-        </code>
+    <br />
+    <p class="code-ex">
+      <br />
+      <code>
+        let counter = 0;<br />
+        console.log( ++counter ); // -> 1<br />
+      </code>
     </p>
-    <br>
+    <br />
+    <script>
+      let counter1 = 0;
+      console.log(++counter1); // 1
+    </script>
 
-    <p>Сравните с:</p>
-    <br>
-    <p class="code-ex"><br>
-        <code>
-            let counter = 1;
-            console.log( 2 * counter++ ); // 2, потому что counter++ возвращает "старое" значение<br>
-        </code>
+    <p>
+      А в разі, коли потрібно збільшити на одиницю та при цьому мати значення
+      змінної до збільшення, використовують – постфіксну форму:
     </p>
-    <br>
-
-    <p>Хотя технически всё в порядке, такая запись обычно делает код менее читабельным. Лучше использовать стиль «одна строка – одно действие»:</p>
-    <br>
-    <p class="code-ex"><br>
-        <code>
-            let counter = 1;<br>
-            console.log( 2 * counter );<br>
-            counter++;<br>
-        </code>
+    <br />
+    <p class="code-ex">
+      <br />
+      <code>
+        let counter = 0;<br />
+        console.log( counter++ ); // -> 0<br />
+      </code>
     </p>
-    <br>
+    <br />
+    <script>
+      let counter2 = 0;
+      console.log(counter2++); // 0
+    </script>
 
-</body>
+    <p>
+      Оператори ++/-- можуть використовуватися всередині виразів. Їхній
+      пріоритет вище, ніж в арифметичних операціях, наприклад:
+    </p>
+    <br />
+    <p class="code-ex">
+      <br />
+      <code>
+        let counter = 1;<br />
+        console.log( 2 * ++counter ); // -> 4<br />
+      </code>
+    </p>
+    <br />
+    <script>
+      let counter3 = 1;
+      console.log(2 * ++counter3); // 4
+    </script>
 
+    <p>І тепер порівняйте з:</p>
+    <br />
+    <p class="code-ex">
+      <br />
+      <code>
+        let counter = 1;<br />
+        console.log( 2 * counter++ ); // -> 2, тому, що counter++ повертає
+        попереднє значення до збільшення - тобто число '1' і має приорітет над
+        операцією множення.<br />
+      </code>
+    </p>
+    <br />
+    <script>
+      let counter4 = 1;
+      console.log(2 * counter4++); // 2
+    </script>
+
+    <p>
+      Хоча технічно все гаразд, такий запис зазвичай робить код менш зрозумілим.
+      Краще використовувати стиль - <b>один рядок – одна дія</b>, хоча б як тут:
+    </p>
+    <br />
+    <p class="code-ex">
+      <br />
+      <code>
+        let counter = 1;<br />
+        2 * counter; // -> 2<br />
+        counter++; // -> 1 <br />
+      </code>
+    </p>
+    <br />
+    <script>
+      let counter5 = 1;
+      console.log(2 * counter5); // 2
+      console.log(counter5++); // -> 1
+    </script>
+  </body>
 </html>
