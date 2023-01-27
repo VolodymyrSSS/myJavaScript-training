@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Currying calculate volume</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Use currying to transform a function</h2>
+    <h4 class="title">
+      Working with functional programming: using
+      <span class="emph">currying</span>
+    </h4>
+
+    <h4 class="task">
+      Let’s say we have the length, breadth, and height of a cuboid and we want
+      to construct a function that can calculate the volume. The function is
+      being called which consequently executes its code by provided arguments
+      and returns the appropriate result. Finally we call this function with all
+      arguments and obtain the returned value.<br />
+      But we would like to be able to call this function as several functions of
+      a single argument in sequence, namely use currying.
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          function calculateVolume(length, breadth, height) {
+              return length * breadth * height;
+          }
+          calculateVolume(4, 5, 6); // 120
+
+          function simpleFunction(param1, param2, param3, .....) => 
+              function curriedFunction(param1)(param2)(param3)(....
+              
+            => calculateVolume(4)(5)(6); // 120
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <p>
+      Почнемо з того, що таке <em>carrying</em>?<br />
+      Карування – це більш вдосконала техніка для роботи з функціями, це
+      трансформація функції таким чином, щоб вона отримувала аргументи не як
+      f(a, b, c), а як f(a)(b)(c). Карування не викликає функцію, вона просто
+      трансформує її. Карування використовується не тільки в JavaScript, але і в
+      інших мовах програмування.<br />
+      В JavaScript використання карування дозволяє викликати функцію обома
+      варіантами: чи традиційно, чи повертати <em>частково</em> застосовану
+      функцію, якщо кількість аргументів недостатня.<br />
+      Отже, давайте вирішимо наше завдання, для цього створимо іншу функцію
+      <em>curry(f)</em>, яка виконає карування функції <em>f</em> з трьома
+      аргументами. Іншими словами <em>curry(f)</em> для функції
+      <em>calculateVolume(length, breadth, height)</em> трансформує її в
+      <em>calculateVolume(length)(breadth)(height)</em>, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function curry(f) {
+            return function (a) {
+              return function(b) {
+                return function(c) {
+                  return f(a, b, c);
+                }
+              }
+            }
+          }
+
+          // використання:
+           function calculateVolume(length, breadth, height) {
+            return length * breadth * height;
+          }
+
+          let curriedCuboidVolume = curry(calculateVolume);
+          curriedCuboidVolume(4)(5)(6); // 120
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      function curry(f) {
+        return function (a) {
+          return function (b) {
+            return function (c) {
+              return f(a, b, c);
+            };
+          };
+        };
+      }
+
+      // використання:
+      function calculateVolume(length, breadth, height) {
+        return length * breadth * height;
+      }
+
+      let curriedCuboidVolume = curry(calculateVolume);
+      console.log(curriedCuboidVolume(4)(5)(6)); // 120
+    </script>
+
+    <p>
+      Як видно з рішення, реалізація не є складною, хоча вимагає розуміння
+      <em>'замикання'</em>. Якщо попорядку розібратись, то це три обгортки.<br />
+      Результат curry(f) – обгортка function(a).<br />
+      Коли вона викликається як calculateVolume(length), аргумент зберігається в
+      лексичному оточенні та вертається нова обгортка function(b).<br />
+      Далі вже ця обгортка викликається з аргументом calculateVolume(breadth),
+      аргумент також зберігається в лексичному оточенні та вертається нова
+      обгортка function(с).<br />
+      Далі вже ця обгортка викликається з аргументом calculateVolume(height) та
+      передає виклик до батьківської функції.<br />
+      Давайте покажемо карування іншої функції, яка також має три аргумента але
+      просто здійснює їх додавання, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          // використання:
+           function calculateSum(length1, length2, length3) {
+            return length1 + length2 + length3;
+          }
+
+          let curriedSum = curry(calculateSum);
+          curriedSum(4)(5)(6); // 15
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Тепер давайте спростимо варіант карування функції обчислення об'єма куба,
+      тобто застосуємо одразу підїхід карування безпосередньо на самій функції.
+      В ході поточного виконання коду, викликається першою функція
+      calculateVolume(). Всередині міститься анонімна функція, яка отримує
+      параметр та повертає якийсь код. Ми повертаємо (або замикаємо) цю функцію
+      в батьківську функцію, тобто створюється <em>замикання</em>. Таке
+      замикання автоматично створює своє лексичне оточення, яке пов'язане з
+      анонімною функцією. Як тільки ми повертаємо результат в виді анонімної
+      функції, наступний аргумент готовий до передачі. І так процес буде
+      повторюватись до останньої анонімної функції і врешті досягне повернення
+      результату виконання функції, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function calculateVolume(length) {
+              return function (breadth) {
+                  return function (height) {
+                      return length * breadth * height;
+                  }
+              }
+          }
+          calculateVolume(4)(5)(6); // 120
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Ну і для повного розуміння деталей реалізації карування, ось вдосконалена
+      реалізація карування для функцій з багатьма аргументами, яку також можна
+      використати для виконання завдання:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          // func -- функція, яку ми трансформуємо
+          function curry(func) {
+            return function curried(...args) {
+              if (args.length >= func.length) {
+                return func.apply(this, args);
+              } else {
+                return function(...args2) {
+                  return curried.apply(this, args.concat(args2));
+                }
+              }
+            }
+          }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      При цьому необхідно зазначити, що для карування потрібна функція з
+      фіксованою кількістю аргументів. Бо функція, яка використовує
+      <em>оператор залишкових параметрів</em> типу
+      <em><b>f(...args)</b></em> карувати не вдасться.<br />
+
+      Отже, коли ми запускаємо таку функцію, ми бачимо, що є дві гілки виконання
+      <em>if</em>: <br />
+      1) Одразу викликати: якщо кількість переданих аргументів
+      <em>args</em> співпадає з кількістю аргументів при об'явленні функції
+      <em>func.length</em> чи є більше, тоді виклик просто переходить до неї;<br />
+      2) Часткове застосування: тут <em>func</em> не викликається одразу;
+      Замість неї повертається інша обгортка, яка також застосує
+      <em>curried</em> передавши попередні аргументи разом з новими. Потім при
+      новому виклику, ми знову отримуємо або нове часткове застосування (якщо
+      аргументів не достатньо), або врешті результат.<br />
+      Давайте застосуємо цей підхід до нашої функції обчислення об'єму куба і
+      обгортка <em>curried</em>, буде мати вид:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          // func - функція, яку ми трансформуємо
+          function curry(func) {
+            function curried(...args) {
+              if (args.length >= func.length) {
+                return func.apply(this, args);
+              } else {
+                return function pass(...args2) {
+                  return curried.apply(this, args.concat(args2));
+                }
+              }
+            };
+          }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Для того, щоб викликати функцію так: curried(4)(5)(6) чи так:
+      curried(4)(5,6), давайте зробимо по вказаному образу. Перший виклик
+      curried(4) запам'ятовує <i>'4'</i> у своєму лексичному середовищі та
+      повертає обгортку <i>pass</i>. Далі ця обгортка викликається з
+      <i>'5'</i> - вона бере попередній аргумент <i>'4'</i>, об'єднує його з
+      тим, що отримала сама <i>'5'</i> та викликає <i>curried(4, 5)</i> з усіма
+      цими аргументами. Обгортка <i>pass</i> викликається знову з <i>'6'</i>.
+      Для наступного виклику, <i>pass(6)</i> бере попередні аргументи
+      <i>'4', '5'</i> та додає до них <i>'6'</i>, роблячи виклик
+      <i>curried(4, 5, 6)</i> - тобто врешті три аргументи, які передаються
+      батьківській функції, ось:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre style="width: 65%">
+          // func - функція, яку ми трансформуємо
+          function curry(func) {
+            return function curried(...args) {
+              if (args.length >= func.length) {
+                return func.apply(this, args);
+              } else {
+                return function pass(...args2) {
+                  return curried.apply(this, args.concat(args2));
+                }
+              }
+            };
+          }
+
+          // використання:
+          function calculateVolume(length, breadth, height) {
+            return length * breadth * height;
+          }
+
+          let curriedCuboidVolume = curry(calculateVolume);
+
+          curriedCuboidVolume(4, 5, 6); // 120, все ще можна робити виклик нормально
+          curriedCuboidVolume(4)(5,6) ); // 120, карування першого аргументу
+          curriedCuboidVolume(4)(5)(6) ); // 120, карування усіх аргументів
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      // func -- функція, яку ми трансформуємо
+      function curryMult(func) {
+        return function curried(...args) {
+          if (args.length >= func.length) {
+            return func.apply(this, args);
+          } else {
+            return function pass(...args2) {
+              return curried.apply(this, args.concat(args2));
+            };
+          }
+        };
+      }
+
+      // використання:
+      function calculateVolume2(length, breadth, height) {
+        return length * breadth * height;
+      }
+
+      let curriedCuboidVolume2 = curryMult(calculateVolume2);
+
+      console.log(curriedCuboidVolume2(4, 5, 6)); // 120, все ще можна робити виклик нормально
+      console.log(curriedCuboidVolume2(4)(5, 6)); // 120, карування першого аргументу
+      console.log(curriedCuboidVolume2(4)(5)(6)); // 120, карування усіх аргументів
+    </script>
+  </body>
+</html>
