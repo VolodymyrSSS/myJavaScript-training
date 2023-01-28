@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>The pick of an array</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">The pick of an array</h2>
+    <h4 class="title">
+      Working with arrays: using loop
+      <span class="emph">while</span>,<br />
+      property: <span class="emph">length</span> and operator<span class="emph"
+        >if</span
+      >
+    </h4>
+
+    <h4 class="task">
+      Пік гірського масиву - це пояснюється так, масив (arr), умовно можна
+      розділити на 2 частини - зростаючу і спадаючу, а на стику цих двох частин
+      знаходиться пік, який нам необхідно знайти.<br />
+      У зростаючої частини числа відсортовані в порядку зростання, а в спадаючій
+      - в порядку спадання. При цьому може бути ситуація, коли зростаюча або
+      спадаюча частина повністю відсутні. Проте найвище місце (пік) все рівно
+      буде присутнє.<br />
+      Написати функцію peakIndexInMountainArray(arr) яка отримує на вхід масив
+      та повертає єдине число - індекс нашого піка.
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          // Вхідні дані
+
+          let arr1 = [1,2,3,4,3,2,1];
+          let arr2 = [1,2,3,4,5,6,5,4,3,2];
+          let arr3 = [10,9,8,7,6];
+          let arr4 = [14,15,17,18,19,18,17,16];
+    
+          peakIndexInMountainArray(arr1); // пік масиву на індексі 3
+          peakIndexInMountainArray(arr2); // пік масиву на індексі 5
+          peakIndexInMountainArray(arr3); // пік масиву на індексі 0
+          peakIndexInMountainArray(arr4); // пік масиву на індексі 4
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <p>
+      Отже, створюємо функцію для пошуку піку гори - найбільшошо за значенням
+      елементу масиву. Отже треба спочатку визначитись з розмірами усієї "гори"
+      - всього масиву, підніжжя гори (або де вона починаєсться) - індекс першого
+      елементу масиву та іншу сторону "гори" (де закінчуєсться шлях через гору)
+      - індекс останнього елементу масиву. Останній елемент можемо взяти з
+      властивості масиву <b>length</b>, адже довжина масиву - це найбільший
+      індекс - 1. Крім того, потрібно визначити і середину "гори масиву", через
+      вбудований математичний оператор <i>Math.floor()</i>, ось так:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          let peakIndexInMountainArray = function(arr) {
+            let start = 0;
+            let end = arr.length - 1;
+            let middle = Math.floor( (start + end) / 2 );
+          }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Далі, нам потрібно виконувати умову: до тих пір, доки <i>start < end</i> в
+      циклі <b>while</b>, ми піднімаємось по горі і якщо ця умова перестала
+      виконуватись - ми знайшли пік, а отже можемо визначити чітко середину і
+      зогдом перемістимо сюди визначення середини "гори", щоб визначити
+      подальший пошуку частини гори на спуск.<br />
+      Потім задаєм умову через <b>if</b> згідно якої індекс взятого елемента
+      дорівнює індексу середини масиву то ми досягли середини - і ми переносимо
+      сюди початок для визначення індексів на пошук руху вниз гори.
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          while(start < end) {
+            let middle = Math.floor( (start + end) / 2 );
+  
+            if(arr[middle] < arr[middle + 1]) {
+              start = middle + 1; // ще підіймаємось (переставляємо початок)
+            } else {
+              end = middle; // вже спускаємось (переставляємо кінець)
+            }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>Ось так виглядає кінцевий код:</p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          let peakIndexInMountainArray = function(arr) {
+            let start = 0;
+            let end = arr.length - 1;
+    
+            while(start < end) {
+              // тоді це буде середина
+              let middle = Math.floor( (start + end) / 2 );
+    
+              if(arr[middle] < arr[middle + 1]) {
+                // переміщаємо старт до середини
+                start = middle + 1; // підіймаємось і на піку
+              } else {
+                // переміщаємо кінець до середини
+                end = middle; // спускаємось
+              }
+    
+            }
+
+            return start
+          }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      let arr1 = [1, 2, 3, 4, 3, 2, 1];
+      let arr2 = [1, 2, 3, 4, 5, 6, 5, 4, 3, 2];
+      let arr3 = [10, 9, 8, 7, 6];
+      let arr4 = [14, 15, 17, 18, 19, 18, 17, 16];
+
+      let peakIndexInMountainArray = function (arr) {
+        let start = 0;
+        let end = arr.length - 1;
+
+        while (start < end) {
+          let middle = Math.floor((start + end) / 2);
+          console.log({
+            s: arr[start],
+            m: arr[middle],
+            e: arr[end],
+            start,
+            middle,
+            end,
+          });
+
+          if (arr[middle] < arr[middle + 1]) {
+            start = middle + 1; // підіймаємось і на піку
+          } else {
+            end = middle; // спускаємось
+          }
+        }
+
+        console.log({ s: arr[start], e: arr[end], start, end });
+
+        return start;
+      };
+
+      console.log(peakIndexInMountainArray(arr1)); // 3
+      console.log(peakIndexInMountainArray(arr2)); // 5
+      console.log(peakIndexInMountainArray(arr3)); // 0
+      console.log(peakIndexInMountainArray(arr4)); // 4
+    </script>
+  </body>
+</html>
