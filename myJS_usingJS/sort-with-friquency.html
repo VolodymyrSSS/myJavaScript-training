@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Sort by preferences</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Sort by preferences</h2>
+    <h4 class="title">
+      Working with arrays: method of global object
+      <span class="emph">Object.keys(obj)</span>,<br />
+      arrays methods: <span class="emph">reduce(), sort()</span>
+    </h4>
+
+    <h4 class="task">
+      В нас є масив 'fruits' у якого якісь фрукти зустрічаються частіше ніж
+      інші. Написати функцію 'myPrioritySort', яка відсортує фрукти за
+      принципом: той вид фруктів, який більше за всіх зустрічаєтья, іде першими,
+      а той вид, який зустрічається найменше - в кінці.
+    </h4>
+
+    <p>
+      <code>
+        <pre style="width: 70%">
+          let fruits = [
+            'banana', 'grapefruit', 'avocado', 'banana', 'grapefruit', 'banana', 'avocado', 'orange', 'banana', 'avocado'
+          ];
+    
+          myPrioritySort(fruits); // ['banana', 'grapefruit', 'orange'];
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <p>
+      Отже, на вхід ми отримуємо масив рядкових слово-виразів. Проте, спочатку
+      нам потрібно отримати унікальні елементи і скільки раз вони зустрічаються.
+      Найкраще це отримати у виді об'єкту, ключами якого є унікальні елементи, а
+      їх значеннями є кількість раз, який цей елемент зустрічається в масиві.
+      Тому назвемо такий тимчасовий об'єкт як <i>temp</i>.<br />
+      Далі використаємо метод <b>reduce()</b>, який дозволить отримати кожен
+      унікальний елемент як <i>acc[cur]</i> так і значення кількості разів,
+      скільки зустрічається такий унікальний елемент в масиві як
+      <i>acc[cur] + 1</i>. А для цього, замість початкового значення в методі
+      <i>reduce</i> ми візьмем пустий об'єкт, щоб отримати результат роботи
+      методу у виді об'єкту, що має <i>ключ:значення</i>, ось так:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+            const temp = array.reduce((acc, cur) =>{
+              acc[cur] = (acc[cur] || 0) + 1;
+              return acc;
+            },{});
+            console.log(temp); // {banana: 4, grapefruit: 2, avocado: 3, orange: 1}
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Маючи такий об'єкт, далі нам потрібно взяти ключі (унікальні елементи) та
+      правельно їх відфільтрувати. Для цього візьмемо з результату отриманого
+      об'єкта тільки ключі використавши метод глобального об'єкту
+      <b>Object.keys(obj)</b>, який поверне масив ключів у переданому об'єкті,
+      ось так:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre style="width: 55%">
+          const keys = Object.keys(temp); // ['banana', 'grapefruit', 'avocado', 'orange']
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Та вже потім відсортуємо їх методом <b>arr.sort()</b>, врахувавши щоб
+      елементи виводились від більшого числа до меншого задвши порядок
+      сортування в тілі методу. Але тут є один момент, якщо існує потреба в
+      сортуванні у потрібному порядку, то масив повинен спочатку відсортований
+      до виклику методу Object.entries, наприклад<br />
+      <em>Object.entries(obj).sort((a, b) => a[0] - b[0]);</em><br />
+      Тому при сортуванні ми враховуємо це, ось так:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre style="width: 55%">
+          keys.sort((a, b) => {
+              return temp[b] - temp[a];
+            });
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Останнє, огортаєм код в функцію, та одразу повертаємо відсортований масив,
+      ось так виглядає кінцевий код:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre style="width: 85%">
+          let fruits = [
+            'banana', 'grapefruit', 'avocado', 'banana', 'grapefruit', 'banana', 'avocado', 'orange', 'banana', 'avocado'
+          ];
+
+          const myPrioritySort = (array) => {
+
+            const temp = array.reduce((acc, cur) =>{
+              acc[cur] = (acc[cur] || 0) + 1;
+              return acc;
+            },{});
+            console.log(temp); // {banana: 4, grapefruit: 2, avocado: 3, orange: 1}
+    
+            // Візьмемо ключі:
+            const keys = Object.keys(temp); // ['banana', 'grapefruit', 'avocado', 'orange']
+    
+            // відсортуємо їх у відповідності до їх значення від більшого до меншого
+            return keys.sort((a, b) => {
+              return temp[b] - temp[a];
+            });
+    
+          }
+    
+          console.log(myPrioritySort(fruits)); // ['banana', 'avocado', 'grapefruit', 'orange']
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      let fruits = [
+        'banana',
+        'grapefruit',
+        'avocado',
+        'banana',
+        'grapefruit',
+        'banana',
+        'avocado',
+        'orange',
+        'banana',
+        'avocado',
+      ];
+
+      const myPrioritySort = (array) => {
+        const temp = array.reduce((acc, cur) => {
+          acc[cur] = (acc[cur] || 0) + 1;
+          return acc;
+        }, {});
+        console.log(temp); // {banana: 4, grapefruit: 2, avocado: 3, orange: 1}
+
+        // Візьмемо ключі:
+        const keys = Object.keys(temp);
+        console.log(keys); // ['banana', 'grapefruit', 'avocado', 'orange']
+
+        // відсортуємо їх у відповідності до їх значення
+        return keys.sort((a, b) => {
+          return temp[b] - temp[a];
+        });
+      };
+
+      console.log(myPrioritySort(fruits)); // ['banana', 'avocado', 'grapefruit', 'orange']
+    </script>
+  </body>
+</html>
