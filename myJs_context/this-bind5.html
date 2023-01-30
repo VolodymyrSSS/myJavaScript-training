@@ -60,11 +60,17 @@
   </head>
 
   <body>
-    <h2 class="title">Working with context - keyword <span class="emph">this</span>, the method <span class="emph">bind</span></h2>
+    <h2 class="title">
+      Working with context - keyword <span class="emph">this</span>, the method
+      <span class="emph">bind</span>
+    </h2>
 
     <h4 class="task">
-      В об'єкті 'placeMinsk' містяться географічні координати міста Мінська, які відображаються в консолі при виклику його методу showCoordinates().<br>
-      Створіть окрему функцію showMinskCoordinates(), яка буде звертатись за даними до об'єкта placeMinsk та виводити координати міста Мінська також.<br>
+      В об'єкті 'placeMinsk' містяться географічні координати міста Мінська, які
+      відображаються в консолі при виклику його методу showCoordinates().<br />
+      Створіть окрему функцію showMinskCoordinates(), яка буде звертатись за
+      даними до об'єкта placeMinsk та виводити координати міста Мінська
+      також.<br />
     </h4>
 
     <p class="code-ex">
@@ -78,23 +84,32 @@
           }
         };
 
-        place.showCoordinates(); // Latitude: 53.9 на іншому рядку Longitude: 27.56667
+        placeMinsk.showCoordinates(); // Latitude: 53.9 на іншому рядку Longitude: 27.56667
         
         створити окрему функцію виклик якої матиме такий самий результат
         showMinskCoordinates(); // Latitude: 53.9 на іншому рядку Longitude: 27.56667
         </pre>
       </code>
-  </p><br>
+    </p>
+    <br />
 
-    <p><b>Відповідь</b>:</p><br>
+    <p><b>Відповідь</b>:</p>
+    <br />
 
-    <p>Функція, яка постійно викликається із значенням this, називається прив'язаною функцією.<br>
-      Власне метод bind() і використовується для створення нової функції на основі вже наявної, але з 'жорстко' заданим значенням this і (або) визначеним набором параметрів, та приймає два аргументи:<br>
-      - значення this;<br>
-      - визначений набір параметрів по типу REST-аргументів (але це не обов'язково)<br>
-      <br>
-      Отже, створюємо функцію showMinskCoordinates() з використанням методу bind() в якій контекстом буде жорсто привязаний контекст об'єкта placeMinsk (this = placeMinsk). Ось так:
-      </p>
+    <p>
+      Функція, яка постійно викликається із значенням this, називається
+      прив'язаною функцією.<br />
+      Власне метод bind() і використовується для створення нової функції на
+      основі вже наявної, але з 'жорстко' заданим значенням this і (або)
+      визначеним набором параметрів, та приймає два аргументи:<br />
+      - значення this;<br />
+      - визначений набір параметрів по типу REST-аргументів (але це не
+      обов'язково)<br />
+      <br />
+      Отже, створюємо функцію showMinskCoordinates() з використанням методу
+      bind() в якій контекстом буде жорсто привязаний контекст об'єкта
+      placeMinsk (this = placeMinsk). Ось так:
+    </p>
 
     <p class="code-ex" style="width: 70%">
       <code>
@@ -106,24 +121,28 @@
       </code>
     </p>
 
-    <p>Так, незалежно від того, де і як буде ініційовано виклик showMinskCoordinates(), вона завжди буде звертатися за даними саме до об'єкта place.
+    <p>
+      Так, незалежно від того, де і як буде ініційовано виклик
+      showMinskCoordinates(), вона завжди буде звертатися за даними саме до
+      об'єкта placeMinsk.
     </p>
-   
+
     <script>
       let placeMinsk = {
-      latitude: 53.9,
-      longitude: 27.56667,
-      showCoordinates: function() {
-        console.log(`Latitude: ${this.latitude}\nLongitude: ${this.longitude}`);
-        }
+        latitude: 53.9,
+        longitude: 27.56667,
+        showCoordinates: function () {
+          console.log(
+            `Latitude: ${this.latitude}\nLongitude: ${this.longitude}`
+          );
+        },
       };
-      
-      placeMinsk.showCoordinates(); // Latitude: 53.9 на іншому рядку Longitude: 27.56667 
+
+      placeMinsk.showCoordinates(); // Latitude: 53.9 на іншому рядку Longitude: 27.56667
 
       let showMinskCoordinates = placeMinsk.showCoordinates.bind(placeMinsk);
 
       showMinskCoordinates(); // Latitude: 53.9 на іншому рядку Longitude: 27.56667
-      
     </script>
   </body>
 </html>
