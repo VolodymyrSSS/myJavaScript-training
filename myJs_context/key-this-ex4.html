@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Keyword 'this': this() ex4</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Keyword 'this'</h2>
+    <h4 class="title">
+      Working with Keyword <span class="emph"> this</span> and method
+      <span class="emph"> call()</span>
+    </h4>
+
+    <h4 class="task">
+      В нас є глобальна змінна <i>foo</i> та функція затримки <i>setTimeout</i>,
+      яка містить у своїй внутрішній області видимості також змінну
+      <i>foo</i> та метод <i>getFoo()</i> де використовується ключове слово
+      <i>this</i>.<br />
+      Що буде виведено в консолі при виклику метода <i>getFoo()</i> та при
+      виклику із застосуванням метода <i>call()</i>?<br />
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          var foo = 1;
+
+          setTimeout(() => {
+            let foo = 2;
+
+            const bar = {
+                foo: 3,
+                getFoo(){
+                    return this.foo;
+                }
+            }
+
+            console.log(bar.getFoo()); // ???
+            console.log(bar.getFoo.call(this)); // ???
+          }, 0);
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Рішення:</b> 3 та 1</p>
+    <br />
+
+    <p>
+      Значення ключового слова <i>this</i> залежить від того, де воно
+      використовується.<br />
+      В методі <i>getFoo</i>, ключове слово <i>this</i> посилається на об'єкт,
+      якому належить цей метод. В даному завданні, цей метод належить об'єкту
+      <i>bar</i>, тому <i>this</i> відноситься до нього. Коли ми реєструємо
+      <i>this.foo</i>, реєструється властивість <i>foo</i> об'єкта
+      <i>bar</i> значенням якого є <i>'3'</i>, ось так:<br />
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          var foo = 1;
+
+          setTimeout(() => {
+            let foo = 2;
+
+            const bar = {
+              foo: 3,
+              getFoo() {
+                return this.foo;
+              },
+            };
+
+            console.log(bar.getFoo()); // 3
+          }, 0);
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      За допомогою методу <b>call()</b> ми можемо змінити об'єкт на який
+      посилається ключове слово <i>this</i>. В функціях ключове слово
+      <i>this</i> належить до об'єкту, якому належить функція. Ми об'явили
+      функцію <i>setTimeout</i> для об'єкта <i>window</i>, тому в функції
+      <i>setTimeout</i> <i>this</i> посилається на глобальний об'єкт. В цьому
+      глобальному об'єкті є змінна з ім'ям <i>foo</i> та значенням <i>'1'</i>, а
+      тому при регістрації <i>this.foo</i> виводиться <i>'1'</i>, ось так:<br />
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          var foo = 1;
+
+          setTimeout(() => {
+            let foo = 2;
+
+            const bar = {
+              foo: 3,
+              getFoo() {
+                return this.foo;
+              },
+            };
+
+            console.log(bar.getFoo.call(this)); // 1
+          }, 0);
+        </pre>
+      </code>
+    </p>
+    <br />
+    <br />
+
+    <script>
+      var foo = 1;
+
+      setTimeout(() => {
+        let foo = 2;
+
+        const bar = {
+          foo: 3,
+          getFoo() {
+            return this.foo;
+          },
+        };
+
+        console.log(bar.getFoo());
+        console.log(bar.getFoo.call(this));
+      }, 0);
+    </script>
+  </body>
+</html>
