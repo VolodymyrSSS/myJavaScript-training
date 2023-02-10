@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Working with Promise: new Promise() ex3</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">new Promise()</h2>
+    <h4 class="title">
+      Working with Promise: using method:
+      <span class="emph"> Promise.then()</span>
+    </h4>
+
+    <h4 class="task">
+      Вбудована функція <i>setTimeout</i> використовує колбек-функцію. Створіть
+      альтернативу, яка буде використовувати проміси.<br />
+      Тобто, функція <i>delay(ms)</i> повинна повертати проміс, який перейде в
+      стан <i>'виконано'</i> через <i>ms</i> мілісекунд, так щоб можна було
+      додати до нього метод <i>.then</i>.<br />
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          function delay(ms) {
+            // ... ваш код ...
+          }
+
+          delay(3000).then(() => console.log('виконалось через 3 секунди'));
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <p>
+      Отже, повертаємо в функції <i>delay(ms)</i> конструктор промісу, який
+      одразу запускає функцію-виконавця з двома аргументами: resolve та reject,
+      ось так:<br />
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          function delay(ms) {
+            return new Promise(function(resolve, reject) {
+
+            })
+          }
+
+          delay(3000).then(() => console.log('виконалось через 3 секунди'));
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Далі потрібно зробити так, щоб функція-виконавець викликала один з
+      аргументів - нам потрібно щоб успішно був виконаний проміс, тому
+      викликаємо з аргументом <i>resolve</i>, який передається функції-затримці
+      <i>setTimeout()</i>, причому <i>resolve</i> не повинен мати якісь
+      аргументи бо нам потрібно тільки забезпечити одну лише затримку. А далі,
+      як видно по коду, метод <b>.then</b> – функцiя, що виконується коли проміс
+      переходить в стан <i>'виконано успішно'</i> та отримує результат -
+      виводить в консоль фразу 'виконалось через 3 секунди', ось так:<br />
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          function delay(ms) {
+            return new Promise(function(resolve, reject) {
+              setTimeout(resolve, ms);
+            })
+          }
+
+          delay(3000).then(() => console.log('виконалось через 3 секунди'));
+        </pre>
+      </code>
+    </p>
+    <br />
+    <br />
+
+    <script>
+      function delay(ms) {
+        return new Promise(function (resolve, reject) {
+          setTimeout(resolve, ms);
+        });
+      }
+
+      delay(3000).then(() => console.log('виконалось через 3 секунди')); // через 3 секунди виведеться вираз
+    </script>
+  </body>
+</html>

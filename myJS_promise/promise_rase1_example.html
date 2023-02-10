@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Working with Promise: Promise.race() ex1</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Promise.race()</h2>
+    <h4 class="title">
+      Working with Promise: using method:
+      <span class="emph"> Promise.race()</span>
+    </h4>
+
+    <h4 class="task">
+      В нас є два проміси які позитивно вирішуються відповідними результатами:
+      'first' та 'second'. До цих промісів ми застосували метод
+      <i>Promise.race()</i>.<br />
+      Який результат ми отримаємо в консолі?<br />
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          const p1 = new Promise((res, rej) => {
+              setTimeout(res, 500, 'first');
+          });
+
+          const p2 = new Promise((res, rej) => {
+              setTimeout(res, 100, 'second');
+          });
+
+          Promise.race([p1, p2]).then(console.log);
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Рішення:</b> 'second'</p>
+    <br />
+
+    <p>
+      Коли ми передаємо кілька промісів методу <b>Promise.race</b>, він
+      дозволить той проміс, який буде вирішений першим. У методі
+      <i>setTimeout</i> ми передаємо таймер: 500 мс для першого промісу та 100
+      мс для другого промісу. Це означає, що <i>p2</i> дозволиться першим із
+      значенням 'second'. Отже <i>res</i> тепер містить значення 'second', яке
+      виводиться в консоль, ось так:<br />
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          Promise.race([p1, p2]).then(console.log); // 'second'
+        </pre>
+      </code>
+    </p>
+    <br />
+    <br />
+
+    <script>
+      const p1 = new Promise((res, rej) => {
+        setTimeout(res, 500, 'first');
+      });
+
+      const p2 = new Promise((res, rej) => {
+        setTimeout(res, 100, 'second');
+      });
+
+      Promise.race([p1, p2]).then(console.log);
+    </script>
+  </body>
+</html>

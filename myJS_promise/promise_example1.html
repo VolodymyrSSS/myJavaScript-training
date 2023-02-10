@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Working with Promise: new Promise() ex1</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">new Promise()</h2>
+    <h4 class="title">
+      Working with Promise: using method:
+      <span class="emph"> Promise.then()</span>
+    </h4>
+
+    <h4 class="task">
+      В нас є проміс який позитивно вирішується з результатом '123'.<br />
+      Чи можемо ми одразу отримати результат використовуючи
+      <i>Promise</i>? Як перевірити?<br />
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          let promise = new Promise(function(resolve, reject) {
+            // задача, яка не потребує часу на вирішення
+            resolve(123); // чи видасть одразу результат?
+          });
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Рішення:</b> так ...</p>
+    <br />
+
+    <p>
+      В промісі, функція-виконавець виконується автоматично, при виклику
+      <b>new Promise</b>. Зазвичай, в тілі проміса функція-виконавець здійснює
+      якісь асинхронні дії, і після цього викликає <i>resolve/reject</i>, тобто
+      через якийсь певний час. Але в дійсності, це не обов'язково, 'resolve' чи
+      'reject' можуть бути викликані одразу, ось так:<br />
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          let promise = new Promise(function(resolve, reject) {
+            resolve(123);
+          });
+
+          console.log(promise); // Promise { fulfilled : 123}
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Проте для перевірки, давайте застосуємо метод обробки результатів проміс -
+      <b>.then()</b>, бо на завершених промісах обробники запускаються одразу.
+      Тобто, якщо проміс в стані очікування, обробники в
+      <i>then/catch/finally</i> будуть очікувати його, але якщо проміс вже
+      виконано/завершено, то обробники запускаються одразу, ось так:<br />
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          let promise = new Promise(function(resolve, reject) {
+            resolve(123); 
+          });
+
+          promise.then(console.log); // одразу видасть результат '123'
+        </pre>
+      </code>
+    </p>
+    <br />
+    <br />
+
+    <script>
+      let promise = new Promise(function (resolve, reject) {
+        resolve(123);
+      });
+
+      // console.log(promise);
+      promise.then(console.log);
+    </script>
+  </body>
+</html>

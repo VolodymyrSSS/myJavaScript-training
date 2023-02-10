@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Working with Promise: new Promise() ex2</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">new Promise()</h2>
+    <h4 class="title">
+      Working with Promise: using method:
+      <span class="emph"> Promise.then()</span>
+    </h4>
+
+    <h4 class="task">
+      В нас є проміс який позитивно вирішується з результатом '1'.<br />
+      Також, в промісі є друга функція-виконавець, яка вирішується із затримкою
+      в 1 секунду з результатом '2'. Що буде виведено в консолі? Чи можна
+      функцію-виконавця перевиконати?<br />
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          let promise = new Promise(function(resolve, reject) {
+            resolve(1);
+
+            setTimeout(() => resolve(2), 1000);
+          });
+
+          promise.then(console.log);
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Рішення:</b> 1 ...</p>
+    <br />
+
+    <p>
+      Як відомо, стан промісу моеже бути змінено тільки один раз і
+      функція-виконавець промісу може мати тільки одн результат: позитивне
+      вирішення чи помилку. <br />Крім того, функція
+      <i>reject/resolve</i> очікує тільки один аргумент (або жодного). Усі
+      додаткові аргументи будуть проігноровані. Іншими словами, не можна
+      перевиконати функцію-виконавця з другим аргументом, якщо вона була
+      вирішена з вже взятим першим аргументом.<br />
+      Таким чином, в завданні перша функція-виконавець одразу виведе <i>'1'</i>.
+      Так ми отримали єдиний результат з взятим першим аргументом <i>'1'</i>.
+      Другий виклик <i>resolve</i> будет проігнорований, оскільки враховується
+      тільки перший виклик <i>reject/resolve</i>, і всі наступні виклики -
+      ігноруються, ось так:<br />
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          let promise = new Promise(function(resolve, reject) {
+            resolve(1);
+
+            setTimeout(() => resolve(2), 1000);
+          });
+
+          promise.then(console.log); // 1
+        </pre>
+      </code>
+    </p>
+    <br />
+    <br />
+
+    <script>
+      let promise = new Promise(function (resolve, reject) {
+        resolve(1);
+
+        setTimeout(() => resolve(2), 1000);
+      });
+
+      promise.then(console.log); // 1
+    </script>
+  </body>
+</html>
