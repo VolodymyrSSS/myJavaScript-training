@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Basic JS</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Basic JS</h2>
+    <h4 class="title">
+      Working with increment <span class="emph">++</span> and decrement
+      <span class="emph">--</span>
+    </h4>
+
+    <h4 class="task">
+      В нас є змінна <i>n</i> та три стрілочні функції які збільшують значення
+      перемінної оператором increment <b>++</b>, причому перша функція збільшує
+      змінну в 'префіксній' формі, а друга в 'постфіксній' формі, ну і третя
+      функція просто повертає значення <i>n</i>.<br />
+      Що буде виведено у консолі в результаті такого збільшення?<br />
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          let n = 0;
+
+          const fn1 = () => ++n;
+          const fn2 = () => n++;
+          const fn3 = () => n;
+
+          console.log(fn1()); // ???
+          console.log(fn2()); // ???
+          console.log(fn3()); // ???
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Рішення:</b> 1, 1 та 2</p>
+    <br />
+
+    <p>
+      Перше, що видно, змінній <i>n</i> було присвоїно значення <i>'0'</i>. В
+      момент виклику першої функції <i>f1</i> значення <i>n</i> було спочатку
+      збільшено на одиницю, а вже потім було повернуто і в консолі виводиться
+      <i>'1'</i>.<br />
+      Натомість, в функції <i>f2</i>, значення спочатку повертається і
+      виводиться в консоль, а вже потім <i>n</i> збільшується на одиницю, тобто
+      в консоль було виведено <i>'1'</i>, а <i>n</i> стало рівне <i>'2'</i>.
+      <br />
+      Ну і остання функція просто повертає <i>'2'</i>, ось так:<br />
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          let n = 0;
+
+          const fn1 = () => ++n;
+          const fn2 = () => n++;
+          const fn3 = () => n;
+
+          console.log(fn1()); // 1
+          console.log(fn2()); // 1
+          console.log(fn3()); // 2
+        </pre>
+      </code>
+    </p>
+    <br />
+    <br />
+
+    <script>
+      let n = 0;
+
+      const fn1 = () => ++n;
+      const fn2 = () => n++;
+      const fn3 = () => n;
+
+      console.log(fn1()); // 1
+      console.log(fn2()); // 1
+      console.log(fn3()); // 2
+    </script>
+  </body>
+</html>
