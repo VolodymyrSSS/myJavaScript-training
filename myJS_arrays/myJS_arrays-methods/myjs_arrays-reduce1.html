@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Arrays methods: reduce</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      div {
+        width: 60%;
+        background-color: #bebebe;
+        margin: auto;
+      }
+
+      h3 {
+        color: #d87093;
+        text-align: center;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Array methods</h2>
+    <h4 class="title">
+      Working with array methods: method <span class="emph">reduse()</span>
+    </h4>
+
+    <h4 class="task">
+      Покажіть на прикладі підрахунку суми значень усіх елементів масиву, сутність застосування методу reduse()?<br />
+    </h4>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          // Вихідні дані:
+
+          let arr = [1, 2, 3, 4, 5];
+
+          let result = arr.reduce( /...ваш код.../);
+
+          console.log(result); // 15 - обчислена сума значень
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <p>
+      Якщо нам потрібно перебрати масив, ми можемо використати методи: <i>forЕach, for, for..of</i>.<br />
+      Якщо нам потрібно перебрати масив та повернути якісь дані для кожного елемента масиву, ми використаємо метод <i>map</i>.<br />
+      Але якщо нам потрібно отримати якесь єдине обчислене значення на основі усіх елементів масиву, ми використовуємо метод <strong><em>reduce</em></strong>.<br />
+      Методи <i>arr.reduce() та arr.reduceRight()</i> трохи складніші ніж інші методи масивів. Його синтаксис виглядає так: <br />
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          reduce/reduceRight(func, initial);
+          // але краще ось так:
+          let value = arr.reduce(function(previousValue, item, index, array) {
+            // ...
+          }, [initial]);
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Функція застосовується по черзі до всіх елементів масиву та переносить свій результат на слідуючий виклик. Її аргументами є:<br />
+      - previousValue – попередній елемент масиву, або точніше результат попереднього виклику цієї функції, він дорівнює значенню <i>initial</i> при першому виклику (якщо він звичайно переданий).<br />
+      - item – черговий елемент масиву,</br>
+      - index – його індекс,<br />
+      - array – сам масив.<br />
+      <br />
+      Якщо викликати функцію, то результат її виклику, що записаний на попередньому елементі передається як перший аргумент. Далі береться черговий елемент масиву та здійснюється якесь обчислення з цими двома елементами і результат знову записується в попередній елемент. Звучить ніби складно, але стає простіше до розуміння, коли перший аргумент (або попередній) розглядати як 'акумулятор' - той що накопичує результати попередніх викликів. Врешті він стає результатом, який повертає метод <i>reduce</i>.
+    </p>
+    </br>
+
+    <p>
+      Отже, розглянемо на прикладі додавання значень усіх елементів масиву застосувавши метод <i>reduce</i>. Тут ми можемо отримати суму цих значень застосувавши цей метод разом із стрілковими функціями усього одним рядком, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          let arr = [1, 2, 3, 4, 5];
+
+          let result = arr.reduce((sum, current) => sum + current, 0);
+
+          console.log(result); // 15
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      let arr = [1, 2, 3, 4, 5];
+        
+      let result = arr.reduce((sum, current) => sum + current, 0);
+            
+      console.log(result); // 15
+    </script>
+
+    <p>
+      Метод працює так:<br />
+        При першому запуску <i>sum</i> дорівнює <i>initial</i> (останній аргумент reduce), тобто <i>0</i>, а <i>current</i> – першому елементу масива, що дорівнює <i>1</i>. Таким чином, результатом дії функції на цьому етапі буде <i>1</i>.<br />
+        При другому виклику, sum = 1, а до нього додаємо другий елемент масиву <i>2</i>.<br />
+        При третьому запуску sum = 3, до якого ми додаєм наступний елемент із значенням <i>4</i>, і так далі…<br>
+    </p>
+    <br />
+
+    <p>
+     Ми навіть можемо не вказувати початкове значення, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          let arr = [1, 2, 3, 4, 5];
+
+          // не вказали початкове значення (немає 0 у кінці)
+          let result = arr.reduce((sum, current) => sum + current);
+
+          console.log( result ); // 15
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Результат – точно такий самий! Це тому, що при відсутності <i>initial</i> у якості попереднього значення буде братись перший елемент масиву, а перебор стартує вже з другого елементу. Проте таке використання потребує певної обережності, бо якщо масив пустий, то виклик функції без початкового значення видасть помилку. Тому рекомендується завжди задавати початкове значення.
+    </p>
+    <br />
+
+    <p>
+     Метод <b>arr.reduceRight</b> працює аналогично, але прохід по масиву здійснюється з права на ліво.
+    </p>
+
+    <script>        
+      let result2 = arr.reduceRight((sum, current) => sum + current, 0);
+            
+      console.log(result2); // 15
+    </script>
+
+    <br /><br /><br />
+  </body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Arrays methods: reduce</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      div {
+        width: 60%;
+        background-color: #bebebe;
+        margin: auto;
+      }
+
+      h3 {
+        color: #d87093;
+        text-align: center;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Array methods</h2>
+    <h4 class="title">
+      Working with array methods: method <span class="emph">reduсe()</span>
+    </h4>
+
+    <h4 class="task">
+      Ми маємо довільний масив <i>arr</i>, який своїми елементами має об'єкти.
+      Конвертуйте цей масив об'єктів у простий об'єкт де його ключами є значення
+      id, а його значеннями - значення властивостей об'єктів <i>name</i>?<br />
+    </h4>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          // Вихідні дані:
+
+          const arr = [
+            { id: 1, name: 'John' },
+            { id: 2, name: 'Jane' },
+            { id: 3, name: 'Bob' }
+          ];
+
+          console.log(obj); // {1: 'John', 2: 'Jane', 3: 'Bob'}
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <p>
+      Для перетворення масиву в об'єкт можемо використати метод масивів
+      <strong><em>reduce</em></strong
+      >.<br />
+      Цей метод використовується для того, щоб перебрати кожен елемент масиву та
+      застосувати до елемента якусь дію, в нашому завданні - взяти значення
+      <i>id</i> та значення <i>name</i> кожного об'єкта, що і є елементами
+      заданого масиву і записати їх в один об'єкт що є акумулятором метода, який
+      повертається.<br />
+      Тобто, в завданні ми маємо масив об'єктів які мають властивості
+      <i>id</i> та <i>name</i>. Використавши метод <i>reduce()</i>, ми
+      проходимось по кожному елементу масиву - по кожному об'єкту та задаєм
+      властивості для нового об'єкта беручи необхідні значення від властивостей
+      кожного об'єкта. Акумулятор метода <i>acc</i> - це новий об'єкт, який
+      закумульовує/отримує значення від об'єктів (елементів) заданого масиву, а
+      поточне значення <i>current</i> - це наступний об'єкт (наступний елемент)
+      від якого будуть братись необхідні значення для нового об'єкта. Отже, щоб
+      взяти значення <i>id</i> взятого об'єкта, треба використати квадратні
+      дужки, а для взяття значення властивості об'єкта <i>name</i>, взяти просто
+      через крапку, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+            acc[current.id]
+
+            current.name;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Таким чином, колбек функція методу <i>reduce()</i> додає нову пару
+      ключ-значення в новий закумульований об'єкт, значення яких будуть братись
+      з властивостей об'єктів вхідного масиву. Ключ - це значення властивості
+      <i>id</i> поточного елементу а його значення - це значення властивості
+      <i>name</i> поточного елементу. Літерал об'єкта {} передається як другий
+      аргумент в <i>reduce()</i> метод - це початкове значення новостворюваного
+      об'єкту. Тому, застосування методу буде мати вид:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          const obj = arr.reduce((acc, current) => {
+            acc[current.id] = current.name;
+            return acc;
+          }, {});
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      const arr = [
+        { id: 1, name: 'John' },
+        { id: 2, name: 'Jane' },
+        { id: 3, name: 'Bob' },
+      ];
+
+      const obj = arr.reduce((acc, current) => {
+        acc[current.id] = current.name;
+        return acc;
+      }, {});
+
+      console.log(obj); // {1: 'John', 2: 'Jane', 3: 'Bob'}
+    </script>
+
+    <br /><br /><br />
+  </body>
+</html>

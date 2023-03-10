@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Arrays methods: reduce</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      div {
+        width: 60%;
+        background-color: #bebebe;
+        margin: auto;
+      }
+
+      h3 {
+        color: #d87093;
+        text-align: center;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Array methods</h2>
+    <h4 class="title">
+      Working with array methods: method <span class="emph">reduсe()</span>
+    </h4>
+
+    <h4 class="task">
+      Напишіть функцію <i>getAverageAge(users)</i>, яка приймає масив<br />
+      об'єктів та повертає середній вік. Кожен об'єкт має властивість
+      <i>age</i>.<br />
+      Формула для обчислення среднього арифметичного значення:<br />
+      <i>(age1 + age2 + ... + ageN) / N</i>.
+    </h4>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          // Вихідні дані:
+
+          let saimon = { name: 'Saimon', age: 25 };
+          let juliet = { name: 'Juliet', age: 30 };
+          let kally = { name: 'Kally', age: 28 };
+          let peter = { name: 'Peter', age: 31 };
+          let walter = { name: 'Walter', age: 19 };
+
+          let users = [  saimon, juliet, kally, peter, walter,];
+
+          console.log( getAverageAge(users) ); // (25 + 30 + 28 + 31 + 19) / 5 = 26.6
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <p>
+      Для вирішення завдання використаємо метод
+      <strong><em>reduce(func, initial)</em></strong
+      >,<br />
+      який обчислює єдине значення на основі усього масиву, викликаючи
+      <i>func</i> для кожного елементу масиву та передає проміжний результат між
+      викликами.<br />
+      Щоб краще зрозуміти, можна цей метод розписати так:<br />
+      <b
+        >let value = arr.reduce(function(previousValue, item, index, array)
+        {...}, [initial]);</b
+      ><br />
+      як видно, тут функція застосовується по-черзі до всіх елементів масиву та
+      переносить свій проміжний/попередній результат на слідуючий виклик.<br />
+      Тут <i>previousValue</i> – результат попереднього виклику цієї функції і
+      при першому виклику дорівнює значенню <i>initial</i>. Або можна сказати і
+      так - 'акумулюючий' результат попередніх викликів функції і по закінченню,
+      він стає результатом роботи метода <i>reduce</i>.<br />
+      Але почнемо з того, що для визначення кількості елементів масиву,
+      застосуємо властивість <i>length</i>, бо вона потрібна для того, щоб
+      вирахувати середній вік користувачів:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+            ( arr[1] + arr[2] + arr[3] + arr[s4] + arr[5] ) / arr.length
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Далі, щоб взяти будь-яке значення об'єкту, застосуємо взяття його через
+      крапку, і в завданні це береться в кожного поточного користувача по типу:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          let kally = { name: 'Kally', age: 28 }; 
+
+          kally.age; // 28
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Тобто, для аргументів метода <i>reduce()</i>, а саме для поточних значень
+      <i>current</i> ми будемо брати це значення, яке потрібно додавати до
+      попередньо обчисленого значення, яке знаходиться в акумуляторі, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function(acc, user) => acc + user.age
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Початкове значення для акумулятора можна визначити як <i>[0]</i>. Отже,
+      вирішення завдання методом <i>reduce()</i> буде мати вид:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function getAverageAge(users) {
+            return users.reduce((acc, user) => acc + user.age, 0) / users.length;
+          }
+
+          let saimon = { name: 'Saimon', age: 25 };
+          let juliet = { name: 'Juliet', age: 30 };
+          let kally = { name: 'Kally', age: 28 };
+          let peter = { name: 'Peter', age: 31 };
+          let walter = { name: 'Walter', age: 19 };
+
+          let users = [saimon, juliet, kally, peter, walter];
+
+          console.log(getAverageAge(users)); // 26.6
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      function getAverageAge(users) {
+        return users.reduce((acc, user) => acc + user.age, 0) / users.length;
+      }
+
+      let saimon = { name: 'Saimon', age: 25 };
+      let juliet = { name: 'Juliet', age: 30 };
+      let kally = { name: 'Kally', age: 28 };
+      let peter = { name: 'Peter', age: 31 };
+      let walter = { name: 'Walter', age: 19 };
+
+      let users = [saimon, juliet, kally, peter, walter];
+
+      console.log(getAverageAge(users)); // 26.6
+    </script>
+
+    <br /><br /><br />
+  </body>
+</html>
