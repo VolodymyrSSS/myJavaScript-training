@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Working with DOM</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      div {
+        width: 60%;
+        background-color: #bebebe;
+        margin: auto;
+      }
+
+      h3 {
+        color: #d87093;
+        text-align: center;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      .autos {
+        display: flex;
+        background-color: royalblue;
+      }
+
+      .autoCard {
+        color: white;
+        background-color: brown;
+        width: 300px;
+        margin: 10px;
+        text-align: center;
+        line-height: 25px;
+        font-size: 16px;
+        border: 2px solid black;
+      }
+
+      .btn {
+        background-color: blueviolet;
+        border: none;
+        color: black;
+        padding: 8px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 4px;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">DOM (data object model)</h2>
+    <h4 class="title">
+      Working with DOM: using <span class="emph">classList</span>, methods
+      <span class="emph">createElements(), add(), remove()</span>,<br />
+      searching method <span class="emph">querySelector()</span> and
+      <span class="emph">querySelectorAll()</span> array methods
+      <span class="emph">forEach()</span><br />
+      universal method
+      <span class="emph">elem.insertAdjacentElem(where, elem)</span>,
+      eventListener <span class="emph">elem.eventListener()</span> <br />
+    </h4>
+
+    <h4 class="task">
+      За допомогою методів та способів для роботи з DOM-елементами:<br />
+      1. Створіть div-eлемент<br />
+      2. Надайте цьому div-eлементу клас <i>wrapper</i> із сірим фоном та
+      помістіть на сторінку<br />
+      3. Напишіть функцію <i>generateAutoCard</i>, яка на вхід отримує три
+      аргументи <i>brand, color, year</i>та повертає цілий НТМL-шаблон<br />
+      4. Створіть новий div-елемент з класом <i>autos</i><br />
+      5. Використовуючи функцію <i>generateAutoCard</i>, створіть 3и картки для
+      різних брендів авто, які задані в масиві <i>carsList</i><br />
+      6. Помістіть створенi картки всередину div-eлементу з класом
+      <i>autos</i><br />
+      7. Помістіть створений div-елемент з класом <i>autos</i> всередину
+      div-eлементу з класом <i>wrapper</i> точніше в кінець блоку<br />
+      8. Створити кнопку <i>Remove</i> на кожній карточці<br />
+      9. При натисканні на кнопку - видалити картку з структури DOM<br />
+    </h4>
+    <br />
+
+    <p><b>Результат:</b></p>
+    <br />
+
+    <script>
+      const div = document.createElement('div');
+
+      div.classList.add('wrapper');
+
+      const body = document.body;
+
+      document.body.append(div);
+
+      const generateAutoCard = (brand, color, year) => {
+        const currantDate = new Date();
+        const currantYear = currantDate.getFullYear();
+        return `
+          <div class="autoCard">
+            <h2> ${brand.toUpperCase()} </h2>
+            <p> ${year} року випуску </p>
+            <p> Автомобіль ${brand.toUpperCase()} колір - ${color} </p>
+            <p> Вік авто - ${currantYear - year} років </p>
+            <button type="button" class="btn">Remove</button>
+          </div>  
+        `;
+      };
+
+      const carsDiv = document.createElement('div');
+      carsDiv.classList.add('autos');
+
+      const carsList = [
+        { brand: 'Tesla', year: 2015, color: 'red' },
+        { brand: 'Lexus', year: 2016, color: 'silver' },
+        { brand: 'BMW', year: 2012, color: 'blue' },
+      ];
+
+      const carsHTML = carsList
+        .map((car) => {
+          return generateAutoCard(car.brand, car.color, car.year);
+        })
+        .join('');
+
+      carsDiv.innerHTML = carsHTML;
+
+      div.insertAdjacentElement('beforeend', carsDiv);
+
+      const buttons = document.querySelectorAll('.btn');
+
+      function handleClick(event) {
+        const currentButton = event.currentTarget;
+        // currentButton.parentElement.remove();
+        currentButton.closest('.autoCard').remove();
+      }
+
+      buttons.forEach((button) => {
+        button.addEventListener('click', handleClick);
+      });
+    </script>
+    <br /><br />
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <p>
+      Для роботи з DOM-елементами нам потрібно використовувати методи які
+      починаються з слова <strong><em>document</em></strong> і далі береться
+      (через крапку - як в об'єкті) безпосередня назва самого методу.<br />
+      Почнемо виконання завдань з першого і для цього створимо змінну, якій
+      присвоємо створений DOM-елемент, використавши метод
+      <strong><em>createElement(tag)</em></strong
+      >, який створює новий DOM-елемент у заданому тегу; адже DOM – це подання
+      HTML-документу у вигляді дерева тегів, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          const div = document.createElement('div');
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Зауважимо, що DOM-елемент створено, але поки що він лише у змінній. Ми не
+      можемо бачити цей елемент (вузел) на сторінці, оскільки він не є частиною
+      моделі HTML-документа.
+    </p>
+    <br />
+
+    <p>
+      Для задання створеному DOM-елементу будь-якого класу використаємо вираз -
+      <strong><em>classList</em></strong
+      >, a щоб його безпосередньо задати - метод <strong><em>add()</em></strong
+      >, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          div.classList.add('wrapper');
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Щоб наш div з'явився, нам потрібно помістити його в середину <i>body</i>,
+      а щоб зробити так треба спочатку його знайти в DOM, наприклад методом
+      <strong><em>querySelector()</em></strong> a вже потім щось робити з ним.
+      Але <i>body</i> має особливість - до нього можна звернутись напряму бо це
+      є метод самого глобального об'єкта <em>document</em>, тому можемо зробити
+      це двома способами:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          const body = document.querySelector('body');
+          // або так
+          const body = document.body;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      І щоб помістити всередину <i>body</i>, існує метод:
+      <strong><em>append()</em></strong
+      >.<br />
+      Або методом <i>appendChild()</i> що своєю назвою сам показує, що робить -
+      додавання дочірного елементу в батьківський, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          document.body.append(div);
+          // або так
+          body.appendChild(div)
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Далі, створюємо перемінну з стрілковою функцією та одразу помістимо в тіло
+      функції цілий HTML-шаблон, та використаємо інтерполяцію для вставки
+      значень. А для обчислення віку авто, використаємо встроїний об'єкт
+      <i>new Date()</i>, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          const generateAutoCard = (brand, color, year) => {
+            const currantDate = new Date();
+            const currantYear = currantDate.getFullYear();
+            return `
+              &lt;div class="autoCard"&gt;
+                &lt;h2&gt; ${brand.toUpperCase()} &lt;/h2&gt;
+                &lt;p&gt; ${year} року випуску &lt;/p&gt;
+                &lt;p&gt; Автомобіль ${brand.toUpperCase()} колір - ${color} &lt;/p&gt;
+                &lt;p&gt; Вік авто - ${currantYear - year} років  &lt;/p&gt;
+              &lt;/div&gt;  
+            `;
+          }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Створюємо новий div-елемент з класом <i>autos</i> при цьому позначемо цей
+      новий div-element в константі та задамо клас методом
+      <i>classList.add()</i>, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          const carsDiv = document.createElement('div');
+
+          carsDiv.classList.add('autos');
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Вже тепер можемо використати функцію <i>generateAutoCard()</i> для
+      створення 3х карток, які задані в масиві <i>carsList</i>. Тобто, ми будемо
+      в дійсності динамічно створювати картки при цьому брати необхідні дані з
+      властивостей об'єктів листа автомобілів, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          const carsList = [
+            {brand: 'Tesla', year: 2015, color: 'red'},
+            {brand: 'Lexus', year: 2016, color: 'silver'},
+            {brand: 'BMW', year: 2012, color: 'blue'}
+          ];
+
+          const carsHTML = carsList.map(car => {
+            return generateAutoCard(car.brand, car.color, car.year);
+          });
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Помістимо створенi картки всередину div-eлементу з класом
+      <i>autos</i><br />. Для цього використаєм властивість
+      <strong><i>elem.innerHTML</i></strong
+      >, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          carsDiv.innerHTML = carsHTML;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Тепер, для того, щоб вставити створений div-елемент з класом
+      <i>autos</i> всередину div-eлементу з класом <i>wrapper</i> використаєм
+      універсальний метод:<br />
+      <strong><i>elem.insertAdjacentElement(where, elem)</i></strong
+      ><br />
+      Перший параметр - це спеціальне слово, що вказує, куди по відношенню до
+      elem робити вставку. Значення має бути одним із наступних:<br />
+      - "beforebegin" – вставити html безпосередньо перед elem,<br />
+      - "afterbegin" – вставити html на початок elem,<br />
+      - "beforeend" – вставити html в кінець elem,<br />
+      - "afterend" – вставити html безпосередньо після elem.<br />
+      Другий параметр – це створений елемент <i>carsDiv</i>. який буде
+      вставлений у середину div-eлементу з класом <i>wrapper</i>. Давайте
+      визначимо вставити його в кінці div-eлементу - <i>"beforeend"</i>. <br />,
+      ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          div.insertAdjacentElement("beforeend", carsDiv);
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Для того, щоб додати кнопку <i>Remove</i> на кожну картку авто, задамо її
+      в HTML-шаблоні, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          const generateAutoCard = (brand, color, year) => {
+            const currantDate = new Date();
+            const currantYear = currantDate.getFullYear();
+            return `
+              &lt;div class="autoCard"&gt;
+                &lt;h2&gt; ${brand.toUpperCase()} &lt;/h2&gt;
+                &lt;p&gt; ${year} року випуску &lt;/p&gt;
+                &lt;p&gt; Автомобіль ${brand.toUpperCase()} колір - ${color} &lt;/p&gt;
+                &lt;p&gt; Вік авто - ${currantYear - year} років  &lt;/p&gt;
+                &lt;button type="button" class="btn"&gt; Remove &lt;/button&gt;
+              &lt;/div&gt;  
+            `;
+          }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Для того, щоб запрацювала кнопка і ми могли видалити картку, потрібно
+      спочатку визначити усі кнопки
+      <strong><i>document.querySelectorAll()</i></strong
+      >, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          const buttons = document.querySelectorAll('.btn');
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Потім створити функцію, яка буде видаляти кнопку
+      <i>function handleClick()</i>. Для видалення ми можемо використати одразу
+      батьківський елемент як <i>parentElement.remove()</i>, але якщо потрібно
+      ще додати вкладеність, то краще використовувати найближчий батьківський
+      елемент <i>closest().remove()</i>, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function handleClick(event) {
+            const currentButton = event.currentTarget;
+            currentButton.parentElement.remove();
+            // aбо
+            currentButton.closest.remove();
+          }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      І вже потім, потрібно навішати слухача подій
+      <strong><i>addEventListeners()</i></strong
+      >, який буде запускати функцію видалення в циклі
+      <strong><i>arr.forEach()</i></strong
+      >, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          buttons.forEach(button => {
+            button.addEventListener('click', handleClick);
+          })
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <br /><br />
+  </body>
+</html>
