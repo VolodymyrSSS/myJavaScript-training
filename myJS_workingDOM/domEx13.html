@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Working with DOM</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      div {
+        width: 60%;
+        background-color: #bebebe;
+        margin: auto;
+      }
+
+      h3 {
+        color: #d87093;
+        text-align: center;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">DOM (data object model)</h2>
+    <h4 class="title">
+      Working with DOM: using <span class="emph">classList</span>, methods
+      <span class="emph">createElements(), add(), remove()</span>,<br />
+      searching method <span class="emph">querySelector()</span> and universal
+      method <span class="emph">elem.insertAdjacentHTML(where, elem)</span
+      ><br />
+    </h4>
+
+    <h4 class="task">
+      За допомогою методів та способів для роботи з DOM-елементами:<br />
+      1. Створіть div-eлемент<br />
+      2. Надайте цьому div-eлементу клас <i>wrapper</i> із сірим фоном та
+      помістіть на сторінку<br />
+      3. Використовуючи шаблонні HTML-рядки, створіть div-елемент з класом
+      <i>pDiv</i><br />
+      4. Створіть 3 параграфи встередені цього div-елемента<br />
+      5. Помістіть створений div-елемент всередину div-eлементу з класом
+      <i>wrapper</i><br />
+      6. Додайте другому параграфу клас <i>text</i><br />
+      7. Видаліть третій параграф<br />
+    </h4>
+    <br />
+
+    <p><b>Результат:</b></p>
+    <br />
+
+    <script>
+      const div = document.createElement('div');
+
+      div.classList.add('wrapper');
+
+      const body = document.body;
+
+      document.body.append(div);
+
+      const elemHTML = `
+        <div class='pDiv'>
+          <p>Paragraph 1</p>
+          <p>Paragraph 2</p>
+          <p>Paragraph 3</p>
+        </div>
+      `;
+
+      div.insertAdjacentHTML('afterbegin', elemHTML);
+
+      const pDiv = document.querySelector('.pDiv');
+      pDiv.children[1].classList.add('text');
+      pDiv.lastElementChild.remove();
+    </script>
+    <br /><br />
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <p>
+      Для роботи з DOM-елементами нам потрібно використовувати методи які
+      починаються з слова <strong><em>document</em></strong> і далі береться
+      (через крапку - як в об'єкті) безпосередня назва самого методу.<br />
+      Почнемо виконання завдань з першого і для цього створимо змінну, якій
+      присвоємо створений DOM-елемент, використавши метод
+      <strong><em>createElement(tag)</em></strong
+      >, який створює новий DOM-елемент у заданому тегу; адже DOM – це подання
+      HTML-документу у вигляді дерева тегів, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          const div = document.createElement('div');
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Зауважимо, що DOM-елемент створено, але поки що він лише у змінній. Ми не
+      можемо бачити цей елемент (вузел) на сторінці, оскільки він не є частиною
+      моделі HTML-документа.
+    </p>
+    <br />
+
+    <p>
+      Для задання створеному DOM-елементу будь-якого класу використаємо вираз -
+      <strong><em>classList</em></strong
+      >, a щоб його безпосередньо задати - метод <strong><em>add()</em></strong
+      >, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          div.classList.add('wrapper');
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Щоб наш div з'явився, нам потрібно помістити його в середину <i>body</i>,
+      а щоб зробити так треба спочатку його знайти в DOM, наприклад методом
+      <strong><em>querySelector()</em></strong> a вже потім щось робити з ним.
+      Але <i>body</i> має особливість - до нього можна звернутись напряму бо це
+      є метод самого глобального об'єкта <em>document</em>, тому можемо зробити
+      це двома способами:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          const body = document.querySelector('body');
+          // або так
+          const body = document.body;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      І щоб помістити всередину <i>body</i>, існує метод:
+      <strong><em>append()</em></strong
+      >.<br />
+      Або методом <i>appendChild()</i> що своєю назвою сам показує, що робить -
+      додавання дочірного елементу в батьківський, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          document.body.append(div);
+          // або так
+          body.appendChild(div)
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Далі, створюємо новий div-елемент, але використаємо для цього шаблонні
+      HTML-рядки що дозволяють створювати цілі частини HTML-коду які огортаються
+      зворотніми лапками. А тому, своривши div-елемент задамо йому одразу клас
+      <i>pDiv</i> та 3и параграфи з тегом <i>p</i> як це звичайно робиться при
+      створенні HTML-шаблону, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          const elemHTML = `
+            &lt;div class="pDiv"&gt;
+              &lt;p&gt; Paragraph 1 &lt;/p&gt; 
+              &lt;p&gt; Paragraph 2 &lt;/p&gt;
+              &lt;p&gt; Paragraph 3 &lt;/p&gt;
+            &lt;/div&gt;
+          `;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Якщо ми хочемо вставити створений div-елемент, саме «як html», з усіма
+      тегами та іншим синтаксисом усередину батьківського div-елемента з класом
+      <i>wrapper</i>, використаємо доволі потужний та універсальний метод:<br />
+      <strong><em>elem.insertAdjacentHTML(where, html)</em></strong
+      ><br />
+      Перший параметр - це спеціальне слово, що вказує, куди по відношенню до
+      elem робити вставку. Значення має бути одним із наступних:<br />
+      - "beforebegin" – вставити html безпосередньо перед elem,<br />
+      - "afterbegin" – вставити html на початок elem,<br />
+      - "beforeend" – вставити html в кінець elem,<br />
+      - "afterend" – вставити html безпосередньо після elem.<br />
+      Другий параметр – це HTML-рядок-символів. який буде вставлений у визначене
+      місце «як html».<br /><br />
+      У цього метода є два брати:<br />
+      <i>elem.insertAdjacentText(where, text)</i>
+      – такий самий синтаксис, але рядок символів text вставляється «як текст»,
+      замість HTML,<br />
+      <i>elem.insertAdjacentElement(where, elem)</i>
+      – такий самий синтаксис, але вставляє елемент elem.<br />
+      <br />
+      Отже, додамо свторений div-елемент в батьківський елемент ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          div.insertAdjacentHTML('afterbegin', elemHTML);
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Ці три методи існують, переважно, щоб уніфікувати синтаксис. На практиці
+      часто використовується тільки <em>insertAdjacentHTML</em>. Тому що для
+      елементів та тексту ми маємо методи append/prepend/before/after – їх
+      швидше написати, і вони можуть вставляти як вузли, так і текст.
+    </p>
+    <br />
+
+    <p>
+      Щоб задати клас другому параграфу, треба його спочатку визначити
+      батьківський блок, де розміщені подібні параграфи, а потім можна
+      подивитись, що знаходиться в визначеному блоці через метод
+      <i>children</i>:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          const pDiv = document.querySelector('.pDiv');
+
+          console.log(pDiv.children); // HTMLCollection(3) [p, p, p]
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Вже тепер можемо використати метод застосування надання класу
+      <i>classList.add()</i>, визначивши другий параграф зі списку
+      <i>children</i>, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          pDiv.children[1].classList.add('text');
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      А для того, щоб видалити третій параграф, ми використаємо один з методів
+      для визначення останнього елемента, наприклад - <i>lastElementChild</i> і
+      застосуєм метод <strong><i>remove()</i></strong
+      >, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          pDiv.lastElementChild.remove();
+          // або так
+          pDiv.removeChild(pDiv.children[2]);
+          // або так
+          pDiv.removeChild(pDiv.laststChild);
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <br /><br />
+  </body>
+</html>
