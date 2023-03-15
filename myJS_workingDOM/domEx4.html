@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Working with DOM</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 40%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      form {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      input[type='text'] {
+        padding: 1px 2px;
+      }
+
+      input[type='submit' i] {
+        appearance: auto;
+        user-select: none;
+        white-space: pre;
+        align-items: flex-start;
+        text-align: center;
+        cursor: default;
+        box-sizing: border-box;
+        background-color: buttonface;
+        color: buttontext;
+        padding: 1px 6px;
+        border-width: 2px;
+        border-style: outset;
+        border-color: buttonborder;
+        border-image: initial;
+      }
+
+      label {
+        cursor: default;
+      }
+
+      table {
+        display: table;
+        border-collapse: separate;
+        box-sizing: border-box;
+        text-indent: initial;
+        border-spacing: 2px;
+        border-color: grey;
+      }
+
+      tbody {
+        display: table-row-group;
+        vertical-align: middle;
+        border-color: inherit;
+      }
+
+      tr {
+        display: table-row;
+        vertical-align: inherit;
+        border-color: inherit;
+      }
+
+      td {
+        display: table-cell;
+        vertical-align: inherit;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">DOM (data object model)</h2>
+    <h4 class="title">
+      Working with DOM: using search methods:
+      <span class="emph">document.getElementById(id)</span>,
+      <span class="emph">elem.getElementsByTagName(tag)</span>,
+      <span class="emph">getElementsByName(name)</span>,<br />
+      <span class="emph">elem.querySelector(css)</span>,
+      <span class="emph">elem.querySelectorAll(css)</span>
+    </h4>
+
+    <h4 class="task">
+      Ми маємо документ, який містить і форми і таблиці. Як в цьому документі
+      знайти:<br />
+      - таблицю з id="age-table"<br />
+      - всі елементи label всередині цієї таблиці (їх троє)<br />
+      - перший td цієї таблиці (зі словом «Age»)<br />
+      - форму form з іменем name="search"<br />
+      - перший input в цій формі<br />
+      - останній input в цій формі<br />
+    </h4>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          // Вхідні дані:
+
+          table with id="age-table" // code?
+          all elements label of this table // code?
+          first td of this table (with «Age») // code?
+          form with name="search" // code?
+          first input of this form // code?
+          last input of this form // code?
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <hr />
+
+    <form name="search">
+      <label>
+        "Search the site: "
+        <input type="text" name="search" />
+      </label>
+      <input type="submit" value="Search!" />
+    </form>
+
+    <form name="search-person">
+      "Search the visitors: "
+      <table id="age-table">
+        <tbody>
+          <tr>
+            <td>Age:</td>
+            <td id="Age-list">
+              <label>
+                <input type="radio" name="age" value="youang" />
+                "less than 18"
+              </label>
+              <label>
+                <input type="radio" name="age" value="mature" />
+                "18 - 50"
+              </label>
+              <label>
+                <input type="radio" name="age" value="senior" />
+                "more than 50"
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>Additionally:</td>
+            <td>
+              <input type="text" name="info[0]" />
+              <input type="text" name="info[0]" />
+              <input type="text" name="info[0]" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <input type="submit" value="Search" />
+    </form>
+
+    <hr />
+
+    <br />
+
+    <p>
+      Отже, наше завдання полягає в отриманні елементів-вузлів сторінки.<br />
+      Сторінка для цього завдання показана вище - між горизонтальними лініями. І
+      щоб зрозуміти які елементи ми маємо, необхідно цей документ відкрити з
+      інструментами розробника на вкладці - "Elements".<br />
+      Необхідно зазначити, що властивості для навігації по DOM добре
+      використовувати, коли елементи розташовані поблизу один-одного. Проте що
+      робити, коли ні? Як отримати довільний елемент на сторінці? - Ось про це і
+      є завдання.<br />
+      Ось для цього в DOM є додаткові методи пошуку елементів-вузлів.
+    </p>
+    <br />
+
+    <p>
+      Якщо в елемента є атрибут <i>id</i>, то ми можемо отримати його викликом
+      <strong><i>document.getElementById(id)</i></strong
+      >, де би він не знаходився на сторінці.<br />
+      Існують також є інші методи пошуку елементів по
+      <i>tag, class, name</i> як:<br />
+      <strong><i>elem.getElementsByTagName(tag)</i></strong> - здійснює пошук
+      елементів з заданим тегом та повертає їх колекцію. А якщо замість тега
+      передати <i>"*"</i> можна отримати усіх потомків.<br />
+      <strong><i>elem.getElementsByClassName(className)</i></strong> - повертає
+      елементи, які мають даний CSS-класс.<br />
+      <strong><i>document.getElementsByName(name)</i></strong> - повертає
+      елементи із заданим атрибутом <i>name</i>. Хоча цей метод досить рідко
+      використовується.<br />
+      Але безумовними лідерами є сучасні універсальні методи:<br />
+      <strong><i>elem.querySelectorAll(css)</i></strong> - він повертає усі
+      елементи які є всередині <i>elem</i>, які відповідають даному
+      CSS-селектору. Цей метод є досить дієвий і ефективний бо можна
+      використовувати будь-який CSS-селектор.<br />
+      <strong><i>elem.querySelector(css)</i></strong> - повертає перший елемент,
+      який відповідає даному CSS-селектору.<br />
+      Крім того:<br />
+      Є метод, <strong><i>elem.matches(css)</i></strong
+      >. Цей метод нічого не шукає, а тільки перевіряє чи відповідає
+      <i>elem</i> CSS-селектору, та повертає <i>true</i> чи <i>false</i>. Його
+      зручно застосовувати коли ми перебираємо елементи (наприклад в масиві чи в
+      чомусь подібному) і намагаємось вибрати ті з них, які нас цікавлять.<br />
+      Метод <strong><i>elem.closest(css)</i></strong> - шукає найближчого по
+      ієрархії предка, відповідному даному CSS-селектору. Сам елемент також
+      включений в пошук.<br />
+      Є ще один метод, який перевіряє наявність відношень між предком та
+      потомком - <strong><i>elemA.contains(elemB)</i></strong
+      >. Він поверне <i>true</i> якщо <i>elemB</i> знаходиться всередині
+      елементу <i>elemА</i>; або коли <i>elemA==elemB</i>.
+    </p>
+    <br />
+
+    <p>
+      Отже, використаємо ці знання для отримання таблиці з id="age-table", ось
+      так:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          let tableTwo = document.getElementById("age-table");
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>Отримаєм усі елементи <i>label</i> всередині цієї таблиці, ось так:</p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          let labelsFromTableTwo = document.querySelectorAll('#age-table label');
+          // або так
+          let labelsFromTableTwo = tableTwo.getElementsByTagName('label');
+
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>А перший td цієї таблиці (зі словом «Age»), ось так:</p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          tableTwo.querySelector('td');
+          // або так
+          tableTwo.getElementsByTagName('td')[0];
+          // або так
+          tableTwo.rows[0].cells[0];
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Далі, отримаємо форму <i>form</i> з іменем name="search", це перша форма з
+      двох наявних. Вона має атрибут <i>name</i>, а отже це і використаємо ось
+      так:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          let formFirst = document.getElementsByName('search')[0];
+          // або так
+          let formFirst = document.querySelector('form[name="search"]');
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>A перший <i>input</i> в цій формі, ось так:</p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          formFirst.querySelector('input');
+          // або так
+          formFirst.getElementsByTagName('input')[0];
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      І останній input в цій формі можна взяти, для прикладу відшукавши усі
+      <i>input</i> в першій формі, а вже потім взяти останній з використанням
+      властивості <i>length - 1</i>, ось так
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          let inputsFirstForm = formFirst.querySelectorAll('input'); // найти усі input
+          inputsFirstForm[inputsFirstForm.length - 1]; // взяти останній
+        </pre>
+      </code>
+    </p>
+    <br />
+    <br />
+
+    <script>
+      let tableTwo = document.getElementById('age-table');
+
+      // let labelsFromTableTwo = document.querySelectorAll('#age-table label');
+      let labelsFromTableTwo = tableTwo.getElementsByTagName('label');
+
+      // tableTwo.querySelector('td');
+      // tableTwo.getElementsByTagName('td')[0];
+      tableTwo.rows[0].cells[0]; // <td>Age:</td>
+
+      // let formFirst = document.getElementsByName('search')[0];
+      let formFirst = document.querySelector('form[name="search"]');
+
+      // formFirst.querySelector('input');
+      formFirst.getElementsByTagName('input')[0];
+
+      let inputsFirstForm = formFirst.querySelectorAll('input'); // найти усі input
+      inputsFirstForm[inputsFirstForm.length - 1]; // взяти останній
+    </script>
+
+    <br />
+  </body>
+</html>
