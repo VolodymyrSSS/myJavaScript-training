@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Working with DOM</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 40%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">DOM (data object model)</h2>
+    <h4 class="title">
+      Working with DOM: using search methods:
+      <span class="emph">document.querySelectorAll(css)</span><br />
+      <span class="emph">document.getElementsByTagName(tag)</span>, property
+      <span class="emph">length</span> and loop
+      <span class="emph">for..of</span>
+    </h4>
+
+    <h4 class="task">
+      В нас є HTML-сторінка, на якій розміщено список <i>ul</i> із двома
+      вкладеними елементами <i>li</i> та текстом в них.<br />
+      Напишіть код, який виведе кожен елемент списку <i>li</i>.<br />
+      Крім того:<br />
+      Як прочитати текст кожного елементу та вивести в консоль?<br />
+      Яке число потомків - усіх вкладених <i>li</i>?
+    </h4>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          // Вихідні дані:
+
+          &lt;html&gt;
+          &lt;body&gt;
+            &lt;ul&gt;
+              &lt;li&gt;I'll be back&lt;/li&gt;
+              &lt;li&gt;Yarippa, Yarippa&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/body&gt;
+          &lt;/html&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Рішення:</b></p>
+    <br /><br />
+
+    <div>
+      <ul>
+        <li>I'll be back</li>
+        <li>Yarippa, Yarippa</li>
+      </ul>
+    </div>
+
+    <p>
+      Для того, щоб отримати усі елементи <i>li</i>, необхідно спочатку їх
+      отримати чи знайти в документі HTML.<br />
+      З теорії відомо, що можна знайти вузол-елемент по його тегу універсальними
+      методами:<br />
+      <strong><i>elem.querySelectorAll(css)</i></strong> - він повертає усі
+      елементи які є всередині <i>elem</i>, які відповідають даному
+      CSS-селектору. Цей метод є досить дієвий і ефективний бо можна
+      використовувати будь-який CSS-селектор.<br />
+      <strong><i>elem.querySelector(css)</i></strong> - повертає перший елемент,
+      який відповідає даному CSS-селектору.<br />
+      Крім того:<br />
+      Є метод, <strong><i>elem.matches(css)</i></strong
+      >. Цей метод нічого не шукає, а тільки перевіряє чи відповідає
+      <i>elem</i> CSS-селектору, та повертає <i>true</i> чи <i>false</i>. Його
+      зручно застосовувати коли ми перебираємо елементи (наприклад в масиві чи в
+      чомусь подібному) і намагаємось вибрати ті з них, які нас цікавлять.<br />
+      Метод <strong><i>elem.closest(css)</i></strong> - шукає найближчого по
+      ієрархії предка, відповідному даному CSS-селектору. Сам елемент також
+      включений в пошук.<br />
+      Є ще один метод, який перевіряє наявність відношень між предком та
+      потомком - <strong><i>elemA.contains(elemB)</i></strong
+      >. Він поверне <i>true</i> якщо <i>elemB</i> знаходиться всередині
+      елементу <i>elemА</i>; або коли <i>elemA==elemB</i>.
+    </p>
+    <br />
+
+    <p>
+      Отже, використаємо ці знання для отримання всіх елементів <i>li</i> в
+      списку <i>ul</i>, ось так:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          let allLis = document.querySelectorAll('li');
+
+          console.log(allLis); // NodeList(2) [li, li]
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Проте ми отримали список тільки усіх елементів <i>li</i>, але щоб також
+      отримати текст, який міститься в кожному елементі, треба пройтись циклом
+      по усіх отриманих елементах <i>li</i> та взяти текст в кожного елемента
+      <i>li</i>.Щоб взяти текст, давайте згадаємо теорію.<br />
+      Відомо, що в різних DOM-вузлів можуть бути різні властивості. Текстові
+      вузли відрізняються від вузлів-елементів, але в них є загальні властивості
+      і методи також, бо всі класи DOM-вузлів формують єдину ієрархію. Вершиною
+      ієрархії є <i>EventTarget</i>, від нього успадковує властивості клас
+      <i>Node</i> та інші DOM-вузли вниз по структурі ієрархії. Незважаючи на
+      це, кожен DOM-вузел належить відповідному вбудованому класу. А тому,
+      повний набір властивостей та методів якогось конкретного вузла є
+      результатом ланцюга успадкованих від попередніх класів методів та
+      властивостей та методів і властивостей, які належать конкретному класу.<br />
+      Нас цікавить в цій задачі абстрактний клас <i>CharacterData</i> який
+      успадковує властивості від класа <i>Node</i> і від якого, в свою чергу
+      успадковують свої властивості класи:<br />
+      - <i>Text</i> – відповідає тексту всередині вузлів-елементів. Наприклад,
+      <i>Hello</i> в <i>&lt;p&gt;Hello&lt;/p&gt;</i><br />
+      - <i>Comment</i> – для коментарів. Вони не відображаються але кожен
+      коментар стає членом DOM.<br />
+      В текстових типах вузлів, є властивості:
+      <strong><i>nodeValue</i></strong> та <strong><i>data</i></strong
+      >. Ці властивості дуже схожі за своєю дією при використанні (крім деяких
+      невеличких відмінностей, що вказані в специфікаціях), а тому давайте
+      будемо використовувати <i>data</i> (вона коротша).<br />
+      Отже, пройдемся циклом по елементам <i>li</i> та прочитаємо його текстовий
+      вміст елемента з першого дочірного вузла <i>li</i>, який буде його
+      текстовим вузлом, ось так:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          for (let li of allLis) {
+            let litext = li.firstChild.data;
+
+            console.log(litext); // "I'll be back", "Yarippa, Yarippa"
+          }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      І тепер, щоб отримати кількість потомків, спочатку знаходимо вузол-елемент
+      <i>li</i> на сторінці по його тегу, використавши метод:<br />
+      <strong><i>document.getElementsByTagName(tag)</i></strong
+      >, що здійснює пошук елементів з заданим тегом та повертає їх колекцію<br />
+      а потім використаємо властивість <strong><i>length</i></strong> щоб
+      отримати кількість потомків, ось так:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          let liNums = document.getElementsByTagName('li').length;
+
+          console.log(liNums); // 2
+        </pre>
+      </code>
+    </p>
+    <br />
+    <br />
+
+    <script>
+      let allLis = document.querySelectorAll('li');
+
+      console.log(allLis); // NodeList(2) [li, li]
+
+      for (let li of allLis) {
+        let litext = li.firstChild.data;
+
+        console.log(litext); // "I'll be back", "Yarippa, Yarippa"
+      }
+
+      let liNums = document.getElementsByTagName('li').length;
+
+      console.log(liNums);
+    </script>
+
+    <br />
+  </body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Working with DOM</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 40%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">DOM (data object model)</h2>
+    <h4 class="title">
+      Working with DOM: using class property
+      <span class="emph">constructor.name</span>, object property
+      <span class="emph">__proto__</span><br />
+      and <span class="emph">prototype</span>
+      built function
+      <span class="emph">console.dir(document)</span>
+    </h4>
+
+    <h4 class="task">
+      Дайте відповідь на питання:<br />
+      Об'єктом якого класу є <i>document</i><br />
+      Яке місце він займає в DOM-ієрархії?<br />
+      Чи успадковується цей клас від класу <i>Node</i> або <i>Element</i> а може
+      від класу <i>HTMLElement</i>?
+    </h4>
+    <br />
+
+    <p><b>Рішення:</b></p>
+    <br /><br />
+
+    <img
+      src="./dom-class-hierarchy.svg"
+      alt="dom-class hierarchy"
+      style="width: 50%"
+    />
+
+    <p>
+      Для того, щоб відповісти на питання, необхідно спочатку згадати теорію.<br />
+      Відомо, що в різних DOM-вузлів можуть бути різні властивості. Текстові
+      вузли відрізняються від вузлів-елементів, проте в них є загальні
+      властивості і методи також, бо всі класи DOM-вузлів формують єдину
+      ієрархію. Вершиною ієрархії є <i>EventTarget</i>, від нього успадковує
+      властивості клас <i>Node</i> та інші DOM-вузли вниз по структурі ієрархії.
+      Незважаючи на це, кожен DOM-вузел належить відповідному вбудованому класу.
+      А тому, повний набір властивостей та методів якогось конкретного вузла є
+      результатом ланцюга успадкованих від попередніх класів методів та
+      властивостей та методів і властивостей, які належать конкретному класу.<br />
+      <br />
+    </p>
+    <br />
+
+    <p>
+      Отже, для того, щоб дізнатись ім'я класу, якому належить DOM-вузел, можна
+      використати властивість об'єктів <strong><i>constructor</i></strong
+      >, яке посилається на конструктор класу який у своїй властивості
+      <strong><i>constructor.name</i></strong> містить назву цього класу.<br />
+      Або є ще простіший метод - конвертувати його в рядок, наприклад вбудованою
+      функцією <i>alert</i>, ось так:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          let className = document.constructor.name;
+
+          console.log(className); // HTMLDocument
+
+          // або так
+          alert(document); // [object HTMLDocument]
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Таким чином, <i>document</i> це об'єкт класу <i>HTMLDocument</i>.<br />
+      А щоб визначити місце <i>HTMLDocument</i> класу в ієрархії, можна знайти в
+      документації, але якщо спробувати визначити його самостійно, то потрібно
+      пройти вверх по посиланнях на прототипи - по <i>__proto__</i>.<br />
+      Відомо, що методи класу знаходяться в <i>prototype</i> конструктора.
+      Наприклад в <i>HTMLDocument.prototype</i> знаходяться методи для об'єктів
+      типу <i>document</i>. Крім того, всередині <i>prototype</i> є посилання на
+      функцію-конструктор:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          console.log(HTMLDocument.prototype.constructor === HTMLDocument); // true
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      А тепер, щоб отримати ім'я класу в рядковій формі, знову використаємо
+      властивість <i>constructor.name</i>. Давайте пройдемся по усьому ланцюгу
+      прототипів <i>document</i> вверх до класу <i>Node</i>, ось так:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          console.log(HTMLDocument.prototype.constructor.name); // HTMLDocument
+          console.log(HTMLDocument.prototype.__proto__.constructor.name); // Document
+          console.log(HTMLDocument.prototype.__proto__.__proto__.constructor.name); // Node
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Ось так ми отримали ієрархію і можемо бачити місце класу
+      <i>HTMLDocument</i> в ній. <br />
+      Як видно, DOM-вузли – це звичайні JavaScript об'єкти'. Для успадкування
+      властивостей вони використовують класи, засновані на прототипах.<br />
+      Ми також можемо дослідити об'єкт за допомогою
+      <strong><i>console.dir(document);</i></strong> та побачити імена
+      функцій-конструкторів відкривши <i>__proto__</i>. Браузерна консоль бере
+      їх як раз з властивості <i>constructor</i>. <br />
+      Для консоль браузера, для наведених нижче команд працює по різному:<br />
+      console.log(elem) - виводить елемент у виді DOM-дерева.<br />
+      console.dir(elem) - виводить елементи у виді DOM-об'єкта, що досить зручно
+      для аналізу йго властивостей.<br />
+    </p>
+    <br />
+    <br />
+
+    <script>
+      let className = document.constructor.name;
+
+      console.log(className); // HTMLDocument
+
+      console.log(HTMLDocument.prototype.constructor === HTMLDocument); // true
+
+      console.log(HTMLDocument.prototype.constructor.name); // HTMLDocument
+      console.log(HTMLDocument.prototype.__proto__.constructor.name); // Document
+      console.log(HTMLDocument.prototype.__proto__.__proto__.constructor.name); // Node
+
+      console.dir(document);
+    </script>
+
+    <br />
+  </body>
+</html>
