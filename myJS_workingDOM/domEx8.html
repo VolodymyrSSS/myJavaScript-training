@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Working with DOM</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 40%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">DOM (data object model)</h2>
+    <h4 class="title">
+      Working with DOM: using properties:
+      <span class="emph">tagName</span> and <span class="emph">nodeName</span>
+    </h4>
+
+    <h4 class="task">
+      В нас є два вида тегів: <i>nodeName</i> та <i>tagName</i>.<br />
+      В нас показана частина HTML-сторінки, на якій представлено код з цими
+      тегами. Поясніть яка різниця між ними та що буде виведено в результаті
+      роботи цього скірпта?
+    </h4>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          // Вихідні дані:
+
+          &lt;html&gt;
+          &lt;body&gt;&lt;!-- коментар --&gt;
+
+            &lt;script&gt;
+              // для коментаря
+              console.log( document.body.firstChild.tagName ); // ?
+              console.log( document.body.firstChild.nodeName ); // ?
+
+              // для document
+              console.log( document.tagName ); // ?
+              console.log( document.nodeName ); // ?
+            &lt;/script&gt;
+
+            .... інший код....
+          &lt;/body&gt;
+          &lt;/html&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Рішення:</b></p>
+    <br /><br />
+
+    <p>
+      З теорії відомо, що отримавши DOM-вузел, ми можемо дізнатись назву його
+      тега використавши властивість або <strong><i>nodeName</i></strong
+      >, або <strong><i>tagName</i></strong
+      >.<br />
+      Ось приклад:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          console.log( document.body.nodeName ); // BODY
+          console.log( document.body.tagName ); // BODY
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      console.log(document.body.nodeName);
+      console.log(document.body.tagName);
+    </script>
+
+    <p>
+      Проте, як видно результат одинаковий. Так в чому ж різниця?<br />
+      Вона звичайно є і зрозуміла безпосередньо з назви цих тегів, хоча і
+      неочевидна.<br />
+      Властивість <i>tagName</i> є тільки в елеменів <i>Element</i>;<br />
+      Властивість <i>nodeName</i> належить для будь-яких вузлів
+      <i>Node</i>;<br />
+      З цього видно, що для елементів воно дорівнює <i>tagName</i>, а для решти
+      типів узлів (текст, коментар і т.д.) воно містить рядок з типом вузла.<br />
+      Можна пояснити ще так: властивість <i>tagName</i> є тільки у
+      вузлів-елементів бо ця властивість успадковується від класу
+      <i>Element</i>, а властивість <i>nodeName</i> може показати тег і для
+      цього і для інших типів вузлів.<br />
+      А тому, якщо ми маєм справу тільки з елементами, то можна використовувати
+      як
+      <i>tagName</i> так і <i>nodeName</i>, тут немає різниці. Ось ми і бачимо в
+      попередньому прикладі одинаковий результат.<br />
+      Є ще один нюанс, в браузері існує два режима обробки документа:
+      <i>HTML</i> та <i>XML</i>. HTML-режим зазвичай використовується для
+      веб-сторінок. XML-режим включається, якщо браузер отримує XML-документ із
+      заголовком: <i>Content-Type: application/xml+xhtml</i>.<br />
+      В HTML-режимі значення <i>tagName/nodeName</i> завжди записані у верхньому
+      регістрі незалежно від того як записаний тег в HTML <i>body</i> чи
+      <i>BoDy</i>. А тому в попередньому прикладі розпечатується <i>BODY</i> - у
+      верхньому регістрі. В XML-режимі регістр зберігається <i>"як є"</i>. В
+      теперішній час, XML-режим застосовується рідко.<br />
+      Таким чином, відповідь на наше завдання буде таким:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre style="width: 70%">
+          &lt;script&gt;
+              // для коментаря
+              console.log( document.body.firstChild.tagName ); // #text - бо в body завжди першим дочірним елементом є text
+              console.log( document.body.firstChild.nodeName ); // #comment
+
+              // для document
+              console.log( document.tagName ); // undefined - бо не є елементом
+              console.log( document.nodeName ); // #document
+            &lt;/script&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+    <br />
+
+    <script>
+      // для коментаря
+      console.log(document.body.firstChild.tagName); // #text - бо в body завжди першим дочірним елементом є text
+      console.log(document.body.firstChild.nodeName); // #comment
+
+      // для document
+      console.log(document.tagName); // undefined - бо не є елементом
+      console.log(document.nodeName); // #document
+    </script>
+  </body>
+</html>
