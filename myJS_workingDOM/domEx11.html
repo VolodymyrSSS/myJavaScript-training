@@ -12,17 +12,6 @@
         font-family: Verdana, sans-serif;
       }
 
-      div {
-        width: 60%;
-        background-color: #bebebe;
-        margin: auto;
-      }
-
-      h3 {
-        color: #d87093;
-        text-align: center;
-      }
-
       .emph {
         color: red;
       }
@@ -47,7 +36,7 @@
       }
 
       pre {
-        width: 50%;
+        width: 40%;
         background-color: #bebebe;
         padding-top: 20px;
         margin: 0 auto;
@@ -58,14 +47,14 @@
         font-size: large;
       }
 
-      .code-ex {
-        width: 50%;
-        font-family: sans-serif;
-        font-style: italic;
-        background-color: #bebebe;
-        font-size: large;
-        padding-left: 15px;
-        margin: 0 auto;
+      div {
+        width: 400px;
+        margin: 0 auto 30px;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: pink;
       }
     </style>
   </head>
@@ -73,288 +62,268 @@
   <body>
     <h2 class="title">DOM (data object model)</h2>
     <h4 class="title">
-      Working with DOM: using <span class="emph">classList</span>, methods
-      <span class="emph">createElements(), add(), appendChild()</span>,
-      properties
-      <span class="emph">elem.textContent, elem.innerHTML</span>,<br />
-      searching method <span class="emph">querySelector()</span> and universal
-      method <span class="emph">elem.insertAdjacentElement(where, elem)</span
-      ><br />
+      Working with DOM: using search method:
+      <span class="emph">elem.querySelectorAll(css)</span><br />
+      using method for getting value of the attribute via
+      <span class="emph">elem.getAttribute(name)</span><br />
+      JS operators: <span class="emph">if, continue, !</span>, JS methods to
+      work with a string: <span class="emph">includes(), startsWith()</span>,
+      loops: <span class="emph">for..of, forEach()</span><br />
+      CSS selectors:
+      <span class="emph">[attribute*="value"], [attribute^="value"]</span>
     </h4>
 
     <h4 class="task">
-      За допомогою методів та способів для роботи з DOM-елементами:<br />
-      1. Створіть div-eлемент<br />
-      2. Надайте цьому div-eлементу клас wrapper<br />
-      3. Помістіть його всередину тегу <i>body</i><br />
-      4. Створити заголовок h3 з назвою "DOM - Data Object Model"<br />
-      5. Помістити h3 попереду div<br />
-      6. Створити список ul та додати до нього 3 елементи li із текстом "один"
-      "два" "три"<br />
-      7. Помістити цей список ul всередину елементу div з класом wrapper<br />
+      Зробіть тільки зовнішні посилання оранжевого кольору, змінивши їх
+      властивість <i>style</i>.<br />
+      При цьому вважається, що посилання є зовнішнім, за умови, якщо:<br />
+      її атрибут <i>href</i> містить <i>://</i><br />
+      і також посилання не починається з <i>http://internal.com</i><br />
     </h4>
+    <br />
+
+    <p>
+      <code>
+        <pre style="width: 60%">
+          // Вихідні дані:
+
+          &lt;html&gt;
+          &lt;body&gt;
+
+            &lt;div&gt;
+              &lt;a name="list"&gt;the list&lt;/a&gt;
+              &lt;ul&gt;
+                  &lt;li&gt;&lt;a href="http://google.com"&gt;http://google.com&lt;/a&gt;&lt;/li&gt;
+                  &lt;li&gt;&lt;a href="/tutorial"&gt;/tutorial.html&lt;/a&gt;&lt;/li&gt;
+                  &lt;li&gt;&lt;a href="local/path"&gt; local/path&lt;/a&gt;&lt;/li&gt;
+                  &lt;li&gt;&lt;a href="ftp://ftp.com/my.zip"&gt;ftp://ftp.com/my.zip&lt;/a&gt;&lt;/li&gt;
+                  &lt;li&gt;&lt;a href="http://nodejs.org"&gt;http://nodejs.org&lt;/a&gt;&lt;/li&gt;
+                  &lt;li&gt;&lt;a href="http://internal.com/test"&gt;http://internal.com/test&lt;/a&gt;&lt;/li&gt;
+              &lt;/ul&gt;
+            &lt;/div&gt;
+            .... інший код....
+
+            &lt;script&gt;
+                // додавання стиля для одного посилання
+                let link = document.querySelector('a');
+                link.style.color = 'orange';
+            &lt;/script&gt;
+
+          &lt;/body&gt;
+          &lt;/html&gt;
+        </pre>
+      </code>
+    </p>
     <br />
 
     <p><b>Результат:</b></p>
     <br />
 
-    <script>
-      const div = document.createElement('div');
-      div.classList.add('wrapper');
-
-      const body = document.querySelector('body');
-      body.appendChild(div);
-
-      const header = document.createElement('h3');
-      header.textContent = 'DOM - Data Object Model';
-      div.insertAdjacentElement('beforebegin', header);
-
-      const ul = `
-        <ul>
-          <li>один</li>
-          <li>два</li>
-          <li>три</li>
-        </ul>
-      `;
-      div.innerHTML = ul;
-    </script>
-    <br /><br />
+    <div>
+      <a name="list">The list:</a>
+      <ul>
+        <li><a href="https://google.com">https://google.com</a></li>
+        <li><a href="/tutorial">/tutorial.html</a></li>
+        <li><a href="local/path">local/path</a></li>
+        <li><a href="ftp://ftp.com/my.zip">ftp://ftp.com/my.zip</a></li>
+        <li><a href="https://nodejs.org">https://nodejs.org</a></li>
+        <li><a href="http://internal.com/test">http://internal.com/test</a></li>
+      </ul>
+    </div>
 
     <p><b>Рішення:</b></p>
     <br />
 
+    <!-- <script>
+      let links = document.querySelectorAll('a');
+
+      for (let link of links) {
+        let href = link.getAttribute('href'); //
+        if (!href) continue; // нет атрибута
+
+        if (!href.includes('://')) continue; // нет протокола
+
+        if (href.startsWith('http://internal.com')) continue; // внутренняя
+
+        link.style.color = 'orange';
+      }
+    </script> -->
+
     <p>
-      Будь-який html-код в браузері формує
-      <strong>Об'єктну Mодель Документу</strong> - <strong>DOM</strong>, яка
-      представляє вміст усієї сторінки у виді об'єктів, які можна змінювати.
-      Наглядно на це можна подивитись коли відкриєш вкладку інструментів
-      розробника <i>Elements</i>, і можна бачити усю структуру DOM-дерева.
-      Браузер дає змогу взаємодіяти з DOM-елементами за допомогою
-      <strong>Java Script</strong>.<br />
-      Далі необхідно зазначити, що в браузері існує глобальний об'єкт
-      <strong>window</strong>, який має багато властивостей. Серед них,
-      наприклад, <strong>location</strong> де знаходяться дані про поточну
-      відкриту сторінку: URL-адрес, протокол, IP-адрес та інші; чи властивість
-      <strong>innerWidth</strong>, що покаже ширину вікна браузера в пікселях,
-      властивість <strong>navigator</strong>, яка містить більшістю інформацію
-      про пристрій на якому працює і відкритий браузер.<br />
-      Але є ще одна дуже важлива властивість - це <strong>document</strong>, що
-      дає можливість працювати з DOM-елементами. Тобто, об'єкт <i>document</i> –
-      основна "вхідна точка". З його допомогою ми можемо щось створювати чи
-      змінювати на сторінці. Візуально, зона дії цієї властивості від
-      відкриваючого до закриваючого тега <i>html</i>.
+      Перш за все, нам потрібно знайти усі зовнішні посилання, а потім задати
+      стиль як вказано в завданні через
+      <i>link.style.color = 'orange';</i>.<br />
+      А тому, шукаємо усі посилання використовуючи універсальний метод пошуку
+      вузол-елемента по його тегу:
+      <strong><i>elem.querySelectorAll(css)</i></strong> який повертає усі
+      елементи які є всередині <i>elem</i>, які відповідають даному
+      CSS-селектору. Цей метод є досить ефективний бо можна використовувати
+      будь-який CSS-селектор.<br />
+      Також, потрібно присвоїти результат пошуку змінній, яку будемо
+      використовувати для роботи з властивостями, ось так:
     </p>
     <br />
 
     <p>
-      Таким чином, для роботи з DOM-елементами нам потрібно використовувати
-      методи які починаються з об'єкта <strong><em>document</em></strong> і далі
-      береться сам метод через крапку.<br />
-      Почнемо виконання першого завдання і для цього створимо змінну, якій
-      присвоємо DOM-елемент, щоб далі можна було працювати із цією змінною в
-      JavaScript.<br />
-      Узагалі, DOM-елемент створюють через метод
-      <strong><em>createElement(tag)</em></strong
-      >, де <i>tag</i> - це тег DOM-дерева, адже DOM – це подання HTML-документу
-      у вигляді дерева тегів. <br />
-      А методом <strong><em>createTextNode(text)</em></strong
-      >, можемо створити DOM-елемент із заданим тектстом, бо текст, є також
-      об'єктом.<br />
-      У більшості необхідність по створенню DOM-елементів припадає на створення
-      елементів типу <i>div</i>, то застосуємо перший спосіб, ось так:
+      <code>
+        <pre style="width: 60%">
+          let links = document.querySelectorAll('a');
+          console.log(links); // NodeList(7) [a, a, a, a, a, a, a]
+        </pre>
+      </code>
     </p>
     <br />
 
-    <p class="code-ex">
+    <script>
+      // console.log(links); // NodeList(7) [a, a, a, a, a, a, a]
+    </script>
+
+    <p>
+      Як ми бачимо, ми отримали усі посилання - колекцію з семи елементів
+      довжиною 7. Ну тепер можна пройтись циклом
+      <strong><i>for...of</i></strong> по елементам (по кожному посиланню) та
+      задамо кожному елементу стиль як вказано в завданні. Так ми поки задамо
+      усім елементам оранжевий колір, ось так:<br />
+    </p>
+    <br />
+
+    <p>
       <code>
         <pre>
-          const div = document.createElement('div');
+          let links = document.querySelectorAll('a');
+
+          for (let link of links) {
+            link.style.color = 'orange';
+          }
         </pre>
       </code>
     </p>
     <br />
 
     <p>
-      Зауважимо, що DOM-елемент створено, але поки що він лише у змінній. Ми не
-      можемо бачити його на сторінці, оскільки вона не є частиною документа.
+      А тепер ми можемо відфільтрувати тільки ті посилання, які є зовнішніми
+      посиланнями (які відповідають умовам завдання). Для цього, визначаємо для
+      кожного посилання <i>a</i> обов'язковий атрибут <i>href</i> по якому і
+      будемо фільтрувати і можемо це зробити за допомогою метода
+      <strong><i>elem.getAttribute(name)</i></strong
+      >, що дозволить отримати значення атрибуту. Звичайно, ми могли взяти це
+      значення використавши властивість DOM-елемента через крапку, типу
+      <i>link.href</i>, але нам потрібно отримати значення, яке записано точно
+      як в HTML. Значення DOM-властивості може бути іншим, наприклад,
+      DOM-властивість <i>href</i> – завжди містить повний URL, навіть якщо
+      атрибут містить відносний URL чи просто #hash, а нам потрібно отримати
+      оригіналье значення. Ось приклад:
     </p>
     <br />
 
     <p>
-      Для присвоєння створеному div-елементу будь-якого класу використаємо вираз
-      для класів - <strong><em>classList</em></strong
-      >, а для безпосереднього його надання - метод
-      <strong><em>add()</em></strong
+      <code>
+        <pre>
+          &lt;a id="a" href="#hello"&gt;link&lt;/a&gt;
+          &lt;script&gt;
+            // атрибут
+            console.log(a.getAttribute('href')); // #hello
+
+            // DOM-властивість
+            console.log(a.href ); // повний URL типу http://site.com/page#hello
+          &lt;/script&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Тому беремо це значення використавши саме метод
+      <i>elem.getAttribute(name)</i>, ось так:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre style="width: 60%">
+          let links = document.querySelectorAll('a');
+
+          for (let link of links) {
+            let href = link.getAttribute('href'); // властивість DOM-об'єкту
+
+            link.style.color = 'orange';
+          }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Коли браузер завантажує сторінку, він читає (також говорять:
+      <i>"парсить"</i>) HTML і генерує з нього DOM-об'єкти. Для вузлів-елементів
+      більшість стандартних HTML-атрибутів автоматично стають властивостями
+      DOM-обєктів. Маючи DOM-об'єкт, ми можемо здійснювати фільтрацію
+      використовуючи JavaScript методи. А тому здійснюєм фільтрацію
+      використовуючи оператор <strong><i>if</i></strong> та для продовження
+      ітерації, оператор <strong><i>continue</i></strong
       >, ось так:
     </p>
     <br />
 
-    <p class="code-ex">
+    <p>
       <code>
-        <pre>
-          div.classList.add('wrapper');
+        <pre style="width: 60%">
+          let links = document.querySelectorAll('a');
+
+          for (let link of links) {
+            let href = link.getAttribute('href'); // властивість DOM-об'єкту
+
+            if (!href) continue; // немає атрибута
+
+            if (!href.includes('://')) continue; // немає протокола
+
+            if (href.startsWith('http://internal.com')) continue; // внутрішнє посилання
+
+            link.style.color = 'orange';
+          }
         </pre>
       </code>
     </p>
     <br />
 
     <p>
-      Щоб наш div з'явився, нам потрібно вставити його десь у document.
-      Наприклад, у document.body. Щоб помістити елемент всередину body треба
-      спочатку знайти його та звернутись до нього. Для цього існує метод
-      <strong><em>querySelector()</em></strong
-      >. Тут body має особливості - до нього можна звертатись напряму бо це є
-      тіло самого глобального <em>document</em>, робимо це ось так:
+      Можна розглянути, більш простий шлях – додати одразу перевірку в
+      CSS-селектор.<br />
+      Для перевірки використовуємо CSS-селектор
+      <strong><i>[attribute*="value"]</i></strong> який використовується для
+      вибору елементів, що мають специфічний атрибут, всі значення яких
+      <i>включають</i> значення <i>"://"</i>. Також, використовуємо CSS-селектор
+      <strong><i>[attribute^="value"]</i></strong> який використовується для
+      <i>виключення</i> тих елементів, що мають специфічний атрибут, всі
+      значення яких <i>починаються</i> саме із
+      <i>"http://internal.com"</i>.<br />
+      Далі, використати вже перевірений селектор в універсальному методі
+      отримання властивостей DOM-елементів, по яких проходимся циклом та задаєм
+      кожній властивості відповідний стиль, ось так:
     </p>
     <br />
 
-    <p class="code-ex">
+    <p>
       <code>
-        <pre>
-          const body = document.querySelector('body');
-          або так
-          const body = document.body;
+        <pre style="width: 65%">
+          let selector = 'a[href*="://"]:not([href^="http://internal.com"])';
+          let links = document.querySelectorAll(selector); // NodeList(3) [a, a, a]
+
+          links.forEach(link => link.style.color = 'orange');
         </pre>
       </code>
     </p>
     <br />
 
-    <p>
-      І щоб помістити всередину body, існує метод append:
-      <strong><em>document.body.append(div)</em></strong
-      >.<br />
-      у нашому випадку:як правило з кінця, існує метод додавання елемента в тіло
-      як <strong><em>appendChild()</em></strong
-      >, ось так:
-    </p>
-    <br />
+    <script>
+      let selector = 'a[href*="://"]:not([href^="http://internal.com"])';
+      let links2 = document.querySelectorAll(selector);
 
-    <p class="code-ex">
-      <code>
-        <pre>
-          body.appendChild(div);
-        </pre>
-      </code>
-    </p>
-    <br />
+      console.log(links2); // NodeList(3) [a, a, a]
 
-    <p>
-      Робимо h3 по аналогії створення div-елемента використавши для цього метод
-      <strong><em>createElement()</em></strong
-      >, та властивість для текстових значень
-      <strong><em>textContent</em></strong
-      >. Властивість textContent надає доступ до тексту всередині елемента за
-      винятком всіх тегів. У разі запису до нього тексту разом із
-      HTML-симворалми, ці спеціальні символи і теги інтерпретуються як текст і
-      не добавляться як частина HTML-коду. Тобто, ця властивість дозволяє писати
-      текст безпечним способом бо ми не хочемо, щоб на сайті з'являвся якийсь
-      довільний HTML-код.<br />
-      Отже, спочатку створюємо заголовок, а потім туди передаємо текстовий
-      контент, ось так:
-    </p>
-    <br />
+      links2.forEach((link) => (link.style.color = 'orange'));
+    </script>
 
-    <p class="code-ex">
-      <code>
-        <pre>
-          const header = document.createElement('h3');
-          header.textContent = 'DOM - data Object Model';
-        </pre>
-      </code>
-    </p>
     <br />
-
-    <p>
-      Якщо ми хочемо вставити HTML саме «як html», з усіма тегами та іншим
-      синтаксисом, подібно до того, як це робить <em>elem.innerHTML()</em> то
-      необхідно використати доволі потужний та універсальний метод:<br />
-      <strong><em>elem.insertAdjacentHTML(where, html)</em></strong
-      ><br />
-      Перший параметр - це спеціальне слово, що вказує, куди по відношенню до
-      elem робити вставку. Значення має бути одним із наступних:<br />
-      - "beforebegin" – вставити html безпосередньо перед elem,<br />
-      - "afterbegin" – вставити html на початок elem,<br />
-      - "beforeend" – вставити html в кінець elem,<br />
-      - "afterend" – вставити html безпосередньо після elem.<br />
-      Другий параметр – це HTML-рядок-символів. який буде вставлений у визначене
-      місце «як html».<br /><br />
-      У цього метода є два брати:<br />
-      <strong><em>elem.insertAdjacentText(where, text)</em></strong>
-      – такий самий синтаксис, але рядок символів text вставляється «як текст»,
-      замість HTML,<br />
-      <strong><em>elem.insertAdjacentElement(where, elem)</em></strong>
-      – такий самий синтаксис, але вставляє елемент elem.<br />
-      В нашому випадку вже є створений елемент header, який ми вставляємо перед
-      блоком div згідно із завданням, тому можемо використати метод
-      <em>elem.insertAdjacentElement(where, elem)</em> ось так: <br />
-    </p>
-    <br />
-
-    <p class="code-ex">
-      <code>
-        <pre>
-          div.insertAdjacentElement('beforebegin', header);
-        </pre>
-      </code>
-    </p>
-    <br />
-
-    <p>
-      Ці три методи існують, переважно, щоб уніфікувати синтаксис. На практиці
-      часто використовується тільки <em>insertAdjacentHTML</em>. Тому що для
-      елементів та тексту ми маємо методи append/prepend/before/after – їх
-      швидше написати, і вони можуть вставляти як вузли, так і текст.
-    </p>
-    <br />
-
-    <p>
-      Зауважимо, що другий параметр універсального методу
-      <strong><em>elem.insertAdjacentHTML(where, html)</em></strong
-      >– це може бути HTML-рядок-символів, який буде вставлений саме «як HTML»(з
-      усіма тегами та іншим синтаксисом). Тому можна використати в цьому
-      елементі HTML-рядок-символів.<br />
-      Давайте створемо такий елемент «як HTML» і використаєм для цього зворотні
-      лапки, щоб писати розмітку на різних рядках та одразу задати цілий блок
-      коду, ось так:
-    </p>
-    <br />
-
-    <p class="code-ex">
-      <code>
-        <pre>
-          const ul = `
-            &lt;ul&gt;
-              &lt;li&gt;один&lt;/li&gt;
-              &lt;li&gt;два&lt;/li&gt;
-              &lt;li&gt;три&lt;/li&gt;
-            &lt;/ul&gt;
-          `
-        </pre>
-      </code>
-    </p>
-    <br />
-
-    <p>
-      Щоб помістити створений список в div тепер використаємо властивість
-      <strong><em>elem.innerHTML</em></strong
-      ><br />
-      Ця властивість дозволяє отримати HTML-вміст елементу у вигляді рядка
-      символів. Або можна сказати так: З в innerHTML вставка відбувається «як
-      HTML», з усіма HTML-тегами. Властивість <em>innerHTML</em> є лише у
-      вузлів-елементів. Отже, щоб помістити список ul всередину елементу div,
-      достатньо тільки присвоїти цій властивості змінну в якій вже створений цей
-      елемент «як HTML» і цей елемент вставиться на веб-сторінку «як HTML», ось
-      так:
-    </p>
-    <br />
-
-    <p class="code-ex">
-      <code>
-        <pre>
-          div.innerHTML = ul;
-        </pre>
-      </code>
-    </p>
-    <br /><br /><br />
   </body>
 </html>

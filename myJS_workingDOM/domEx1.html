@@ -93,16 +93,23 @@
       Отже, отримавши DOM-вузел, ми можемо перейти до його найближчих сусідів
       використовуючи навігаційні посилання.<br />
       Є два основних типa навігаційних посилань:<br />
+      <br />
       - для усіх вузлів документу:
       <i
         >parentNode, childNodes, firstChild, lastChild, previousSibling,
         nextSibling</i
       >;<br />
+      Це добре видно з дерева усіх вузлів документу, ось:<br />
+      <img src="./dom-links.svg" alt="DOM links image" />
+      <br />
       - тільки для вузлів-елементів:
       <i
         >parentElement, children, firstElementChild, lastElementChild,
         previousElementSibling, nextElementSibling</i
       >;<br />
+      Це добре видно з дерева усіх вузлів-елементів документу, ось:<br />
+      <img src="./dom-links-elements.svg" alt="DOM links-elements image" />
+      <br />
       Це є тому, що навігаційні властивості які стосуються типу
       <i>для всіх вузлів</i>, відносяться до всіх типів вузлів в документі.
       Зокрема, в <i>childNodes</i> знаходяться і текстові вузли, вузли-елементи
