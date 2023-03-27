@@ -62,53 +62,32 @@
   <body>
     <h2 class="title">DOM (data object model)</h2>
     <h4 class="title">
-      Working with DOM: using search method:
-      <span class="emph">elem.querySelectorAll(css)</span><br />
+      Working with DOM: using search methods:
+      <span class="emph">document.querySelector('elem')</span><br />
       using method for getting value of the attribute via
-      <span class="emph">elem.getAttribute(name)</span><br />
-      JS operators: <span class="emph">if, continue, !</span>, JS methods to
-      work with a string: <span class="emph">includes(), startsWith()</span>,
-      loops: <span class="emph">for..of, forEach()</span><br />
-      CSS selectors:
-      <span class="emph">[attribute*="value"], [attribute^="value"]</span>
+      <span class="emph">elem.dataset.attrNameInCamelCase</span> or
+      <span class="emph">elem.getAttribute(name)</span>
     </h4>
 
     <h4 class="task">
-      Зробіть тільки зовнішні посилання оранжевого кольору, змінивши їх
-      властивість <i>style</i>.<br />
-      При цьому вважається, що посилання є зовнішнім, за умови, якщо:<br />
-      її атрибут <i>href</i> містить <i>://</i><br />
-      і також посилання не починається з <i>http://internal.com</i><br />
+      В нас є блок <i>div</i> з рожевим фоном, який має нестандартний атрибут
+      <i>data-widget-name</i>.<br />
+      Напишіть код для вибору елемента з цим атрибутом та отримайте значення
+      цього атрибута в консолі?
     </h4>
     <br />
 
     <p>
       <code>
-        <pre style="width: 60%">
+        <pre>
           // Вихідні дані:
 
           &lt;html&gt;
           &lt;body&gt;
-
-            &lt;div&gt;
-              &lt;a name="list"&gt;the list&lt;/a&gt;
-              &lt;ul&gt;
-                  &lt;li&gt;&lt;a href="http://google.com"&gt;http://google.com&lt;/a&gt;&lt;/li&gt;
-                  &lt;li&gt;&lt;a href="/tutorial"&gt;/tutorial.html&lt;/a&gt;&lt;/li&gt;
-                  &lt;li&gt;&lt;a href="local/path"&gt; local/path&lt;/a&gt;&lt;/li&gt;
-                  &lt;li&gt;&lt;a href="ftp://ftp.com/my.zip"&gt;ftp://ftp.com/my.zip&lt;/a&gt;&lt;/li&gt;
-                  &lt;li&gt;&lt;a href="http://nodejs.org"&gt;http://nodejs.org&lt;/a&gt;&lt;/li&gt;
-                  &lt;li&gt;&lt;a href="http://internal.com/test"&gt;http://internal.com/test&lt;/a&gt;&lt;/li&gt;
-              &lt;/ul&gt;
+            &lt;div data-widget-name="menu"&gt;
+              Choose the genre
             &lt;/div&gt;
-            .... інший код....
-
-            &lt;script&gt;
-                // додавання стиля для одного посилання
-                let link = document.querySelector('a');
-                link.style.color = 'orange';
-            &lt;/script&gt;
-
+            &lt;script&gt;/* your code */&lt;/script&gt;
           &lt;/body&gt;
           &lt;/html&gt;
         </pre>
@@ -116,212 +95,203 @@
     </p>
     <br />
 
-    <p><b>Результат:</b></p>
-    <br />
-
-    <div>
-      <a name="list">The list:</a>
-      <ul>
-        <li><a href="https://google.com">https://google.com</a></li>
-        <li><a href="/tutorial">/tutorial.html</a></li>
-        <li><a href="local/path">local/path</a></li>
-        <li><a href="ftp://ftp.com/my.zip">ftp://ftp.com/my.zip</a></li>
-        <li><a href="https://nodejs.org">https://nodejs.org</a></li>
-        <li><a href="http://internal.com/test">http://internal.com/test</a></li>
-      </ul>
-    </div>
+    <div data-widget-name="menu">Choose the genre</div>
 
     <p><b>Рішення:</b></p>
     <br />
 
-    <!-- <script>
-      let links = document.querySelectorAll('a');
-
-      for (let link of links) {
-        let href = link.getAttribute('href'); //
-        if (!href) continue; // нет атрибута
-
-        if (!href.includes('://')) continue; // нет протокола
-
-        if (href.startsWith('http://internal.com')) continue; // внутренняя
-
-        link.style.color = 'orange';
-      }
-    </script> -->
-
     <p>
-      Перш за все, нам потрібно знайти усі зовнішні посилання, а потім задати
-      стиль як вказано в завданні через
-      <i>link.style.color = 'orange';</i>.<br />
-      А тому, шукаємо усі посилання використовуючи універсальний метод пошуку
-      вузол-елемента по його тегу:
-      <strong><i>elem.querySelectorAll(css)</i></strong> який повертає усі
-      елементи які є всередині <i>elem</i>, які відповідають даному
-      CSS-селектору. Цей метод є досить ефективний бо можна використовувати
-      будь-який CSS-селектор.<br />
-      Також, потрібно присвоїти результат пошуку змінній, яку будемо
-      використовувати для роботи з властивостями, ось так:
-    </p>
-    <br />
-
-    <p>
-      <code>
-        <pre style="width: 60%">
-          let links = document.querySelectorAll('a');
-          console.log(links); // NodeList(7) [a, a, a, a, a, a, a]
-        </pre>
-      </code>
-    </p>
-    <br />
-
-    <script>
-      // console.log(links); // NodeList(7) [a, a, a, a, a, a, a]
-    </script>
-
-    <p>
-      Як ми бачимо, ми отримали усі посилання - колекцію з семи елементів
-      довжиною 7. Ну тепер можна пройтись циклом
-      <strong><i>for...of</i></strong> по елементам (по кожному посиланню) та
-      задамо кожному елементу стиль як вказано в завданні. Так ми поки задамо
-      усім елементам оранжевий колір, ось так:<br />
-    </p>
-    <br />
-
-    <p>
-      <code>
-        <pre>
-          let links = document.querySelectorAll('a');
-
-          for (let link of links) {
-            link.style.color = 'orange';
-          }
-        </pre>
-      </code>
-    </p>
-    <br />
-
-    <p>
-      А тепер ми можемо відфільтрувати тільки ті посилання, які є зовнішніми
-      посиланнями (які відповідають умовам завдання). Для цього, визначаємо для
-      кожного посилання <i>a</i> обов'язковий атрибут <i>href</i> по якому і
-      будемо фільтрувати і можемо це зробити за допомогою метода
-      <strong><i>elem.getAttribute(name)</i></strong
-      >, що дозволить отримати значення атрибуту. Звичайно, ми могли взяти це
-      значення використавши властивість DOM-елемента через крапку, типу
-      <i>link.href</i>, але нам потрібно отримати значення, яке записано точно
-      як в HTML. Значення DOM-властивості може бути іншим, наприклад,
-      DOM-властивість <i>href</i> – завжди містить повний URL, навіть якщо
-      атрибут містить відносний URL чи просто #hash, а нам потрібно отримати
-      оригіналье значення. Ось приклад:
-    </p>
-    <br />
-
-    <p>
-      <code>
-        <pre>
-          &lt;a id="a" href="#hello"&gt;link&lt;/a&gt;
-          &lt;script&gt;
-            // атрибут
-            console.log(a.getAttribute('href')); // #hello
-
-            // DOM-властивість
-            console.log(a.href ); // повний URL типу http://site.com/page#hello
-          &lt;/script&gt;
-        </pre>
-      </code>
-    </p>
-    <br />
-
-    <p>
-      Тому беремо це значення використавши саме метод
-      <i>elem.getAttribute(name)</i>, ось так:
-    </p>
-    <br />
-
-    <p>
-      <code>
-        <pre style="width: 60%">
-          let links = document.querySelectorAll('a');
-
-          for (let link of links) {
-            let href = link.getAttribute('href'); // властивість DOM-об'єкту
-
-            link.style.color = 'orange';
-          }
-        </pre>
-      </code>
-    </p>
-    <br />
-
-    <p>
+      З теорії відомо, що DOM-вузли – це звичайні об'єкти JavaScript. Тобто,
+      DOM-властивості та їх методы ведуть себе так само, як і звичайні об'єкти
+      JavaScript: їм можна присвоїти будь-яке значення і вони
+      регістрозалежні.<br />
       Коли браузер завантажує сторінку, він читає (також говорять:
       <i>"парсить"</i>) HTML і генерує з нього DOM-об'єкти. Для вузлів-елементів
       більшість стандартних HTML-атрибутів автоматично стають властивостями
-      DOM-обєктів. Маючи DOM-об'єкт, ми можемо здійснювати фільтрацію
-      використовуючи JavaScript методи. А тому здійснюєм фільтрацію
-      використовуючи оператор <strong><i>if</i></strong> та для продовження
-      ітерації, оператор <strong><i>continue</i></strong
+      DOM-обєктів. Ну і звичайно є такі, як нестандартні чи клієнтські атрибути
+      та атрибути, які належать тільки до певних класів, які перетворюються не
+      прямо на властивості DOM-об'єктів.<br /><br />
+      Так от, коли браузер <i>"парсить"</i> HTML, щоб створити DOM-об'єкти для
+      тегів, він роспізнає стандартні атрибути та створює DOM-властивості для
+      них. Для прикладу, коли в елемента є <i>id</i> чи інший стандартний
+      атрибут, сотворюється відповідна властивість. Але цього не стається, коли
+      атрибут нестандартний.<br />
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          &lt;html&gt;
+          &lt;body id="test" something="non-standard"&gt;
+            &lt;script&gt;
+              console.log(document.body.id); // test
+
+              // нестандартний атрибут не перетворюється у властивість
+              console.log(document.body.something); // undefined
+            &lt;/script&gt;
+          &lt;/body&gt;
+          &lt;/html&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Також, необхідно сказати, що стандартний атрибут для одного тега, може
+      бути нестандартним для іншого. Наприклад, атрибут <i>type</i> є
+      стандартним атрибутом для елементу <i>input</i> (HTMLInputElement) проте
+      не є стандартним для <i>body</i> (HTMLBodyElement). Стандартні атрибути
+      описані в специфікаціях для відповідного класу елемента, ось приклад:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre style="width: 70%">
+          &lt;html&gt;
+          &lt;body id="body" type="..."&gt;
+
+            &lt;input id="input" type="text" /&gt;
+
+            &lt;script&gt;
+              console.log(input.type); // text
+
+              // стандартний атрибут елемента іншого класу не перетворюється у властивість для елемента іншого класу
+              console.log(body.type); // undefined - DOM-властивість не створилось, тому що воно є нестандартне для body
+            &lt;/script&gt;
+          &lt;/body&gt;
+          &lt;/html&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Тому, щоб отримати властивість з нестандартного атрибуту, існують методи:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          elem.hasAttribute(name) – перевіряє наявність атрибута.
+          elem.getAttribute(name) – отримує значення атрибута.
+          elem.setAttribute(name, value) – встановлює значення атрибута.
+          elem.removeAttribute(name) – видаляє атрибут.
+          elem.attributes - отримати усі наявні атрибута eлемента.
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Ці методи працюють іменно з тим, що написано в HTML. Також, потрібно
+      зазначити, що в HTML-атрибути мають особливості: їх імена
+      регістронезалежні (id то саме, що і ID ) та їх значення завжди є рядками
+      слово-виразів.<br />
+      Необхідно зауважити, що в більшості випадків, перевагу потрібно надавати
+      використанню DOM-властивостей. А використовувати атрибути тільки тоді,
+      коли DOM-властивості не підходять, коли іменно потрібно використати
+      атрибути.<br />
+      Також, при написанні HTML ми застосовуємо в основному стандартні атрибути.
+      Але якщо нам потрібно використати нестандартні, або клієнтські
+      (користувацькі), то що робити?<br />
+      Нестандартні атрибути використовують для передачі клієнтських даних з HTML
+      в JavaScript, чи щоб якимось чином виділити/помітити потрібні
+      HTML-елементи для JavaScript. Також, їх застосовують щоб надати стилі
+      елементам, бо атрибутами зручніше управляти ніж класами.<br />
+      Але, що якщо застосовують нестандартний атрибут а цей атрибут зявиться в
+      стандарті та буде виконувати якусь функцію? Щоб уникнути конфліктів,
+      існують атрибути виду <strong><i>data-*</i></strong
+      >. Усі атрибути, які починаються з перфіксу <i>data-</i>, зарезервовані
+      для користуванням ІТ розробниками програм. Вони доступні у властивості
+      <strong><i>dataset</i></strong
+      >. Наприклад, якщо в <i>elem</i> є атрибут <i>"data-about"</i>, то
+      звернутись до нього можна як <i>elem.dataset.about</i>, ось так видніше:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          &lt;html&gt;
+          &lt;body data-about="Elephants"&gt;
+            &lt;script&gt;
+              console.log(document.body.dataset.about); // Elephants
+            &lt;/script&gt;
+          &lt;/body&gt;
+          &lt;/html&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Отже, використання <i>data-*</i> атрибутів - це валідний та безпечний
+      спосіб передачі клієнтських даних.<br />
+      Таким чином, щоб вирішити наше завдання, потрібно спочатку знайти
+      вузол-елемент
+      <i>div</i> та записати його в змінну як <i>elem</i>. Пошук здійснимо по
+      наявним атрибутам блока <i>div</i> з використанням метода пошуку
+      <strong><i>document.querySelector('elem')</i></strong
       >, ось так:
     </p>
     <br />
 
     <p>
       <code>
-        <pre style="width: 60%">
-          let links = document.querySelectorAll('a');
-
-          for (let link of links) {
-            let href = link.getAttribute('href'); // властивість DOM-об'єкту
-
-            if (!href) continue; // немає атрибута
-
-            if (!href.includes('://')) continue; // немає протокола
-
-            if (href.startsWith('http://internal.com')) continue; // внутрішнє посилання
-
-            link.style.color = 'orange';
-          }
-        </pre>
-      </code>
-    </p>
-    <br />
-
-    <p>
-      Можна розглянути, більш простий шлях – додати одразу перевірку в
-      CSS-селектор.<br />
-      Для перевірки використовуємо CSS-селектор
-      <strong><i>[attribute*="value"]</i></strong> який використовується для
-      вибору елементів, що мають специфічний атрибут, всі значення яких
-      <i>включають</i> значення <i>"://"</i>. Також, використовуємо CSS-селектор
-      <strong><i>[attribute^="value"]</i></strong> який використовується для
-      <i>виключення</i> тих елементів, що мають специфічний атрибут, всі
-      значення яких <i>починаються</i> саме із
-      <i>"http://internal.com"</i>.<br />
-      Далі, використати вже перевірений селектор в універсальному методі
-      отримання властивостей DOM-елементів, по яких проходимся циклом та задаєм
-      кожній властивості відповідний стиль, ось так:
-    </p>
-    <br />
-
-    <p>
-      <code>
-        <pre style="width: 65%">
-          let selector = 'a[href*="://"]:not([href^="http://internal.com"])';
-          let links = document.querySelectorAll(selector); // NodeList(3) [a, a, a]
-
-          links.forEach(link => link.style.color = 'orange');
+        <pre>
+          let elem = document.querySelector('[data-widget-name]');
         </pre>
       </code>
     </p>
     <br />
 
     <script>
-      let selector = 'a[href*="://"]:not([href^="http://internal.com"])';
-      let links2 = document.querySelectorAll(selector);
+      let elem = document.querySelector('[data-widget-name]');
+    </script>
 
-      console.log(links2); // NodeList(3) [a, a, a]
+    <p>
+      Вже тепер, коли ми маємо вузол-елемент, ми можемо працювати з ним як з
+      JavaScript об'єктом та отримати його значення. Для об'єктів використовують
+      отримання властивості через крапку, але з врахуванням того, що ми маємо
+      атрибут, який починається з перфіксу <i>data-</i>, потрібно використати
+      властивість <i>dataset</i>, ось так:
+    </p>
+    <br />
 
-      links2.forEach((link) => (link.style.color = 'orange'));
+    <p>
+      <code>
+        <pre>
+          &lt;html&gt;
+          &lt;body&gt;
+
+            &lt;div data-widget-name="menu"&gt;
+                Choose the genre
+            &lt;/div&gt;
+
+            &lt;script&gt;
+              let elem = document.querySelector('[data-widget-name]');
+
+              console.log(elem.dataset.widgetName); // menu
+
+              // або з використанням методу elem.getAttribute(name)
+              console.log(elem.getAttribute('data-widget-name')); // menu
+            &lt;/script&gt;
+          &lt;/body&gt;
+          &lt;/html&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+    <br />
+
+    <script>
+      console.log(elem.dataset.widgetName); // menu
+
+      // або з використанням методу elem.getAttribute(name);
+      console.log(elem.getAttribute('data-widget-name')); // menu
     </script>
 
     <br />

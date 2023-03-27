@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Working with DOM</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 40%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      div {
+        width: 400px;
+        margin: 0 auto 30px;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: pink;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">DOM (data object model)</h2>
+    <h4 class="title">
+      Working with DOM: using search method:
+      <span class="emph">elem.querySelectorAll(css)</span><br />
+      using method for getting value of the attribute via
+      <span class="emph">elem.getAttribute(name)</span><br />
+      JS operators: <span class="emph">if, continue, !</span>, JS methods to
+      work with a string: <span class="emph">includes(), startsWith()</span>,
+      loops: <span class="emph">for..of, forEach()</span><br />
+      CSS selectors:
+      <span class="emph">[attribute*="value"], [attribute^="value"]</span> and
+      pseudo class <span class="emph">:not()</span><br />
+    </h4>
+
+    <h4 class="task">
+      На веб сторінці розміщено список посилань (HTML-код показано нижче).
+      Зробіть так, щоб тільки зовнішні посилання мали оранжевий колір, задавши
+      їх властивість
+      <i>style</i>.<br />
+      При цьому вважається, що посилання є зовнішнім, за умови, якщо:<br />
+      її атрибут <i>href</i> містить <i>://</i><br />
+      і також посилання не починається з <i>http://internal.com</i><br />
+    </h4>
+    <br />
+
+    <p>
+      <code>
+        <pre style="width: 60%">
+          // Вихідні дані:
+
+          &lt;html&gt;
+          &lt;body&gt;
+
+            &lt;div&gt;
+              &lt;a name="list"&gt;the list&lt;/a&gt;
+              &lt;ul&gt;
+                  &lt;li&gt;&lt;a href="http://google.com"&gt;http://google.com&lt;/a&gt;&lt;/li&gt;
+                  &lt;li&gt;&lt;a href="/tutorial"&gt;/tutorial.html&lt;/a&gt;&lt;/li&gt;
+                  &lt;li&gt;&lt;a href="local/path"&gt; local/path&lt;/a&gt;&lt;/li&gt;
+                  &lt;li&gt;&lt;a href="ftp://ftp.com/my.zip"&gt;ftp://ftp.com/my.zip&lt;/a&gt;&lt;/li&gt;
+                  &lt;li&gt;&lt;a href="http://nodejs.org"&gt;http://nodejs.org&lt;/a&gt;&lt;/li&gt;
+                  &lt;li&gt;&lt;a href="http://internal.com/test"&gt;http://internal.com/test&lt;/a&gt;&lt;/li&gt;
+              &lt;/ul&gt;
+            &lt;/div&gt;
+            .... якийсь інший код....
+
+            &lt;script&gt;
+                ...ваш код...
+                
+                // зразок додавання стиля для одного посилання
+                let link = document.querySelector('a');
+                link.style.color = 'orange';
+            &lt;/script&gt;
+
+          &lt;/body&gt;
+          &lt;/html&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Результат:</b></p>
+    <br />
+
+    <div>
+      <a name="list">The list:</a>
+      <ul>
+        <li><a href="https://google.com">https://google.com</a></li>
+        <li><a href="/tutorial">/tutorial.html</a></li>
+        <li><a href="local/path">local/path</a></li>
+        <li><a href="ftp://ftp.com/my.zip">ftp://ftp.com/my.zip</a></li>
+        <li><a href="https://nodejs.org">https://nodejs.org</a></li>
+        <li><a href="http://internal.com/test">http://internal.com/test</a></li>
+      </ul>
+    </div>
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <p>
+      Відомо, що <i>атрибути</i> - це те, що записано в <i>HTML</i>, а
+      <i>властивості</i> - це те, що знаходиться в DOM-об'єктах.<br />
+      У більшості випадків надають перевагу використанню DOM-властивостей.
+      Атрибути використовують тільки тоді, коли DOM-властивості не підходять,
+      коли потрібно саме атрибути, а це, для прикладу:<br />
+      - потрібен нестандартний (клієнтський) атрибут. Проте, коли він
+      починається з <i>data-</i>, тоді потрібно використовувати
+      <i>dataset</i>;<br />
+      - потрібно отримати <i>'чисте'</i> значення (без будь-яких інших
+      додаткових символів) - саме таке, яке записано в <i>HTML</i>.<br /><br />
+      Алгоритм вирішення буде таким: перше нам потрібно знайти усі посилання,
+      далі визначити які з них є зовнішніми, а потім задати стиль як вказано в
+      завданні через
+      <i>link.style.color = 'orange';</i>.<br />
+      А тому, шукаємо усі посилання використовуючи універсальний метод пошуку
+      вузол-елемента по його тегу:
+      <strong><i>document.querySelectorAll('tag')</i></strong> який повертає усі
+      елементи які є всередині <i>tag</i> (які відповідають даному
+      CSS-селектору).<br />
+      Також, потрібно присвоїти результат пошуку змінній (вузлу-елементу), яку
+      будемо використовувати для роботи з властивостями, ось так:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre style="width: 60%">
+          <b>let links = document.querySelectorAll('a');</b>
+          console.log(links); // NodeList(7) [a, a, a, a, a, a, a]
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      // console.log(links); // NodeList(7) [a, a, a, a, a, a, a]
+    </script>
+
+    <p>
+      Як ми бачимо, ми отримали усі посилання - колекцію з семи елементів
+      довжиною 7. Ну тепер можна пройтись циклом
+      <strong><i>for...of</i></strong> по елементам (по кожному посиланню) та
+      задамо кожному елементу стиль як вказано в завданні. Так ми поки задамо
+      усім елементам оранжевий колір, ось так:<br />
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          let links = document.querySelectorAll('a');
+
+          for (let link of links) {
+            <b>link.style.color = 'orange';</b>
+          }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      А тепер ми можемо відфільтрувати тільки ті посилання, які є зовнішніми
+      посиланнями (за умовами завдання мають <i>://</i> та не починаються з
+      <i>http://internal.com</i>).<br />
+      Як відомо, кожне посилання <i>'a'</i> має обов'язковий атрибут
+      <i>'href'</i> по якому і будемо визначати ті посилання які будуть
+      зовнішніми, задавши потрібну умову. Тобто, спочатку потрібно отримати
+      значення атрибуту <i>'href'</i>, а потім в умові, наприклад оператором
+      <strong><i>if</i></strong
+      >, визначаємо зовнішнє посилання.<br /><br />
+      Отже, значення атрибуту отримуємо за допомогою методу
+      <strong><i>elem.getAttribute(name)</i></strong
+      >, що дозволить отримати чисте значення атрибуту <i>'href'</i> (без
+      додаткових символів). Звичайно, ми могли взяти це значення використавши
+      властивість DOM-елемента через крапку, типу
+      <strong><i>link.href</i></strong
+      >, але нам потрібно отримати значення, яке записано точно так, як записано
+      в HTML. Бо якщо будемо брати значення властивості DOM через крапку, то
+      воно може містити також інші додаткові символи. Так, наприклад,
+      DOM-властивість <i>href</i> – завжди містить повний URL, навіть якщо
+      атрибут містить відносний URL чи просто #hash, а нам потрібно отримати
+      лише чисте значення, а не повний URL. Ось приклад:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          &lt;a id="a" <b>href="#hello"</b>&gt;link&lt;/a&gt;
+          &lt;script&gt;
+            // взяти тільки чисте значення атрибуту
+            a.getAttribute('href'); // <b>#hello</b>
+
+            // взяти значення як властивість DOM (через крапку)
+            a.href; //  <b>http://site.com/page#hello</b> (повний URL - із усіма символами)
+          &lt;/script&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Тому беремо чисте значення використавши саме метод
+      <i>elem.getAttribute(name)</i>, і одразу присвоїмо це значення змінній,
+      щоб далі можна було її задавати в умові, ось так:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre style="width: 60%">
+          let links = document.querySelectorAll('a');
+
+          for (let link of links) {
+            <b>let href = link.getAttribute('href');</b> // чисте значення атрибуту 'href'
+
+            link.style.color = 'orange';
+          }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Коли браузер завантажує сторінку, він читає (також говорять:
+      <i>"парсить"</i>) HTML і генерує з нього DOM-об'єкти. Для вузлів-елементів
+      більшість стандартних HTML-атрибутів автоматично стають властивостями
+      DOM-обєктів. Маючи DOM-об'єкти та їх властивості, ми можемо здійснювати
+      маніпуляції використовуючи JavaScript методи. А тому давайте задамо умову
+      для отримання зовнішніх посилань, та використаємо оператор
+      <strong><i>if</i></strong
+      >, а для продовження ітерації, оператор <strong><i>continue</i></strong
+      >, ось так:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre style="width: 65%">
+          let links = document.querySelectorAll('a');
+
+          for (let link of links) {
+            let href = link.getAttribute('href'); // властивість DOM-об'єкту
+
+            <b>if (!href) continue;</b> // коли немає атрибута - продовжити пошук далі
+
+            <b>if (!href.includes('://')) continue;</b> // коли немає протокола - продовжити пошук далі
+
+            <b>if (href.startsWith('http://internal.com')) continue;</b> // коли це є внутрішнє посилання - продовжити пошук далі
+
+            link.style.color = 'orange';
+          }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Можна розглянути, більш простий спосіб визначення зовнішніх посилань –
+      додати перевірку одразу в CSS-селекторі.<br />
+      Щоб так зробити, використовуємо CSS-селектор
+      <strong><i>[attribute*="value"]</i></strong> який застосовують для вибору
+      елементів, що мають специфічний атрибут, всі значення яких
+      <i>ВКЛЮЧАЮТЬ</i> значення <i>"value"</i> - для нашої задачі включають
+      значення <i>"://"</i>.<br />
+      А для того, щоб виконати другу умову завдання, коли зовнішнє посилання не
+      повинно починатись з <i>http://internal.com</i>, використовуємо такий
+      CSS-селектор як <strong><i>[attribute^="value"]</i></strong> який
+      застосовують для вибору елементів, всі значення яких
+      <i>ПОЧИНАЮТЬСЯ З</i> значення <i>"value"</i> - для нашої задачі
+      починаються з <i>"http://internal.com"</i>, перед якими ставлять
+      CSS-псевдоклас виключення <strong><i>:not(css)</i></strong
+      >, що значить <i>НЕ ПОЧИНАЄТЬСЯ З</i> <i>"http://internal.com"</i>.<br />
+      І вже далі, використовуємо перевірений селектор в універсальному методі
+      отримання властивостей DOM-елементів
+      <strong><i>elem.querySelectorAll(css)</i></strong
+      >, по яких проходимся циклом <strong><i>forEach()</i></strong
+      >та задаєм кожному посиланню відповідний стиль, ось так:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre style="width: 65%">
+          <b>let selector = 'a[href*="://"]:not([href^="http://internal.com"])';</b>
+          
+          let links = document.querySelectorAll(selector); // NodeList(3) [a, a, a]
+
+          links.<b>forEach(</b>link => link.style.color = 'orange'<b>)</b>;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      let selector = 'a[href*="://"]:not([href^="http://internal.com"])';
+      let links2 = document.querySelectorAll(selector);
+
+      console.log(links2); // NodeList(3) [a, a, a]
+
+      links2.forEach((link) => (link.style.color = 'orange'));
+    </script>
+
+    <br />
+  </body>
+</html>

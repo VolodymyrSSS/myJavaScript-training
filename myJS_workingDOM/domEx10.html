@@ -48,13 +48,21 @@
       }
 
       div {
-        width: 400px;
+        width: 300px;
         margin: 0 auto 30px;
-        padding: 10px;
         display: flex;
         justify-content: center;
         align-items: center;
         background-color: pink;
+      }
+
+      div > ul {
+        background-color: DodgerBlue;
+        color: white;
+        margin: 5px;
+        text-align: center;
+        font-size: 20px;
+        flex-basis: 200px;
       }
     </style>
   </head>
@@ -62,18 +70,18 @@
   <body>
     <h2 class="title">DOM (data object model)</h2>
     <h4 class="title">
-      Working with DOM: using search methods:
-      <span class="emph">document.querySelector('elem')</span><br />
-      using method for getting value of the attribute via
-      <span class="emph">elem.dataset.attrNameInCamelCase</span> or
-      <span class="emph">elem.getAttribute(name)</span>
+      Working with DOM: using properties:
+      <span class="emph">outerrHTML</span> and
+      <span class="emph">innerHTML</span>,<br />
+      search method: <span class="emph">document.getElementById('id')</span>
     </h4>
 
     <h4 class="task">
-      В нас є блок <i>div</i> з рожевим фоном, який має нестандартний атрибут
-      <i>data-widget-name</i>.<br />
-      Напишіть код для вибору елемента з цим атрибутом та отримайте значення
-      цього атрибута в консолі?
+      Використання властивості <i>outerHTML</i>.<br />
+      В нас показана частина HTML-сторінки, на якій представлено код в тезі
+      <i>script</i>.<br />
+      Поясніть, що буде виведено в результаті роботи скірпта, а що буде виведено
+      в консолі?
     </h4>
     <br />
 
@@ -84,82 +92,19 @@
 
           &lt;html&gt;
           &lt;body&gt;
-            &lt;div data-widget-name="menu"&gt;
-              Choose the genre
-            &lt;/div&gt;
-            &lt;script&gt;/* your code */&lt;/script&gt;
-          &lt;/body&gt;
-          &lt;/html&gt;
-        </pre>
-      </code>
-    </p>
-    <br />
+            &lt;div&gt;Пацики на моциках з повними баками бензіка....&lt;/div&gt;
 
-    <div data-widget-name="menu">Choose the genre</div>
-
-    <p><b>Рішення:</b></p>
-    <br />
-
-    <p>
-      З теорії відомо, що DOM-вузли – це звичайні об'єкти JavaScript. Тобто,
-      DOM-властивості та їх методы ведуть себе так само, як і звичайні об'єкти
-      JavaScript: їм можна присвоїти будь-яке значення і вони
-      регістрозалежні.<br />
-      Коли браузер завантажує сторінку, він читає (також говорять:
-      <i>"парсить"</i>) HTML і генерує з нього DOM-об'єкти. Для вузлів-елементів
-      більшість стандартних HTML-атрибутів автоматично стають властивостями
-      DOM-обєктів. Ну і звичайно є такі, як нестандартні чи клієнтські атрибути
-      та атрибути, які належать тільки до певних класів, які перетворюються не
-      прямо на властивості DOM-об'єктів.<br /><br />
-      Так от, коли браузер <i>"парсить"</i> HTML, щоб створити DOM-об'єкти для
-      тегів, він роспізнає стандартні атрибути та створює DOM-властивості для
-      них. Для прикладу, коли в елемента є <i>id</i> чи інший стандартний
-      атрибут, сотворюється відповідна властивість. Але цього не стається, коли
-      атрибут нестандартний.<br />
-    </p>
-    <br />
-
-    <p>
-      <code>
-        <pre>
-          &lt;html&gt;
-          &lt;body id="test" something="non-standard"&gt;
-            &lt;script&gt;
-              console.log(document.body.id); // test
-
-              // нестандартний атрибут не перетворюється у властивість
-              console.log(document.body.something); // undefined
-            &lt;/script&gt;
-          &lt;/body&gt;
-          &lt;/html&gt;
-        </pre>
-      </code>
-    </p>
-    <br />
-
-    <p>
-      Також, необхідно сказати, що стандартний атрибут для одного тега, може
-      бути нестандартним для іншого. Наприклад, атрибут <i>type</i> є
-      стандартним атрибутом для елементу <i>input</i> (HTMLInputElement) проте
-      не є стандартним для <i>body</i> (HTMLBodyElement). Стандартні атрибути
-      описані в специфікаціях для відповідного класу елемента, ось приклад:
-    </p>
-    <br />
-
-    <p>
-      <code>
-        <pre style="width: 70%">
-          &lt;html&gt;
-          &lt;body id="body" type="..."&gt;
-
-            &lt;input id="input" type="text" /&gt;
+            .... інший код....
 
             &lt;script&gt;
-              console.log(input.type); // text
+              let div = document.querySelector('div');
 
-              // стандартний атрибут елемента іншого класу не перетворюється у властивість для елемента іншого класу
-              console.log(body.type); // undefined - DOM-властивість не створилось, тому що воно є нестандартне для body
+              // заміняємо div.outerHTML на інший
+              div.outerHTML = '&lt;div&gt;Пацики з компами повні мозги коду....&lt;/div&gt;';
+
+              console.log(div.outerHTML); // що буде виведено ?
             &lt;/script&gt;
+
           &lt;/body&gt;
           &lt;/html&gt;
         </pre>
@@ -168,132 +113,231 @@
     <br />
 
     <p>
-      Тому, щоб отримати властивість з нестандартного атрибуту, існують методи:
+      <b>Рішення:</b>
     </p>
     <br />
 
     <p>
-      <code>
-        <pre>
-          elem.hasAttribute(name) – перевіряє наявність атрибута.
-          elem.getAttribute(name) – отримує значення атрибута.
-          elem.setAttribute(name, value) – встановлює значення атрибута.
-          elem.removeAttribute(name) – видаляє атрибут.
-          elem.attributes - отримати усі наявні атрибута eлемента.
-        </pre>
-      </code>
+      З теорії відомо, що властивість <strong><i>outerHTML</i></strong> містить
+      цілий HTML-елемент. Це як <i>innerHTML</i> плюс сам елемент.<br />
+      На відміну від <i>innerHTML</i>, запис в <i>outerHTML</i> не змінює
+      елемент. Замість цього, елемент заміняється тільки у його зовнішньому
+      контексті. Тобто, ми бачимо, що використання <i>outerHTML</i> не змінює
+      DOM-елемент, а тільки видаляє його з зовнішнього контексту, і вставляє
+      замість нього новий HTML-код, тому хоч ми бачимо новий контекст у
+      зовнішньому відображенні:
     </p>
     <br />
 
-    <p>
-      Ці методи працюють іменно з тим, що написано в HTML. Також, потрібно
-      зазначити, що в HTML-атрибути мають особливості: їх імена
-      регістронезалежні (id то саме, що і ID ) та їх значення завжди є рядками
-      слово-виразів.<br />
-      Необхідно зауважити, що в більшості випадків, перевагу потрібно надавати
-      використанню DOM-властивостей. А використовувати атрибути тільки тоді,
-      коли DOM-властивості не підходять, коли іменно потрібно використати
-      атрибути.<br />
-      Також, при написанні HTML ми застосовуємо в основному стандартні атрибути.
-      Але якщо нам потрібно використати нестандартні, або клієнтські
-      (користувацькі), то що робити?<br />
-      Нестандартні атрибути використовують для передачі клієнтських даних з HTML
-      в JavaScript, чи щоб якимось чином виділити/помітити потрібні
-      HTML-елементи для JavaScript. Також, їх застосовують щоб надати стилі
-      елементам, бо атрибутами зручніше управляти ніж класами.<br />
-      Але, що якщо застосовують нестандартний атрибут а цей атрибут зявиться в
-      стандарті та буде виконувати якусь функцію? Щоб уникнути конфліктів,
-      існують атрибути виду <strong><i>data-*</i></strong
-      >. Усі атрибути, які починаються з перфіксу <i>data-</i>, зарезервовані
-      для користуванням ІТ розробниками програм. Вони доступні у властивості
-      <strong><i>dataset</i></strong
-      >. Наприклад, якщо в <i>elem</i> є атрибут <i>"data-about"</i>, то
-      звернутись до нього можна як <i>elem.dataset.about</i>, ось так видніше:
-    </p>
-    <br />
-
-    <p>
-      <code>
-        <pre>
-          &lt;html&gt;
-          &lt;body data-about="Elephants"&gt;
-            &lt;script&gt;
-              console.log(document.body.dataset.about); // Elephants
-            &lt;/script&gt;
-          &lt;/body&gt;
-          &lt;/html&gt;
-        </pre>
-      </code>
-    </p>
-    <br />
-
-    <p>
-      Отже, використання <i>data-*</i> атрибутів - це валідний та безпечний
-      спосіб передачі клієнтських даних.<br />
-      Таким чином, щоб вирішити наше завдання, потрібно спочатку знайти
-      вузол-елемент
-      <i>div</i> та записати його в змінну як <i>elem</i>. Пошук здійснимо по
-      наявним атрибутам блока <i>div</i> з використанням метода пошуку
-      <strong><i>document.querySelector('elem')</i></strong
-      >, ось так:
-    </p>
-    <br />
-
-    <p>
-      <code>
-        <pre>
-          let elem = document.querySelector('[data-widget-name]');
-        </pre>
-      </code>
-    </p>
-    <br />
+    <div>Пацики на моциках з повними баками бензіка....</div>
 
     <script>
-      let elem = document.querySelector('[data-widget-name]');
+      let div = document.querySelector('div');
+
+      div.outerHTML = '<div>Пацики з компами повні мозги коду....</div>';
+
+      console.log(div.outerHTML); //
     </script>
 
     <p>
-      Вже тепер, коли ми маємо вузол-елемент, ми можемо працювати з ним як з
-      JavaScript об'єктом та отримати його значення. Для об'єктів використовують
-      отримання властивості через крапку, але з врахуванням того, що ми маємо
-      атрибут, який починається з перфіксу <i>data-</i>, потрібно використати
-      властивість <i>dataset</i>, ось так:
+      але в консолі ми розпечатали старе значення в зміній<br />
+      <i>div</i> - <i>Пацики на моциках з повними баками бензіка....</i
+      ><br /><br />
+      Тобто, при <i>div.outerHTML=...</i> сталось наступне:<br />
+      - <i>div</i> був видалений з документу;<br />
+      - замість нього був вставлений другий HTML
+      <i>'&lt;div&gt;Пацики з компами повні мозги коду....&lt;/div&gt;';</i> що
+      ми і бачимо в зовнішньому відображенні елемента<br />
+      - але в <i>div</i> залишилось старе значення. Новий HTML не збережений ні
+      в якій змінній.<br />
+      Як видно, при цьому досить легко зробити помилку: змінити елемент записом
+      <i>div.outerHTML</i>, а потім продовжити працювати з <i>div</i> так, ніби
+      там є новий контекст/вміст. Звичайно, ми можемо отримати посилання на
+      новий елемент, але тільки через DOM.
     </p>
     <br />
 
     <p>
       <code>
+        <pre style="width: 65%">
+          console.log( div.outerHTML ); // &lt;div&gt;Пацики на моциках з повними баками бензіка....&lt;/div&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <h4 class="task">
+      Використання властивості <i>outerHTML</i>.<br />
+      В нас показана частина коду HTML-сторінки.<br />
+      Як отримати назву тега вузла дочірного елементу?<br />
+      Замініть дочірний елемент (блок <i>div</i> з <i>id='d'</i>) на параграф,
+      використавши властивість <i>outerHTML</i>.<br />
+      Поясніть, що буде виведено в результаті роботи скірпта, а що буде виведено
+      в консолі?
+    </h4>
+    <br />
+
+    <p>
+      <code>
         <pre>
+          // Вихідні дані:
+
           &lt;html&gt;
           &lt;body&gt;
-
-            &lt;div data-widget-name="menu"&gt;
-                Choose the genre
+            &lt;div id="container"&gt;
+              &lt;div id="d"&gt;This is a div.&lt;/div&gt;
             &lt;/div&gt;
+            .... інший код....
 
-            &lt;script&gt;
-              let elem = document.querySelector('[data-widget-name]');
-
-              console.log(elem.dataset.widgetName); // menu
-
-              // або з використанням методу elem.getAttribute(name)
-              console.log(elem.getAttribute('data-widget-name')); // menu
+            &lt;script"&gt;
+            ..ваш код..
+            // поміняйте на параграф
+            // node.outerHTML = '<p>This paragraph replaced the original div.</p>';
             &lt;/script&gt;
+
           &lt;/body&gt;
           &lt;/html&gt;
         </pre>
       </code>
     </p>
     <br />
+
+    <p>
+      <b>Рішення:</b>
+    </p>
+    <br />
+
+    <div id="container">
+      <div id="d">This is a div.</div>
+    </div>
+
+    <p></p>
+    <p>
+      З теорії відомо, що кожен DOM-вузел належить певному класу. Класи формують
+      ієрархію. Увесь набір властивостей і методів є результатом успадкування по
+      ієрархії. В залежності від свого класу DOM-вузли мають і інші властивості.
+      Наприклад в елементів <i>input</i> (HTMLInputElement) є властивості
+      <i>value, type</i>, а в елементів <i>a</i> (HTMLAnchorElement) є
+      <i>href</i> і т.д. Більшість стандартних HTML-атрибутів мають відповідні
+      властивості DOM, хоча HTML-атрибути і властивості DOM не завжди одинакові.
+      Отже, головними властивостями DOM-вузла є: <br />
+      1) <strong><i>nodeType</i></strong> - ця властивість дозволяє дізнатись
+      про тип DOM-вузла. Ці типи мають числові значення, так: 1 - для елементів,
+      3 - для текстових вузлів, и т.д. Цю властивість можна використовувати
+      тільки для читання.<br />
+      2) <strong><i>nodeName/tagName</i></strong> - ці властивості повертають
+      назву тега (він записується у верхньому регістрі за вийнятком XML-режиму).
+      Для вузлів-неелементів <i>nodeName</i> описує, що це саме за вузол. Їх
+      також використовують тільки для читання.<br />
+      3) <strong><i>innerHTML</i></strong> - це внутрішній вміст вузла-елементу
+      або внутрішній контекст HTML. Можна змінювати.<br />
+      4) <strong><i>outerHTML</i></strong> - це повний вміст вузла-елементу або
+      внутрішній та зовнішній контексти HTML. Запис в <i>elem.outerHTML</i> не
+      змінює <i>elem</i>. Замість цього, вона заміняє його тільки у зовнішньому
+      контексті.<br />
+      5) <strong><i>nodeValue/data</i></strong> - вміст вузла-неелементу (для
+      тексту та коментарів). Ці властивості практично одинакові, але зазвичай ми
+      використовуєм <i>data</i>. Можнa змінювати.<br />
+      6) <strong><i>textContent</i></strong> - це суто тільки текст всередині
+      елементу: HTML без всіх тегів. Запис у ньому кладе тільки текст в елемент
+      при цьому всі спеціальні символи та теги інтерпритуються як суто текст. Цю
+      властивість можна використовувати для захисту від вставки якогось
+      шкідливого HTML коду.<br />
+      7) <strong><i>hidden</i></strong> - коли це значення виставлено в
+      <i>true</i>, то робить те саме що і CSS <i>display:none</i>.<br />
+      <br />
+      Отже, нам для визначення назви тегу дочірного елементу блоку <i>div</i>,
+      необхідно спочатку отримати батьківський елемент, а вже потім, використати
+      наприклад властивість DOM-вузла <strong><i>nodeName</i></strong
+      >.<br />
+      Якщо в елемента є атрибут <i>id</i>, то ми можемо отримати його викликом
+      <strong><i>document.getElementById(id)</i></strong
+      >, де би він не знаходився на сторінці, ось так:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          const container = document.getElementById("container");
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Вже маючи цей батьківський вузол, використаємо навігаційні посилання для
+      типу вузлів-елементів як
+      <strong><i>firstElementChild</i></strong> та властивість DOM-вузлів
+      <strong><i>nodeName</i></strong
+      >, для того, щоб отримати назву тегу дочірного елементу, ось так:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          console.log(container.firstElementChild.nodeName); // logs "DIV"
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Далі, щоб замінити зовнішній HTML-елемент з використанням властивості для
+      DOM-вузлів <strong><i>outerHTML</i></strong> знайдемо спочатку дочірний
+      вузел-елемент, також по його <i>id</i>, ось так:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          const d = document.getElementById("d");
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      І далі, застосуємо цю властивість для заміни зовнішнього контексту
+      елементу, ось так:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          d.outerHTML = "&lt;p&gt;This paragraph replaced the original div.&lt;/p&gt;";
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      В результаті дочірний елемент не буде частиною дерева DOM і параграф
+      замінить його та стане дочірним елементом замість нього, але тільки у
+      зовнішньому контексті, і якщо застосувати ті самі методи для отримання
+      назви тегу для дочірного елементу, ми отримаємо вже інший тег, ось так:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          console.log(container.firstElementChild.nodeName); // logs "P"
+        </pre>
+      </code>
+    </p>
     <br />
 
     <script>
-      console.log(elem.dataset.widgetName); // menu
+      const container = document.getElementById('container');
+      console.log(container.firstElementChild.nodeName); // logs "DIV"
 
-      // або з використанням методу elem.getAttribute(name);
-      console.log(elem.getAttribute('data-widget-name')); // menu
+      const d = document.getElementById('d');
+      d.outerHTML = '<p>This paragraph replaced the original div.</p>';
+      console.log(container.firstElementChild.nodeName); // logs "P"
     </script>
-
-    <br />
   </body>
 </html>
