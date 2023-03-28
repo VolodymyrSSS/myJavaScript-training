@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Working with DOM</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      div {
+        width: 60%;
+        background-color: #bebebe;
+        margin: auto;
+      }
+
+      h3 {
+        color: #d87093;
+        text-align: center;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      .message {
+        padding: 15px;
+        border: 1px solid #d6e9c6;
+        border-radius: 4px;
+        color: #3c763d;
+        background-color: #dff0d8;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">DOM (data object model)</h2>
+    <h4 class="title">
+      Working with DOM: using <span class="emph">classList</span>, methods
+      <span class="emph">createElements(), append()</span>
+    </h4>
+
+    <h4 class="task">
+      За допомогою методів та способів для роботи з DOM-елементами:<br />
+      1. Створіть div-eлемент<br />
+      2. Надайте цьому div-eлементу клас message<br />
+      3. Помістіть текст всередину div-eлемент<br />
+      4. Додайте створений елемент на сторінку<br />
+      5. Які методи вставки DOM-елемента існують зараз, а які існували
+      раніше?<br />
+    </h4>
+    <br />
+
+    <p><b>Результат:</b></p>
+    <br />
+
+    <script>
+      let div = document.createElement('div');
+      div.className = 'message';
+      div.innerHTML =
+        '<strong>Всім привіт!</strong> Ви прочитали важливе повідомлення.';
+
+      document.body.append(div);
+    </script>
+    <br /><br />
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <p>
+      Будь-який html-код в браузері формує
+      <strong>Об'єктну Mодель Документу</strong> - <strong>DOM</strong>, яка
+      представляє вміст усієї сторінки у виді об'єктів, які можна змінювати.<br />
+      В браузері існує важлива властивість <strong>document</strong>, що і дає
+      можливість працювати з DOM-елементами. Тобто, об'єкт <i>document</i> – це
+      основна "вхідна точка". З його допомогою ми можемо щось створювати чи
+      змінювати на сторінці. Візуально, зона дії цієї властивості від
+      відкриваючого до закриваючого тега <i>html</i>. <br /><br />
+      DOM-вузел можна створювати двума методами:<br />
+      <strong><i>document.createElement(tag)</i></strong> - створює новий
+      елемент з заданим тегом;<br />
+      <strong><i>document.createTextNode(text)</i></strong> - створює новий
+      текстовий вузел з заданим текстом;<br />
+      Ось приклади:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          // створення нового DOM вузла-елементу <i>div</i> з тегом <i>div</i>
+          const div = document.createElement('div');
+
+          // створення нового DOM текстового вузла <i>textNode</i> з текстом 'А ось і я'
+          let textNode = document.createTextNode('А ось і я');
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      У більшості необхідність по створенню DOM-елементів припадає на створення
+      елементів типу <i>div</i>, а тому застосуємо перший спосіб, одночасно
+      надамо одразу клас <i>message</i> використавши властивість
+      <strong><i>className</i></strong> та покладемо текст самого повідомлення
+      через властивість <strong><i>innerHTML</i></strong
+      >, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          &lt;script&gt;
+            let div = document.createElement('div');
+            div.className = "message";
+            div.innerHTML = "&lt;strong&gt;Всім привіт!&lt;/strong&gt; Ви прочитали важливе повідомлення.";
+          &lt;/script&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Щоб наш створений <i>div</i> з'явився, нам потрібно вставити його десь в
+      <i>document</i>, наприклад, в <i>document.body</i>.<br /><br />
+      При цьому існують такі методи для різних варіантів вставки:<br />
+      <strong><i>node.append(...nodes or strings)</i></strong> – додає вузли чи
+      рядки слово-виразів в <em>КІНЕЦЬ</em> <i>node</i>;<br />
+      <strong><i>node.prepend(...nodes or strings)</i></strong> – вставляє вузли
+      чи рядки слово-виразів на <em>ПОЧАТОК</em> <i>node</i>;<br />
+      <strong><i>node.before(...nodes or strings)</i></strong> - вставляє вузли
+      чи рядки слово-виразів <em>ПОПЕРЕДУ</em> <i>node</i>;<br />
+      <strong><i>node.after(...nodes or strings)</i></strong> – вставляє вузли
+      чи рядки слово-виразів <em>ПІСЛЯ</em> <i>node</i>;<br />
+      <strong><i>node.replaceWith(...nodes or strings)</i></strong> – замінює
+      <i>node</i> заданими вузлами чи рядки слово-виразів.<br /><br />
+      А тому, використаємо метод <strong><i>apend()</i></strong
+      >, і в нашому випадку буде це виглядати так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          document.body.append(div);
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>Отже, повний код буде мати вид</p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          &lt;style&gt;
+            .message {
+              padding: 15px;
+              border: 1px solid #d6e9c6;
+              border-radius: 4px;
+              color: #3c763d;
+              background-color: #dff0d8;
+            }
+          &lt;/style&gt;
+
+          &lt;script&gt;
+            let div = document.createElement('div');
+            div.className = "message";
+            div.innerHTML = "&lt;strong&gt;Всім привіт!&lt;/strong&gt; Ви прочитали важливе повідомлення.";
+            document.body.append(div);
+          &lt;/script&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Зауважимо, що існують декілька інших, більш старіших методів додавання,
+      вставки та видалення, які існують по історичних причинах та існують в
+      старих скриптах. Всі вони повертають <i>node</i> - вставлений/видалений
+      вузел, хоча значення що повертається - не використовують, а просто
+      викликають метод. До таких методів належать:<br />
+      <strong><i>parent.appendChild(node)</i></strong> – додає <i>node</i> в
+      кінець дочірних елементів <i>parentElem</i>;<br />
+      <strong><i>parent.insertBefore(node, nextSibling)</i></strong> – вставляє
+      <i>node</i> попереду <i>nextSibling</i> в <i>parentElem</i>;<br />
+      <strong><i>parent.removeChild(node)</i></strong> - видаляє <i>node</i> з
+      <i>parent</i> (розуміється, що він є батьківським для <i>node</i>);<br />
+      <strong><i>parent.replaceChild(newElem, oldChild)</i></strong> – заміняє
+      <i>oldChild</i> на <i>newElem</i> серед дочірних елементів
+      <i>parent</i>;<br />
+    </p>
+    <br />
+
+    <br />
+  </body>
+</html>
