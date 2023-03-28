@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Working with DOM</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 40%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      div {
+        width: 300px;
+        margin: 0 auto 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: pink;
+      }
+
+      div > ul {
+        background-color: DodgerBlue;
+        color: white;
+        margin: 5px;
+        text-align: center;
+        font-size: 20px;
+        flex-basis: 200px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">DOM (data object model)</h2>
+    <h4 class="title">
+      Working with DOM: using properties:
+      <span class="emph">textContent</span> and
+      <span class="emph">innerHTML</span>,<br />
+      searching DOM method:
+      <span class="emph">document.getElementById('id')</span>
+    </h4>
+
+    <h4 class="task">
+      Використання властивості <i>textContent</i>.<br />
+      На веб-сторінці в нас є блок <i>div</i> з <i>id</i> в який має довільний
+      текст 'This is some text'.<br />
+      Як можна переписати лише текст блоку <i>div</i> на інший текст 'This text
+      is different!' з використанням властивості <i>textContent</i>? Крім того,
+      поясніть різницю між властивостями <i>textContent</i> та <i>innerHTML</i>?
+    </h4>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          // Вихідні дані:
+
+          &lt;html&gt;
+          &lt;body&gt;
+            &lt;div id="divA"&gt;
+              This is &lt;span&gt;some&lt;/span&gt; text!
+            &lt;/div&gt;
+
+            &lt;script&gt;
+              // ...ваш код...
+              // треба поміняти текстовий контент на "This text is different!";
+           &lt;/script&gt;
+
+          &lt;/body&gt;
+          &lt;/html&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      <b>Рішення:</b>
+    </p>
+    <br />
+
+    <p>
+      Коли браузер завантажує сторінку, він читає (також говорять:
+      <i>"парсить"</i>) HTML і генерує з нього DOM-об'єкти.<br />
+      Ці об'єкти, або по іншому DOM-вузли (вузли-елементи, вузли-неелементи) –
+      це звичайні об'єкти JavaScript. Для вузлів-елементів більшість стандартних
+      HTML-атрибутів автоматично стають властивостями DOM-обєктів. Також є такі,
+      як нестандартні чи клієнтські атрибути та атрибути, які належать тільки до
+      певних класів, які перетворюються не прямо на властивості DOM-об'єктів.<br />
+      Кожен DOM-вузел належить певному класу. Класи формують ієрархію. Увесь
+      набір властивостей і методів є результатом успадкування по ієрархії. В
+      залежності від свого класу DOM-вузли мають і інші властивості. Наприклад в
+      елементів <i>input</i> (HTMLInputElement) є властивості
+      <i>value, type</i>, а в елементів <i>a</i> (HTMLAnchorElement) є
+      <i>href</i> і т.д. Більшість стандартних HTML-атрибутів мають відповідні
+      властивості DOM, хоча HTML-атрибути і властивості DOM не завжди
+      одинакові.<br />
+      Однією з головних властивостей DOM-вузла є властивість
+      <strong><i>textContent</i></strong> - це суто тільки текст всередині
+      елементу, або це HTML без всіх тегів. Запис у ньому кладе тільки текст в
+      елемент при цьому всі спеціальні символи та теги інтерпритуються як суто
+      текст, ось приклад:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre style="width: 65%">
+          &lt;div id="news"&gt;
+            &lt;h3&gt;Терміново в номер!&lt;/h3&gt;
+            &lt;p&gt;Марсіани атакували людство!&lt;/p&gt;
+          &lt;/div&gt;
+
+          &lt;script&gt;
+            let text = document.getElementById('news').textContent;
+
+            console.log(text); // 'Терміново в номер! Марсіани атакували людство!'
+          &lt;/script&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <div id="news">
+      <h3>Терміново в номер!</h3>
+      <p>Марсіани атакували людство!</p>
+    </div>
+
+    <script>
+      let text = document.getElementById('news').textContent;
+
+      console.log(text); // 'Терміново в номер! Марсіани атакували людство!'
+    </script>
+
+    <p>
+      Отже відповідь на завдання: можна отримати текст блоку
+      <i>div</i> просто застосувавши властивість <i>textContent</i>. Але нам
+      потрібно переписати текст на інший, тому ми одразу можемо присвоїти новий
+      текст блоку з використанням цієї властивості, ось так:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre style="width: 70%">
+          &lt;div id="divA"&gt;
+            This is &lt;span&gt;some&lt;/span&gt; text!
+          &lt;/div&gt;
+
+          &lt;script&gt;
+            let text = document.getElementById('divA').textContent = "This text is different!";
+
+            console.log(text); // "This text is different!";
+          &lt;/script&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <div id="divA">This is <span> some </span> text!</div>
+
+    <script>
+      let text1 = (document.getElementById('divA').textContent =
+        'This text is different!');
+
+      console.log(text1); // 'This is some text!'
+    </script>
+
+    <p>
+      Також, різниця між DOM-властивостями <i>textContent</i> та
+      <i>innerHTML</i> заключається в тому, що <i>textContent</i> має значенням
+      весь контент всіх елементів суто "як текст" - усі символи трактуються
+      буквально. Натомість, DOM-властивість <i>innerHTML</i> має значенням
+      контент "як HTML" - зі всіма HTML-тегами.<br />
+      Ця різниця важлива при захисті від вставки якогось шкідливого HTML коду бо
+      в <i>textContent</i> є можливість записувати текст безпечним способом -
+      без HTML-тегів, що унеможливлює появу шкідливого HTML-коду, ось приклад:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre style="width: 70%">
+          &lt;div id="divB"&gt;&lt;/div&gt;
+          &lt;div id="divC"&gt;&lt;/div&gt;          
+
+          &lt;script&gt;
+            let phrase = prompt("Введіть будь-яку фразу лемківським діалектом?", "&lt;b&gt;Шлях би його трафив!&lt;/b&gt;");
+
+            divB.innerHTML = phrase; // <b>Шлях би його трафив!</b>
+            divС.textContent = phrase; // &lt;b&gt;Шлях би його трафив!&lt;/b&gt;
+          &lt;/script&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      В першому &lt;div&gt; фраза приходить 'як HTML': Усі теги стали іменно
+      тегами , тому ми бачимо фразу виділену товстим шрифтом. В другому
+      &lt;div&gt; фраза приходить 'як текст', тому ми бачимо її разом з усіма
+      тегами &lt;b&gt;Шлях би його трафив!&lt;/b&gt;.
+    </p>
+    <br />
+    <br />
+  </body>
+</html>
