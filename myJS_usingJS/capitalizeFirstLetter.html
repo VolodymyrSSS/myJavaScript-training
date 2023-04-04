@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Working with strings</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      div {
+        width: 60%;
+        margin: auto;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      .message {
+        padding: 15px;
+        border: 1px solid #d6e9c6;
+        border-radius: 4px;
+        color: #3c763d;
+        background-color: #dff0d8;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Working with strings</h2>
+    <h4 class="title">
+      Using methods for strings:
+      <span class="emph">str.toUpperCase(), str.split('')</span> and method to
+      convert from array to string <span class="emph">arr.join('')</span>
+    </h4>
+
+    <h4 class="task">
+      В нас заданий простий рядок слово-виразу. Створіть функцію
+      <i>capitalizeFirstLetter(string)</i>, яка буде робити першу букву цього
+      рядка великою.<br />
+    </h4>
+    <br />
+
+    <p>
+      <code>
+        <pre style="width: 55%">
+          // Вихідні дані:
+
+          function capitalizeFirstLetter(string) {
+            // ...ваш код ...
+          }
+
+          capitalizeFirstLetter('hello'); // 'Hello'
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      function capitalizeFirstLetter(string) {
+        const arrFromString = string.split('');
+        arrFromString[0] = arrFromString[0].toUpperCase();
+        return arrFromString.join('');
+      }
+
+      console.log(capitalizeFirstLetter('hello')); // Hello
+    </script>
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <p>
+      Можливим алгоритмом рішення може бути: спочатку перетворити рядок
+      слово-виразу на масив в якого значеннями будуть кожна буква слово-виразу.
+      Це можна зробити за допомогою метода для рядків
+      <strong><i>split('')</i></strong> та записати цей масив в якусь змінну.<br />
+      Далі, взяти перший елемент масиву по його індексу (через квадратні дужки)
+      та перевести його у верхній регістр за допомогою метода
+      <strong><i>toUpperCase()</i></strong
+      >. Цим самим ми записали перший елемент масиву що є в дійсності
+      конвертованою першою буквою слово-виразу у верхній регістр.<br />
+      І вже далі, переводимо масив назад в слово-вираз методом
+      <strong><i>join('')</i></strong> та повертаємо його, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function capitalizeFirstLetter(string) {
+            const arrFromString = string.split('');
+            <b>arrFromString[0] = arrFromString[0].toUpperCase();</b>
+            return arrFromString.join('');
+          }
+
+          console.log(capitalizeFirstLetter('hello')); // Hello
+        </pre>
+      </code>
+    </p>
+    <br />
+    <br />
+  </body>
+</html>
