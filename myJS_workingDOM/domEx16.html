@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Working with DOM</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      div {
+        width: 60%;
+        margin: auto;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      .message {
+        padding: 15px;
+        border: 1px solid #d6e9c6;
+        border-radius: 4px;
+        color: #3c763d;
+        background-color: #dff0d8;
+      }
+
+      .img-centered {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        /* border: 2px solid black; */
+        border-radius: 8px;
+        padding: 3px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">DOM (data object model)</h2>
+    <h4 class="title">
+      Working with DOM: using <span class="emph">classList</span>, methods
+      <span class="emph">createElements(), append</span> and method to clone a
+      node
+      <span class="emph">elem.cloneNode(true)</span>
+    </h4>
+
+    <h4 class="task">
+      Клонування вузлів: cloneNode<br />
+      У нас на сторінці динамічно створюється div-eлемент із текстом. Як на
+      сторінку вставити таке саме повідомлення? Або як зробити ще таку саму
+      копію?
+    </h4>
+    <br />
+
+    <p>
+      <code>
+        <pre style="width: 55%">
+          // Динамічно створюваний div-eлемент:
+
+          &lt;script&gt;
+            let div = document.createElement('div');
+            div.className = "message";
+            div.innerHTML = "&lt;strong&gt;Всім привіт!&lt;/strong&gt; Ви прочитали важливе повідомлення.";
+            document.body.append(div);
+          &lt;/script&gt;
+
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Результат:</b></p>
+    <br />
+
+    <script>
+      let div = document.createElement('div');
+      div.className = 'message';
+      div.innerHTML =
+        '<strong>Всім привіт!</strong> Ви прочитали важливе повідомлення.';
+
+      document.body.append(div);
+
+      let div2 = div.cloneNode(true); // клонувати повідомлення
+      div2.querySelector('strong').innerHTML = 'Всім бувайте!'; // змінити клонований елемент в частині тега
+
+      div.after(div2); // показати клонований елемент після існуючого div
+    </script>
+    <br /><br />
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <p>
+      Отже, динамічно ми створили DOM-елемент і вставили його на сторінку у виді
+      повідомлення. Але як вставити на сторінку ще одне таке подібне
+      повідомлення? Звичайно, можна створити функцію і покласти в її тіло код по
+      динамічному створенню повідомлення. Далі викликати функцію створивши копію
+      повідомлення. Також можна склонувати існуючий <i>div</i> та просто
+      замінити текст всередини нього.<br />
+      Інколи, коли в нас є великий елемент, це може бути скоріше та простіше.
+      Але виклик <strong><i>elem.cloneNode(true)</i></strong> - створює глибокий
+      клон елементу - із усіма атрибутами та дочірними елементами. А якщо ми
+      викличемо <strong><i>elem.cloneNode(false)</i></strong> - тоді клон буде
+      без дочірних елементів. <br />
+      Тому, давайте створимо копію повідомлення, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre style="width: 67%">
+          &lt;style&gt;
+            .message {
+              padding: 15px;
+              border: 1px solid #d6e9c6;
+              border-radius: 4px;
+              color: #3c763d;
+              background-color: #dff0d8;
+            }
+          &lt;/style&gt;
+
+          &lt;script&gt;
+            let div = document.createElement('div');
+            div.className = "message";
+            div.innerHTML = "&lt;strong&gt;Всім привіт!&lt;/strong&gt; Ви прочитали важливе повідомлення.";
+            document.body.append(div);
+
+            <b>let div2 = div.cloneNode(true);</b> // клонувати повідомлення
+            div2.querySelector('strong').innerHTML = 'Всім бувайте!'; // змінити клонований елемент в частині тега 'strong'
+
+            div.after(div2); // показати клонований елемент після існуючого div
+          &lt;/script&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+    <br />
+  </body>
+</html>

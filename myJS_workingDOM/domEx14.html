@@ -18,6 +18,10 @@
         margin: auto;
       }
 
+      ol {
+        background-color: #dff0d8;
+      }
+
       h3 {
         color: #d87093;
         text-align: center;
@@ -75,6 +79,15 @@
         color: #3c763d;
         background-color: #dff0d8;
       }
+
+      .img-centered {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        /* border: 2px solid black; */
+        border-radius: 8px;
+        padding: 3px;
+      }
     </style>
   </head>
 
@@ -82,17 +95,21 @@
     <h2 class="title">DOM (data object model)</h2>
     <h4 class="title">
       Working with DOM: using <span class="emph">classList</span>, methods
-      <span class="emph">createElements(), append()</span>
+      <span class="emph">createElements/append/prepend/before/after</span>
     </h4>
 
     <h4 class="task">
-      За допомогою методів та способів для роботи з DOM-елементами:<br />
+      За допомогою cучасних методів та способів для роботи з DOM-елементами,
+      динамічно:<br />
       1. Створіть div-eлемент<br />
-      2. Надайте цьому div-eлементу клас message<br />
-      3. Помістіть текст всередину div-eлемент<br />
-      4. Додайте створений елемент на сторінку<br />
-      5. Які методи вставки DOM-елемента існують зараз, а які існували
-      раніше?<br />
+      2. Надайте цьому div-eлементу клас <i>message</i><br />
+      3. Помістіть текст всередину div-eлементу як HTML - з тегами<br />
+      4. Додайте створений div-eлемент на сторінку<br />
+      5. Покажіть декілька прикладів застосування інших методів
+      додавання/вставки DOM-елементів на сторінку<br />
+      6. Видаліть передостанній елемент<br />
+      7. Які методи додавання/вставки DOM-елементів існували раніше, наведіть
+      декілька прикладів роботи з ними?<br />
     </h4>
     <br />
 
@@ -117,15 +134,18 @@
       <strong>Об'єктну Mодель Документу</strong> - <strong>DOM</strong>, яка
       представляє вміст усієї сторінки у виді об'єктів, які можна змінювати.<br />
       В браузері існує важлива властивість <strong>document</strong>, що і дає
-      можливість працювати з DOM-елементами. Тобто, об'єкт <i>document</i> – це
-      основна "вхідна точка". З його допомогою ми можемо щось створювати чи
-      змінювати на сторінці. Візуально, зона дії цієї властивості від
-      відкриваючого до закриваючого тега <i>html</i>. <br /><br />
-      DOM-вузел можна створювати двума методами:<br />
+      можливість працювати з такими об'єктами, або кажуть DOM-елементами (які
+      можуть бути: або вузлами-елементами, або текстовими вузлами). Тобто,
+      об'єкт <i>document</i> – це основна "вхідна точка". З його допомогою ми
+      можемо щось створювати чи змінювати на сторінці, тобто працювати як із
+      звичайними JavaScript об'єктами. Візуально, на веб-сторінці, зона дії цієї
+      властивості від відкриваючого до закриваючого тега <i>html</i>.
+      <br /><br />
+      DOM-елемент можна створювати двума методами:<br />
       <strong><i>document.createElement(tag)</i></strong> - створює новий
-      елемент з заданим тегом;<br />
+      DOM-вузел - елемент-вузел з заданим тегом;<br />
       <strong><i>document.createTextNode(text)</i></strong> - створює новий
-      текстовий вузел з заданим текстом;<br />
+      DOM-вузел - текстовий вузел з заданим текстом;<br />
       Ось приклади:
     </p>
     <br />
@@ -145,10 +165,11 @@
 
     <p>
       У більшості необхідність по створенню DOM-елементів припадає на створення
-      елементів типу <i>div</i>, а тому застосуємо перший спосіб, одночасно
-      надамо одразу клас <i>message</i> використавши властивість
-      <strong><i>className</i></strong> та покладемо текст самого повідомлення
-      через властивість <strong><i>innerHTML</i></strong
+      DOM-елементів типу <i>div</i>, а тому застосуємо перший спосіб, при цьому
+      одночасно задамо одразу клас <i>message</i> використавши властивість
+      <strong><i>className</i></strong> та присвоїмо текст самого повідомлення з
+      потрібними тегами (тобто 'як HTML') через властивість
+      <strong><i>innerHTML</i></strong
       >, ось так:
     </p>
     <br />
@@ -167,6 +188,9 @@
     <br />
 
     <p>
+      Зауважимо, що DOM-елемент, або <i>node</i> створено, але поки що він лише
+      у змінній <i>div</i>. Ми не можемо бачити його на сторінці, оскільки
+      змінна не є поки частиною документа.<br />
       Щоб наш створений <i>div</i> з'явився, нам потрібно вставити його десь в
       <i>document</i>, наприклад, в <i>document.body</i>.<br /><br />
       При цьому існують такі методи для різних варіантів вставки:<br />
@@ -179,9 +203,14 @@
       <strong><i>node.after(...nodes or strings)</i></strong> – вставляє вузли
       чи рядки слово-виразів <em>ПІСЛЯ</em> <i>node</i>;<br />
       <strong><i>node.replaceWith(...nodes or strings)</i></strong> – замінює
-      <i>node</i> заданими вузлами чи рядки слово-виразів.<br /><br />
-      А тому, використаємо метод <strong><i>apend()</i></strong
-      >, і в нашому випадку буде це виглядати так:
+      <i>node</i> заданими вузлами чи рядками слово-виразів.<br />
+      Загалом, ці методи можуть використовуватись тільки для додавання/вставки
+      DOM-вузлів чи текстових фрагменів.<br />
+      Ну і метод <strong><i>node.remove()</i></strong> – для видалення
+      <i>node</i>.<br />
+      З перерахованих методів, для вирішення завдання використаємо метод
+      <strong><i>apend</i></strong
+      >, і це буде виглядати так:
     </p>
     <br />
 
@@ -199,7 +228,7 @@
 
     <p class="code-ex">
       <code>
-        <pre>
+        <pre style="width: 60%">
           &lt;style&gt;
             .message {
               padding: 15px;
@@ -222,23 +251,405 @@
     <br />
 
     <p>
-      Зауважимо, що існують декілька інших, більш старіших методів додавання,
-      вставки та видалення, які існують по історичних причинах та існують в
-      старих скриптах. Всі вони повертають <i>node</i> - вставлений/видалений
-      вузел, хоча значення що повертається - не використовують, а просто
-      викликають метод. До таких методів належать:<br />
-      <strong><i>parent.appendChild(node)</i></strong> – додає <i>node</i> в
-      кінець дочірних елементів <i>parentElem</i>;<br />
-      <strong><i>parent.insertBefore(node, nextSibling)</i></strong> – вставляє
-      <i>node</i> попереду <i>nextSibling</i> в <i>parentElem</i>;<br />
-      <strong><i>parent.removeChild(node)</i></strong> - видаляє <i>node</i> з
-      <i>parent</i> (розуміється, що він є батьківським для <i>node</i>);<br />
-      <strong><i>parent.replaceChild(newElem, oldChild)</i></strong> – заміняє
-      <i>oldChild</i> на <i>newElem</i> серед дочірних елементів
-      <i>parent</i>;<br />
+      Тепер, давайте наведемо ще декілька прикладів застосування названих
+      способів додавання/вставки DOM-елементів на сторінку. Для цього розглянемо
+      впорядкований список <i>ol</i> з трьома дочірними елементами <i>li</i> у
+      різні місця якого будемо вставляти DOM-елементи.<br />
+      Отже, вставимо перед та після списку рядки слово-виразів, ось так:
     </p>
     <br />
 
+    <p class="code-ex">
+      <code>
+        <pre style="width: 60%">
+          &lt;ol id="ol"&gt;
+            &lt;li&gt;0&lt;/li&gt;
+            &lt;li&gt;1&lt;/li&gt;
+            &lt;li&gt;2&lt;/li&gt;
+          &lt;/ol&gt;
+
+          &lt;script&gt;
+            ol.before('Я cпереду'); // вставити рядок слово-виразу "Я спереду" ПОПЕРЕДУ списку <i>ol</i>
+            ol.after('Я позаду'); // вставити рядок слово-виразу "Я позаду" ПІСЛЯ списку <i>ol</i>
+          &lt;/script&gt;
+        </pre>
+      </code>
+    </p>
     <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          // HTML-код буде мати вид:
+
+          Я cпереду
+          &lt;ol id="ol"&gt;
+            &lt;li&gt;0&lt;/li&gt;
+            &lt;li&gt;1&lt;/li&gt;
+            &lt;li&gt;2&lt;/li&gt;
+          &lt;/ol&gt;
+          Я позаду
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Доречі, рядки слово-виразів вставляються безпечним способом, так само, як
+      це роблять через властивість <i>elem.textContent</i>. Крім того, цими
+      методами можна додавати/вставляти декілька вузлів та текстових фрагментів
+      за один виклик. Наприклад, тут вставимо і рядок слово-виразу і елемент
+      одночасно:
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          &lt;ol id="ol"&gt;
+            &lt;li&gt;0&lt;/li&gt;
+            &lt;li&gt;1&lt;/li&gt;
+            &lt;li&gt;2&lt;/li&gt;
+          &lt;/ol&gt;
+
+          &lt;script&gt;
+            ol.before('Я cпереду', document.createElement('hr')); 
+          &lt;/script&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      A тепер, створимо два нових DOM-вузла: <i>liFirst</i> та <i>liLast</i> і
+      вставимо всередину самого списку <i>ol</i>, тобто як дочірні елементи - як
+      перший дочірний елемент списку і останній дочірний елемент, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre style="width: 60%">
+          &lt;ol id="ol"&gt;
+            &lt;li&gt;0&lt;/li&gt;
+            &lt;li&gt;1&lt;/li&gt;
+            &lt;li&gt;2&lt;/li&gt;
+          &lt;/ol&gt;
+
+          &lt;script&gt;
+            ol.before('Я cпереду', document.createElement('hr')); // вставити рядок слово-виразу "Я спереду"
+             ПОПЕРЕДУ списку <i>ol</i> та одночасно створили новий елемент <i>hr</i>і вставили за ним<br />
+            ol.after(document.createElement('hr'), 'Я позаду'); //  створили новий елемент <i>hr</i> і одночасно 
+            вставили рядок слово-виразу "Я позаду" ПІСЛЯ списку <i>ol</i><br />
+
+            let liFirst = document.createElement('li');
+            liFirst.innerHTML = 'Я насправді перший елемент';
+            ol.prepend(liFirst); // вставить <i>liFirst</i> на початок списку
+
+            let liLast = document.createElement('li');
+            liLast.innerHTML = 'Я насправді останній елемент';
+            ol.append(liLast); // вставити <i>liLast</i> в кінець списку
+          &lt;/script&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>Результатом роботи коду буде:</p>
+    <br />
+
+    <div>
+      <ol id="ol">
+        <li>0</li>
+        <li>1</li>
+        <li>2</li>
+      </ol>
+    </div>
+    <br />
+
+    <script>
+      ol.before('Я cпереду', document.createElement('hr'));
+      ol.after(document.createElement('hr'), 'Я позаду');
+
+      let liFirst = document.createElement('li');
+      liFirst.innerHTML = 'Я насправді перший елемент';
+      ol.prepend(liFirst); // вставить <i>liFirst</i> на початок списку
+
+      let liLast = document.createElement('li');
+      liLast.innerHTML = 'Я насправді останній елемент';
+      ol.append(liLast); // вставити <i>liLast</i> в кінець списку
+    </script>
+
+    <p>Наглядно, додавання/вставка нових вузлів можна показати на картинці:</p>
+    <br />
+
+    <img
+      src="./before-prepend-append-after.svg"
+      alt="schema insert nodes"
+      class="img-centered"
+    />
+
+    <p>
+      І тепер наостанок, давайте видалимо, наприклад передостанній елемент і це
+      зробимо ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre style="width: 60%">
+          &lt;ol id="ol"&gt;
+            &lt;li&gt;Я насправді перший елемент&lt;/li&gt;
+            &lt;li&gt;0&lt;/li&gt;
+            &lt;li&gt;1&lt;/li&gt;
+            &lt;li&gt;2&lt;/li&gt; // цей елемент буде видалений
+            &lt;li&gt;Я насправді останній елемент&lt;/li&gt;
+          &lt;/ol&gt;
+
+          &lt;script&gt;
+            let li = ol.children[3];
+            li.remove();
+          &lt;/script&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          // HTML-код буде мати вид:
+
+          Я cпереду
+          &lt;ol id="ol"&gt;
+          &lt;li&gt;Я насправді перший елемент&lt;/li&gt;
+            &lt;li&gt;0&lt;/li&gt;
+            &lt;li&gt;1&lt;/li&gt;
+            &lt;li&gt;Я насправді останній елемент&lt;/li&gt;
+          &lt;/ol&gt;
+          Я позаду
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Необхідно зазначити, що існують інші, більш старіші методи додавання,
+      вставки та видалення, які існують більше по історичних причинах. Наразі,
+      не має причини їх використовувати бо сучасні методи
+      <i>append, prepend, before, after, remove, replaceWith</i> є більш гнучкі
+      та зручніші, але старі методи все ж таки існують в старих скриптах. Всі
+      вони повертають також <i>node</i> - вставлений/видалений вузел, хоча
+      значення що повертається - не використовують, а просто викликають
+      метод.<br />
+      До таких методів належать:<br />
+      <strong><i>parentElem.appendChild(node)</i></strong> – додає <i>node</i> в
+      кінець списку дочірних елементів <i>parentElem</i>;<br />
+      <strong><i>parentElem.insertBefore(node, nextSibling)</i></strong> –
+      вставляє <i>node</i> попереду <i>nextSibling</i> в
+      <i>parentElem</i>;<br />
+      <strong><i>parentElem.removeChild(node)</i></strong> - видаляє
+      <i>node</i> з <i>parentElem</i> (розуміється, що parentElem є батьківським
+      для <i>node</i>);<br />
+      <strong><i>parentElem.replaceChild(newElem, oldChild)</i></strong> –
+      заміняє <i>oldChild</i> на <i>newElem</i> серед дочірних елементів
+      <i>parentElem</i>;<br />
+      Ось покажемо приклад, який додає новий <i>li</i> в кінець списку
+      <i>ol</i>, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          &lt;ol id="list"&gt;
+            &lt;li&gt;0&lt;/li&gt;
+            &lt;li&gt;1&lt;/li&gt;
+            &lt;li&gt;2&lt;/li&gt;
+          &lt;/ol&gt;
+
+          &lt;script&gt;
+            let newLi1 = document.createElement('li');
+            newLi1.innerHTML = 'Вітаю вас всіх, пацики!';
+
+            list.appendChild(newLi1);
+          &lt;/script&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          // HTML-код буде мати вид:
+
+          &lt;ol id="list"&gt;
+            &lt;li&gt;0&lt;/li&gt;
+            &lt;li&gt;1&lt;/li&gt;
+            &lt;li&gt;2&lt;/li&gt;
+            &lt;li&gt;Вітаю вас всіх, пацики!&lt;/li&gt;
+          &lt;/ol&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Наступний приклад вставляє новий елемент перед другим елементом списку:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre style="width: 55%">
+          &lt;ol id="list"&gt;
+            &lt;li&gt;0&lt;/li&gt;
+            &lt;li&gt;1&lt;/li&gt;
+            &lt;li&gt;2&lt;/li&gt;
+          &lt;/ol&gt;
+
+          &lt;script&gt;
+            let newLi2 = document.createElement('li');
+            newLi2.innerHTML = 'Агов, хлопаки!';
+
+            list.insertBefore(newLi2, list.children[1]);
+          &lt;/script&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          // HTML-код буде мати вид:
+
+          &lt;ol id="list"&gt;
+            &lt;li&gt;0&lt;/li&gt;
+            &lt;li&gt;Агов, хлопаки!&lt;/li&gt;
+            &lt;li&gt;1&lt;/li&gt;
+            &lt;li&gt;2&lt;/li&gt;
+            &lt;li&gt;Вітаю вас всіх, пацики!&lt;/li&gt;
+          &lt;/ol&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>А цей приклад вставляє новий елемент newLi на початок списку:</p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre style="width: 55%">
+          &lt;ol id="list"&gt;
+            &lt;li&gt;0&lt;/li&gt;
+            &lt;li&gt;1&lt;/li&gt;
+            &lt;li&gt;2&lt;/li&gt;
+          &lt;/ol&gt;
+
+          &lt;script&gt;
+            let newLi3 = document.createElement('li');
+            newLi3.innerHTML = 'Оооооо, ля-ля!';
+
+            list.insertBefore(newLi3, list.firstChild);
+          &lt;/script&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          // HTML-код буде мати вид:
+
+          &lt;ol id="list"&gt;
+            &lt;li&gt;Оооооо, ля-ля!&lt;/li&gt;
+            &lt;li&gt;0&lt;/li&gt;
+            &lt;li&gt;Агов, хлопаки!&lt;/li&gt;
+            &lt;li&gt;1&lt;/li&gt;
+            &lt;li&gt;2&lt;/li&gt;
+            &lt;li&gt;Вітаю вас всіх, пацики!&lt;/li&gt;
+          &lt;/ol&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Ну і давайте подивимось як видаляти елемент з документу. Видалимо
+      передостанній елемент сипску, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          &lt;ol id="list"&gt;
+            &lt;li&gt;0&lt;/li&gt;
+            &lt;li&gt;1&lt;/li&gt;
+            &lt;li&gt;2&lt;/li&gt;
+          &lt;/ol&gt;
+
+          &lt;script&gt;
+            let li = list.children[4];
+            list.removeChild(li);
+          &lt;/script&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          // HTML-код буде мати вид:
+
+          &lt;ol id="list"&gt;
+            &lt;li&gt;Оооооо, ля-ля!&lt;/li&gt;
+            &lt;li&gt;0&lt;/li&gt;
+            &lt;li&gt;Агов, хлопаки!&lt;/li&gt;
+            &lt;li&gt;1&lt;/li&gt;
+            &lt;li&gt;Вітаю вас всіх, пацики!&lt;/li&gt;
+          &lt;/ol&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>Результатом роботи коду буде:</p>
+    <br />
+
+    <div>
+      <ol id="list">
+        <li>0</li>
+        <li>1</li>
+        <li>2</li>
+      </ol>
+    </div>
+    <br />
+
+    <script>
+      let newLi1 = document.createElement('li');
+      newLi1.innerHTML = 'Вітаю вас всіх, пацики!';
+
+      list.appendChild(newLi1);
+
+      let newLi2 = document.createElement('li');
+      newLi2.innerHTML = 'Агов, хлопаки!';
+
+      list.insertBefore(newLi2, list.children[1]);
+
+      let newLi3 = document.createElement('li');
+      newLi3.innerHTML = 'Оооооо, ля-ля!';
+
+      list.insertBefore(newLi3, list.firstChild);
+
+      // let li = list.children[4];
+      // list.removeChild(li);
+    </script>
+
+    <br /><br />
   </body>
 </html>
