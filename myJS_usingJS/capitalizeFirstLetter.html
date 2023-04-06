@@ -75,15 +75,18 @@
   <body>
     <h2 class="title">Working with strings</h2>
     <h4 class="title">
-      Using methods for strings:
-      <span class="emph">str.toUpperCase(), str.split('')</span> and method to
-      convert from array to string <span class="emph">arr.join('')</span>
+      Using methods for substrings:
+      <span class="emph">str[pos], str.at(pos), str.slice(pos)</span>, method
+      for strings <span class="emph">str.toUpperCase()</span><br />
+      method to convert string to array
+      <span class="emph">str.split('')</span> and method to convert from array
+      to string <span class="emph">arr.join('')</span>
     </h4>
 
     <h4 class="task">
-      В нас заданий простий рядок слово-виразу. Створіть функцію
-      <i>capitalizeFirstLetter(string)</i>, яка буде робити першу букву цього
-      рядка великою.<br />
+      В нас заданий простий рядок (слово-вираз) <i>'hello'</i>. Створіть функцію
+      <i>capitalizeFirstLetter(string)</i>, яка буде робити першу букву
+      будь-якого рядка (слово-виразу) великою.<br />
     </h4>
     <br />
 
@@ -102,30 +105,89 @@
     </p>
     <br />
 
-    <script>
-      function capitalizeFirstLetter(string) {
-        const arrFromString = string.split('');
-        arrFromString[0] = arrFromString[0].toUpperCase(); // H
-        // arrFromString[0] = 'hello'[0].toUpperCase(); // H
-        return arrFromString.join('');
-      }
-
-      console.log(capitalizeFirstLetter('hello')); // Hello
-    </script>
-
-    <p><b>Рішення:</b></p>
+    <p><b>Рішення:</b> Варіант1</p>
     <br />
 
     <p>
-      Можливим алгоритмом рішення може бути: спочатку перетворити рядок
+      Як відомо, в JavaScript немає можливості замінити окремо якийсь символ
+      рядка (букву слово-виразу), бо якщо рядок було створено, то це назавжди.
+      Якщо потрібно замінити якийсь символ рядка (букву слово-виразу) то по суті
+      потрібно створити новий рядок.<br />
+      Можливим алгоритмом рішення може бути: взяти перший символ рядка: або
+      через квадратні дужки <strong><i>str[pos]</i></strong
+      >, або методом <strong><i>str.at(pos)</i></strong> і використати метод
+      <strong><i>str.toUpperCase()</i></strong> щоб перевести цей символ у
+      верхній регістр і потім взяти підрядок рядка (решта слово-виразу без
+      першої букви) методом <strong><i>str.slice(1)</i></strong> та додати до
+      першої букви, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function capitalizeFirstLetter(string) {
+            <b>let newStr = string[0].toUpperCase() + string.slice(1);</b>
+
+            // або берем першу букву іншим методом
+            let newStr = <b>string.at(0).toUpperCase()</b> + string.slice(1);
+
+            return newStr;
+          }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Але тут є зауваження, у разі коли ми не маємо нічого у рядку, тоді
+      <i>string[0] = undefined</i>. Проте <i>underfined</i> не має методу
+      <i>toUpperCase()</i> і в результаті буде помилка. Тому, щоб уникнути
+      цього, можна зробити звичайну перевірку на пустий рядок та повернути це
+      'нічого' у цьому випадку, ось так буде виглядати наприклад варіант
+      рішення:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function capitalizeFirstLetter(string) {
+            <b>if (!string) return string;</b> // перевірка на пустий рядок
+
+            let newStr = string.at(0).toUpperCase() + string.slice(1);
+
+            return newStr;
+          }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      function capitalizeFirstLetter1(string) {
+        if (!string) return string; // перевірка на пустий рядок
+
+        let newStr = string.at(0).toUpperCase() + string.slice(1);
+
+        return newStr;
+      }
+
+      console.log(capitalizeFirstLetter1('hello')); // Hello
+    </script>
+
+    <p><b>Рішення:</b> Варіант2</p>
+    <br />
+
+    <p>
+      Алгоритмом рішення іншим способом може бути: перетворення рядка
       слово-виразу на масив в якого значеннями будуть кожна буква слово-виразу.
-      Це можна зробити за допомогою метода для рядків
+      Це можна зробити за допомогою методу
       <strong><i>split('')</i></strong> та записати цей масив в якусь змінну.<br />
-      Далі, взяти перший елемент масиву по його індексу (через квадратні дужки)
+      Далі, взяти перший елемент масиву (як писали раніше одним з двох методів)
       та перевести його у верхній регістр за допомогою метода
-      <strong><i>toUpperCase()</i></strong
-      >. Цим самим ми записали перший елемент масиву що є в дійсності
-      конвертованою першою буквою слово-виразу у верхній регістр.<br />
+      <i>toUpperCase()</i>. Цим самим ми записали перший елемент масиву що є в
+      дійсності конвертованою першою буквою слово-виразу у верхній регістр.<br />
       І вже далі, переводимо масив назад в слово-вираз методом
       <strong><i>join('')</i></strong> та повертаємо його, ось так:
     </p>
@@ -136,7 +198,12 @@
         <pre>
           function capitalizeFirstLetter(string) {
             const arrFromString = string.split('');
-            <b>arrFromString[0] = arrFromString[0].toUpperCase();</b>
+
+            <b>arrFromString[0] = arrFromString[0].toUpperCase();</b> // H
+
+            // або ось так, особливо коли слово чи вираз маленький
+            arrFromString[0] = 'hello'[0].toUpperCase(); // H
+
             return arrFromString.join('');
           }
 
@@ -145,6 +212,18 @@
       </code>
     </p>
     <br />
+
+    <script>
+      function capitalizeFirstLetter2(string) {
+        const arrFromString = string.split('');
+        arrFromString[0] = arrFromString[0].toUpperCase(); // H
+        // arrFromString[0] = 'hello'[0].toUpperCase(); // H
+        return arrFromString.join('');
+      }
+
+      console.log(capitalizeFirstLetter2('hello')); // Hello
+    </script>
+
     <br />
   </body>
 </html>
