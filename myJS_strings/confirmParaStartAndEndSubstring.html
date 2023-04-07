@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Working with strings - method startsWith-endsWith</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 40%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Working with strings</h2>
+    <h4 class="title">
+      methods: <span class="emph">str.startsWith(substr)</span> and
+      <span class="emph">str.endsWith(substr)</span>
+    </h4>
+
+    <h4 class="task">
+      У нас є невеликий параграф. Hеобхідно дізнатись чи це саме той параграф,
+      який нам потрібен, а саме - чи починається він з слово-виразу 'These' та
+      закінчується слово-виразом 'smartphone'? Виведіть результати в консолі.
+    </h4>
+
+    <p>
+      <code>
+        <pre style="width: 45%">
+          // Вихідні дані:
+
+          let para = 'These publications developed new ways of laying out and
+            presenting stories, creating the narrative not with slabs of text but
+            with photographs, captions and short pieces of text. For example, Sony
+            this year released the Smartwatch, a two-inch-square screen that can
+            display e-mails, Twitter posts and other pieces of text, all pulled from
+            an Android smartphone.';
+
+          // необхідно отримати підтвердження true/false якщо:
+            - починається з підрядка 'The' то отримаєм <b>true</b>
+            - починається з підрядка 'the' то отримаєм <b>false</b>
+            - закінчується на підрядок 'smart' то отримаєм <b>false</b>
+            - закінчується на підрядок 'smartphone.' то отримаєм <b>true</b>
+            - закінчується на підрядок 'bye' то отримаєм <b>false</b>
+
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <p>
+      Для вирішення цього завдання потрібно підібрати необхідний метод пошуку
+      підрядка у рядку. Найкращі методи для вирішення підходять
+      <strong><i>str.startsWith(substr)</i></strong> та
+      <strong><i>str.endsWith(substr)</i></strong
+      >, ось так:<br />
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre style="width: 60%">
+          <b>para.startsWith('The');</b> // true - бо є початком слово-виразу 'These'
+          para.startsWith('the'); // false - бо чутливий до регістру
+          <b>para.endsWith('smart');</b> // false - бо тут береться точно весь слово-вираз 'smartphone.'
+          para.endsWith('smartphone.'); // true - бо точно такий як  'smartphone.'
+          para.endsWith('bye'); // false - бо немає такого слово-виразу у 'smartphone.'
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      let para =
+        'These publications developed new ways of laying out and presenting stories, creating the narrative not with slabs of text but with photographs, captions and short pieces of text. For example, Sony this year released the Smartwatch, a two-inch-square screen that can display e-mails, Twitter posts and other pieces of text, all pulled from an Android smartphone.';
+
+      let result1 = para.startsWith('The');
+      console.log(result1); // true - бо є початком слово-виразу 'These'
+      let result2 = para.startsWith('the');
+      console.log(result2); // false - бо чутливий до регістру
+      let result3 = para.endsWith('smart');
+      console.log(result3); // false - бо тут береться точно весь слово-вираз 'smartphone.'
+      let result4 = para.endsWith('smartphone.');
+      console.log(result4); // true - бо точно такий як  'smartphone.'
+      let result5 = para.endsWith('bye');
+      console.log(result5); // false - бо немає такого слово-виразу у 'smartphone.'
+    </script>
+    <br />
+  </body>
+</html>
