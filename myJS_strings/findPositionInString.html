@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Working with strings, find substr with method includes</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 40%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Working with strings</h2>
+    <h4 class="title">
+      operator <span class="emph">!</span>, bitwise operator
+      <span class="emph">~n</span>, condition
+      <span class="emph">if</span>,<br />
+      methods: <span class="emph">str.includes(substr, pos)</span> and
+      <span class="emph">str.indexOf(substr, pos)</span>
+    </h4>
+
+    <h4 class="task">
+      У нас є якийсь довільний рядок (слово-вираз). Hеобхідно просто дізнатись
+      чи є в ньому слововираз <i>'Widget'</i> і якщо є то вивести підтвердження
+      цього в консоль виразом <i>'Співпадіння є!'</i>.<br />
+      Крім того, в нас даний параграф. Потрібно дізнатись чи є в ньому
+      визначений підрядок? А як дізнатись коли ми знаємо що підрядок існує на
+      конкретній позиції а треба знати чи зустрічається він у параграфі ще десь?
+      <br />
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          // Вихідні дані:
+
+          let str = "Widget with id";
+
+          console.log( 'Співпадіння є!' );
+
+          let para = 'These publications developed new ways of laying out 
+            and presenting stories, creating the narrative not with slabs of <b>text</b>
+            but with photographs, captions and short pieces of <b>text</b>.';
+
+          // підрядок text виявлений на 117-й позиції
+          // як дізнатись чи є ще підрядок text після 117ї позиції?
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <p>
+      Спробуємо вирішити застосувавши просту перевірку на умову <b>if</b> та
+      метод <strong><i>str.indexOf(substr, pos)</i></strong
+      >, що дозволяє шукати підрядок - <i>substr</i> з позиції <i>pos</i> у
+      рядку <i>str</i> і повертає позицію слово-виразу в рядку якщо він є чи
+      <i>'-1'</i>, якщо такого підрядка немає. Спробуємо:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          let str = 'Widget with id';
+
+          <b>if (str.indexOf('Widget')) {</b>
+            console.log( 'Співпадіння є!' ); // НЕ ПРАЦЮЄ!
+          <b>}</b>
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      let str = 'Widget with id';
+
+      if (str.indexOf('Widget')) {
+        console.log('Співпадіння є!'); // HE ПРАЦЮЄ!
+      }
+    </script>
+
+    <p>
+      Але чому? Хоч такий підрядок існує але підтвердження немає? Справа в тому,
+      що якшо шукаємий підрядок починається з позиції <i>'0'</i>, що є в нашому
+      випадку, то в умові цей <i>'0'</i> сприйметься як <i>false</i> і не
+      проходить перевірку, а тому підтвердежння не виводитьcя. Тому тут,
+      потрібно порівняння не з <i>'0'</i>, а з <i>'-1'</i>, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          let str = 'Widget with id';
+
+          if (str.indexOf('Widget') <b>!= -1</b>) {
+              console.log( 'Співпадіння є!' ); // тепер працює!
+          }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      if (str.indexOf('Widget') != -1) {
+        console.log('Співпадіння є!'); // 'Співпадіння є!'
+      }
+    </script>
+
+    <p>
+      Є ще один старий метод для вирішення подібної задачі - із застосуванням
+      побітового НЕ <strong><i>'~'</i></strong
+      >. Він перетворює число - усі біти інвертуються в 32-розрядне ціле число
+      при цьому дрібна частина відкидається. А для 32-розрядних цілих чисел
+      значення <i>~n</i> рівне <i>-(n+1)</i> і <i>~n</i> дорівнює
+      <i>'0'</i> тільки при <i>n == -1</i>. Але для практики, потрібно тільки
+      знати вираз<br />
+      <b>if (~str.indexOf(substr))</b>, що означаеє
+      <b><i>'якщо знайдено substr'</i></b> i код рішення може бути таким:<br />
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          let str = 'Widget with id';
+
+          if (<b>~str</b>.indexOf('Widget')) {
+            console.log( 'Співпадіння є' ); // також працює!
+          }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      if (~str.indexOf('Widget')) {
+        console.log('Співпадіння є!'); // Співпадіння є!
+      }
+    </script>
+
+    <p>
+      Проте, кращим способом вирішення цієї задачі є застосування методу
+      <strong><i>str.includes(substr, pos)</i></strong
+      >, який повертає <i>true</i> якщо такий підрядок є в рядку і
+      <i>false</i> - якщо немає. При цьому потрібно зауважити, що нам не важливо
+      знати позицію а просто знати чи є підрядок в рядку чи не має. Рішення
+      буде:<br />
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre style="width: 60%">
+          let str = 'Widget with id';
+
+          <b>str.includes('Widget');</b> // true
+
+          // інший приклад з параграфом
+          let para = 'These publications developed new ways of laying out 
+            and presenting stories, creating the narrative not with slabs of <b>text</b>
+            but with photographs, captions and short pieces of <b>text</b>.';
+
+          let substr = 'text';
+          let pos = 0; // пошук здійснювати з першої позиції і до кінця;
+
+          <b>let result = para.includes(substr, pos);</b>
+
+          console.log(`It is '${result}'`); // It is 'true'
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      console.log(str.includes('Widget')); // true
+
+      // інший приклад з параграфом
+      let para =
+        'These publications developed new ways of laying out and presenting stories, creating the narrative not with slabs of text but with photographs, captions and short pieces of text.';
+      let substr = 'text';
+      let pos = 0;
+
+      let result = para.includes(substr, pos);
+      console.log(`It is '${result}'`); // It is 'true'
+    </script>
+
+    <p>
+      Необов'язковий другий параметр <i>pos</i> може задавати умову з якої
+      позиції починати шукати.<br />
+      Так, у параграфі, перший підрядок був знайдений на 117 позиції, але
+      спочатку нам не було важливо знати позицію, а просто знати чи є такий
+      підрядок в рядку узагалі. Тепер нам стало важливо значи чи зустрічається
+      цей підрядок після виявленої позиції ще десь. Наприклад ми виявили методом
+      <i>str.includes(substr, pos)</i>, що підрядок знайдений на позиції 117 і
+      нам потрібно просто дізнатись чи він зустрічається ще десь. І рішення буде
+      також із застосуванням методу <i>str.includes(substr, pos)</i> зазначивши
+      в другому параметрі, з якої позиції розпочинати шукати, і в нас це з 118-ї
+      позиції, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          let result1 = para.indexOf('text', 0);
+          console.log(result1); // 117
+
+          let result2 = para.includes('text', 118);
+          console.log(`It is '${result}'`); // true
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      let result2 = para.indexOf('text', 0);
+      console.log(result2); // 117
+
+      let result3 = para.includes('text', 118);
+      console.log(`It is '${result3}'`); // It is 'true'
+    </script>
+    <br />
+  </body>
+</html>

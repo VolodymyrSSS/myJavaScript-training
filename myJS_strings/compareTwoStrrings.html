@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Compare strings no matter of letter order</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 40%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Working with strings</h2>
+    <h4 class="title">
+      Working with strings: operator
+      <span class="emph">===, !==</span>, method:
+      <span class="emph">split('')</span>, condition
+      <span class="emph">if</span>,<br />
+      arrays methods: <span class="emph">sort(), join()</span> and array
+      property <span class="emph">arr.length</span>
+    </h4>
+
+    <h4 class="task">
+      В нас є рядки (слово-вирази) які можуть містити одинакові або різні
+      символи (букви), мати одинакову або різну їх кількість. Символи в рядку
+      можуть стояти одинаково або в різному порядку. Напишіть стрілкову функцію
+      <i>isSame</i>, яка буде визначити ті, які мають і одинакові символи
+      (букви) і одинакову їх кількість?
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          // Вихідні дані:
+
+          const isSame = (str1, str2) => {
+            // ..ваш код..
+          }
+
+          isSame('dog', 'dgo'); // true
+          isSame('dog', 'dfo'); // false
+          isSame('dogy', 'dgo'); // false
+          isSame('doog', 'ddog'); // false
+          isSame('archer', 'rrahce'); // true
+          isSame('archer', 'rrahhce'); // false
+          isSame('ampersant', 'snerpatma'); // true
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <p>
+      Якщо конвертувати символи рядків в елементи масиву, то можна в подальшому
+      застосувати до них методи масивів. Тобто, алгоритм для вирішення завдання
+      може бути таким: привести їх до одинакового виду що дасть змогу порівняти
+      їх. Для цього спочатку конвертувати рядки в масив, потім посортувати
+      елементи масиву тим самим розмістивши елементи в одинаковому порядку, вже
+      потім конвертувати назад до виду рядка і
+      <i>оператором строгого порівняння</i> -
+      <strong><i>===</i></strong> здійснити саме порівняння цих рядків видавши
+      результат <i>true/false</i>. Коли будем мати масиви, використати
+      властивість <strong><i>arr.length</i></strong> для порівняння довжин двох
+      масивів.<br />
+      Таким чином, для конвертації рядка (слово-виразу) в масив, застосуємо
+      метод <strong><i>str.split('')</i></strong
+      >, який "розіб'є" слово-вираз на букви, які будуть елементами масиву
+      задавши пробіл як роздільник.<br />
+      Далі потрібно відсортувати елементи кожного масиву щоб привести їх до
+      одинакової послідовності. Це можна зробити за допомогою методу масивів
+      <strong><i>arr.sort()</i></strong
+      >. Можна подивитись що отримуємо на цей момент, ось так:<br />
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          const isSame = (str1, str2) => {
+            <b>const letters1 = str1.split('').sort();
+            const letters2 = str2.split('').sort();</b>
+
+            console.log(letters1); // ['d', 'g', 'o']
+            console.log(letters2); // ['d', 'g', 'o']
+          };
+
+          isSame('dog', 'dgo');
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      const isSame1 = (str1, str2) => {
+        const letters1 = str1.split('').sort();
+        const letters2 = str2.split('').sort();
+
+        console.log(letters1); // ['d', 'g', 'o']
+        console.log(letters2); // ['d', 'g', 'o']
+      };
+
+      isSame1('dog', 'dgo');
+    </script>
+
+    <p>
+      І далі, посортовані елементи масиву контвертуємо методом
+      <strong><i>arr.join()</i></strong> назад в рядок (слово-вираз) та строгим
+      порівнянням повертаємо <i>true/false</i>. Одразу зможемо перевірити дію
+      коду, але на одинакових за довжиною слово-виразах бо ми ще не порівнювали
+      їх довжини. Перевіримо, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre style="width: 55%">
+          const isSame = (str1, str2) => {
+            const letters1 = str1.split('').sort();
+            const letters2 = str2.split('').sort();
+    
+            <b>return letters1.join() === letters2.join();</b>
+          }
+    
+          console.log(isSame('dog', 'dgo')); // true
+          console.log(isSame('dog', 'dfo')); // false
+          console.log(isSame('doog', 'ddgo')); // false
+          console.log(isSame('archer', 'rrahce')); // true
+          console.log(isSame('ampersant', 'snerpatma')); // true
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      const isSame2 = (str1, str2) => {
+        const letters1 = str1.split('').sort();
+        const letters2 = str2.split('').sort();
+
+        return letters1.join() === letters2.join();
+      };
+
+      console.log(isSame2('dog', 'dgo')); // true
+      console.log(isSame2('dog', 'dfo')); // false
+      console.log(isSame2('doog', 'ddgo')); // false
+      console.log(isSame2('archer', 'rrahce')); // true
+      console.log(isSame2('ampersant', 'snerpatma')); // true
+    </script>
+
+    <p>
+      Тепер, задамо умову для порівняння довжин, і якщо різні то повертаємо
+      <i>false</i>. Найкраще це робити в місці коли маємо два масива та
+      використати їх властивість <strong><i>arr.length</i></strong> та оператор
+      строгого порівняння від зворотнього - <strong><i>!==</i></strong
+      >. В разі, якщо довжини різні, ми одразу повертаємо <i>false</i>. Це і
+      буде наш остаточний варіант рішення. Давайте перевіримо також на
+      слово-виразах із різною довжиною, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre style="width: 55%">
+          const isSame = (str1, str2) => {
+            const letters1 = str1.split('').sort();
+            const letters2 = str2.split('').sort();
+
+            <b>if(letters1.length !== letters2.length) {
+              return false;
+            }</b>
+    
+            return letters1.join() === letters2.join();
+          }
+    
+          console.log(isSame('dogy', 'dgo')); // false
+          console.log(isSame('archer', 'rrahhce')); // false
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      const isSame = (str1, str2) => {
+        const letters1 = str1.split('').sort();
+        const letters2 = str2.split('').sort();
+
+        if (letters1.length !== letters2.length) {
+          return false;
+        }
+
+        return letters1.join() === letters2.join();
+      };
+
+      console.log(isSame('dogy', 'dfo')); // false
+      console.log(isSame('archer', 'rrahhce')); // false
+    </script>
+
+    <br />
+  </body>
+</html>

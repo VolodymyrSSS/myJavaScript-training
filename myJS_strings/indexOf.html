@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>indexOf - working with Strings</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: larger;
+        font-weight: 700;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Working with strings - use the method <span class="emph">str.indexOf(substr, pos)</span></h2>
+
+    <h4 class="task">
+      У нас є невеликий параграф. Hеобхідно дізнатись чи є в ньому слововираз 'text' і якщо є то вивести місце знаходження (позицію) цього слово-виразу у консолi. У разі, якщо є декілька таких слово-виразів, вивести також їх позиції у консолі.
+      <br>
+    </h4>
+
+    <p class="code-ex"><br>
+      Приклад<br>
+      <code><br>
+          let para = 'For example, short pieces of text such as "region" are given less weight than longer ones such as "the region\'s largest economies". These publications developed new ways of laying out and presenting stories, creating the narrative not with slabs of text but with photographs, captions and short pieces of text. For example, Sony this year released the Smartwatch, a two-inch-square screen that can display e-mails, Twitter posts and other pieces of text, all pulled from an Android smartphone.';<br>
+          <br>
+          let target = 'text';<br>
+          console.log(`Знайдено на позиції: ${foundPos}`);<br>
+          <br>
+      </code>
+  </p><br>
+
+    <p><b>Відповідь</b>:</p><br>
+
+    <p>Для вирішення цього необхідно запустити метод <b>str.indexOf(substr, pos)</b> в циклі <b>while</b>. Цей метод дозволяє шукати слововираз substr з позиції pos у рядку чи параграфі str. А для того, щоб знайти інші позиції, потрібно додати 1 до найденої позиції. Код рішення буде:<br>
+      </p>
+
+    <p class="code-ex" style="width: 70%">
+      <code>
+        <pre>
+          let para = 'For example, short pieces ... Android smartphone.';
+          let target = 'text';
+          let pos = 0;
+
+          while(true) {
+            let foundPos = para.indexOf(target, pos);
+            if (foundPos == -1) break;
+            console.log(`Знайдено на позиції: ${foundPos}`);
+            pos = foundPos + 1;
+          }
+        </pre>
+      </code>
+    </p>
+
+    <p>Можна вирішити від зворотнього - припустити, що такого виразу немає. В методі це позначається поверненням -1 - тобто pos = -1;<br>
+    і код тоді буде таким:<br>
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          let para = 'For example, short pieces ... Android smartphone.';
+          let target = 'text';
+          let pos = -1;
+
+          while ((pos = para.indexOf(target, pos + 1)) != -1) {
+            console.log(`Знайдено на позиції: ${pos}`);
+          }
+        </pre>
+      </code>
+    </p><br>
+
+    
+    <script>
+      let para = 'For example, short pieces of text such as "region" are given less weight than longer ones such as "the region\'s largest economies". These publications developed new ways of laying out and presenting stories, creating the narrative not with slabs of text but with photographs, captions and short pieces of text. For example, Sony this year released the Smartwatch, a two-inch-square screen that can display e-mails, Twitter posts and other pieces of text, all pulled from an Android smartphone.';
+      let target = 'text';
+      let pos = 0;
+
+      while(true) {
+        let foundPos = para.indexOf(target, pos);
+        if (foundPos == -1) break;
+        console.log(`Знайдено на позиції: ${foundPos}`);
+        pos = foundPos + 1;
+      }
+
+      // =================================================
+
+      // let pos = -1;
+
+      // while ((pos = para.indexOf(target, pos + 1)) != -1) {
+      //   console.log(`Знайдено на позиції: ${pos}`);
+      // }
+      
+    </script>
+  </body>
+</html>
