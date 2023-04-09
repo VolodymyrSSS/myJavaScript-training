@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Rewrite on Class</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 40%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Working with classes</h2>
+    <h4 class="title">
+      function-constructor <span class="emph">function Name(props){}</span> and
+      operator <span class="emph">new</span>,<br />
+      class syntax
+      <span class="emph">class MyClass {}</span>, with its method
+      <span class="emph">constructor() {...}</span> and operator
+      <span class="emph">new</span>
+    </h4>
+
+    <h4 class="task">
+      В нас є функція-конструктор <i>Bikes</i>, яка отримує два параметри
+      <i>model</i> і <i>color</i> та має метод <i>getDetails</i>, який задається
+      через <i>prototype</i>.<br />
+      Використовуючи синтаксис ES-6, перепишіть цю функцію на клас
+      <i>Bike</i> і на основі створеного класу створіть екземпляр
+      <i>mountainBike</i> та виведіть в консоль результат роботи методу.
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          // Вихідні дані:
+
+          function Bikes (model, color) => {
+            this.model = model;
+            this.color = color;
+          };
+
+          Bikes.prototype.getDetails = function () {
+            return this.model + ' bike has' + this.color + ' color';
+          }
+
+          class Bike {
+            // ..ваш код..
+          }
+
+          console.log(mountainBike.getDetails()); // GT bike has red color;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <p>
+      На практиці нам часто потрібно створювати багато об'єктів одного виду,
+      наприклад користувачів, товари, або ще щось. Для цього, звичайно,
+      використовують <strong><i>функцію-конструктор</i></strong> та оператора
+      <strong><i>new</i></strong
+      >, що в нас і показано в задачі як вихідні параметри.<br />
+      Пам'ятаємо, що згідно із прийнятими правилами, хоча функція-конструктор,
+      технічно, є звичайною функцією, але ім'я її повинно починатись з великої
+      букви, а виконуватись повинна тільки з використанням оператора <i>new</i>.
+      Далі, щоб отримати будь-яку властивість, ми створюємо екземпляр на основі
+      функції-конструктора і отримуємо властивість 'через крапку', ось приклад:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function <b>User</b>(name) {
+            this.name = name;
+            this.isAdmin = false;
+          }
+
+          let user2 = <b>new User</b>("Jack");
+
+          console.log(user2.name); // Jack
+          console.log(user2.isAdmin); // false
+
+          let user3 = new User("Elis");
+          console.log(user3.isAdmin); // false
+
+          let user4 = new User("Catherine");
+          console.log(user4.name); // Catherine
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      То як видно, головною ціллю функції-конструктора є реалізація коду для
+      багатократного створення нових однотипних об'єктів. Крім того, зазвичай,
+      функція-конструктор не має оператора <i>return</i>. Її завдання, все
+      необхідне записати в <i>this</i> і це автоматично стає результатом. Ну і
+      також, ми можемо додавати в <i>this</i> методи, ось простий приклад:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function User(name) {
+          this.name = name;
+
+          <b>this.sayHi = function() {</b>
+            console.log( "Мене звати: " + this.name );
+          <b>}</b>;
+        }
+
+        let modest = new User("Modest");
+
+        modest.sayHi(); // Мене звати: Modest
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Але в сучасному JavaScript розроблена більш продвинута конструкція
+      <i>'class'</i>, яка дає більше можливостей, які є досить корисними в
+      об'єктно-орієнтованому програмуванню. Її базовий синтаксис виглядає так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          <b>class MyClass {</b>
+            // методи класу
+            constructor() { ... }
+            method1() { ... }
+            method2() { ... }
+            method3() { ... }
+            ...
+          <b>}</b>
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Ну і далі використовують виклик <strong><i>new MyClass()</i></strong> для
+      створення нового екземпляру об'єкту із усіма перерахованими методами, при
+      цьому автоматично викликається метод
+      <strong><i>constructor()</i></strong> в якому ми можемо ініціювати об'єкт
+      із заданими властивостями, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          class User {
+
+            <b>constructor(</b>name<b>)</b> {
+              this.name = name;
+            }
+
+            sayHi() {
+              console.log(this.name);
+            }
+
+          }
+
+          // Використання:
+          let sigizmund = new User("Sigizmund");
+
+          sigizmund.sayHi(); // Sigizmund
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      В цьому прикладі коли викликається <i>new User("Sigizmund")</i>,
+      створюється новий об'єкт/екземпляр <i>sigizmund</i>. Далі
+      <i>constructor</i> запускається із заданим аргументом і зберігає його в
+      <i>this.name</i>. Ну і далі вже можна викликати методи об'єкту, як
+      <i>user.sayHi()</i>.<br />
+      Отже, перепишимо надану функцію-конструктор на класи, використовуючи ці
+      знання, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          class Bike {
+            constructor(model, color) {
+              this.model = model;
+              this.color = color;
+            }
+
+            getDetails() {
+              return this.model + ' bike has ' + this.color + ' color';
+            }
+          }
+
+          let mountainBike = new Bike('GT', 'red');
+
+          console.log(mountainBike.getDetails());
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      class Bike {
+        constructor(model, color) {
+          this.model = model;
+          this.color = color;
+        }
+
+        getDetails() {
+          return this.model + ' bike has ' + this.color + ' color';
+        }
+      }
+
+      let mountainBike = new Bike('GT', 'red');
+
+      console.log(mountainBike.getDetails());
+    </script>
+
+    <p>
+      Ось що насправді робить конструкція <i>class Bike {...}</i>: Створюється
+      функція з іменем <i>Bike</i>, яка стає результатом об'явлення класу. Код
+      функції береться з методу <i>constructor</i> (вона буде пустою якщо такого
+      методу не буде). Зберігаються усі методи, такі як <i>getDetails</i> в
+      <i>Bike.prototype</i>. При виклику методу об'єкта <i>new Bike</i> він буде
+      взятий з прототипу.
+    </p>
+    <br />
+  </body>
+</html>
