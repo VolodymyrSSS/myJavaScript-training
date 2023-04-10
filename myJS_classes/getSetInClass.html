@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Use- get/set in Class</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 40%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Working with classes</h2>
+    <h4 class="title">
+      class syntax
+      <span class="emph">class MyClass {}</span>, with its methods
+      <span class="emph">constructor(props){}</span><br />
+      <span class="emph">get()</span>, <span class="emph">set(value)</span> and
+      class property <span class="emph">prop</span>
+    </h4>
+
+    <h4 class="task">
+      Нам дано клас <i>User</i>. Необхідно створити два методи: для отримання
+      властивості <i>name</i>, так і для встановлення цієї властивості, причому
+      якщо задавати значення властивості то воно повинно мати не менше 2х
+      символів. Використайте для цього <i>get/set</i>. Перевірте дію цих методів
+      вивівши в консоль результат.<br />
+      А як додати просто властивість, і яка тут буде особливість?
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          // Вихідні дані:
+
+          class User {
+
+            constructor(name) {
+              this.name = name;
+            }
+
+            // .. методи get/set
+
+          }
+
+          let user224 = new User("Mark");
+          console.log(user224.name); // Mark
+
+          user224 = new User("Li"); // Your name is too short. Needs a bit longer.
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <p>
+      В сучасному JavaScript розроблена продвинута конструкція
+      <i>'class'</i>, яка дає безліч можливостей, які застосовують в
+      об'єктно-орієнтованому програмуванню. Її базовий синтаксис виглядає так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre style="width: 55%">
+          <b>class MyClass {</b>
+            prop = value; // властивість
+
+            constructor() { ... }
+
+            method(...) {} // метод
+
+            get something(...) {} // геттер
+            set something(...) {} // сеттер
+
+            [Symbol.iterator]() {} // метод який має ім'я, що вираховується (тут - символом)
+            // ...
+          <b>}</b>
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Як і функції, класи можна визначати всередині іншого виразу, передавати,
+      повертати, присвоювати і т.д. Ось, для прикладу,
+      <i>Class Expression</i> (по аналогії з Function Expression):
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          let DomesticCats <b>= class {</b>
+            soundsLike() {
+              console.log("Miayuuuuu");
+            }
+          <b>}</b>;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Аналогічно Named Function Expression, Class Expression може мати ім'я,
+      хоча треба зазначити що в специфікаціях такого терміну як
+      <i>Named Class Expression</i> немає. Але, якщо в Class Expression є ім'я,
+      то воно видно тільки всередині класу:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre style="width: 65%">
+          let DomesticCats = class <b>NeighboringCatFluff</b> {
+            soundsLike() {
+              console.log(NeighboringCatFluff); // ім'я NeighboringCatFluff видно тільки всередині класу
+            }
+          };
+
+          new DomesticCats().soundsLike(); // <b>працює</b>, виводить в консоль контекст усього класу NeighboringCatFluff
+
+          console.log(NeighboringCatFluff); // <b>помилка</b>, ім'я NeighboringCatFluff не видно за межами класу
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      let DomesticCats = class NeighboringCatFluff {
+        soundsLike() {
+          console.log(NeighboringCatFluff); // ім'я NeighboringCatFluff видно тільки всередині класу
+        }
+      };
+
+      new DomesticCats().soundsLike(); // працює, виводить в консоль контекст усього класу NeighboringCatFluff
+
+      // console.log(NeighboringCatFluff); // помилка, ім'я NeighboringCatFluff не видно за межами класу
+    </script>
+
+    <p>
+      Тепер, вертаючись до вирішення завдання, давайте об'явимо два методи
+      всередині класу використовуючи базовий синтаксис через <i>get/set</i>,
+      причому, якщо визначаємо метод <i>set</i>, то на вхід повинні подавати
+      якесь значення, яке повинно бути видно тільки всередині цього методу і
+      воно повинно відрізнятись від значення перемінної <i>name</i>, яка
+      визначається в <i>constructor</i>. А тому одразу присвоїмо його як
+      <i>this._name = value</i>. Крім того, ставити кому між методами класу не
+      потрібно, бо це призведе до синтаксичної помилки, а загальний код буде
+      мати вид поки такий:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          class User {
+
+            constructor(name) {
+              this.name = name;
+            }
+
+            <b>get name() {
+              ..
+            }</b>
+
+            <b>set name(value) {
+              this._name = value;
+              ..
+            }</b>
+          }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Після цього вже можемо визначати самі методи. Метод
+      <strong><i>get</i></strong> має просто повертати значення, яке було
+      записано в <i>this.name</i>. Але потрібно брати до уваги, що ми можемо
+      встановлювати ім'я, яке визначається в методі <strong><i>set</i></strong
+      >, а воно визначено як <i>this._name</i>, тому і повертати будемо саме
+      його.<br />
+      Для метода <strong><i>set</i></strong> необхідно задати ще окремо умову
+      визначену в завданні, що ім'я не повинно бути меньше 2х символів. Тому
+      задамо всередині цього методу умову через оператор
+      <strong><i>if</i></strong> де використаєм властивість
+      <strong><i>length</i></strong
+      >. Отже, код з цими методами буде мати вид:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          class User {
+
+            constructor(name) {
+              this.name = name;
+            }
+
+            get name() {
+              <b>return this._name;</b>
+            }
+
+            set name(value) {
+              <b>if (value.length <= 2) {
+                alert("Your name is too short. Needs a bit longer.");
+                return;
+              }
+              this._name = value;</b>
+            }
+          }
+
+          // перевіримо роботу методів
+
+          let user224 = new User("Mark");
+          console.log(user224.name); // Mark
+
+          user224 = new User("Li"); // Your name is too short. Needs a bit longer.
+
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      class User {
+        type = 'experienced user';
+
+        constructor(name) {
+          this.name = name;
+        }
+
+        get name() {
+          return this._name;
+        }
+
+        set name(value) {
+          if (value.length <= 2) {
+            alert('Your name is too short. Needs a bit longer.');
+            return;
+          }
+
+          this._name = value;
+        }
+
+        showType() {
+          console.log(`This one is ${this.type}!`);
+        }
+      }
+
+      let user224 = new User('Mark');
+      console.log(user224.name); // Mark
+
+      // user224 = new User('Li'); // Your name is too short. Needs a bit longer.
+    </script>
+
+    <p>
+      Узагалі, необхідно зазначити, що при об'явленні класу,
+      <i>User</i> технічно є функцією (тою, що ми визначаємо як
+      <i>constructor</i>), але <i>гетери/сетери</i> створюються/записуються на
+      <i>User.prototype</i>, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          Object.defineProperties(User.prototype, {
+            name: {
+              get() {
+                return this._name
+              },
+              set(name) {
+                // ...
+              }
+            }
+          });
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Тепер, згідно з синтаксисом класів, додамо властивість класів
+      <strong><i>prop</i></strong
+      >, ось таку - <i>type = "experienced user"</i>, а для того, щоб її
+      використати, створимо додатковий метод <i>showType()</i>.<br />
+      Особливістю цього є те, що властивість <i>type</i> не встановлюється в
+      <i>User.prototype</i>. Замість цього вона створюється оператором
+      <strong><i>new</i></strong> перед запуском конструктора, це іменно
+      властивість об'єкта. Отже код разом із властивістю класів буде мати вид:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre style="width: 50%">
+          class User {
+
+            <b>type = "experienced user"</b>
+
+            constructor(name) {
+              this.name = name;
+            }
+
+            get name() {
+              return this._name;
+            }
+
+            set name(value) {
+              if (value.length <= 2) {
+                alert("Your name is too short. Needs a bit longer.");
+                return;
+              }
+              this._name = value;
+            }
+
+            showType() {
+              console.log(`This one is ${this.type}!`);
+            }
+
+          }
+
+          // перевіримо роботу нового методу та виведемо властивість в консоль
+
+          let user227 = new User("Walter");
+          
+          console.log(user227.showType()); // This one is experienced user!
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      let user227 = new User('Walter');
+      console.log(user227.showType()); // This one is experienced user!
+    </script>
+
+    <br />
+  </body>
+</html>
