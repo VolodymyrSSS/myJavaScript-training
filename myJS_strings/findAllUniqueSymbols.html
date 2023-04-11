@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Check for uniques symbols</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Working with strings</h2>
+    <h4 class="title">
+      string property <span class="emph">length</span>, using loop
+      <span class="emph">for</span>, condition operator
+      <span class="emph">if</span>, method
+      <span class="emph">str.lastIndexOf(substr, pos)</span>,<br />
+      collection object <span class="emph">Set</span> and methods:
+      <span class="emph">new Set(iterable)</span>,
+      <span class="emph"> has(value), add(value), size</span>
+    </h4>
+
+    <h4 class="task">
+      Напишіть функцію <i>isUnique(string)</i>, яке буде перевіряти чи є
+      унікальні усі символи в рядку (слово-виразі).<br />
+      Унікальний - той, який є тільки один, або більше такого самого не має. При
+      вирішенні задачі, регістр символа повинен бути врахований, тобто
+      <i>'a'</i> та <i>'А'</i> є різні.<br />
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          // Вихідні дані:
+
+          function isUnique(string) {
+            // ..ваш код..
+          }
+
+          // Перевірка роботи:
+          isUnique('abcdef'); // true
+          isUnique('abcABC'); // true
+          isUnique('123456789'); // true
+          isUnique('artyfact'); // false
+          isUnique('374514'); // false
+          isUnique('ABBA'); // false
+          isUnique('rose'); // true
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <p>
+      Визначаємо основний алгоритм вирішення завдання: будемо брати по черзі
+      символ рядка та порівнювати його з остальними символами. Якщо при
+      порівнянні немає такого самого, то символ є унікальний, і функція буде
+      повертати <i>true</i>.<br />
+      Отже, спочатку потрібно пройтись по всьому слово-виразу, щоб мати доступ
+      до конкретної букви і далі букву перевіряти на унікальність. Це можемо
+      зробити за допомогою простого циклу <strong><i>for</i></strong
+      >, а кожен символ одразу визначаємо в змінній <i>char</i> як
+      <em>string[i]</em>, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function isUnique(string) {
+            <b>for(let i=0; i< string.length; i++) {</b>
+             <b>const char = string[i];</b> // отримуємо кожен поточний символ
+
+             // перевіряємо доступ до кожного символу
+             console.log(char); // на кожному окремому рядку буде a b c d e f
+            }
+
+            <b>return true;</b> // припускаємо що символ унікальний
+          <b>}</b>
+
+          isUnique('abcdef');
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      function isUnique3(string) {
+        for (let i = 0; i < string.length; i++) {
+          const char = string[i];
+          console.log(char);
+        }
+
+        return true;
+      }
+
+      isUnique3('abcdef');
+    </script>
+
+    <p>
+      Далі, подивимось чи ми можемо використати метод для рядків (слово-виразів)
+      як
+      <strong><i>str.indexOf(substr, pos)</i></strong
+      ><i></i>, який шукає підрядок <i>substr</i> у рядку <i>str</i>, починаючи
+      з позиції <i>pos</i>, і повертає позицію(індекс) підрядка, на якій є
+      співпадіння, або <i>'-1'</i> за відсутності збігів.<br />
+      Тобто можна задати умову при якій метод буде шукати підрядок (в нас
+      символ) і якщо він повертає <i>'-1'</i> то такого символу не було знайдено
+      і поверне <i>false</i>, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre style="width: 60%">
+          if (string.indexOf(char) === -1) return false;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Але, тут цим методом взявши перший символ, одразу буде повернуто його
+      позицію, і умова з пошуку в <i>if</i> не виконається, а тому краще пошук
+      здійснювати з кінця слово-виразу, і для цього є подібний метод як
+      <string><i>str.lastIndexOf(substr, pos)</i></string
+      >, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre style="width: 60%">
+          if (string.lastIndexOf(char) === -1) return false;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Проте це все рівно не вирішить завдання, бо ми все-рівно знайдемо
+      наявність символу, а нам потрібно знати що в слово-виразі більше не має
+      інших подібних символів. Тому потрібно змінити умову на таку, яка буде
+      визначати, чи не має ще таких самих символів, або більш точніше,
+      <i>чи знайдена інша позиція з таким самим символом</i>.<br />
+      Для цього поміняємо умову де вкажемо, що якщо знайдена позиція(індекс) не
+      буде дорівнювати поточній позиції символу, або так, - якщо символ має ще
+      якийсь інший індекс крім того на якому знаходиться даний символ, тільки
+      тоді повертати <i>false</i>. Заміняємо <i>'-1'</i> на <i>'і'</i> - на
+      поточний індекс символу, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          if (string.lastIndexOf(char) <b>!== i</b>) return false;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>І кінцевий код з використанням цього методу буде мати вид:</p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function isUnique(string) {
+            for(let i=0; i< string.length; i++) {
+             const char = string[i];
+             
+             // якщо знайдений індекс не дорівнює поточному індексу
+             if (string.lastIndexOf(char) !== i) { 
+              return false;
+            }
+
+            return true;
+          };
+
+          // перевірка роботи
+          isUnique('abcdef'); // true
+          isUnique('abcABC'); // true
+          isUnique('123456789'); // true
+          isUnique('artyfact'); // false
+          <b>isUnique('3745142'); // true - result is NOT correct!</b>
+          isUnique('ABBA'); // false
+          isUnique('rose'); // true
+          
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      function isUnique(string) {
+        for (let i = 0; i < string.length; i++) {
+          const char = string[i];
+
+          // якщо знайдений індекс не дорівнює поточному індексу
+          if (string.lastIndexOf(char) !== i) {
+            return false;
+          }
+
+          return true;
+        }
+      }
+
+      console.log('abcdef - ', isUnique('abcdef')); // true;
+      console.log('abcABC - ', isUnique('abcABC')); // true
+      console.log('123456789 - ', isUnique('123456789')); // true
+      console.log('artyfact - ', isUnique('artyfact')); // false
+      console.log('3745142 - ', isUnique('3745142')); // true - is NOT correct!
+      console.log('ABBA - ', isUnique('ABBA')); // false
+      console.log('rose - ', isUnique('rose')); // true
+    </script>
+
+    <p>
+      Але увага, при застосуванні такого рішення, перевірка
+      <em>isUnique('3745142');</em> повертає true - а це не вірно! Це не
+      унікальний слово-вираз бо є два символи "4".
+    </p>
+    <br />
+
+    <p><b>Більш правельний варіант:</b></p>
+    <br />
+
+    <p>
+      За основу для рішення візьмемо об'єкт <strong><i>Set</i></strong> - це
+      особливий вид колекції: "множина" значень (без ключів), де кожне значення
+      може з'являтися тільки один раз.<br />
+      Отже, спочатку створимо таку унікальну колекцію через <em>new Set();</em>,
+      у яку будемо додавати унікальні значення, одразу присвоїмо її змінній
+      <i>set</i>, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function isUnique(string) {
+            <b>const set = new Set();</b>
+
+            for(let i=0; i< string.length; i++) {
+             const char = string[i];
+             
+            return true;
+          };
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Далі в блоці цикла ми будемо також задавати умову використавши метод Set,
+      як <strong><i>set.has(value)</i></strong
+      >, який повертає <i>true</i>, якщо потрібне значення є у множині, інакше
+      <i>false</i>.<br />
+      Тобто, ми повертаємо <i>false</i>, якщо символ у слововиразі є, а якщо
+      немає, то ми повинні додати його до колекції методом
+      <strong><i>set.add(value)</i></strong
+      >. Цей метод додає значення в колекцію (якщо воно вже є, то нічого не
+      робить) і повертає той самий об'єкт <i>Set</i>. Тут треба наголосити, що
+      основна особливість є те, що при повторних викликах
+      <i>set.add(value)</i> з одним і тим самим значенням <i>value</i> нічого не
+      відбувається, за рахунок цього якраз і виходить, що кожне значення виникає
+      тільки один раз. Тому додамо значення до новоствореної колекції, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function isUnique(string) {
+            const set = new Set();
+
+            for(let i=0; i< string.length; i++) {
+             const char = string[i];
+
+             // якщо є вже символ в колекції
+             <b>if(set.has(char)) {
+               return false; // то виходим з циклу - рядок не є унікальним
+              }</b>
+
+             // якщо немає символу, то його додаєм до колекції set
+             set.add(char);
+            }
+             
+            return true;
+          };
+
+          // перевірка роботи
+          isUnique('abcdef'); // true
+          isUnique('abcABC'); // true
+          isUnique('123456789'); // true
+          isUnique('artyfact'); // false
+          <b>isUnique('3745142'); // false - result is correct!</b>
+          isUnique('ABBA'); // false
+          isUnique('rose'); // true
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      function isUnique2(string) {
+        const set = new Set();
+
+        for (let i = 0; i < string.length; i++) {
+          const char = string[i];
+
+          // якщо є символ в колекції
+          if (set.has(char)) {
+            return false;
+          }
+
+          // якщо немає, то його потрібно додати до новоствореної колекції set
+          set.add(char);
+        }
+
+        return true;
+      }
+
+      console.log('abcdef - ', isUnique2('abcdef')); // true;
+      console.log('abcABC - ', isUnique2('abcABC')); // true
+      console.log('123456789 - ', isUnique2('123456789')); // true
+      console.log('artyfact - ', isUnique2('artyfact')); // false
+      console.log('3745142 - ', isUnique2('3745142')); // false
+      console.log('ABBA - ', isUnique2('ABBA')); // false
+      console.log('rose - ', isUnique2('rose')); // true
+    </script>
+
+    <p>
+      Доречі, при створенні колекції <i>set</i> ми можемо одразу задавати
+      аргумент - наш слово-вираз, бо якщо в якості аргумента був переданий
+      якийсь ітеруємий об'єкт, то колекція <i>Set</i> копіює усі значення цього
+      об'єкта в новий <i>Set</i> методом <b>new Set(iterable)</b> - це значить,
+      що робить автоматично кожен символ унікальним. І якщо є в слововиразі два
+      одинакових символа, то в колекції буде зберігатись тільки один.<br />
+      <b><i>Але що це все нам загалом може дати?</i></b> А те, що ми далі можемо
+      порівняти довжину цього <i>set</i> та довжину самого рядка (слово-виразу),
+      і якщо вони різні, то це значить що в слово-виразі є подібні/одинакові
+      символи, а колекція <i>set</i> буде зберігати тільки унікальні символи і
+      подібних символів не містить. Тому використаємо метод
+      <strong><i>set.size</i></strong
+      >, який повертає кількість елементів у множині <i>Set</i>. Для визначення
+      довжини рядка (слово-виразу), використаємо властивість
+      <strong><i>str.length</i></strong
+      >. Кінцевий вид коду буде мати вид:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function isUnique(string) {
+            <b>return new Set(string).size === string.length;</b>
+          };
+
+          // перевірка роботи
+          isUnique('abcdef'); // true
+          isUnique('abcABC'); // true
+          isUnique('123456789'); // true
+          isUnique('artyfact'); // false
+          isUnique('3745142'); // false
+          isUnique('ABBA'); // false
+          isUnique('rose'); // true
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      function isUnique4(string) {
+        return new Set(string).size === string.length;
+      }
+
+      console.log('abcdef - ', isUnique4('abcdef')); // true;
+      console.log('abcABC - ', isUnique4('abcABC')); // true
+      console.log('123456789 - ', isUnique4('123456789')); // true
+      console.log('artyfact - ', isUnique4('artyfact')); // false
+      console.log('3745142 - ', isUnique4('3745142')); // false
+      console.log('ABBA - ', isUnique4('ABBA')); // false
+      console.log('rose - ', isUnique4('rose')); // true
+    </script>
+
+    <br /><br />
+  </body>
+</html>
