@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Working with DOM</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      ol {
+        width: 20%;
+        margin: auto;
+        background-color: pink;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      .message {
+        padding: 15px;
+        border: 1px solid #d6e9c6;
+        border-radius: 4px;
+        color: #3c763d;
+        background-color: #dff0d8;
+      }
+
+      .img-centered {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        /* border: 2px solid black; */
+        border-radius: 8px;
+        padding: 3px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">DOM (data object model)</h2>
+    <h4 class="title">
+      child nodes: <span class="emph">elem.childNodes</span>,
+      <span class="emph">elem.firstChild</span> using method
+      <span class="emph">document.getElementById('elem')</span> and
+      <span class="emph">remove()</span>,<br />
+      loops: <span class="emph">for/for..of</span>,
+      <span class="emph">while</span> properties
+      <span class="emph">elem.innerHTML</span>,
+      <span class="emph">elem.childNodes.length</span>
+    </h4>
+
+    <h4 class="task">
+      В нас є DOM-елемент у виді упорядкованого списку <i>ol</i>. Створіть
+      функцію <i>clear(elem)</i>, яка видалить весь вміст/контент з
+      <i>elem</i>.<br />
+      Покажіть декілька варіантів, поясніть особливості?
+    </h4>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          // Вихідні дані:
+
+            &lt;ol id="elem"&gt;
+              &lt;li&gt;Привіт&lt;/li&gt;
+              &lt;li&gt;Друже&lt;/li&gt;
+            &lt;/ol&gt;
+
+            &lt;script&gt;
+              function clear(elem) { 
+                // ..ваш код .. 
+              }
+
+              clear(elem); // очищає список
+            &lt;/script&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <ol id="elem">
+      <li>Привіт</li>
+      <li>Друже</li>
+    </ol>
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <p>
+      Для вирішення завдання можна пройтись по всіх елементах списку та видалити
+      кожен елемент цього списку. Спробуємо пройтись по списку за допомогою
+      цикла <strong><i>for</i></strong
+      >. З теорії JavaScript відомо, що список <i>ol</i> має дочірні елементи
+      <i>li</i> або <i>"діти"</i>. Колекція
+      <strong><i>childNodes</i></strong> містить список усіх <i>"дітей"</i>,
+      включаючи текстові вузли. Хоча <i>childNodes</i> і подібний на масив, але
+      це не масив. Це колекція - особливий перебераючий об'єкт - псевдомасив, а
+      тому, методи масивів застосовувати не можемо.<br />
+      Все ж таки, давайти пройдемся і подивимось, що ми отримаємо в результаті,
+      якщо застосуємо вид циклу <i>for</i> для перебору дочірних елементів:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          &lt;script&gt;
+            let elem = document.getElementById('elem');
+
+            function clear(elem) {
+              for (let i = 0; i < elem.childNodes.length; i++) {
+                console.log(<b>elem.childNodes[i]</b>); // #text, li, #text, li, #text
+              }
+            }
+
+            clear(elem);
+          &lt;/script&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      let elem = document.getElementById('elem');
+
+      // function clear(elem) {
+      //   for (let i = 0; i < elem.childNodes.length; i++) {
+      //     console.log(elem.childNodes[i]);
+      //   }
+      // }
+
+      // clear(elem);
+    </script>
+
+    <p>
+      Як видно, крім дочірних елементів <i>li</i>, отримуємо текстові елементи
+      також. І якщо ми застосуємо метод для видалення елементів-вузлів, то це не
+      буде працювати, бо виклик <strong><i>remove()</i></strong> зсуває колекцію
+      <i>elem.childNodes</i>, при цьому елементи починаються кожен раз з індекса
+      <i>'0'</i> а <i>'і'</i> одночасно збільшується і частина (в дійсності -
+      кожен наступний, а це і є наші <i>li</i>) елементи будуть пропущені. Тому
+      цей метод перебору - не підійде.<br />
+      Так само, хоч <i>elem.childNodes</i> є псевдомасив, і для перебору
+      елементів можемо також використовувати цикл
+      <strong><i>for ..of</i></strong
+      >, результат дії буде такий самий як при простому <i>for</i> - частина
+      елементів буде пропущена.
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          &lt;script&gt;
+            let elem = document.getElementById('elem');
+
+            function clear(elem) {
+              for (let i=0; i < elem.childNodes.length; i++) {
+                <b>elem.childNodes[i].remove();</b>
+              }
+            }
+
+            clear(elem)
+          &lt;/script&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      // function clear2(elem) {
+      //   for (let i = 0; i < elem.childNodes.length; i++) {
+      //     elem.childNodes[i].remove();
+      //   }
+      // }
+
+      // clear2(elem);
+    </script>
+
+    <p>
+      Для вирішення завдання, потрібно робити так, щоб перебираючи елементи,
+      потрібно, щоб елементи зсуваючись, одночасно не додавались як наступний,
+      тобто треба щоб видалявся перший елемент, коли зсунулось, наступний ставав
+      перший і знову перший елемент повинен видалятись а не братись наступний і
+      пропускати <i>'0'</i> - нульовий. Ми знаємо, що такі властивості як
+      <i>elem.firstChild або elem.childNodes[0]</i> та
+      <i>elem.lastChild або elem.childNodes[elem.childNodes.length - 1]</i>
+      забезпечують швидкий доступ до першого та останнього дочірнього елементу.
+      Тому нам постійно треба брати перший елемент для видалення, бо наступний,
+      після зсуву, стає першим і його знову треба видалити. Для цього краще
+      підійде цикл <strong><i>while</i></strong> - бо допоки буде братись перший
+      елемент, доти наступний при зсуві стає першим елементом і він і буде
+      братись для видалення і так усі елементи видаляться, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          &lt;script&gt;
+            let elem = document.getElementById('elem');
+
+            function clear(elem) {
+              <b>while (elem.firstChild) {
+                elem.firstChild.remove();
+              }</b>
+            }
+          &lt;/script&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      // function clear3(elem) {
+      //   while (elem.firstChild) {
+      //     elem.firstChild.remove();
+      //   }
+      // }
+
+      // clear3(elem);
+    </script>
+
+    <p>
+      Ну і врешті, існує властивість ефективної заміни контенту
+      <i>HTML</i>-сторінки - <strong><i>innerHTML</i></strong
+      >. Ця властивість дозволяє отримати як і визначити вміст(контент) елемента
+      саме <i>як-HTML</i> - з урахуванням усіх тегів. Ми можемо призначити
+      пустий рядок як вміст елемента, який потрібно очистити, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          &lt;script&gt;
+            let elem = document.getElementById('elem');
+
+            function clear(elem) {
+              <b>elem.innerHTML = "";</b>
+            }
+          &lt;/script&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      // function clear4(elem) {
+      //   elem.innerHTML = '';
+      // }
+
+      // clear4(elem);
+    </script>
+    <br />
+  </body>
+</html>
