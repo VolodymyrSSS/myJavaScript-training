@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Working with DOM</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      div {
+        width: 40%;
+        margin: auto;
+        background-color: pink;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+
+      .message {
+        padding: 15px;
+        border: 1px solid #d6e9c6;
+        border-radius: 4px;
+        color: #3c763d;
+        background-color: #dff0d8;
+      }
+
+      .img-centered {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        /* border: 2px solid black; */
+        border-radius: 8px;
+        padding: 3px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">DOM (data object model)</h2>
+    <h4 class="title">
+      using method <span class="emph">document.createTextNode(text)</span>,
+      properties <span class="emph">elem.innerHTML</span> and
+      <span class="emph">elem.textContent</span>
+    </h4>
+
+    <h4 class="task">
+      В нас є пустий DOM-елемент <i>elem</i> та рядок <i>text</i>. Дайте
+      відповідь яка з цих трьох команд буде працювати одинаково?<br />
+      Ось ця <i>elem.append(document.createTextNode(text))</i><br />
+      чи ця <i>elem.innerHTML = tex</i>t<br />
+      або ця <i>elem.textContent = text</i><br />
+      Поясніть чому?
+    </h4>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          // Вихідні дані:
+
+          &lt;script&gt;
+            elem.append(document.createTextNode(text));
+            elem.innerHTML = tex;
+            elem.textContent = text;
+          &lt;/script&gt;
+
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Результат:</b> 1 і 3</p>
+    <br />
+
+    <div>
+      <div id="elem1"></div>
+      <div id="elem2"></div>
+      <div id="elem3"></div>
+    </div>
+
+    <script>
+      let text = '<b>Це є простий текст</b>';
+
+      elem1.append(document.createTextNode(text));
+      elem2.innerHTML = text;
+      elem3.textContent = text;
+    </script>
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <p>
+      З теорії JavaScript відомо, що існує два способи створити вузел-елемент,
+      так от вираз
+      <strong><i>document.createTextNode(text);</i></strong> - створює новий
+      саме текстовий вузел із заданим текстом (в нашому випадку має бути заданий
+      якийсь <i>text</i>).<br />
+      Отже, давайте визначимо якусь довільну змінну <i>text</i> і присвоємо їй
+      будь-яке текстове значення. Потім використовуючи вказаний метод, створимо
+      новий текстовий вузел в DOM-дереві, причому вузел буде створений як просто
+      текст (разом з усіма тегами та атрибутами - увесь контент буде сприйматись
+      як простий текст) ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          &lt;div id="elem1"&gt;&lt;/div&gt;
+
+          &lt;script&gt;
+            let text = '&lt;b&gt;Це є простий текст&lt;/b&gt;';
+
+            elem1.append(document.createTextNode(text));
+          &lt;/script&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Тому в результаті ми бачимо текстовий вузел як простий текст з усіма
+      атрибутами та тегами.<br />
+      Але давайте розглянемо другий приклад. У цьому випадку, властивість
+      <strong><i>innerHTML</i></strong> дозволяє отримати вміст(контент)
+      елемента у виді рядка - саме <i>як-HTML</i>. Це значить що вміст буде
+      прочитаний <i>як-HTML</i> - з урахуванням усіх тегів. Тому ми бачимо в
+      результаті текст виділений жирним шрифтом, ось:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          &lt;div id="elem2"&gt;&lt;/div&gt;
+
+          &lt;script&gt;
+            let text = '&lt;b&gt;Це є простий текст&lt;/b&gt;'; // ці <i>b-теги</i> працюють як призначено тегам
+            elem2.innerHTML = text;
+          &lt;/script&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Загалом, ця властивість є однією з самих ефективних способів міняти
+      вміст/контент на <i>HTML</i>-сторінці.<br />
+      І врешті третій вираз - властивість
+      <strong><i>textContent</i></strong> дає доступ до тексту всередині
+      елементу відсікаючи всі наявні теги, тобто отримуємо просто текст. В
+      результаті ми бачимо просто текст з усіма тегами, бо дія їх була ніби
+      "зневільована" і ми їх тільки читаємо як простий текст буквально, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          &lt;div id="elem3"&gt;&lt;/div&gt;
+
+          &lt;script&gt;
+            let text = '&lt;b&gt;Це є простий текст&lt;/b&gt;'; // дія цих <i>b-тегів</i> не виконується
+            elem3.textContent = text;
+          &lt;/script&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Використовують цю властивість для можливості записувати текст 'безпечним
+      способом'. З <i>textContent</i> вставка получається <i>як-текст</i>, всі
+      символи трактуються буквально.
+    </p>
+    <br />
+    <br />
+  </body>
+</html>
