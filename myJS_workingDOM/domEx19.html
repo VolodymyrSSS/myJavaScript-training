@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Working with DOM</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      div {
+        width: 40%;
+        background-color: pink;
+        margin: auto;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">DOM (data object model)</h2>
+    <h4 class="title">
+      using method
+      <span class="emph">document.createElement(tag);</span> and
+      <span class="emph">append(elem)</span>,<br />
+      loop: <span class="emph">while</span>, property
+      <span class="emph">textContent</span>,
+    </h4>
+
+    <h4 class="task">
+      Напишіть інтерфейс для створення списку.<br />
+      А саме, для кожної позиції списку запитуйте її вміст за допомогою
+      <i>prompt</i>. Таким чином буде створюватись елемент списка <i>li</i>,
+      який буде додаватись в загальний список <i>ul</i>. Так потрібно робити до
+      тих пір, доки користувач не відмінить ввід: або натисне <i>Esc</i>, або
+      введе пустий рядок. Як бачите, усе повинно створюватись динамічно. Якщо
+      користувач введе якісь <i>HTML</i>-теги, то вони повинні оброблятись суто
+      як текст, адже нам не потрібно якийсь шкідливий код, правда :)
+    </h4>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          // Вихідні дані:
+
+            &lt;ul&gt; - динамічно створений список
+              &lt;li&gt;AAA&lt;/li&gt; - введено через <i>prompt</i>
+              &lt;li&gt;BBB&lt;/li&gt; - введено через <i>prompt</i>
+              &lt;li&gt;ССС&lt;/li&gt; - введено через <i>prompt</i>
+            &lt;/ul&gt;
+
+            &lt;script&gt;
+              //..динамічно створити список і запитувати через <i>prompt</i> вміст його елементу
+            &lt;/script&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Результат тут:</b></p>
+    <br />
+
+    <script>
+      let div = document.createElement('div');
+      let ul = document.createElement('ul');
+      document.body.append(div);
+      div.append(ul);
+
+      while (true) {
+        let data = prompt('Введіть текст для елементу списка', '');
+
+        // коли натисне ESC чи не введе нічого
+        if (!data) {
+          break;
+        }
+
+        let li = document.createElement('li');
+        li.textContent = data;
+        ul.append(li);
+      }
+    </script>
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <p>
+      Будь-який html-код в браузері формує
+      <strong>Об'єктну Mодель Документу</strong> - <strong>DOM</strong>, яка
+      представляє вміст усієї сторінки у виді об'єктів, або ще кажуть
+      DOM-елементів (які можуть бути: або вузлами-елементами, або текстовими
+      вузлами).<br /><br />
+      DOM-елемент можна створювати двума методами:<br />
+      <strong><i>document.createElement(tag)</i></strong> - створює новий
+      DOM-вузел - елемент-вузел з заданим тегом;<br />
+      <strong><i>document.createTextNode(text)</i></strong> - створює новий
+      DOM-вузел - текстовий вузел з заданим текстом;<br />
+      У більшості необхідність по створенню DOM-елементів припадає на створення
+      DOM-елементів типу <i>div</i>, а тому застосовують частіше перший
+      спосіб.<br />
+      Давайте так і зробимо і створимо ul-елемент, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          &lt;script&gt;
+            <b>let ul = document.createElement('ul');</b>
+          &lt;/script&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Зауважимо, що DOM-елемент, або <i>node</i> створено, але поки що він лише
+      у змінній <i>ul</i>. Ми не можемо бачити його на сторінці, оскільки змінна
+      не є поки частиною документа.<br />
+      Щоб наш створений <i>ul</i> з'явився, нам потрібно вставити його в
+      <i>document</i>, саме в <i>document.body</i>.<br /><br />
+      При цьому використаємо один з методів вставки:<br />
+      <strong><i>append(...nodes or strings)</i></strong
+      >, який додає вузли чи рядки слово-виразів в <em>КІНЕЦЬ</em> <i>node</i>,
+      ось так:<br />
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          &lt;script&gt;
+            <b>document.body.append(ul);</b>
+          &lt;/script&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Далі, потрібно створити елементи списку <i>li</i>, контент яких повинен
+      наповнюватись від користувача. Тобто, за допомогою <i>prompt</i> ми
+      повинні визначати контент <i>li</i> при цьому врахувати те, що якщо
+      користувач введе якісь <i>HTML</i>-теги, то вони повинні оброблятись суто
+      як текст. Отже, створюємо динамічно <i>li</i>, додаємо його в список тим
+      самим методом <i>node.append(nodes)</i>. Для того, щоб увесь текст
+      сприймався як є, - щоб усе читалось як текст, включаючи будь-які введені
+      <i>HTML</i>-теги, будемо використовувати властивість
+      <strong><i>elem.textContent</i></strong
+      >, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          &lt;script&gt;
+            <b>let li = document.createElement('li');</b>
+            li.textContent; // поки так
+            ul.append(li);            
+          &lt;/script&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      А для того, щоб отримати сам контент, назвем його <i>data</i>, ми
+      використаємо вбудований метод <strong><i>prompt</i></strong> та будемо в
+      циклі задавати контент користувачем до тих пір, доки він не натисне
+      <i>ESC</i> чи пустий рядок - <i>''</i>. Найкраще тут використати цикл
+      <strong><i>while</i></strong
+      >, в тілі якого визначити контент від користувача <i>data</i>, перевірку
+      на введення цього контенту, та власне створення самого <i>li</i>, і
+      узагальнений код буде такий:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          &lt;script&gt;
+            let ul = document.createElement('ul');
+            document.body.append(ul);
+
+            <b>while (true) {</b>
+              let data = prompt("Введіть текст для елементу списка", "");
+
+              // коли натисне ESC чи не введе нічого
+              if (!data) {
+                break;
+              }
+
+              let li = document.createElement('li');
+              li.textContent = data; // поки так
+              ul.append(li);   
+            <b>}</b>
+          &lt;/script&gt;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <br />
+  </body>
+</html>
