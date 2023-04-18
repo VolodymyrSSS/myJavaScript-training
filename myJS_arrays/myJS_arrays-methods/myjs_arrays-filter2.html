@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Working with Arrays</title>
+		<style>
+			body {
+				background-color: tan;
+				margin: 0;
+				font-family: Verdana, sans-serif;
+			}
+
+			.emph {
+				color: red;
+			}
+
+			.title {
+				color: navy;
+				text-align: center;
+				font-weight: 700;
+			}
+
+			.task {
+				width: 50%;
+				padding: 15px 25px;
+				color: navy;
+				background-color: #e2e2e2;
+				margin: 35px auto;
+			}
+
+			p {
+				width: 80%;
+				margin: 0 auto;
+			}
+
+			pre {
+				width: 50%;
+				background-color: #bebebe;
+				padding-top: 20px;
+				margin: 0 auto;
+			}
+
+			code {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: large;
+			}
+
+			.code-ex {
+				width: 50%;
+				font-family: sans-serif;
+				font-style: italic;
+				background-color: #bebebe;
+				font-size: large;
+				padding-left: 15px;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h2 class="title">Working with Arrays</h2>
+		<h4 class="title">
+			using arrays method <span class="emph">.filter()</span>, property
+			<span class="emph">length</span> and operator
+			<span class="emph">></span>
+		</h4>
+
+		<h4 class="task">
+			Напишіть функцію <i>findLongWords(words)</i>, яка отримує масив рядків
+			(слово-виразів) <i>words</i> та повертає новий масив з елементів, довжина
+			кожного елемента (слова) має мати більше ніж шість символів.<br />
+			Функція повинна повертати новий масив та не змінювати вихідний. Результати
+			виведіть в консоль.
+		</h4>
+		<br />
+
+		<p>
+			<code>
+				<pre>
+          // Вихідні дані:
+
+          function findLongWords(words) {
+            // ... ваш код ...
+          }
+
+          const words = ['spray', 'limit', 'elite', 'exuberant', 'destruction', 'present'];
+
+          const result = findLongWords(words);
+
+          console.log( result ); // ["exuberant", "destruction", "present"]
+
+          console.log( words ); // ['spray', 'limit', 'elite', 'exuberant', 'destruction', 'present'] - не міняється
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p><b>Рішення:</b></p>
+		<br />
+
+		<p>
+			Алгоритмом рішення завдання, може бути застосування методу пошуку
+			елементів в масиві.<br />
+			Метод <strong><i>arr.find(fn)</i></strong> шукає один елемент (перший який
+			попадеться) на якому функція-колбека поверне <i>true</i>. Але на випадок,
+			якщо знайдених елементів може бути багато, існує метод
+			<strong><i>arr.filter(callbackFn)</i></strong
+			>. Метод filter() створює поверхневу копію частини даного масиву,
+			відфільтровану лише до елементів із даного масиву, які пройшли перевірку,
+			реалізовану наданою функцією.<br />
+			Синтаксис цього методу подібний з <i>find()</i>, але
+			<i>filter()</i> повертає масив з усіх підходячих елементів, які
+			відповідають умові пошуку, що зазначені в колбеці <i>callbackFn</i>, ось:
+		</p>
+		<br />
+
+		<p class="code-ex">
+			Його синтаксис:<br />
+			<code>
+				<b>let results = arr.filter(callbackFn(item, index, array) {</b><br />
+				// якщо true - елемент додається до результату, перебор продовжується<br />
+				// повертається пустий масив у випадку, якщо нічого не знайдено<br />
+				<b>});</b><br />
+			</code>
+		</p>
+		<br />
+
+		<p>
+			Метод <i>filter()</i> це ітеративний метод. Він викликає надану функцію
+			callbackFn один раз для кожного елемента в масиві та створює новий масив
+			усіх значень, для яких callbackFn повертає правдиве значення. Елементи
+			масиву, які не пройшли перевірку callbackFn, не включаються в новий
+			масив.<br />
+			Отже, використаєм метод <i>filter(fn)</i> де в умові пошуку зазначимо які
+			значення вхідного масиву повинні бути знайдені. Це можна зробити
+			використавши оператор більше - <strong><i>></i></strong> та властивість
+			для елементів <strong><i>length</i></strong
+			>. Функція повинна повертати знайдені елелементи, які присвоїмо новому
+			масиву щоб вхідний масив не чіпати, ось так:
+		</p>
+		<br />
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          function findLongWords(words) {
+            return <b>words.filter(word => word.length > 6);</b>;
+          }
+
+          // перевірка роботи функції
+          const words = ['spray', 'limit', 'elite', 'exuberant', 'destruction', 'present'];
+
+          const result = findLongWords(words);
+
+          console.log( result ); // ['exuberant', 'destruction', 'present']
+
+          console.log( words ); // ['spray', 'limit', 'elite', 'exuberant', 'destruction', 'present'] - не змінився
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<script>
+			function findLongWords(words) {
+				return words.filter((word) => word.length > 6);
+			}
+
+			// перевірка роботи функції
+			const words = [
+				'spray',
+				'limit',
+				'elite',
+				'exuberant',
+				'destruction',
+				'present',
+			];
+
+			const result = findLongWords(words);
+
+			console.log(result); // ["exuberant", "destruction", "present"]
+
+			console.log(words); // ['spray', 'limit', 'elite', 'exuberant', 'destruction', 'present']
+		</script>
+
+		<br />
+	</body>
+</html>

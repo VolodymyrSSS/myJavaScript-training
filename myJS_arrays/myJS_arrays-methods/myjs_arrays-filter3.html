@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Working with Arrays</title>
+		<style>
+			body {
+				background-color: tan;
+				margin: 0;
+				font-family: Verdana, sans-serif;
+			}
+
+			.emph {
+				color: red;
+			}
+
+			.title {
+				color: navy;
+				text-align: center;
+				font-weight: 700;
+			}
+
+			.task {
+				width: 50%;
+				padding: 15px 25px;
+				color: navy;
+				background-color: #e2e2e2;
+				margin: 35px auto;
+			}
+
+			p {
+				width: 80%;
+				margin: 0 auto;
+			}
+
+			pre {
+				width: 50%;
+				background-color: #bebebe;
+				padding-top: 20px;
+				margin: 0 auto;
+			}
+
+			code {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: large;
+			}
+
+			.code-ex {
+				width: 50%;
+				font-family: sans-serif;
+				font-style: italic;
+				background-color: #bebebe;
+				font-size: large;
+				padding-left: 15px;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h2 class="title">Working with Arrays</h2>
+		<h4 class="title">
+			using arrays method <span class="emph">.filter()</span>,
+			<span class="emph">.map()</span>, <span class="emph">.slice()</span>, and
+			<span class="emph">.join()</span>,<br />
+			strings method <span class="emph">.toUpperCase()</span> and ternary
+			operator <span class="emph">cond ? true : false</span>
+		</h4>
+
+		<h4 class="task">
+			Напишіть функцію <i>filterRange(arr, a, b)</i>, яка отримує масив
+			<i>arr</i> та два числових значення: <i>a</i> та <i>b</i>, які визначають
+			границі діапазону. Пілся ініціалізації функції, здійснюється пошук
+			елементів зі значеннями більшими чи рівними <i>a</i> та меньшими чи
+			рівними <i>b</i> повертаючи масив із знайдених елементів.<br />
+			Функція повинна повертати новий масив та не змінювати вихідний. Результати
+			виведіть в консоль.
+		</h4>
+		<br />
+
+		<p>
+			<code>
+				<pre>
+          // Вихідні дані:
+
+          function filterRange(arr, a, b) {
+            // ... ваш код ...
+          }
+
+          let arr = [5, 42, 3, 8, 1, 12, 34, 10];
+
+          let filtered = filterRange(arr, 1, 10);
+
+          console.log( filtered ); // 5,3,8,1,10
+
+          console.log( arr ); // [5,42,3,8,1,12,34,10] - має не змінитися
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p><b>Рішення:</b></p>
+		<br />
+
+		<p>
+			Алгоритмом рішення завдання, може бути застосування методу пошуку
+			елементів в масиві.<br />
+			Метод <strong><i>arr.find(fn)</i></strong> шукає один елемент (перший який
+			попадеться) на якому функція-колбека поверне <i>true</i>. Але на випадок,
+			якщо знайдених елементів може бути багато, існує метод
+			<strong><i>arr.filter(fn)</i></strong
+			>.<br />
+			Синтаксис цього методу подібний з <i>find()</i>, але
+			<i>filter()</i> повертає масив з усіх підходячих елементів, які
+			відповідають умові пошуку, що зазначені в <i>fn</i>. Отже, використаєм
+			метод <i>filter(fn)</i> де в умові пошуку зазначимо які значення вхідного
+			масиву повинні бути знайдені. Це можна знобити використавши оператори
+			<strong><i>>=</i></strong> або <strong><i><=</i></strong
+			>. Функція повинна повертати знайдені елелементи, які присвоїмо новому
+			масиву щоб вхідний масив не чіпати, ось так:
+		</p>
+		<br />
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          function filterRange(arr, a, b) {
+            return <b>arr.filter((item) => a <= item && item <= b)</b>;
+          }
+
+          // перевірка роботи функції
+          let arr = [5, 42, 3, 8, 1, 12, 34, 10];
+
+          let filtered = filterRange(arr, 1, 10);
+
+          console.log( filtered ); // [5, 3, 8, 1, 10]
+
+          console.log( arr ); // [5, 42, 3, 8, 1, 12, 34, 10] -  не змінився
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<script>
+			function filterRange(arr, a, b) {
+				return arr.filter((item) => a <= item && item <= b);
+			}
+
+			// перевірка роботи функції
+			let arr = [5, 42, 3, 8, 1, 12, 34, 10];
+
+			let filtered = filterRange(arr, 1, 10);
+
+			console.log(filtered); // [5, 3, 8, 1, 10]
+
+			console.log(arr); // [5,42,3,8,1,12,34,10] -  не змінився
+		</script>
+
+		<br />
+	</body>
+</html>
