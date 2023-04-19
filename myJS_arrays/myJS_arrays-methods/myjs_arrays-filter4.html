@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Working with Arrays</title>
+		<style>
+			body {
+				background-color: tan;
+				margin: 0;
+				font-family: Verdana, sans-serif;
+			}
+
+			.emph {
+				color: red;
+			}
+
+			.title {
+				color: navy;
+				text-align: center;
+				font-weight: 700;
+			}
+
+			.task {
+				width: 50%;
+				padding: 15px 25px;
+				color: navy;
+				background-color: #e2e2e2;
+				margin: 35px auto;
+			}
+
+			p {
+				width: 80%;
+				margin: 0 auto;
+			}
+
+			pre {
+				width: 50%;
+				background-color: #bebebe;
+				padding-top: 20px;
+				margin: 0 auto;
+			}
+
+			code {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: large;
+			}
+
+			.code-ex {
+				width: 50%;
+				font-family: sans-serif;
+				font-style: italic;
+				background-color: #bebebe;
+				font-size: large;
+				padding-left: 15px;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h2 class="title">Working with Arrays</h2>
+		<h4 class="title">
+			using arrays method <span class="emph">.filter()</span>, loop
+			<span class="emph">for</span>, condition operator
+			<span class="emph">if</span> and operators <span class="emph">< ></span>,
+			math operator <span class="emph">%</span>
+		</h4>
+
+		<h4 class="task">
+			Напишіть функцію <i>isPrime(num)</i>, яка отримує на вхід розширену
+			множину натуральних чисел (від'ємні, натуральні, та нуль)
+			<i>arrayNums</i> та повертає масив тільки <i>простих чисел</i>.<br />
+			Результат виведіть в консоль.
+		</h4>
+		<br />
+
+		<p>
+			<code>
+				<pre>
+          // Вихідні дані:
+
+          function isPrime(num) {
+            // ... ваш код ...
+          }
+
+          const array = [-3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+
+          console.log( filter(isPrime) ); // [2, 3, 5, 7, 11, 13]
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p><b>Рішення:</b></p>
+		<br />
+
+		<p>
+			Для вирішення завдання необхідно чітко визначити, що таке
+			<i>ПРОСТІ</i> числа?<br />
+			Натуральні числа, що мають тільки два <i>дільники</i> — одиницю і само
+			себе, називають <i>ПРОСТИМИ</i>. От, для прикладу, числа
+			<i>2;3;5;7;11...</i> — прості, оскільки діляться тільки на 1 і самі на
+			себе, тобто мають два дільники. А натуральні числа, що мають більше двох
+			дільників, називають складеними і такі числа як
+			<i>4;6;8;10;...48... </i> - складені, оскільки діляться не тільки на 1 і
+			самі на себе, а ще, наприклад, на 2, тобто мають більше двох дільників.<br />
+			Також, число <i>1</i> не належить ні до простих, ні до складених чисел. До
+			цього вартує додати <i>основну теорему арифметики</i> - будь-яке
+			натуральне число (крім 1) або є простим, або його можна розкласти на
+			прості множники.<br /><br />
+			Для вирішення завдання, потрібно використати метод масивів
+			<strong><i>arr.filter(callbackFn)</i></strong
+			>, який повертає масив елементів, які відповідають умові пошуку, що
+			зазначені в функції-колбеці <i>callbackFn</i>, ось його синтаксис:
+		</p>
+		<br />
+
+		<p class="code-ex">
+			<code>
+				<b>let results = arr.filter(callbackFn(item, index, array) {</b><br />
+				// якщо true - елемент додається до результату, перебор продовжується<br />
+				// повертається пустий масив у випадку, якщо нічого не знайдено<br />
+				<b>});</b><br />
+			</code>
+		</p>
+		<br />
+
+		<p>
+			Метод <i>filter(callbackFn)</i> викликає надану функцію
+			<i>callbackFn</i> один раз для кожного елементу в масиві та створює новий
+			масив усіх значень, для яких <i>callbackFn</i> повертає правдиве значення.
+			Елементи масиву, які не пройшли перевірку <i>callbackFn</i>, не
+			включаються в новий масив.<br />
+			Отже, використаєм метод <i>filter(callbackFn)</i> куда замість
+			<i>callbackFn</i> будемо передавати нашу функцію <i>isPrime(num)</i> з
+			пошуку простих чисел, але тільки ПЕРЕДАВАТИ а не викликати, ось так:
+		</p>
+		<br />
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          <b>array.filter(isPrime);</b>
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p>
+			А для функції, яка буде повертати масив простих чисел, визначаємо алгоритм
+			визначення та повернення простого числа з отриманих параметрів: потрібно
+			пройтись по всіх елементах масиву за допомогою циклу
+			<strong><i>for</i></strong> де початковим значенням буде число <i>2</i>,
+			бо <i>0</i> та <i>1</i> не належать до простих чисел, а ітерацію проводити
+			до значення, яке перевіряється на просте число та брати наступне число для
+			перевірки. Функція повинна повертати те число, яке проходить перевірку для
+			<i>простого числа</i> - має бути позитивним, не дорівнювати <i>0</i> та
+			<i>1</i>, повинно ділитись тільки на себе або на <i>1</i>, яке задається
+			взяттям залишку через математичний оператор <strong><i>%</i></strong
+			>, якщо залишку немає при діленні на будь-яке число, що стоїть до нього то
+			це є не просте число і повертаємо <i>false</i>, ось так:
+		</p>
+		<br />
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          function isPrime(num) {
+            <b>for (let i = 2; i < num; i++) {
+              if (num % i === 0) {
+                return false;
+              }
+            }</b>
+            return num > 1;
+          }
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p>Кінцевий код буде ось такий:</p>
+		<br />
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          const array = [-3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+
+          function isPrime(num) {
+            for (let i = 2; i < num; i++) {
+              if (num % i === 0) {
+                return false;
+              }
+            }
+            return num > 1;
+          }
+
+          console.log(array.filter(isPrime)); // [2, 3, 5, 7, 11, 13]
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<script>
+			const array = [-3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+
+			function isPrime(num) {
+				for (let i = 2; i < num; i++) {
+					if (num % i === 0) {
+						return false;
+					}
+				}
+				return num > 1;
+			}
+
+			console.log(array.filter(isPrime));
+		</script>
+
+		<br />
+	</body>
+</html>
+gh
