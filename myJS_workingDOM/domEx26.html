@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			.list-item {
+				cursor: pointer;
+				width: min-content;
+			}
+
+			.list-item:hover {
+				color: red;
+				text-decoration: line-through;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="list"></div>
+
+		<form id="new-item-form">
+			<label for="item-input">New Item</label>
+			<input type="text" id="item-input" />
+			<button type="submit">Add Item</button>
+		</form>
+
+		<script>
+			// 1. Визначити усі потрібні елементи для роботи
+			const form = document.querySelector('#new-item-form');
+			const list = document.querySelector('#list');
+			const input = document.querySelector('#item-input');
+
+			// 2. Коли натиснути на кнопку - додати новий елемент, а коли клікнути на новий елемент - видалити його
+			form.addEventListener('submit', (event) => {
+				event.preventDefault(); // щоб сторінка не перезавантажувалась
+
+				const item = document.createElement('div'); // створити новий елемент
+				item.innerText = input.value; // задати текст в полі вводу
+				item.classList.add('list-item'); // присвоїти клас
+
+				list.append(item); // додати неовий елемент до списку
+
+				input.value = ''; // очистити поле вводу
+
+				// видалити елемент по кліку
+				item.addEventListener('click', (event) => {
+					item.remove();
+					// list.removeChild(item); // застарілий метод видалення
+				});
+			});
+		</script>
+	</body>
+</html>
