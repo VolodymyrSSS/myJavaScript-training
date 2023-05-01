@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Working with Arrays</title>
+		<style>
+			body {
+				background-color: tan;
+				margin: 0;
+				font-family: Verdana, sans-serif;
+			}
+
+			.emph {
+				color: red;
+			}
+
+			.title {
+				color: navy;
+				text-align: center;
+				font-weight: 700;
+			}
+
+			.task {
+				width: 50%;
+				padding: 15px 25px;
+				color: navy;
+				background-color: #e2e2e2;
+				margin: 35px auto;
+			}
+
+			p {
+				width: 80%;
+				margin: 0 auto;
+			}
+
+			pre {
+				width: 50%;
+				background-color: #bebebe;
+				padding-top: 20px;
+				margin: 0 auto;
+			}
+
+			code {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: large;
+			}
+
+			.code-ex {
+				width: 50%;
+				font-family: sans-serif;
+				font-style: italic;
+				background-color: #bebebe;
+				font-size: large;
+				padding-left: 15px;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h2 class="title">Working with Arrays</h2>
+		<h4 class="title">
+			using arrays method <span class="emph">arr.fill()</span>, and array constructor <span class="emph">Array()</span>
+		</h4>
+
+		<h4 class="task">
+			Використовуючи конструктор створення масивів, створіть масив <i>arr</i>, який буде мати три елемента пустих об'єктів. Потім заповніть об'єкти парами ключ-значення <i>hi: "hi"</i>.
+			<br />
+			Результати виведіть в консоль.
+		</h4>
+		<br />
+
+		<p>
+			<code>
+				<pre style='width:60%'>
+          // Вихідні дані:
+
+          отримати масив об'єктів типу: [{ hi: "hi" }, { hi: "hi" }, { hi: "hi" }]
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p><b>Рішення:</b></p>
+		<br />
+
+		<p>
+			Метод <strong><i>arr.fill()</strong> змінює всі елементи в масиві на статичне значення від початкового індексу (за замовчуванням від 0) до кінцевого індексу не включаючи його (за замовчуванням array.length). Він повертає змінений масив.
+		</p>
+		<br />
+
+		<p class="code-ex">
+			Його синтаксис:<br />
+			<code>
+				<b>fill(value)<br />
+           fill(value, start)<br />
+           fill(value, start, end)</b><br />
+			</code>
+		</p>
+		<br />
+
+		<p>
+			де <b>value</b> - значення для заповнення масиву, причому зауважте, що всі елементи в масиві будуть мати саме це значення, а <b><i>якщо value є об’єктом, то кожен слот у масиві буде посилатись на цей об’єкт</i></b>.<br /><br />
+			<b>start</b> - індекс від нуля, з якого починається заповнення, це значення перетворюється на ціле число. Від’ємний індекс вираховується від кінця масиву, тобто: якщо <i>start < 0</i>, індекс визначається як <i>start + array.length</i>.<br /> 
+			Якщо <i>start < -array.length</i> чи узагалі немає - застосовується <i>0</i>;<br />
+			Ну і якщо <i>start >= array.length</i> то індекс не заповнюється узагалі.<br />
+			<br />
+			<b>end</b> - індекс на якому завершується заповнення, перетворений на ціле число. метод fill() заповнює до кінця, але не включає його. Від’ємний індекс вираховується від кінця масиву, тобто: якщо <i>start < 0</i>, індекс визначається як <i>start + array.length</i>.<br />
+			Якщо <i>start < -array.length</i> - застосовується <i>0</i>;<br />
+			Якщо <i>end >= array.length</i> або <i>end</i> опущено, використовується array.length, що спричиняє заповнення всіх індексів до кінця.<br />
+			Якщо <i>end</i> розташовано перед або на початку після нормалізації, індекс не заповнюється.<br />
+			Отже, створюємо спочатку масив з трьох елементів, використовуючи конструктор масивів <strong><i>Array(num)</i></strong>, а методом <i>fill({})</i> заповнюємо масив об'єктами ось так:
+		</p>
+		<br />
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          <b>const arr = Array(3).fill({});</b> // [{}, {}, {}]
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p>
+			далі, потрібно задати кожному повторяючому об'єкту першу властивість (пара ключ-значення), для цього задаєм ключ-значення першому елементу масиву (що є об'єктом),  через квадратні дужки за індексом <i>0</i> властивість <i>hi</i>, що буде присвоєно значення <i>"hi"</i>. А так, як такими елементами заповняеться увесь масив, то достатньо тільки одному задати властивість і отримаємо її у всіх елементах, які заповнюють масив через метод <i>fill()</i> ось так:
+		</p>
+		<br />
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          const arr = Array(3).fill({}); // [{}, {}, {}]
+
+          <b>arr[0].hi = "hi";</b>
+
+          console.log(arr); // [{ hi: "hi" }, { hi: "hi" }, { hi: "hi" }]
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<script>
+			const arr = Array(3).fill({}); // [{}, {}, {}]
+
+			arr[0].hi = "hi"; 
+
+      console.log(arr); // [{ hi: "hi" }, { hi: "hi" }, { hi: "hi" }]
+		</script>
+
+		<br />
+	</body>
+</html>
+

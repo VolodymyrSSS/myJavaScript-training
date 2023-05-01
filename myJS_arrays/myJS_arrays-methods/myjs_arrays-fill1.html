@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Working with Arrays</title>
+		<style>
+			body {
+				background-color: tan;
+				margin: 0;
+				font-family: Verdana, sans-serif;
+			}
+
+			.emph {
+				color: red;
+			}
+
+			.title {
+				color: navy;
+				text-align: center;
+				font-weight: 700;
+			}
+
+			.task {
+				width: 50%;
+				padding: 15px 25px;
+				color: navy;
+				background-color: #e2e2e2;
+				margin: 35px auto;
+			}
+
+			p {
+				width: 80%;
+				margin: 0 auto;
+			}
+
+			pre {
+				width: 50%;
+				background-color: #bebebe;
+				padding-top: 20px;
+				margin: 0 auto;
+			}
+
+			code {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: large;
+			}
+
+			.code-ex {
+				width: 50%;
+				font-family: sans-serif;
+				font-style: italic;
+				background-color: #bebebe;
+				font-size: large;
+				padding-left: 15px;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h2 class="title">Working with Arrays</h2>
+		<h4 class="title">
+			using arrays method <span class="emph">arr.fill()</span>,
+		</h4>
+
+		<h4 class="task">
+			В нас є масив <i>array</i> який містить чотири елементи - числа.<br />
+			Застосуйте метод масивів <i>fill()</i> для того, щоб:<br />
+			1) Заповнити <i>0</i>-и два останні елементи, або замінити два останні значення нулями;<br />
+			2) Заповнити <i>5</i>-и від другого елементу і до кінця масиву;<br />
+			3) Заповнити <i>6</i>-и усі елементи масиву.<br />
+			4) Заповнити/замінити <i>7</i>-ю другий елемент масиву.<br />
+			5) Спробувати замінити попередній масив але отримати той самий.<br />
+			6) Спробувати додати <i>2</i>-у як п'ятий елемент масиву, але отримати той самий.<br />
+			7) Замінити перший елемент масиву на <i>8</i>-у використовуючи відємні значення.<br />
+      8) Спробувати додати дві <i>9</i>-и як п'ятий і шостий елементи масиву, але отримати той самий.<br />
+      9) Використати конструктор масивів для заповнення масиву усіма <i>9</i>-и.<br />
+			<br />
+			Результати перевірти в консолі.
+		</h4>
+		<br />
+
+		<p>
+			<code>
+				<pre style='width:60%'>
+          // Вихідні дані:
+
+          const array = [1, 2, 3, 4];
+					
+          отримати замість array такий масив - [1, 2, 0, 0]
+          отримати замість array такий масив - [1, 5, 5, 5]
+          отримати замість array такий масив - [6, 6, 6, 6]
+          отримати замість array такий масив - [1, 7, 3, 4]
+          cпробувати змінити [1, 7, 3, 4] на масив - [1, 8, 3, 4], але отримати той самий - [1, 7, 3, 4]
+          спробувати додати 5-й елемент масиву - 2, але отримати той самий з чотирьох - [1, 2, 3, 4]
+          отримати замість array такий масив - [8, 2, 3, 4] використовуючи від'ємні значення
+          спробувати додати 5-й і 6-й елементи масиву як 9, але отримати той самий з чотирьох [8, 2, 3, 4]
+          використати конструктор Array(4) щоб заповнити масив усіма <i>9</i>-и.
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p><b>Рішення:</b></p>
+		<br />
+
+		<p>
+			Метод <strong><i>arr.fill()</strong> змінює всі елементи в масиві на статичне значення від початкового індексу (за замовчуванням від 0) до кінцевого індексу не включаючи його (за замовчуванням array.length). Він повертає змінений масив.
+		</p>
+		<br />
+
+		<p class="code-ex">
+			Його синтаксис:<br />
+			<code>
+				<b>fill(value)<br />
+           fill(value, start)<br />
+           fill(value, start, end)</b><br />
+			</code>
+		</p>
+		<br />
+
+		<p>
+			де <b>value</b> - значення для заповнення масиву, причому зауважте, що всі елементи в масиві будуть мати саме це значення, а якщо value є об’єктом, то кожен слот у масиві буде посилатись на цей об’єкт.<br />
+			<b>start</b> - індекс від нуля, з якого починається заповнення, це значення перетворюється на ціле число. Від’ємний індекс вираховується від кінця масиву, тобто: якщо <i>start < 0</i>, індекс визначається як <i>start + array.length</i>.<br /> 
+			Якщо <i>start < -array.length</i> чи узагалі немає - застосовується <i>0</i>;<br />
+			Ну і якщо <i>start >= array.length</i> то індекс не заповнюється узагалі.<br />
+			<br />
+			<b>end</b> - індекс на якому завершується заповнення, перетворений на ціле число. метод fill() заповнює до кінця, але не включає його. Від’ємний індекс вираховується від кінця масиву, тобто: якщо <i>start < 0</i>, індекс визначається як <i>start + array.length</i>.<br />
+			Якщо <i>start < -array.length</i> - застосовується <i>0</i>;<br />
+			Якщо <i>end >= array.length</i> або <i>end</i> опущено, використовується array.length, що спричиняє заповнення всіх індексів до кінця.<br />
+			Якщо <i>end</i> розташовано перед або на початку після нормалізації, індекс не заповнюється.<br />
+			Отже, зважаючи на це, рішенням завдання буде такий код:
+		</p>
+		<br />
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          для 1 - console.log(array.fill(0, 2, 4)); // [1, 2, 0, 0]
+          для 2 - console.log(array.fill(5, 1)); // [1, 5, 5, 5]
+          для 3 - console.log(array.fill(6)); // [6, 6, 6, 6]
+          для 4 - console.log(array.fill(7, 1, 2)); // [1, 7, 3, 4]
+          для 5 - console.log(array.fill(8, 1, 1)); // [1, 7, 3, 4]
+          для 6 - console.log(array.fill(2, 4, 4)); // [1, 2, 3, 4]
+          для 7 - console.log(array.fill(8, -4, -3)); // [8, 2, 3, 4]
+          для 8 - console.log(array.fill(9, 4, 6)); // [8, 2, 3, 4]
+          для 9 - console.log(Array(4).fill(9)); // [9, 9, 9, 9]
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<script>
+			const array1 = [1, 2, 3, 4];
+			const array2 = [1, 2, 3, 4];
+			const array3 = [1, 2, 3, 4];
+			const array4 = [1, 2, 3, 4];
+
+			console.log(array1.fill(0, 2, 4)); // [1, 2, 0, 0]
+      console.log(array1.fill(5, 1)); // [1, 5, 5, 5]
+      console.log(array1.fill(6)); // [6, 6, 6, 6]
+      console.log(array2.fill(7, 1, 2)); // [1, 7, 3, 4]
+			console.log(array2.fill(8, 1, 1)); // [1, 7, 3, 4]
+			console.log(array3.fill(2, 4, 4)); // [1, 2, 3, 4]
+			console.log(array4.fill(8, -4, -3)); // [8, 2, 3, 4]
+			console.log(Array(4).fill(9)); // [9, 9, 9, 9]
+		</script>
+
+		<br />
+	</body>
+</html>
+gh
