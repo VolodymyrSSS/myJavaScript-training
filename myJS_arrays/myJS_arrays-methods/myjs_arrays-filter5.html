@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Working with Arrays</title>
+		<style>
+			body {
+				background-color: tan;
+				margin: 0;
+				font-family: Verdana, sans-serif;
+			}
+
+			.emph {
+				color: red;
+			}
+
+			.title {
+				color: navy;
+				text-align: center;
+				font-weight: 700;
+			}
+
+			.task {
+				width: 50%;
+				padding: 15px 25px;
+				color: navy;
+				background-color: #e2e2e2;
+				margin: 35px auto;
+			}
+
+			p {
+				width: 80%;
+				margin: 0 auto;
+			}
+
+			pre {
+				width: 50%;
+				background-color: #bebebe;
+				padding-top: 20px;
+				margin: 0 auto;
+			}
+
+			code {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: large;
+			}
+
+			.code-ex {
+				width: 50%;
+				font-family: sans-serif;
+				font-style: italic;
+				background-color: #bebebe;
+				font-size: large;
+				padding-left: 15px;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h2 class="title">Working with Arrays</h2>
+		<h4 class="title">
+			using arrays method <span class="emph">arr.filter(fn)</span>,
+			<span class="emph">arr.includes()</span>, string method
+			<span class="emph">str.toLowerCase()</span>
+		</h4>
+
+		<h4 class="task">
+			Напишіть функцію <i>filterItems</i>, яка отримує на вхід першим параметром
+			масив рядків (слово-виразів), а другим - підрядок <i>query</i>, та
+			повертає новий масив тільки тих елементів, які включають підрядок
+			<i>query</i>.<br />
+			По іншому <i>query</i> називають критерій для фільтрації/пошуку.
+			Результати виведіть в консоль.
+		</h4>
+		<br />
+
+		<p>
+			<code>
+				<pre>
+          // Вихідні дані:
+
+          const fruits = ["apple", "banana", "grapes", "mango", "orange"];
+
+          function filterItems(arr, query) {
+            // .. ваш код ..
+          }
+
+          console.log(filterItems(fruits, "ap")); // ['apple', 'grapes']
+          console.log(filterItems(fruits, "an")); // ['banana', 'mango', 'orange']
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p><b>Рішення:</b></p>
+		<br />
+
+		<p>
+			Алгоритмом рішення завдання може бути: фільтрація тих
+			елементів масиву, які містять потрібний підрядок методом <strong><i>arr.filter(fn)</i></strong>, в якому визначеємо в функції-колбеку <i>fn</i> критерій для фільтрації. За цим критерієм, спочатку необхідно відшукати ті елементи масиву, які включають заданий підрядок.<br />
+			Це можна знобити використавши інший метод масивів
+			<strong><i>arr.includes()</strong> проте щоб зробити уніфікований пошук необхідно привести елементи до наприклад нижнього регістру за допомогою методу для рядків <strong><i>str.toLowerCase()</i></strong
+			>, ось так:
+		</p>
+		<br />
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          function filterItems(arr, query) {
+            return arr.filter((el) =>
+              el.toLowerCase().includes(query.toLowerCase())
+            );
+          }
+
+          console.log(filterItems(fruits, 'ap')); // ['apple', 'grapes']
+          console.log(filterItems(fruits, 'an')); // ['banana', 'mango', 'orange']
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<script>
+			const fruits = ['apple', 'banana', 'grapes', 'mango', 'orange'];
+
+			/**
+			 * Filter array items based on search criteria (query)
+			 */
+			function filterItems(arr, query) {
+				return arr.filter((el) =>
+					el.toLowerCase().includes(query.toLowerCase())
+				);
+			}
+
+			console.log(filterItems(fruits, 'ap')); // ['apple', 'grapes']
+			console.log(filterItems(fruits, 'an')); // ['banana', 'mango', 'orange']
+		</script>
+
+		<br />
+	</body>
+</html>
+gh
