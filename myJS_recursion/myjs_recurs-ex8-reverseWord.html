@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Recursion</title>
+		<style>
+			body {
+				background-color: tan;
+				margin: 0;
+				font-family: Verdana, sans-serif;
+			}
+
+			.emph {
+				color: red;
+			}
+
+			.title {
+				color: navy;
+				text-align: center;
+				font-weight: 700;
+			}
+
+			.task {
+				width: 50%;
+				padding: 15px 25px;
+				color: navy;
+				background-color: #e2e2e2;
+				margin: 35px auto;
+			}
+
+			p {
+				width: 80%;
+				margin: 0 auto;
+			}
+
+			pre {
+				width: 50%;
+				background-color: #bebebe;
+				padding-top: 20px;
+				margin: 0 auto;
+			}
+
+			code {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: large;
+			}
+
+			.code-ex {
+				width: 50%;
+				font-family: sans-serif;
+				font-style: italic;
+				background-color: #bebebe;
+				font-size: large;
+				padding-left: 15px;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h2 class="title">Recursion</h2>
+		<h4 class="title">
+			using <span class="emph">recursive</span> approach calling the same
+			function<br />
+			string method <span class="emph">str.slice()</span>, string property
+			<span class="emph">str.length</span>
+		</h4>
+
+		<h4 class="task">
+			Напишіть функцію <i>reversing(srt)</i>, яка отримує рядок слово-виразів
+			<i>str</i> який потрібно вивести в консоль у зворотньому порядку
+			використавши рекурсію.
+		</h4>
+		<br />
+
+		<p>
+			<code>
+				<pre>
+          // Вихідні дані:
+
+          const str = "hello"
+
+          function reversing(str) {
+            // ... ваш код ...
+          }
+
+          console.log( reversing(str) ); // olleh
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p><b>Рішення:</b></p>
+		<br />
+
+		<p>
+			Можливий алгоритм може бути таким: будувати посимвольно новий рядок
+			символів беручи для нього символ з кінця заданого рядка символів та
+			додавати до нього рядок символів, що залишився. Потім знову брати символ з
+			кінця рядка що залишився, і додавати його до того, що також залишився від
+			попереднього результату. Тобто, вирізати по-одному символ рядоку
+			слово-виразу з кінця та додавати його до наступного символа, який також
+			береться з кінця того самого рядка символів. Така повторяюча дія підпадає
+			під рекурсивний виклик. І так вирізати усі символи з заданого рядка щоб в
+			ньому не залишилось символів. Так буде сформований новий рядок символів
+			але символи у ньому будуть стояти у зворотньому порядку від заданого.<br />
+			Тому, спочатку визначаємо базу рекурсії, яка буде вважатись такою, коли
+			усі символи були вирізані із заданого рядка, тобто довжина рядка символів
+			буде дорівнювати <i>0</i> при цьому функція має повернути пустий рядок,
+			ось так:
+		</p>
+		<br />
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          function reversing(str) {
+            <b>if (str.length === 0) return "";</b>
+            // піде інший код
+          }
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p>
+			Далі йдемо по алгоритму - беремо/вирізаємо останній символ заданого рядку
+			та додаємо до нього рядок символів, що залишився (без того останнього
+			символу що був вирізаний) використавши для цього метод
+			<strong><i>slice(0, str.length-1)</i></strong
+			>. Цей <i>"обрізаний"</i> рядок поступає на вхід тої самої функції
+			(рекурсивно). В результаті ми, додамо передостанній символ до останнього
+			та знову рядок, що залишився який поступає на вхід тої самої функції, або
+			рекурсивно викликає сама себе. І так до тих пір, доки з заданого рядка
+			будуть вирізані усі символи. При цьому результат рекурсії також потрібно
+			повертати, тому результуючий код буде ось такий:
+		</p>
+		<br />
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          const str = "hello"
+
+          function reversing(str) {
+            // base case
+            if (str.length === 0) return "";
+            
+            // recursion
+            <b>return str[str.length - 1] + reversing(str.slice(0, str.length - 1));</b>
+          }
+
+          console.log(reversing(str)); // olleh
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<script>
+			const str = 'hello';
+
+			function reversing(str) {
+				// base case
+				if (str.length === 0) return '';
+
+				// recursion
+				return str[str.length - 1] + reversing(str.slice(0, str.length - 1));
+			}
+
+			console.log(reversing(str)); // olleh
+		</script>
+
+		<br />
+	</body>
+</html>
