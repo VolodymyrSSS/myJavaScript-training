@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Working with Objects</title>
+		<style>
+			body {
+				background-color: tan;
+				margin: 0;
+				font-family: Verdana, sans-serif;
+			}
+
+			.emph {
+				color: red;
+			}
+
+			.title {
+				color: navy;
+				text-align: center;
+				font-weight: 700;
+			}
+
+			.task {
+				width: 50%;
+				padding: 15px 25px;
+				color: navy;
+				background-color: #e2e2e2;
+				margin: 35px auto;
+			}
+
+			p {
+				width: 80%;
+				margin: 0 auto;
+			}
+
+			pre {
+				width: 50%;
+				background-color: #bebebe;
+				padding-top: 20px;
+				margin: 0 auto;
+			}
+
+			code {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: large;
+			}
+
+			.code-ex {
+				width: 50%;
+				font-family: sans-serif;
+				font-style: italic;
+				background-color: #bebebe;
+				font-size: large;
+				padding-left: 15px;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h2 class="title">Working with Objects</h2>
+		<h4 class="title">
+			object method to iterate through the values
+			<span class="emph">Object.values(obj)</span>,<br />
+			iterations over data structures for plain objects as
+			<span class="emph">for...of</span>, arrays method
+			<span class="emph">reduce()</span>
+		</h4>
+
+		<h4 class="task">
+			У нас є об'єкт <i>salaries</i> у якому (умовно) зазначені у властивостях
+			їх заробітні плати за місяць. Напишіть функцію
+			<i>sumSalaries(salaries)</i>, яка підрахує загальну суму заробітку усіх
+			працівників. Покажіть щонайменше два можливих рішення.<br />
+			Результати виведіть в консоль.
+		</h4>
+		<br />
+
+		<p>
+			<code>
+				<pre>
+          // Вихідні дані:
+
+          let salaries = {
+            John: 1952,
+            Pete: 3020,
+            Mary: 2487,
+          };
+
+          function sumSalaries(salaries) {
+            // ... ваш код
+          }
+
+          // перевірка
+          console.log( sumSalaries(salaries) ); // 7459
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p><b>Рішення1:</b></p>
+		<br />
+
+		<p>
+			Алгоритмом рішення завдання, може бути таким: створюємо змінну, якій буде
+			присвоєно результат обчислення, звичайно він на початку буде дорівнювати
+			нулю. Далі потрібно пройтись по всім властивостям об'єкту за допомогою
+			циклу <strong><i>for...of</i></strong> та взяти суму усіх їх значень
+			використавши метод <strong><i>Object.values(obj)</i></strong
+			>, ну і звичайно, повертаємо значення підрахованої суми, ось так:
+		</p>
+		<br />
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          function sumSalaries(salaries) {
+            let sum = 0;
+            <b>for (let salary of Object.values(salaries)) {
+              sum += salary;</b>
+            }
+            return sum;
+          }
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p><b>Рішення2:</b></p>
+		<br />
+
+		<p>
+			Для обчислення єдиного значення можна з використати метод масивів
+			<strong><i>.reduce()</i></strong
+			>, але звичайно перед цим потрібно спочатку отримати значення властивостей
+			об'єкту, які потім через метод <i>reduce()</i> додамо та отримаємо
+			результат.<br />
+			Тобто, для отримання значень ключів об'єтку, використовуємо той самий
+			метод для об'єктів <strong><i>Object.values(obj)</i></strong> (повертає
+			масив значень ключів об'єкту), а вже отримавши ці значення, ітеруємо по
+			них методом масивів <i>reduce()</i>, ось:
+		</p>
+		<br />
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          function sumSalaries(salaries) {
+            return <b>Object.values(salaries).reduce((acc, val) => acc + val, 0)</b>
+          }
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<script>
+			let salaries = {
+				John: 1952,
+				Pete: 3020,
+				Mary: 2487,
+			};
+
+			function sumSalaries(salaries) {
+				let sum = 0;
+				for (let salary of Object.values(salaries)) {
+					sum += salary;
+				}
+				return sum;
+			}
+
+			function sumSalaries2(salaries) {
+				return Object.values(salaries).reduce((acc, elem) => acc + elem, 0);
+			}
+
+			console.log(sumSalaries(salaries)); // 7459
+			console.log(sumSalaries2(salaries)); // 7459
+		</script>
+
+		<br />
+	</body>
+</html>
