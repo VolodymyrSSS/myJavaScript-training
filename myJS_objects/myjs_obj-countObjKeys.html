@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Working with Objects</title>
+		<style>
+			body {
+				background-color: tan;
+				margin: 0;
+				font-family: Verdana, sans-serif;
+			}
+
+			.emph {
+				color: red;
+			}
+
+			.title {
+				color: navy;
+				text-align: center;
+				font-weight: 700;
+			}
+
+			.task {
+				width: 50%;
+				padding: 15px 25px;
+				color: navy;
+				background-color: #e2e2e2;
+				margin: 35px auto;
+			}
+
+			p {
+				width: 80%;
+				margin: 0 auto;
+			}
+
+			pre {
+				width: 50%;
+				background-color: #bebebe;
+				padding-top: 20px;
+				margin: 0 auto;
+			}
+
+			code {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: large;
+			}
+
+			.code-ex {
+				width: 50%;
+				font-family: sans-serif;
+				font-style: italic;
+				background-color: #bebebe;
+				font-size: large;
+				padding-left: 15px;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h2 class="title">Working with Objects</h2>
+		<h4 class="title">
+			iterations over data structures for plain objects as
+			<span class="emph">Object.keys(obj)</span>,<br />
+			array property <span class="emph">array.length</span>
+		</h4>
+
+		<h4 class="task">
+			У нас є об'єкти <i>user1</i> та <i>user2</i>, кожен має своєю кількість
+			властивостей. Напишіть функцію <i>countProps(user)</i> яка буде рахувати
+			кількість властивостей/полів заданого об'єкту. Спробуйте написати
+			найкороткий код.<br />
+			Результат виведіть в консоль.
+		</h4>
+		<br />
+
+		<p>
+			<code>
+				<pre>
+          // Вихідні дані:
+
+          let user1 = {
+            name: "Modest",
+            age: 42,
+          };
+
+          let user2 = {
+            name: "Sigizmund",
+            age: 44,
+            "love birds": true,
+            "love cats": false,
+          };
+
+          function countProps(userN) {
+            // ... ваш код
+          }
+
+          // перевірка
+          console.log( dcountProps(user1) ); // 2
+          console.log( dcountProps(user2) ); // 4
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p><b>Рішення:</b></p>
+		<br />
+
+		<p>
+			Для вирішення цього завдання потрібно просто в функції повернути загальну
+			кількість полів заданого об'єкту. Для цього, використаєм властивість
+			масивів <strong><i>arr.length</i></strong
+			>, а щоб можна було взяти значення <i>length</i>, потрібно отримати цей
+			масив та його елементи - тобто поля об'єкту отримати як елементи масиву,
+			або перевести об'єкт в масив. Це можна зробити за допомогою методу
+			ітерації по полям об'єкту
+			<strong><i>Object.keys(obj)</i></strong> (повертає масив ключів об'єкту).
+			Отже, найкоротший код рішення буде:
+		</p>
+		<br />
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          function countProps(userN) {
+            return <b>Object.keys(userN).length</b>;
+          }
+        </pre>
+			</code>
+		</p>
+		<br />
+		<br />
+
+		<script>
+			let user1 = {
+				name: 'Modest',
+				age: 42,
+			};
+
+			let user2 = {
+				name: 'Sigizmund',
+				age: 44,
+				'love birds': true,
+				'love cats': false,
+			};
+
+			function countProps(userN) {
+				return Object.keys(userN).length;
+			}
+
+			console.log(countProps(user1)); // 2
+			console.log(countProps(user2)); // 4
+		</script>
+
+		<br />
+	</body>
+</html>

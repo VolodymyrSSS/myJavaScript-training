@@ -1,419 +1,479 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>myjs: keyword-this</title>
-    <style>
-    body {
-        background-color: tan;
-        margin: 0;
-        font-family: Verdana, sans-serif;
-    }
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>myjs: keyword-this</title>
+		<style>
+			body {
+				background-color: tan;
+				margin: 0;
+				font-family: Verdana, sans-serif;
+			}
 
-    .title {
-        color: red;
-        text-align: center;
-        font-weight:700;
-    }
+			.title {
+				color: red;
+				text-align: center;
+				font-weight: 700;
+			}
 
-    .code-ex {
-        width: 50%;
-        font-family: sans-serif;
-        background-color: #bebebe;
-        font-size: large;
-        padding-left: 15px;
-        margin: 0 auto;
-    }
+			.code-ex {
+				width: 50%;
+				font-family: sans-serif;
+				background-color: #bebebe;
+				font-size: large;
+				padding-left: 15px;
+				margin: 0 auto;
+			}
 
-    .task{
-        width: 50%;
-        padding: 15px 25px;
-        color: navy;
-        background-color: #e2e2e2;
-        margin: 35px auto;
-    }
+			.task {
+				width: 50%;
+				padding: 15px 25px;
+				color: navy;
+				background-color: #e2e2e2;
+				margin: 35px auto;
+			}
 
-    .code-ex {
-        width: 50%;
-        font-family: sans-serif;
-        background-color: #bebebe;
-        font-size: large;
-        padding-left: 15px;
-        margin: 0 auto;
-    }
+			.code-ex {
+				width: 50%;
+				font-family: sans-serif;
+				background-color: #bebebe;
+				font-size: large;
+				padding-left: 15px;
+				margin: 0 auto;
+			}
 
-    p {
-        width: 80%;
-        margin: 0 auto;
-    }
-    </style>
-</head>
-<body>
+			p {
+				width: 80%;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+	<body>
+		<h2 class="title">
+			JS-objects: keyword-«this»: методы объектов, «this» в методах, «this» не
+			фиксирован, ссылочный тип, стрелочные функции и «this»
+		</h2>
 
-    <h2 class="title">JS-objects: keyword-«this»: методы объектов, «this» в методах, «this» не фиксирован, ссылочный тип, стрелочные функции и «this»</h2>
+		<h3>Методы объектов</h3>
 
-    <h3>Методы объектов</h3>
+		<h4 class="task">
+			Создайте объект 'user' и задайте ему несколько свойств. Далее, используйте
+			Function Expression (функциональное выражение), чтобы создать функцию для
+			приветствия, и присвойте её свойству user.sayHi - то есть создайте метод
+			нашего объекта.<br />
+			Потом, проверте объект выведя в консоль одно свойство и вызовите его
+			свойство-функцию.
+		</h4>
 
-    <h4 class="task">
-        Создайте объект 'user' и задайте ему несколько свойств. Далее, используйте Function Expression (функциональное выражение), 
-        чтобы создать функцию для приветствия, и присвойте её свойству user.sayHi  - то есть создайте метод нашего объекта.<br>
-        Потом, проверте объект выведя в консоль одно свойство и вызовите его свойство-функцию.
-    </h4>
+		<p><b>Решение</b>:</p>
 
-    <p><b>Решение</b>:</p>
+		<p>
+			Объекты обычно создаются, чтобы представлять сущности реального мира, будь
+			то пользователи, заказы и так далее. Пользователь может совершать
+			действия. Такие действия в JavaScript представлены
+			<b>свойствами-функциями объекта</b>.<br />
+			<br />
+			<b
+				>Функцию, которая является свойством объекта, называют методом этого
+				объекта.</b
+			><br />
+			<br />
+		</p>
+		<br />
 
-    <p>Объекты обычно создаются, чтобы представлять сущности реального мира, будь то пользователи, заказы и так 
-        далее. Пользователь может совершать действия. Такие действия в JavaScript представлены <b>свойствами-функциями 
-        объекта</b>.<br>
-        <br>
-        <b>Функцию, которая является свойством объекта, называют методом этого объекта.</b><br>
-        <br>
-    </p>
-    <br>
+		<p class="code-ex">
+			<code>
+				let user = {<br />
+				name: 'Bonifatsii',<br />
+				surname: 'Chacaningy',<br />
+				age: 40<br />
+				};<br />
+				<br />
+				<b>user.sayHi</b> = function() {<br />
+				console.log('Hello!');<br />
+				};<br />
+				<br />
+				console.log(user.name); // Bonifatsii -взяли свойство user.sayHi(); //
+				Hello! -вызвали функцию и получили результат<br />
+			</code>
+		</p>
+		<br />
 
-    <p class="code-ex">
-        <code>
-            let user = {<br>
-              name: 'Bonifatsii',<br>
-              surname: 'Chacaningy',<br>
-              age: 40<br>
-            };<br>
-            <br>
-            <b>user.sayHi</b> = function() {<br>
-              console.log('Hello!');<br>
-            };<br>
-            <br>
-            console.log(user.name); // Bonifatsii -взяли свойство
-            user.sayHi(); // Hello! -вызвали функцию  и получили результат<br>
-        </code>
-    </p>
-    <br>
+		<script>
+			let user = {
+				name: 'Bonifatsii',
+				surname: 'Chacaningy',
+				age: 40,
+			};
 
-    <script>
-        let user = {
-              name: 'Bonifatsii',
-              surname: 'Chacaningy',
-              age: 40
-            };
-              
-            user.sayHi = function() {
-              console.log('Hello!');
-            };
-              
-            console.log(user.name); // Bonifatsii
-            user.sayHi(); // Hello!
-    </script>
+			user.sayHi = function () {
+				console.log('Hello!');
+			};
 
-    <p>Итак, мы получили метод sayHi объекта user.
-        Конечно, мы могли бы заранее объявить функцию и использовать её в качестве метода, примерно так:
-    </p>
-    <br>
+			console.log(user.name); // Bonifatsii
+			user.sayHi(); // Hello!
+		</script>
 
-    <p class="code-ex">
-        <code>
-            let user = {<br>
-                name: 'Bonifatsii',<br>
-                surname: 'Chacaningy',<br>
-                age: 40<br>
-            }; -внимание! <b>;</b> обязательна<br>
-              <br>
-            // сначала объявляем<br>
-               function sayHi() {<br>
-                console.log('Hello!');<br>
-            };<br>
-            <br>
-            // затем добавляем в качестве метода<br>
-            <b>user.sayHi = sayHi;</b><br>
-            <br>
-            user.sayHi(); // Hello!<br>
-        </code>
-    </p>
-    <br>
+		<p>
+			Итак, мы получили метод sayHi объекта user. Конечно, мы могли бы заранее
+			объявить функцию и использовать её в качестве метода, примерно так:
+		</p>
+		<br />
 
-    <p>Но первый пример выглядит лаконичнее.<br>
-        Существует более короткий синтаксис для методов в литерале объекта - мы можем пропустить 
-        ключевое слово 'function' и просто написать sayHi() вот так:
-    </p>
-    <br>
+		<p class="code-ex">
+			<code>
+				let user = {<br />
+				name: 'Bonifatsii',<br />
+				surname: 'Chacaningy',<br />
+				age: 40<br />
+				}; -внимание! <b>;</b> обязательна<br />
+				<br />
+				// сначала объявляем<br />
+				function sayHi() {<br />
+				console.log('Hello!');<br />
+				};<br />
+				<br />
+				// затем добавляем в качестве метода<br />
+				<b>user.sayHi = sayHi;</b><br />
+				<br />
+				user.sayHi(); // Hello!<br />
+			</code>
+		</p>
+		<br />
 
-    <p class="code-ex">
-        <code>
-            // эти объекты делают одно и то же (одинаковые методы)<br>
-            <br>
-            user = {<br>
-                sayHi: function() {<br>
-                  console.log('Привет'); }<br>
-            };<br>
-            <br>
-            // сокращённая запись выглядит лучше, не так ли?<br>
-            user = {<br>
-                sayHi() { // то же самое, что и 'sayHi: function()'<br>
-                  console.log('Привет'); }<br>
-            };<br>
-        </code>
-    </p>
-    <br>
+		<p>
+			Но первый пример выглядит лаконичнее.<br />
+			Существует более короткий синтаксис для методов в литерале объекта - мы
+			можем пропустить ключевое слово 'function' и просто написать sayHi() вот
+			так:
+		</p>
+		<br />
 
-    <p>Нужно отметить, что эти две записи не полностью эквивалентны. Есть тонкие различия, связанные с наследованием 
-        объектов, но на данном этапе это неважно. В большинстве случаев сокращённый синтаксис предпочтителен.
-    </p>
-    <br>
+		<p class="code-ex">
+			<code>
+				// эти объекты делают одно и то же (одинаковые методы)<br />
+				<br />
+				user = {<br />
+				sayHi: function() {<br />
+				console.log('Привет'); }<br />
+				};<br />
+				<br />
+				// сокращённая запись выглядит лучше, не так ли?<br />
+				user = {<br />
+				sayHi() { // то же самое, что и 'sayHi: function()'<br />
+				console.log('Привет'); }<br />
+				};<br />
+			</code>
+		</p>
+		<br />
 
-    <h3>Ключевое слово «this» в методах</h3>
+		<p>
+			Нужно отметить, что эти две записи не полностью эквивалентны. Есть тонкие
+			различия, связанные с наследованием объектов, но на данном этапе это
+			неважно. В большинстве случаев сокращённый синтаксис предпочтителен.
+		</p>
+		<br />
 
-    <h4 class="task">
-        Внутри объекта 'author', в его методе используйте ключевое слово <em>«this»</em> для доступа к свойству 'name' этого объекта.
-    </h4>
+		<h3>Ключевое слово «this» в методах</h3>
 
-    <p><b>Решение</b>:</p>
+		<h4 class="task">
+			Внутри объекта 'author', в его методе используйте ключевое слово
+			<em>«this»</em> для доступа к свойству 'name' этого объекта.
+		</h4>
 
-    <p>Как правило, методу объекта необходим доступ к информации, которая хранится в объекте, чтобы выполнить с ней 
-        какие-либо действия (в соответствии с назначением метода).
-        Например, коду внутри user.sayHi() может понадобиться имя пользователя, которое хранится в объекте user и т.д.
-    </p>
-    <br>
+		<p><b>Решение</b>:</p>
 
-    <p>Для доступа к информации внутри объекта метод может использовать ключевое слово <b><em>this</em></b>.<br>
-        <b>начение this – это объект «перед точкой», который использовался для вызова метода</b>.
-    </p>
-    <br>
+		<p>
+			Как правило, методу объекта необходим доступ к информации, которая
+			хранится в объекте, чтобы выполнить с ней какие-либо действия (в
+			соответствии с назначением метода). Например, коду внутри user.sayHi()
+			может понадобиться имя пользователя, которое хранится в объекте user и
+			т.д.
+		</p>
+		<br />
 
-    <p class="code-ex">
-        <code>
-            let author = {<br>
-              name: 'Hans Christian',<br>
-              surname: 'Andersen',<br>
-              age: 45<br>
-              <br>
-              sayHi() {<br>
-                console.log(this.name); -здесь this - это 'текущий объект'}<br>
-            };<br>
-            <br>
-            author.sayHi(); // Hans Christian<br>
-        </code>
-    </p>
-    <br>
+		<p>
+			Для доступа к информации внутри объекта метод может использовать ключевое
+			слово <b><em>this</em></b
+			>.<br />
+			<b
+				>начение this – это объект «перед точкой», который использовался для
+				вызова метода</b
+			>.
+		</p>
+		<br />
 
-    <script>
-        let author = {
-            name: "Hans Christian",
-            surname: "Andersen",
-            age: 218,
-        
-          sayHi() {
-            console.log(this.name);
-          }
-        };
-            
-            author.sayHi(); // Hans Christian
-    </script>
+		<p class="code-ex">
+			<code>
+				let author = {<br />
+				name: 'Hans Christian',<br />
+				surname: 'Andersen',<br />
+				age: 45<br />
+				<br />
+				sayHi() {<br />
+				console.log(this.name); -здесь this - это 'текущий объект'}<br />
+				};<br />
+				<br />
+				author.sayHi(); // Hans Christian<br />
+			</code>
+		</p>
+		<br />
 
-    <p>Здесь во время выполнения кода author.sayHi() значением this будет являться author (ссылка на объект user).<br>
-        Технически также возможно получить доступ к объекту без ключевого слова this, ссылаясь на него через внешнюю 
-        переменную (в которой хранится ссылка на этот объект):
-    </p>
-    <br>
+		<script>
+			let author = {
+				name: 'Hans Christian',
+				surname: 'Andersen',
+				age: 218,
 
-    <p class="code-ex">
-        <code>
-            let author = {<br>
-              name: 'Hans Christian',<br>
-              surname: 'Andersen',<br>
-              age: 45<br>
-              <br>
-              sayHi() {<br>
-                console.log(<b>author.name</b>); }<br>
-            };<br>
-            <br>
-            author.sayHi(); // Hans Christian<br>
-        </code>
-    </p>
-    <br>
+				sayHi() {
+					console.log(this.name);
+				},
+			};
 
-    <p>Но такой код будет ненадёжным. Если мы решим скопировать ссылку на объект author в другую переменную, например, 
-        author2 = author, и перезапишем переменную author чем-то другим, тогда будет осуществлён доступ к неправильному 
-        объекту при вызове метода из author2.
-    </p>
-    <br>
+			author.sayHi(); // Hans Christian
+		</script>
 
-    <p class="code-ex" style="width: 60%;">
-        <code>
-            let author = {<br>
-              name: 'Hans Christian',<br>
-              surname: 'Andersen',<br>
-              age: 45<br>
-              <br>
-              sayHi() {<br>
-                console.log(author.name); }<br>
-            };<br>
-            <br>
-            <b>let author2 = author;</b><br>
-            <br>
-            <b>author = null</b>  -обнулим переменную для наглядности, теперь она не хранит ссылку на объект<br>
-            author2.sayHi(); -Ошибка! Внутри sayHi() используется author, которая больше не ссылается на объект!<br>
-            <br>
-            // Но если мы используем this.name вместо author.name внутри console.log, тогда этот код будет работать.
-        </code>
-    </p>
-    <br>
+		<p>
+			Здесь во время выполнения кода author.sayHi() значением this будет
+			являться author (ссылка на объект user).<br />
+			Технически также возможно получить доступ к объекту без ключевого слова
+			this, ссылаясь на него через внешнюю переменную (в которой хранится ссылка
+			на этот объект):
+		</p>
+		<br />
 
-    <h3>«this» не является фиксированным</h3>
+		<p class="code-ex">
+			<code>
+				let author = {<br />
+				name: 'Hans Christian',<br />
+				surname: 'Andersen',<br />
+				age: 45<br />
+				<br />
+				sayHi() {<br />
+				console.log(<b>author.name</b>); }<br />
+				};<br />
+				<br />
+				author.sayHi(); // Hans Christian<br />
+			</code>
+		</p>
+		<br />
 
-    <p>В JavaScript ключевое слово «this» ведёт себя иначе, чем в большинстве других языков программирования. Оно может 
-        использоваться в любой функции.<br>
-        В этом коде нет синтаксической ошибки:
-    </p>
-    <br>
+		<p>
+			Но такой код будет ненадёжным. Если мы решим скопировать ссылку на объект
+			author в другую переменную, например, author2 = author, и перезапишем
+			переменную author чем-то другим, тогда будет осуществлён доступ к
+			неправильному объекту при вызове метода из author2.
+		</p>
+		<br />
 
-    <p class="code-ex" style="width: 60%;">
-        <code>
-            function sayHi() {<br>
-                alert( this.name );<br>
-              }<br>
-        </code>
-    </p>
-    <br>
+		<p class="code-ex" style="width: 60%">
+			<code>
+				let author = {<br />
+				name: 'Hans Christian',<br />
+				surname: 'Andersen',<br />
+				age: 45<br />
+				<br />
+				sayHi() {<br />
+				console.log(author.name); }<br />
+				};<br />
+				<br />
+				<b>let author2 = author;</b><br />
+				<br />
+				<b>author = null</b> -обнулим переменную для наглядности, теперь она не
+				хранит ссылку на объект<br />
+				author2.sayHi(); -Ошибка! Внутри sayHi() используется author, которая
+				больше не ссылается на объект!<br />
+				<br />
+				// Но если мы используем this.name вместо author.name внутри
+				console.log, тогда этот код будет работать.
+			</code>
+		</p>
+		<br />
 
-    <p>Значение this вычисляется во время выполнения кода и зависит от контекста.</p>
+		<h3>«this» не является фиксированным</h3>
 
-    <h4 class="task">
-        Создайте функцию 'sayHi()' и назначте её двум разным объектам. Какое значение получит «this» при вызовах этих функций?
-    </h4>
+		<p>
+			В JavaScript ключевое слово «this» ведёт себя иначе, чем в большинстве
+			других языков программирования. Оно может использоваться в любой
+			функции.<br />
+			В этом коде нет синтаксической ошибки:
+		</p>
+		<br />
 
-    <p><b>Ответ</b>: при вызове obj.f() значение this внутри f равно obj. Так что, в приведённом примере это user или admin.</p>
-    <br>
+		<p class="code-ex" style="width: 60%">
+			<code>
+				function sayHi() {<br />
+				alert( this.name );<br />
+				}<br />
+			</code>
+		</p>
+		<br />
 
-    <p class="code-ex" style="width: 60%;">
-        <code>
-            let user = { name: 'John' };<br>
-            let admin = { name: 'Admin' };<br>
-            <br>
-            function sayHi() {<br>
-              console.log( this.name );<br>
-            }<br>
-            <br>
-            <b>// используем одну и ту же функцию в двух объектах</b><br>
-            user.f = sayHi;<br>
-            admin.f = sayHi;<br>
-            <br>
-            // вызовы функции, приведённые ниже, имеют разное значение this<br>
-            // "this" внутри функции является ссылкой на объект, который указан 'перед точкой'<br>
-            <b>user.f(); // John  тут this == user<br>
-            admin.f();</b> // Admin  тут this == admin<br>
-            <br>
-            <b>admin['f']();</b> // Админ (неважен способ доступа к методу - через точку или квадратные скобки)<br>
-        </code>
-    </p>
-    <br>
+		<p>
+			Значение this вычисляется во время выполнения кода и зависит от контекста.
+		</p>
 
-    <script>
-        let user2 = { name: "John" };
-        let admin2 = { name: "Admin" };
+		<h4 class="task">
+			Создайте функцию 'sayHi()' и назначте её двум разным объектам. Какое
+			значение получит «this» при вызовах этих функций?
+		</h4>
 
-        function sayHi() {
-          console.log( this.name );
-        }
+		<p>
+			<b>Ответ</b>: при вызове obj.f() значение this внутри f равно obj. Так
+			что, в приведённом примере это user или admin.
+		</p>
+		<br />
 
-        // используем одну и ту же функцию в двух объектах
-        user2.f = sayHi;
-        admin2.f = sayHi;
+		<p class="code-ex" style="width: 60%">
+			<code>
+				let user = { name: 'John' };<br />
+				let admin = { name: 'Admin' };<br />
+				<br />
+				function sayHi() {<br />
+				console.log( this.name );<br />
+				}<br />
+				<br />
+				<b>// используем одну и ту же функцию в двух объектах</b><br />
+				user.f = sayHi;<br />
+				admin.f = sayHi;<br />
+				<br />
+				// вызовы функции, приведённые ниже, имеют разное значение this<br />
+				// "this" внутри функции является ссылкой на объект, который указан
+				'перед точкой'<br />
+				<b
+					>user.f(); // John тут this == user<br />
+					admin.f();</b
+				>
+				// Admin тут this == admin<br />
+				<br />
+				<b>admin['f']();</b> // Админ (неважен способ доступа к методу - через
+				точку или квадратные скобки)<br />
+			</code>
+		</p>
+		<br />
 
-        // вызовы функции, приведённые ниже, имеют разное значение this
-        // 'this' внутри функции является ссылкой на объект, который указан 'перед точкой'
-        user2.f(); // John  (this == user2)
-        admin2.f(); // Admin  (this == admin2)
+		<script>
+			let user2 = { name: 'John' };
+			let admin2 = { name: 'Admin' };
 
-        admin2["f"](); // Admin - неважен способ доступа к методу - через точку или квадратные скобки
-    </script>
+			function sayHi() {
+				console.log(this.name);
+			}
 
-    <p>В JavaScript this является «свободным», его значение вычисляется в момент вызова метода и не зависит от того, 
-        где этот метод был объявлен, а зависит от того, какой объект вызывает метод (какой объект стоит «перед точкой»).
-        Эта идея вычисления this в момент исполнения имеет как свои плюсы, так и минусы. С одной стороны, функция может 
-        быть повторно использована в качестве метода у различных объектов (что повышает гибкость). С другой стороны, 
-        большая гибкость увеличивает вероятность ошибок.
-    </p>
+			// используем одну и ту же функцию в двух объектах
+			user2.f = sayHi;
+			admin2.f = sayHi;
 
-    <h3>Внутренняя реализация: Ссылочный тип</h3>
+			// вызовы функции, приведённые ниже, имеют разное значение this
+			// 'this' внутри функции является ссылкой на объект, который указан 'перед точкой'
+			user2.f(); // John  (this == user2)
+			admin2.f(); // Admin  (this == admin2)
 
-    <p>Следует заметить что значение this передаётся правильно, только если функция вызывается напрямую с использованием 
-        синтаксиса точки <b>obj.method()</b> или квадратных скобок <b>obj['method']()</b> (они делают то же самое). <br>
-        Но некоторые хитрые способы вызова метода приводят к потере значения this, например:
-    </p>
-    <br>
+			admin2['f'](); // Admin - неважен способ доступа к методу - через точку или квадратные скобки
+		</script>
 
-    <p class="code-ex" style="width: 60%;">
-        <code>
-            let user = {<br>
-                name: 'Джон',<br>
-                hi() { console.log(this.name); },<br>
-                bye() { console.log('Пока'); }<br>
-            };<br>
-            <br> 
-            user.hi(); // Джон (простой вызов метода работает хорошо)<br>
-            <br>  
-            // теперь давайте попробуем вызывать user.hi или user.bye<br>
-            // в зависимости от имени пользователя user.name<br>
-            (user.name == "Джон" ? user.hi : user.bye)(); // <b>Ошибка!</b><br>
-        </code>
-    </p>
-    <br>
+		<p>
+			В JavaScript this является «свободным», его значение вычисляется в момент
+			вызова метода и не зависит от того, где этот метод был объявлен, а зависит
+			от того, какой объект вызывает метод (какой объект стоит «перед точкой»).
+			Эта идея вычисления this в момент исполнения имеет как свои плюсы, так и
+			минусы. С одной стороны, функция может быть повторно использована в
+			качестве метода у различных объектов (что повышает гибкость). С другой
+			стороны, большая гибкость увеличивает вероятность ошибок.
+		</p>
 
-    <p>Ошибка зз-за того, что для работы вызовов типа user.hi(), JavaScript использует трюк – точка '.' возвращает не саму функцию, 
-        а специальное значение «ссылочного типа», называемого Reference Type. Значение ссылочного типа – это «триплет»: комбинация 
-        из трёх значений (base, name, strict), где: base – это объект; name – это имя свойства объекта; strict – это режим исполнения. 
-        Является true, если действует строгий режим (use strict). Ссылочный тип – исключительно внутренний, промежуточный, используемый, 
-        чтобы передать информацию от точки . до вызывающих скобок (). Поэтому дальнейший вызов происходит уже без this.
-    </p>
+		<h3>Внутренняя реализация: Ссылочный тип</h3>
 
-    <h3>У стрелочных функций нет «this»</h3>
+		<p>
+			Следует заметить что значение this передаётся правильно, только если
+			функция вызывается напрямую с использованием синтаксиса точки
+			<b>obj.method()</b> или квадратных скобок <b>obj['method']()</b> (они
+			делают то же самое). <br />
+			Но некоторые хитрые способы вызова метода приводят к потере значения this,
+			например:
+		</p>
+		<br />
 
-    <h4 class="task">
-        Какой результат будет если метод использует стрелочную функцию вместе с «this»? Покажите на примере?
-    </h4>
+		<p class="code-ex" style="width: 60%">
+			<code>
+				let user = {<br />
+				name: 'Джон',<br />
+				hi() { console.log(this.name); },<br />
+				bye() { console.log('Пока'); }<br />
+				};<br />
+				<br />
+				user.hi(); // Джон (простой вызов метода работает хорошо)<br />
+				<br />
+				// теперь давайте попробуем вызывать user.hi или user.bye<br />
+				// в зависимости от имени пользователя user.name<br />
+				(user.name == "Джон" ? user.hi : user.bye)(); // <b>Ошибка!</b><br />
+			</code>
+		</p>
+		<br />
 
-    <p><b>Решение</b>:</p>
+		<p>
+			Ошибка зз-за того, что для работы вызовов типа user.hi(), JavaScript
+			использует трюк – точка '.' возвращает не саму функцию, а специальное
+			значение «ссылочного типа», называемого Reference Type. Значение
+			ссылочного типа – это «триплет»: комбинация из трёх значений (base, name,
+			strict), где: base – это объект; name – это имя свойства объекта; strict –
+			это режим исполнения. Является true, если действует строгий режим (use
+			strict). Ссылочный тип – исключительно внутренний, промежуточный,
+			используемый, чтобы передать информацию от точки . до вызывающих скобок
+			(). Поэтому дальнейший вызов происходит уже без this.
+		</p>
 
-    <p>Стрелочные функции особенные: у них нет своего «собственного» this. Если мы используем this внутри стрелочной функции, 
-        то его значение берётся из внешней «нормальной» функции.<br>
-        Например, здесь arrow() использует значение this из внешнего метода user.sayHi():
-    </p>
-    <br>
+		<h3>У стрелочных функций нет «this»</h3>
 
-    <p class="code-ex" style="width: 60%;">
-        <code>
-            let puple = {<br>
-                firstName: 'Brian',<br>
-                sayHi() {<br>
-                    <b>let arrow = () => console.log(this.firstName);</b><br>
-                    arrow();<br>
-                }<br>
-            };<br>
-            <br>
-            puple.sayHi(); // Brian<br>
-        </code>
-    </p>
-    <br>
+		<h4 class="task">
+			Какой результат будет если метод использует стрелочную функцию вместе с
+			«this»? Покажите на примере?
+		</h4>
 
-    <script>
-        let puple = {
-            firstName: "Brian",
-            sayHi() {
-                let arrow = () => console.log(this.firstName);
-                arrow();
-            }
-        };
+		<p><b>Решение</b>:</p>
 
-        puple.sayHi(); // Brian
-    </script>
+		<p>
+			Стрелочные функции особенные: у них нет своего «собственного» this. Если
+			мы используем this внутри стрелочной функции, то его значение берётся из
+			внешней «нормальной» функции.<br />
+			Например, здесь arrow() использует значение this из внешнего метода
+			user.sayHi():
+		</p>
+		<br />
 
-    <p>Это является особенностью стрелочных функций. Они полезны, когда мы на самом деле не хотим иметь 
-        отдельное значение this, а хотим брать его из внешнего контекста.
-    </p>
-    
+		<p class="code-ex" style="width: 60%">
+			<code>
+				let puple = {<br />
+				firstName: 'Brian',<br />
+				sayHi() {<br />
+				<b>let arrow = () => console.log(this.firstName);</b><br />
+				arrow();<br />
+				}<br />
+				};<br />
+				<br />
+				puple.sayHi(); // Brian<br />
+			</code>
+		</p>
+		<br />
 
-    
-</body>
+		<script>
+			let puple = {
+				firstName: 'Brian',
+				sayHi() {
+					let arrow = () => console.log(this.firstName);
+					arrow();
+				},
+			};
 
+			puple.sayHi(); // Brian
+		</script>
+
+		<p>
+			Это является особенностью стрелочных функций. Они полезны, когда мы на
+			самом деле не хотим иметь отдельное значение this, а хотим брать его из
+			внешнего контекста.
+		</p>
+	</body>
 </html>

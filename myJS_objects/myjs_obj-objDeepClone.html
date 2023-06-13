@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Working with Objects</title>
+		<style>
+			body {
+				background-color: tan;
+				margin: 0;
+				font-family: Verdana, sans-serif;
+			}
+
+			.emph {
+				color: red;
+			}
+
+			.title {
+				color: navy;
+				text-align: center;
+				font-weight: 700;
+			}
+
+			.task {
+				width: 50%;
+				padding: 15px 25px;
+				color: navy;
+				background-color: #e2e2e2;
+				margin: 35px auto;
+			}
+
+			p {
+				width: 80%;
+				margin: 0 auto;
+				font-size: 1em;
+			}
+
+			pre {
+				width: 50%;
+				background-color: #bebebe;
+				padding-top: 20px;
+				margin: 0 auto;
+			}
+
+			code {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: large;
+			}
+
+			.code-ex {
+				width: 50%;
+				font-family: sans-serif;
+				font-style: italic;
+				background-color: #bebebe;
+				font-size: large;
+				padding-left: 15px;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h2 class="title">Working with Objects</h2>
+		<h4 class="title">
+			method for cloning simple object
+			<span class="emph">Object.assign(target, ...sources)</span>, operator
+			<span class="emph">typeof</span>,<br />
+			iterations over props for objects as <span class="emph">for...in</span>,
+			JSON methods to/from obj <span class="emph">JSON.parse()</span> and
+			<span class="emph">JSON.stringify(obj)</span>
+		</h4>
+
+		<h4 class="task">
+			В нас є об'єкт 'worker', який має багаторівневу структуру вкладеності
+			даних.<br />
+			Ідея компанії така, по типу структури даних цього об'єкту, необхідно
+			створити незалежну його копію (або клон), щоб у подальшому можна було
+			створювати по його типу інших працівників компанії.<br />
+			Отже, потрібно створити функцію <i>cloneDeep(obj)</i>яка буде копіювати
+			об'єкт із усіма рівнями вкладеності його даних.<br />
+			Можете показати ще спосіб для глубокого копіювання об'єктів?
+		</h4>
+		<br />
+
+		<p>
+			<code>
+				<pre style="width: 70%">
+          // Вихідні дані:
+
+          let worker = {
+            name: 'Modest',
+            surname: 'Opakhan',
+            age: 42,
+            job: {
+              speciality: 'frontend',
+              skils: ['HTML5', 'CSS3', 'JavaScript', 'React', 'PostreSQL', 'NodeJS'],
+              'in Orange team': true,
+            },
+            'company friends': null,
+            statuses: {
+              inWork: {
+                isAdmin: false,
+                isBuisinessAnalitic: false,
+                isDeveloper: true,
+                isDesigner: false,
+                isQA: false,
+                passID: 452744879924484,
+                annualWage: 120_000,
+              },
+              inLife: {
+                isMaried: false,
+                isSingle: false,
+                isDivorse: true,
+                children: {
+                  sons: [
+                    {name: 'Tarry', birthday: 01/09/2000},
+                  ],
+                  daughters: [
+                    {name: 'Ellis', birthday: 14/07/2017},
+                    {name: 'Caroll', birthday: 04/06/2023}
+                  ],
+                },
+                hobbies: ['oil painting', 'arrow hunting'],
+              }
+            }
+          };
+
+          function cloneDeep(obj){
+            // ваш код...
+          }
+
+          console.log( cloneDeep(worker) ); // {name: 'Modest', surname: 'Opakhan', age: 42,
+                                                            obj: {…}, company friends: null, …}
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p><b>Рішення:</b></p>
+		<br />
+
+		<p>
+			Якщо нам потрібно створити незалежну копію об'єка 'obj', або стоврити його
+			клон чи дубль з одночасним копіюванням його властивостей - ми можемо
+			використати метод
+			<strong><i>Object.assign({}, obj1, obj2, ....)</i></strong> або ось так
+			<strong><i>Object.assign(target, ...sources)</i></strong
+			>. Цей метод копіює перераховані властивості об'єкта в новий створюваний
+			об'єкт, або додає нові властивості у інший об'єкт з перезаписом
+			властивостей які є вже в об'єкті до якого додаються властивості.<br /><br />
+			Давайте використаємо цей метод і покажемо на декількох прикладах дію цього
+			методу для отримання копії (клона) простого об'єкту
+			<i>worker</i>, ось так:
+		</p>
+		<br />
+
+		<p class="code-ex" style="width: 70%">
+			<code>
+				<pre>
+          let worker = {
+            name: 'Joseph',
+            surname: 'Milevitch',
+            age: 52,
+            job: 'Soft Serve',
+            duties: 'CTO',
+            isAdmin: true,
+            status: 'married',
+            'has children': true
+          };
+          
+          let copiedWorker = <b>Object.assign({}, worker)</b>;
+                    
+          // змінюємо властивості скопійованого об'єкта та робимо його незалежним
+          copiedWorker.name = 'Mathew'; 
+          copiedWorker.surname = 'Parry';
+          copiedWorker.age = 37;
+          copiedWorker.job = 'Blue team';
+          copiedWorker.duties = 'frontend';
+          copiedWorker.isAdmin = false;
+          copiedWorker.status = 'divorced';
+          copiedWorker['has children'] = false;
+
+          console.log(copiedWorker); // {name: "Mathew", surname: "Parry", 
+                                         age: 37, job: "Blue team", duties: "frontend", …}
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<script>
+			let worker = {
+				name: 'Joseph',
+				surname: 'Milevitch',
+				age: 52,
+				job: 'Soft Serve',
+				duties: 'CTO',
+				isAdmin: true,
+				status: 'married',
+				'has children': true,
+			};
+
+			let copiedWorker = Object.assign({}, worker);
+
+			// змінюємо властивості скопійованого об'єкта та робимо його незалежним
+			copiedWorker.name = 'Mathew';
+			copiedWorker.surname = 'Parry';
+			copiedWorker.age = 37;
+			copiedWorker.job = 'Blue team';
+			copiedWorker.duties = 'frontend';
+			copiedWorker.isAdmin = false;
+			copiedWorker.status = 'divorced';
+			copiedWorker['has children'] = false;
+
+			console.log(copiedWorker); // {name: "Mathew", surname: "Parry", age: 37, job: "DanIT", duties: "frontend", …}
+		</script>
+
+		<p>
+			У разі, якщо в нас є вже створений об'єкт і нам потрібно створити копію
+			яка додає нові властивості з іншого об'єкта, то дія цього методу буде
+			такою:
+		</p>
+		<br />
+
+		<p class="code-ex" style="width: 70%">
+			<code>
+				<pre>
+          const target = { a: 1, b: 2 };
+          const source = { b: 4, c: 5 };
+
+          const returnedTarget = <b>Object.assign(target, source)</b>;
+
+          console.log(target); // Object { a: 1, <b>b: 4, c: 5</b> }
+
+          console.log(returnedTarget === target); // true
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<script>
+			const target = { a: 1, b: 2 };
+			const source = { b: 4, c: 5 };
+
+			const returnedTarget = Object.assign(target, source);
+
+			console.log(target); // Object { a: 1, <b>b: 4, c: 5</b> }
+
+			console.log(returnedTarget === target); // true
+		</script>
+
+		<p>
+			Але, що робити, якщо об'єкт має інший рівень вкладеності, ось як у цьому
+			прикладі?
+		</p>
+		<br />
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          let user = {
+            name: 'Mark',
+            sizes: {
+              height: 182,
+              weight: 80
+            }
+          };
+          
+          let clone = Object.assign({}, user);
+
+          // змінюємо властивість склонованого об'єкта 
+          clone.name = "Simon";
+          console.log(clone); // { name: 'Simon', sizes: {height: 182,weight: 80}}
+
+          ПРОТЕ! вроді отримали незалежну копію, але
+
+          user.sizes.weight++;  // змінюємо властивість на рівні вкладеності в одному об'єкті
+          clone.sizes.weight; // 81, бачимо результат і в іншому об'єкті - це не незалежна копія
+
+          // бо тут user та clone звертаються до одного і того самого об'єкту sizes, і
+          // якщо вихідне значення є посиланням на об’єкт, воно копіює лише посилання.
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<script>
+			let user2 = {
+				name: 'Mark',
+				sizes: {
+					height: 182,
+					weight: 80,
+				},
+			};
+
+			let clone2 = Object.assign({}, user2);
+
+			// змінюємо властивість склонованого об'єкта
+			clone2.name = 'Simon';
+			console.log(clone2); // { name:'Simon', sizes:{height:182, weight:80} }
+
+			// змінюємо властивість склонованого об'єкта на рівні вкладеності
+			user2.sizes.weight++;
+
+			console.log(clone2.sizes.weight); // 81
+		</script>
+
+		<p>
+			А тому, якщо є рівень/рівні вкладеності, ми не зможемо зробити незалежну
+			копію об'єкта бо властивості на рівні вкладеності копіюються і мають
+			посилання на один і той самий об'єкт, для перевірки можемо вивести в
+			консоль вираз
+			<em>user.sizes === clone.sizes // true</em><br />
+			<b
+				><i
+					>Тому використання методу Object.assign найкраще підійде для
+					клонування об'єктів, які мають властивостями примітивні значення</i
+				></b
+			>.<br />
+			<br />
+			Якщо об'єкт має рівні вкладеності то при клонуванні недостатньо просто
+			скопіювати його властівості (що є посиланням на один і той самий об'єкт).
+			В JS немає для цього готового, визначеного метода. Його можна створити.<br />
+			<br />
+			Тому, щоб зробити клон об'єкта з рівнями вкладеності, потрібно в циклі
+			перебору ключів <strong><i>for...in</i></strong> брати ключі обєкта, та
+			присвоювати ключам нового об'єкта - ось так:
+			<i>newObj[key] = obj[key]</i>. Але так робити якщо властивість об'єкта не
+			має рівнів вкладеності - тобто не є об'єктом. Тому потрібно робити
+			перевірку, чи не є значення user[key] об'єктом за допомогою оператора
+			<strong><i>typeof</i></strong
+			>, і якщо це так - тоді потрібно скопіювати ключ старого об'єкта новому як
+			це показали раніше. Крім того, в перевірці потрібно ще перевіряти чи ключ
+			властивості рівний <i>null</i>, адже ми знаємо, що це історична помилка
+			JS, а <i>typeof null == object</i>. Бо якщо присутнє таке значення
+			властивості, воно скопіюється як пустий об'єкт.<br />
+			А у разі, якщо тип ключа об'єкту == <i>objeсt</i>, тоді в ключ нового
+			об'єкту записуємо рекурсію, яка своєю базою буде копіювати значення ключа
+			старого об'єкту в новий, а тому на її вхід подати ключ який містить
+			значенням ключа об'єкту.<br />
+			Тільки після цього можна розглянути нашу задачу і використовуючи описаний
+			підхід та рекурсію вирішити її, ось так:
+		</p>
+		<br />
+
+		<p class="code-ex" style="width: 70%">
+			<code>
+				<pre>
+          function cloneDeep(obj){
+            let newObj = {};
+            for (let key in obj) { // тут проходимо циклом по властивостям об'єкта
+              if (typeof obj[key] !== 'object' || obj[key] == null){ // тут перевіряємо чи властивість не є об'єктом
+                newObj[key] = obj[key]; // тут копіюємо значення властивостей
+              } else {
+                newObj[key] = cloneDeep(obj[key]) // тут використовуємо рекурсію
+              }
+            }
+            return newObj
+          }
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p>
+			Описаний вище підхід клонування об'єкту називається 'глибоким
+			клонуванням'. Є також інший підхід для клонування об'єкту із рівнями
+			вкладеності. Для цього можна використовувати методи JSON: метод
+			конвертації (або серіалізації) в рядок
+			<strong><i>JSON.stringify(obj)</i></strong> та метод конвертування з рядка
+			назад в об'єкт <strong><i>JSON.parse()</i></strong>
+			Щоб створити клон об'єкта потрібно спочатку структуру даних серіалізуем в
+			рядок, а потім рядок десеріалізуем в структуру даних, ось так:
+		</p>
+		<br />
+
+		<p class="code-ex" style="width: 70%">
+			<code>
+				<pre>
+          const deepCopy = <b>JSON.parse(JSON.stringify(obj))</b>;
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<script>
+			let worker24 = {
+				name: 'Modest',
+				surname: 'Opakhan',
+				age: 42,
+				job: {
+					speciality: 'frontend',
+					skils: [
+						'HTML5',
+						'CSS3',
+						'JavaScript',
+						'React',
+						'PostreSQL',
+						'NodeJS',
+					],
+					'in Orange team': true,
+				},
+				'company friends': null,
+				statuses: {
+					inWork: {
+						isAdmin: false,
+						isBuisinessAnalitic: false,
+						isDeveloper: true,
+						isDesigner: false,
+						isQA: false,
+						passID: 452744879924484,
+						annualWage: 120_000,
+					},
+					inLife: {
+						isMaried: false,
+						isSingle: false,
+						isDivorse: true,
+						children: {
+							sons: [{ name: 'Tarry', birthday: 01 / 09 / 2000 }],
+							daughters: [
+								{ name: 'Ellis', birthday: 14 / 07 / 2017 },
+								{ name: 'Caroll', birthday: 04 / 06 / 2023 },
+							],
+						},
+						hobbies: ['oil painting', 'arrow hunting'],
+					},
+				},
+			};
+
+			function cloneDeep(obj) {
+				let newObj = {};
+				for (let key in obj) {
+					if (typeof obj[key] !== 'object' || obj[key] == null) {
+						newObj[key] = obj[key];
+					} else {
+						newObj[key] = cloneDeep(obj[key]);
+					}
+				}
+				return newObj;
+			}
+
+			console.log(cloneDeep(worker24));
+
+			// const deepCopy = JSON.parse(JSON.stringify(worker24));
+
+			// console.log(deepCopy);
+		</script>
+	</body>
+</html>
