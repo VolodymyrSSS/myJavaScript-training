@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Working with DOM</title>
+		<style>
+			body {
+				background-color: tan;
+				margin: 0;
+				font-family: Verdana, sans-serif;
+			}
+
+			div {
+				width: 40%;
+				background-color: pink;
+				margin: auto;
+			}
+
+			.emph {
+				color: red;
+			}
+
+			.title {
+				color: navy;
+				text-align: center;
+				font-weight: 700;
+			}
+
+			.task {
+				width: 50%;
+				padding: 15px 25px;
+				color: navy;
+				background-color: #e2e2e2;
+				margin: 35px auto;
+			}
+
+			p {
+				width: 80%;
+				margin: 0 auto;
+			}
+
+			pre {
+				width: 50%;
+				background-color: #bebebe;
+				padding-top: 20px;
+				margin: 0 auto;
+			}
+
+			code {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: large;
+			}
+
+			.code-ex {
+				width: 50%;
+				font-family: sans-serif;
+				font-style: italic;
+				background-color: #bebebe;
+				font-size: large;
+				padding-left: 15px;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h2 class="title">DOM (data object model)</h2>
+		<h4 class="title">
+			using property
+			<span class="emph">elem.innerHTML</span> and
+			<span class="emph">length</span>, object loop
+			<span class="emph">for..in</span>, using
+			<span class="emph">recursion</span>, condition operator
+			<span class="emph">if</span><br />
+			simple obj iteration method to get keys:
+			<span class="emph">Object.keys(obj)</span>, DOM method
+			<span class="emph">document.createElement('tagName')</span>
+		</h4>
+
+		<h4 class="task">
+			Напишіть функцію <i>createTree</i>, яка на вхід отримує елемент
+			<i>container</i> та об'єкт <i>data</i> і в результаті створює вкладений
+			список <i>ul/li</i> з цього об'єкта <i>data</i> у контейнері.
+		</h4>
+		<br />
+
+		<p>
+			<code>
+				<pre>
+          // Вихідні дані:
+
+            let data = {
+              "Риби": {
+                "форель": {},
+                "лосось": {}
+              },
+
+              "Дерева": {
+                "Великі": {
+                  "секвойя": {},
+                  "дуб": {}
+                },
+                "Квіткові": {
+                  "яблуня": {},
+                  "магнолія": {}
+                }
+              }
+            };
+
+            let container = document.getElementById('container');
+            
+            createTree(container, data); // створює дерево в контейнері
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p><b>Результат:</b></p>
+		<br />
+
+		<div id="container"></div>
+
+		<script>
+			let data = {
+				Риби: {
+					форель: {},
+					лосось: {},
+				},
+
+				Дерева: {
+					Великі: {
+						секвойя: {},
+						дуб: {},
+					},
+					Квіткові: {
+						яблуня: {},
+						магнолія: {},
+					},
+				},
+			};
+
+			function createTree(container, obj) {
+				container.innerHTML = createTreeText(obj);
+			}
+
+			function createTreeText(obj) {
+				// окрема рекурсивна функція
+				let li = '';
+				let ul;
+				for (let key in obj) {
+					li += '<li>' + key + createTreeText(obj[key]) + '</li>';
+				}
+
+				if (li) {
+					ul = '<ul>' + li + '</ul>';
+				}
+
+				return ul || '';
+			}
+
+			createTree(container, data);
+		</script>
+
+		<p><b>Рішення:</b> Варіант1 - через innerHTML</p>
+		<br />
+
+		<p>
+			Отже, отримавши елемент-вузел <i>container</i> по його ІD, ми повинні
+			помістити в нього дані з об'єкта. Вміст/контент вузла-елемента можна
+			задавати за допомогою властивості <strong><i>innerHTML</i></strong
+			>, також цією властивістю можна і змінювати контент, ну і взагалі, це
+			вважається одним з самих ефективних способів зміни вмісту/контенту
+			елементу веб-сторінки. А тому, використаємо його, при цьому замість
+			контенту HTML, будемо задавати функцію, назвемо її
+			<i>createTreeText</i> яка на вхід буде отримувати об'єкт <i>obj</i>, ось
+			так:
+		</p>
+		<br />
+
+		<p class="code-ex">
+			<code>
+				<pre>
+            function createTree(container, obj) {
+              <b>container.innerHTML = createTreeText(obj);</b>
+            }
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p>
+			Далі потрібно створити саму функцію <i>createTreeText(obj)</i>, яка власне
+			і буде створювати список <i>ul</i> з елементами <i>li</i> та одразу
+			повертати його або порожній список у разі відсутності елементів списку. А
+			тому, визначаємо одразу в змінній список <i>ul</i> (задекларуємо) та
+			змінну для його елементів <i>li</i>, які на початку поки порожні, ось так:
+		</p>
+		<br />
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          function <b>createTreeText(obj) {</b>            
+            let ul;
+            let li = "";
+            ...
+						...
+            <b>return ul || "";</b>
+          <b>}</b>
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p>
+			Потім необхідно додати елемент <i>li</i> в список <i>ul</i> використовуючи
+			просту конкатенацію в умові <i>if</i> - якщо такий елемент списку існує,
+			то додавати його, ось так:
+		</p>
+		<br />
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          function createTreeText(obj) {            
+            let ul;
+            let li = "";
+            ...
+            <b>if (li) {
+              ul = '&lt;ul&gt;' + li + '&lt;/ul&gt;';
+            }</b>
+
+            return ul || "";
+          }
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p>
+			Наступним кроком буде створення самого елементу <i>li</i>, контент якого
+			буде братись з ключів об'єкту, який функція отримує на вхід. Для створення
+			цього елементу, необхідно пройтись по ключам об'єкту за допомогою циклу
+			<strong><i>for..in</i></strong> (для об'єктів) та записати кожен ключ в
+			елемент <i>li</i>, ось так:
+		</p>
+		<br />
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          function createTreeText(obj) {            
+            let ul;
+            let li = "";
+            
+            <b>for (let key in obj) {
+              li += '&lt;li&gt;' + key + '&lt;/li&gt;';
+            }</b>
+
+            if (li) {
+              ul = '&lt;ul&gt;' + li + '&lt;/ul&gt;';
+            }
+            return ul || "";
+          }
+          
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p>
+			Але такий метод додавання ключа в елемент <i>li</i> додасть в список
+			значення ключів тільки першого рівня вкладеності, а нам потрібно щоб
+			скільки було рівнів, стільки і додавало. А тому, для вирішення цього
+			використаємо принцип <b>рекурсії</b>. Тобто, <i>рекурсія</i> - це коли
+			функція викликає сама себе, або точніше, коли задача може бути спрощена до
+			нескладних дій плюс простий варіант тої самої задачі.<br />
+			В нашому випадку, базою рекурсії (призводить до очевидного результату)
+			можна вважати взяття та додавання просто ключа <i>key</i> до списку, як це
+			було показано вище, а якщо ключ буде мати рівень вкладеності, то додавати
+			до нього ще й ключі вкладеного об'єкту.<br />
+			Тому тут (на цьому рівні вкладеності) будемо додавати ключі вкладеного
+			об'єкту, що є результатом дії рекурсивної функції, ось так -
+			<i>createTreeText(obj[key])</i>.<br />
+			Такими кроками будем спрощувати задачу до простого взяття ключа вкладеного
+			об'єкту (рухатись до бази рекурсії). Можна сказати, що рекурсивна функція
+			<i>createTreeText(obj[key])</i> буде викликати сама себе і зведеться до
+			простого взяття ключа об'єкта через квадратні скобки <i>obj[key]</i>, ось
+			так:<br />
+		</p>
+		<br />
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          function createTreeText(obj) {
+            // окрема рекурсивна функція
+            let li = '';
+            let ul;
+            for (let key in obj) {
+              li += '&lt;li&gt;' <b>+ key + createTreeText(obj[key]) +</b> '&lt;/li&gt;';
+            }
+
+            if (li) {
+              ul = '&lt;ul&gt;' + li + '&lt;/ul&gt;';
+            }
+
+            return ul || '';
+          }
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p>
+			Загальна кількість вкладених викликів (включаючи перший) називають
+			<i>глибиною рекурсії</i>. У нашому випадку, він буде дорівнювати кількості
+			рівнів вкладеності ключів об'єкту.<br />
+			Проте, одразу тут потрібно зауважити, що максимальна глибина рекурсії
+			обмежена двигуном JavaScript. Точно можна розраховувати на 10_000
+			вкладених викликів. Це звісно обмежує застосування рекурсії, але все
+			рівно, рекурсія досить широко застосовується для вирішення великої
+			кількості задач бо такий підхід дає простий код, який легко
+			підтримувати.<br />
+			Рекурсивне рішення завдання зазвичай коротше чим ітеративне. Ідею рекурсії
+			можна інколи подати через оператор <i>?</i> замість <i>if</i>, ми можемо
+			переписати createTreeText(obj), роблячи код функции більш лаконічним, але
+			все ще зрозумілим, щось типу такого:
+		</p>
+		<br />
+
+		<p class="code-ex">
+			<code>
+				<pre>
+            function createTreeText(obj) {
+              ...
+              <b>return obj ? key : createTreeText(obj[key]);</b>
+            }
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p>
+			Зауважимо, що
+			<i
+				>люба рекурсія може бути перероблена в цикл. Як правило, варіант з
+				циклом буде ефективнішим</i
+			>
+			в нескладних випадках. Проте переробити рекурсію в цикл може бути досить
+			непростим завданням, особливо коли в функції в залежності від умов
+			використовують різні рекурсивні підвиклики, результати яких обєднують чи
+			коли рівні вкладеності досить складні. Тому тут оптимізація (переробка в
+			цикл) може бути непотрібною і абсолютно не вартувати зусиль.
+		</p>
+		<br />
+
+		<p><b>Рішення:</b> Варіант2 - через DOM</p>
+		<br />
+
+		<p>
+			Так само як і раніше, отримавши елемент-вузел <i>container</i> по його ІD,
+			ми повинні помістити в нього контент об'єкту. Це ми можемо зробити за
+			допомогою метода вставки вузла-елемента <strong><i>append</i></strong
+			>, куда аргументом передаємо функцію яку назвемо <i>createTreeDom</i> і
+			яка на вхід буде отримувати об'єкт <i>obj</i>, ось так:
+		</p>
+		<br />
+
+		<p class="code-ex">
+			<code>
+				<pre>
+            function createTree(container, obj) {
+              <b>container.append(createTreeDom(obj));</b>
+            }
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p>
+			Далі потрібно створити саму функцію <i>createTreeDom(obj)</i>, яка отримує
+			на вхід об'єкт <i>obj</i> та повертає список <i>ul</i>. Але одразу, в
+			умові визначимо, якщо об'єкт не має ключів - тобто не має дочірніх
+			елементів то функція повертає <i>undefined</i> і список - елемент
+			<i>ul</i>, не буде створений. Для визначення наявності дочірних елементів,
+			використаєм властивість перебору ключів об'єкту
+			<strong><i>Object.keys(obj)</i></strong
+			>, та властивість <strong><i>length</i></strong
+			>, ось так:
+		</p>
+		<br />
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          function createTreeDom(obj) {
+            <b>if (!Object.keys(obj).length) return;</b>
+               ...
+               ...
+            <b>return ul;</b>
+          };
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p>
+			Наступним кроком буде створення списку <i>ul</i>. Для цього використаємо
+			метод для створення елементів DOM
+			<strong><i>document.createElement('ul')</i></strong> та одразу визначимо
+			його в змінній <i>ul</i>, ось так:
+		</p>
+		<br />
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          function createTreeDom(obj) {
+            if (!Object.keys(obj).length) return;
+              ...
+              <b>let ul = document.createElement('ul');</b>
+							...
+            return ul;
+          };
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p>
+			На початку було визначено, що за умовою, коли дочірні елементи існують, то
+			потрібно пройтись по списку за допомогою циклу для об'єктів
+			<strong><i>for...in</i></strong> та взяти значення ключів, які за
+			допомогою властивості <strong><i>inner.HTML</i></strong> присвоюємо
+			вузлу-елементу <i>li</i>. Потім за допомогою властивості
+			<strong><i>append</i></strong
+			>, можемо додати елемент <i>li</i> до списку <i>ul</i>.<br />
+			Отже, подібно до створення списку, створюємо елемент <i>li</i>. Для цього
+			використаємо метод для створення елементів DOM
+			<strong><i>document.createElement('li')</i></strong> та одразу визначимо
+			його в змінній <i>li</i>. Важливим моментом є те, що <i>li</i> визначаємо
+			в середині блоку циклу <i>for...in</i>. Узагальнений код для цього кроку
+			буде таким:
+		</p>
+		<br />
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          function createTreeDom(obj) {
+            if (!Object.keys(obj).length) return;
+
+              let ul = document.createElement('ul');
+
+              <b>for (let key in obj) {
+                let li = document.createElement('li');
+                li.innerHTML = key;
+
+                ul.append(li);
+              }</b>
+							
+            return ul;
+          };
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p>
+			Але, так само як і в першому методі, в нас існують рівні вкладеності на
+			ключах об'єкту, а тому також будемо використовувати принцип
+			<i>рекурсії</i>. Для цього спочатку визначимо в змінній
+			<i>let childrenUl</i>, що є елементом із вкладеними дочірніми елементами.
+			Йому будемо присвоювати результат роботи рекурсивної функції
+			<i>createTreeDom(obj[key])</i>, при цьому, в умові <i>if</i> будемо
+			перевіряти наявність дочірних елементів і у разі їх наявності, будемо
+			додавати до елемента <i>li</i> у якого виявлений рівень вкладеності і на
+			цьому це буде рішення, ось:
+		</p>
+		<br />
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          function createTreeDom(obj) {
+            if (!Object.keys(obj).length) return;
+
+              let ul = document.createElement('ul');
+
+              for (let key in obj) {
+                let li = document.createElement('li');
+                li.innerHTML = key;
+
+                <b>let childrenUl = createTreeDom(obj[key]);
+                if (childrenUl) {
+                  li.append(childrenUl);
+                }</b>
+
+                ul.append(li);
+              }
+							
+            return ul;
+          };
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<br />
+	</body>
+</html>
