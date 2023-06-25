@@ -1,0 +1,275 @@
+Task 1
+const priority = newSet();
+priority.add('High').add('Low');
+priority.add('High');
+console.log(priority.size);
+Answer:  2
+
+Task 2
+const priority = newSet([
+'High',
+'Normal',
+'Low'
+]);
+const newPriority = new Set(priority);
+console.log(newPriority.size);
+Answer:  3
+
+Task 3
+const priority = new Set([
+'High',
+'Normal',
+]);
+console.log(priority.has('High'));
+console.log(priority.has('Low'));
+Answer:  true
+Answer:  false
+
+Task 4
+const priority = new Set([
+'High',
+'Low'
+]);
+console.log([...priority.keys()]);
+console.log([...priority.values()]);
+console.log([...priority.entries()]);
+Answer:  ['High', 'Low']
+Answer:  ['High', 'Low']
+Answer:  [['High', 'High'], ['Low', 'Low']]
+
+Task 5
+const tasks = newSet([
+{id:1, action:'dolt'},
+{id:1, action:'dolt'}
+]);
+console.log(tasks.size);
+Answer:  2
+
+Task 6
+const priority = new Set([
+'High',
+'Normal',
+]);
+const isDeleted = priority.delete('Normal');
+console.log(priority.has('High'));
+console.log(priority.has('Normal'));
+console.log(isDeleted);
+Answer:  true
+Answer:  false
+Answer:  true
+
+Task 7
+const priority = new Set([
+'High',
+'Normal',
+]);
+priority.clear();
+console.log(priority.size);
+Answer:  0
+
+Task 8
+const task1 = {action: 'Create...'};
+const task2 = {action: 'Delete...'};
+const project = new WeakSet([task1, task2]);
+]);
+console.log(project.has(task1));
+console.log(project.size);
+Answer:  true
+Answer:  undefined
+
+Task 9
+const task1 = {action: 'Create...'};
+const task2 = {action: 'Delete...'};
+const project = new WeakSet([task1, task2]);
+for(let p of project) {
+console.log(p.action);
+}
+Answer:  TypeError: project is not iterable
+
+Task 10
+const rating = [1, 2, 3, 4, 5];
+const result = rating.reduce(
+   (start, next, index, array) => start * next
+);
+console.log(result);
+Answer:  120
+
+Task 11
+const rating = [1, 2, 3, 4, 5];
+const result = rating.reduceRight(
+   (start, next, index, array) => start - next
+);
+console.log(result);
+Answer:  -5
+
+Task 12
+const tasks = Array(100);
+console.log(tasks.length);
+Answer:  100
+
+Task 13
+const tasks = Array.of(100);
+console.log(tasks.length);
+console.log(tasks);
+Answer:  1
+Answer:  [100]
+
+Task 14
+const priority = [1, 2, 3];
+const priority10 = Array.from(
+   priority,
+   p => p * 10
+);
+console.log(priority10);
+Answer: [10, 20, 30];
+
+Task 15
+const priority = [1, 2, 3];
+const priority100 = Array.from(
+   priority,
+   p => p * 10 + this.adjustment,
+   {adjustment: 100}
+);
+console.log(priority100);
+Answer: [NaN, NaN, NaN];
+
+Task 16
+const priority = [1, 2, 3];
+const priorityCopy = Array.from(priority);
+console.log(priority === priorityCopy);
+Answer:  false
+
+Task 17
+const priority = [{a:1}];
+const copy = Array.from(priority);
+copy[0].a = 2;
+console.log(priority);
+Answer:  [{a:2}]
+
+Task 18
+const priority = [,,];
+for (let item of priority) {
+   console.log(item);
+}
+Answer:  undefined
+Answer:  undefined
+
+Task 19
+const taskDesc = 'Task description sample';
+const flyingRocket = "\ud83d\ude80";
+let count = 0;
+let count2 = 0;
+for (const char of taskDesc) {
+   count++;
+}
+for (const char of flyingRocket) {
+   count2++;
+}
+console.log(count);
+console.log(count2);
+Answer:  23
+Answer:  1
+
+Task 20
+const priority = ["Low", "Normal", "High"];
+const [low, normal, high] = priority;
+console.log(high);
+Answer: "High"
+
+Task 21
+const priority = ["Low", "Normal"];
+const [low, normal, high] = priority;
+console.log(high);
+Answer: undefined
+
+Task 22
+const priority = ["Low", "Normal", "High"];
+const [low, , high] = priority;
+console.log(high);
+Answer: "High"
+
+Task 23
+const priority = ["Low", "Normal", "High"];
+const [low, ...remaining] = priority;
+console.log(remaining);
+Answer: ["Normal", "High"]
+
+Task 24
+const priority = ["Low", "Normal"];
+const [low, normal, high='High'] = priority;
+console.log(low);
+console.log(high);
+Answer: "Low"
+Answer: "High"
+
+Task 25
+const hours = ['plH', 'acH', ['rmH', 'ovH']];
+const [plan, actual, [remain, overtime]] = hours;
+console.log(remain);
+Answer: "rmH"
+
+Task 26
+const priority = ["Low", "Normal"];
+let low, normal, high;
+// ..some code..
+[low, normal, high='High'] = priority;
+console.log(high);
+Answer: "High"
+
+Task 27
+function reviewHours([plan, actual]) {
+   console.log(actual);
+}
+reviewHours(["plH", "acH"])
+Answer: "acH"
+
+Task 28
+const [maxN, minN] = "90";
+console.log(`min:${minN}, max:${maxN}`);
+Answer: min:0, max:9
+
+Task 29
+const [high, low] = [];
+console.log(`high:${high}, low:${low}`);
+Answer: high:undefined, low:undefined
+
+Task 30
+let count = 0;
+for (const [a, b] of [[5, 10]]) {
+   console.log( `${a} ${b}`);
+   count++;
+}
+console.log(count);
+Answer: 5 10
+Answer: 1
+
+Task 31
+const arr = [1, 2, 3];
+const result = arr.flatMap(num => [num, num*2]);
+console.log(`result);
+Answer: [1, 2, 2, 4, 3, 6]
+
+Task 32
+const numbers = [1, 2, 3, 4];
+const sum = numbers.reduceRight(
+	(acc, num) => acc + num, 0);
+console.log(sum);
+Answer: 10
+
+Task 33
+const numbers = [2, 4, 6];
+const areAllEven = numbers.every(
+	num => num%2 ===0);
+console.log(areAllEven);
+Answer: true
+
+Task 34
+const arr = [1, [2, 3], [4, [5, 6]]];
+const nestedArr = arr.flat(1);
+console.log(nestedArr);
+Answer: [1, 2, 3, 4, [5, 6]];
+
+
+
+
+

@@ -6,46 +6,91 @@ console.log(a2[0]);
 Answer:  99
 
 Task 2
+const entries = [‘a’, 1, true];
+console.log(entries instanceof Array);
+Answer:  true
+
+Task 3
 const entries = [‘a’, ‘b’, ‘c’];
 console.log(Array.isArray(entries));
 Answer: true
 
-Task 3
+Task 4
+const entries = [‘a’, ‘b’, ‘c’];
+console.log(typeof entries);
+Answer: object
+
+Task 5
 const entries = [‘a’, ‘b’, ‘c’];
 entries.length = 10;
 console.log(entries.length);
 Answer:  10
 
-Task 4
+Task 6
+const entries = [];
+console.log(entries.length);
+Answer: 0
+
+Task 7
+const entries = [‘a’, ‘b’, ‘c’];
+entries[entries.length] = ‘d’;
+console.log(entries.length);
+Answer: 4
+
+Task 8
+const entries = [];
+entries.push(‘a’);
+entries.push(‘b’, ‘c’);
+entries.pop();
+console.log(entries.length);
+Answer: 2
+
+Task 9
 const entries = [‘a’, ‘b’, ‘c’];
 console.log(entries.toString());
 Answer:  'a,b,c'
 
-Task 5
+Task 10
 const entries = [];
 console.log(entries.pop());
 Answer:  undefined
 
-Task 6
+Task 11
 const entries = [‘a’, ‘b’, ‘c’, ‘d’];
 const newEntries = entries.slice(2);
 console.log(newEntries);
 Answer:  ['c', 'd']
 
-Task 7
+Task 12
+const entries = [‘a’, ‘b’, ‘c’];
+const newEntries = entries.concat([‘d’, ‘e’, ‘f’], ‘g’, ‘h’);
+console.log(newEntries.length);
+Answer: 8
+
+Task 13
+const entries = [‘a’, ‘b’, ‘c’, ‘d’];
+const r = entries.splice(2, 0, ‘A’, ‘B’, ‘C’);
+console.log(entries.toString());
+console.log(r);
+Answer:  'a, b, A, B, C, c, d';
+Answer:  [];
+
+Task 14
 const entries = [‘a’, ‘b’, ‘c’, ‘d’];
 const r = entries.splice(2, 1, ‘A’, ‘B’, ‘C’);
 console.log(entries.toString()); 
 console.log(r);
 Answer:  'a, b, A, B, C, d';
-Answer:  ['c']
+Answer:  ['c'];
 
-Task 8
+Task 15
 const ratings = [1, 2, 3, 4, 5, 4, 3, 2, 1];
 console.log(ratings.indexOf(66));
+console.log(ratings.indexOf('3'));
+Answer:  -1
 Answer:  -1
 
-Task 9
+Task 16
 const entries = [‘a’, ‘b’, ‘c’, ‘d’];
 entries.forEach(function(element, index, array) {
      if (index === 1) array.push(‘e’);
@@ -56,54 +101,75 @@ Answer:  B
 Answer:  C
 Answer:  D
 
-Task 10
+Task 17
+const entries = [‘a’, ‘b’, ‘c’, ‘d’];
+entries.forEach(function(element, index) {
+     if (index === 1) return;
+     console.log(element.toUpperCase());
+});
+Answer:  A 
+Answer:  C
+Answer:  D
+
+Task 18
+const entries = [‘a’, ‘b’, ‘c’, ‘d’, ‘ef’];
+const result = entries.some(e => e.length === 2);
+console.log(result);
+Answer: true
+
+Task 19
+const a = Array(2).fill({ });
+console.log(a[0] === a[1]);
+Answer: true
+
+Task 20
 const ratings = [1, 2, 3, 4, 5];
 const result = ratings.reduce((start, next, index, array) => start * next); 
 console.log(result);
 Answer: 120
 
-Task 11
+Task 21
 const priority = [1, 2, 3];
 const priorityCopy = Array.from(priority);
 console.log(priority === priorityCopy);
 Answer:  false
 
-Task 12
+Task 22
 const priority = [1, 2, 3];
 const result = priority.find(elem => elem >= 2);
 console.log(result);
 Answer:  2
 
-Task 13
+Task 23
 const priority = [1, 2, 3];
 const result = priority.includes(2);
 console.log(result);
 Answer:  true
 
-Task 14
+Task 24
 const nums = [ 1, 2, [ 3, 4 ], [ [ 5, 6 ] ] ];
 console.log(nums.flat(Infinity));
 Answer:  [1, 2, 3, 4, 5, 6]
 
-Task 15
+Task 25
 const priorityCodes = ['A', ...'BC', 'D'];
 console.log(priorityCodes);
 Answer:  ['A', 'B', 'C', 'D' ]
 
-Task 16
+Task 26
 const priority = [‘Low’, ‘Normal’, ‘High’];
 const [low, …remaining] = priority;
 console.log(remaining);
 Answer:  [‘Normal’, ‘High’]
 
-Task 17
+Task 27
 const priority = new Set();
 priority.add(“High”);
 priority.add(“Low”);
 console.log(priority.size);
 Answer:  2
 
-Task 18
+Task 28
 const priority = new Set([“High”,“Low”]);
 function logSetElements(key, value, set) {
     console.log(`s[${key}] = ${value}`);
@@ -112,14 +178,14 @@ priority.forEach(logSetElements);
 Answer: `s[High] = High
 Answer: ` s[Low] = Low
 
-Task 19
+Task 29
 const task1 = { action: “Create…” };
 const task2 = { action: “Delete…” };
 const project = new WeakSet([task1, task2]);
 console.log(project.has(task1));
 Answer:  true
 
-Task 20
+Task 30
 const task1 = { action: “Create…” };
 const task2 = { action: “Delete…” };
 const project = new WeakSet([task1, task2]);

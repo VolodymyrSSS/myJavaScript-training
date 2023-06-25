@@ -1,0 +1,179 @@
+Task 1
+function square(x, y) {
+	return x * y;
+}
+let v1 = square;
+let v2 = v1(5, 5);
+console.log(v2);
+Answer: 25
+
+Task 2
+let v = square(5, 5);
+console.log(v);
+
+let square = function (x, y) {
+	return x * y;
+};
+Answer: 25
+
+Task 3
+let squareFunc = function square(x, y) {
+	console.log(x * y);
+};
+square(2, 3);
+Answer: 6
+
+Task 4
+let numberToSquare = 5;
+(function(x) {
+	console.log(x * x);
+})(numberToSquare);
+Answer: 25
+
+Task 5
+async function sum() {
+	const a = await Promise.resolve(2);
+	const b = await Promise.resolve(3);
+	return a + b;
+}
+sum().then(console.log);
+Answer: 5
+
+Task 6
+“use strict”;
+function square(x, y) {
+	console.log(this);
+	return x * y;
+}
+let v = square(2, 3);
+console.log(v);
+Answer: Error
+
+Task 7
+let person = {
+    firstName: “Anna”,
+    lastName: “Vasilieva”,
+   showFullName: function () {
+       console.log(`${this.firstName} ${this.lastName}`);
+   }
+};
+person.showFullName();
+Answer: Anna Vasilieva
+
+Task 8
+function showFullName(param) {
+	console.log(this);
+	console.log(param);
+}
+
+showFullName.apply(null, [1]);
+Answer: undefined, [1]
+
+Task 9
+let sum = function() {
+	let x = 0;
+    	arguments.forEach( (arg) => {
+		x += arg;
+	});
+ 	return x;
+}
+console.log( sum(1, 2, 3) ); 
+Answer: 6
+
+Task 10
+let sum = function( opt_a=0, opt_b=0) {
+	return opt_a + opt_b;
+};
+console.log( sum() ); 
+Answer: 0
+
+Task 11
+function sum(a, b) {
+	return a + b;
+}
+console.log( sum.length );
+Answer: undefined
+
+Task 12
+let func = function() {
+	return function() {
+   	   console.log(“Hello”);
+ 	};
+};
+func()();
+Answer: Hello
+
+Task 13
+function sayHi(person) {
+	let message = makeMessage();
+	console.log( message );
+
+ 	function getHello(age) {
+   		return age >= 18 ? “Hello” : “Hi”;
+ 	}
+
+ 	function makeMessage() { // w/o person
+       	return `${getHello(person.age)}, ${person.name}`;
+ 	} 
+}
+sayHi({ name: “Ann”, age: 17 });
+Answer: 18 Ann
+
+Task 14
+const closure = function() {
+	console.log(x);
+};
+const callAClosure = function() {
+	const x = 10;
+	closure();
+};
+callAClosure();
+Answer:
+
+Task 15
+var x = 10;
+const capturedClosure = function() {
+	console.log(x);
+};
+var x = 100;
+capturedClosure();
+Answer:
+
+Task 16
+const callback = function(x) {
+		console.log(x);
+};
+const callAClosure = function(closure) {
+	closure(10);
+};
+callAClosure(callback);
+Answer:
+
+Task 17
+let getTaskId = () => 5;
+console.log( typeof getTaskId );
+Answer:
+
+Task 18
+let getHours = (actual, overtime) => {
+	return actual + overtime;
+}
+console.log(getHours(8, 4));
+Answer:
+
+Task 19
+const getTask = task => () => task;
+const specialGetTask = getTask(‘Create’);
+const result = specialGetTask(); 
+console.log(result);
+Answer:
+
+Task 20
+let getTaskId = () => 1;
+console.log(getTaskId.hasOwnProperty(“prototype”)
+);
+Answer:
+
+
+
+

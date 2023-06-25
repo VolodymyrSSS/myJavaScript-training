@@ -1,0 +1,217 @@
+Task 1
+const priority = [1, 2, 3];
+priority.fill(100);
+console.log(priority);
+Answer:  [100, 100, 100]
+
+Task 2
+const priority = [1, 2, 3];
+priority.fill(100, 1);
+console.log(priority);
+Answer:  [1, 100, 100]
+
+Task 3
+const priority = [1, 2, 3];
+priority.fill(100, 1, 2);
+console.log(priority);
+Answer:  [1, 100, 3]
+
+Task 4
+const priority = [1, 2, 3];
+priority.fill(100, -1);
+console.log(priority);
+Answer:  [1, 2, 100]
+
+Task 5
+const o = [].fill.call({length: 3}, 4);
+console.log(`o`);
+Answer: {0: 4, 1: 4, 2: 4}
+
+Task 6
+const a = Array(2).fill({});
+console.log(a[0] === a[1]);
+Answer:  true
+
+Task 7
+const priority = [1, 2, 3];
+const result = priority.find(
+   elem => elem >= 3
+);
+console.log(result);
+Answer:  3
+
+Task 8
+const priority = [1, 2, 3];
+const result = priority.find(
+   elem => elem >= 2
+);
+console.log(result);
+Answer:  2
+
+Task 9
+const priority = [1, 2, 3];
+const result = priority.find(
+   elem => elem >= 10
+);
+console.log(result);
+Answer:  undefined
+
+Task 10
+const priority = [1, 2, 3];
+const result = priority.findIndex(
+   function(value, index, array) {
+      return value == this; //object
+   },
+   2 // context for object
+);
+console.log(result);
+Answer:  1
+
+Task 11
+const priority = [1, 2, 3];
+const result = priority.findIndex(
+   function(value, index, array) {
+      return value == this; //object
+   },
+   42 // context for object
+);
+console.log(result);
+Answer:  -1
+
+Task 12
+const priority = [1, 2, 3];
+priority.copyWithin(2);
+console.log(priority);
+Answer:  [1, 2, 1]
+
+Task 13
+const priority = [1, 2, 3];
+priority.copyWithin(1);
+console.log(priority);
+Answer:  [1, 1, 2]
+
+Task 14
+const taskIds = [1, 2, 3, 4, 5];
+taskIds.copyWithin(0, 1);
+console.log(taskIds);
+Answer:  [2, 3, 4, 5, 5]
+
+Task 15
+const taskIds = [1, 2, 3, 4, 5, 6];
+taskIds.copyWithin(3, 0, 2);
+console.log(taskIds);
+Answer:  [1, 2, 3, 1, 2, 6]
+
+Task 16
+const priority = ["High", "Normal", "Low"];
+console.log([...priority.entries()]);
+Answer:  [[0: "High"], [1: "Normal"], [2: "Low"]]
+
+Task 17
+const priority = ["High", "Normal", "Low"];
+console.log([...priority.keys()]);
+Answer:  [0, 1, 2]
+
+Task 18
+const priority = ["High", "Normal", "Low"];
+console.log([...priority.values()]);
+Answer:  ["High", "Normal", "Low"]
+
+Task 19
+const priority = ["High", "Normal", "Low"];
+for (let p of priority) { // == (let p of priority.values())..
+   console.log(p);
+}
+Answer:  High
+Answer:  Normal
+Answer:  Low
+
+Task 20
+const priority = [1, 2, 3];
+const result = priority.includes(2)
+console.log(result);
+Answer:  true
+
+Task 21
+const priority = [1, 2, 3];
+const result = priority.includes(2, 2);
+console.log(result);
+Answer:  false
+
+Task 22
+const priority = [1, 2, 3, NaN];
+const result1 = priority.includes(NaN);
+const result2 = priority.indexOf(NaN)>=0;
+console.log(result1);
+console.log(result2);
+Answer:  true
+Answer:  false
+
+Task 23
+value2 = {value: 2}
+const priority = [{value:1}, value2];
+const result1 = priority.includes(value2);
+const result2 = priority.includes({value: 2});
+console.log(result1);
+console.log(result2);
+Answer:  true
+Answer:  false
+
+Task 24
+const nums = [1, 2, [3, 4], [[5, 6]]];
+const newNums = nums.flat();
+console.log(newNums);
+console.log(nums);
+Answer:  [1, 2, 3, 4, [5, 6]]
+Answer:  [1, 2, [3, 4], [[5, 6]]]
+
+Task 25
+const nums = [1, 2, [3, 4], [[5, 6]]];
+console.log(nums.flat(2));
+console.log(nums.flat(0));
+console.log(nums.flat(Infinity));
+Answer:  [1, 2, 3, 4, 5, 6]
+Answer:  [1, 2, [3, 4], [[5, 6]]]
+Answer:  [1, 2, 3, 4, 5, 6]
+
+Task 26
+const nums = [[{some1: 1}], [[{some2: 2}], [{some3: 3}]]];
+console.log(nums.flat());
+console.log(nums.flat(2));
+Answer:  [{some1: 1}, [{some2: 2}], [{some3: 3}]];
+Answer:  [{some1: 1}, {some2: 2}, {some3: 3}];
+
+Task 27
+const cond = false;
+const letters1 = [(cond ? 'a' : []), 'b'].flat();
+console.log(letters1);
+const letters2 = [(cond ? 'a' : ['b', 'c']), 'd'].flat();
+console.log(letters2);
+Answer:  ['b']
+Answer:  ['b', 'c', 'd']
+
+Task 28
+const a1 = ['a', 'b', 'c'].flatMap(x => x);
+const a2 = ['a', 'b', 'c'].flatMap(x => [x]);
+const a3 = ['a', 'b', 'c'].flatMap(x => [[x]]);
+console.log(a1);
+console.log(a2);
+console.log(a3);
+Answer:  ['a', 'b', 'c']
+Answer:  ['a', 'b', 'c']
+Answer:  [['a'], ['b'], ['c']]
+
+Task 29
+const a = ['a', 'b', 'c'].flatMap((el, i) => new Array(i+1).fill(el));
+console.log(a);
+Answer:  ['a', 'b', 'b', 'c', 'c', 'c']
+
+Task 30
+const taskId = '234574';
+const maxNum = Math.max(...taskId);
+console.log(...taskId);
+console.log(maxNum);
+Answer:  2 3 4 5 7 4
+Answer:  7
+
+
