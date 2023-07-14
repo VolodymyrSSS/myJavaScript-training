@@ -1,0 +1,208 @@
+Task 1
+function square(x, y) {
+     return x * y;
+}
+let v1 = square;
+square = undefined;
+let v2 = square(5, 5);
+console.log(v2);
+Answer: error
+
+Task 2
+let square = function (x, y) {
+     return x * y;
+};
+let v = square(5, 5);
+console.log(v);
+Answer: 25
+
+Task 3
+let squareFunc = function square(x, y) {
+     console.log(x * y);
+};
+squareFunc(2, 3);
+Answer: 6
+
+Task 4
+let numberToSquare = 5;
+let result = (function(x) {
+     return x * x;
+})(numberToSquare);
+console.log(result);
+Answer: 25
+
+Task 5
+function* generate() {
+	yield 1;
+	yield 2;
+}
+const it = generate();
+console.log(it.next());
+Answer: {value: 1, next: false}
+
+Task 6
+function square(x, y) {
+     console.log(this);
+     return x * y;
+}
+let v = square(2, 3);
+console.log(v);
+Answer: Window{...}
+Answer: 6
+
+Task 7
+let upper = function(strings, ...values) {
+      let result = strings[0];			
+      values.forEach((subst, i) => {
+           result += +subst;
+           result += strings[i + 1];
+      });
+      return result.toUpperCase();
+ };
+ let x = 1;
+ let y = 3;
+console.log (upper `${x} + ${y} is ${x + y}`);
+Answer: 1 + 3 IS 6
+
+Task 8
+let person = {
+    firstName: “Anna”,
+    lastName: “Vasilieva”,
+};
+function showFullName(param) {
+    console.log(`${this.firstName} ${this.lastName}`);
+    console.log(param);
+}
+showFullName.call(person, …[1]);
+Answer:  Anna Vasilieva
+
+Task 9
+let sum = function() {
+    let i, x = 0;
+    for (i = 0; i < arguments.length; i++) {
+        x += arguments[i];
+    } 
+    return x;
+}
+console.log( sum(1, 2, 3) ); 
+Answer: 6
+
+Task 10
+function increment(x) {
+     x++;
+}
+let i = 10;
+console.log(i);
+increment(i);
+console.log(i);
+Answer: 10
+Answer: 10
+
+Task 11
+uniqueInteger.count = 0;
+function uniqueInteger() {
+     return uniqueInteger.count++;
+}
+console.log( uniqueInteger() );
+console.log( uniqueInteger() );
+Answer: 0
+Answer: 1
+
+Task 12
+let print = function(name) {
+     console.log(`Hello, ${name}`);
+};
+
+let func = function(callback) {
+     let name = “Ann”;
+     callback(name);
+};
+func( print );
+Answer:  Ann
+
+Task 13
+function sayHi(person) {
+     var message = makeMessage(person);
+     console.log( message );
+
+     function getHello(age) {
+         return age >= 18 ? “Hello” : “Hi”;
+     }
+
+    function makeMessage(person) {
+         return `${getHello(person.age)}, ${person.name}`;
+     } 
+}
+sayHi({ name: “Ann”, age: 17 });
+Answer: Hi Ann
+
+Task 14
+function getClosure() {
+     const x = 10;
+     return function() {
+          console.log(x);
+     };
+}
+var closure = getClosure();
+closure();
+Answer: 10
+
+Task 15
+var capturedClosure = function() {
+     console.log(x);
+};
+capturedClosure();
+let x = 10;
+Answer: error
+
+Task 16
+const functions = [];
+for (let i = 0; i < 3; i++) {
+     var z = i; // <== var
+     const closure = function() {
+          console.log(z);
+     };
+     functions.push(closure);
+}
+functions[0]();
+functions[1]();
+functions[2]();
+Answer: 2
+Answer: 2
+Answer: 2
+
+Task 17
+let getHours = (actual, overtime) => actual + overtime;
+console.log(getHours(8, 2));
+Answer: 10
+
+Task 18
+let getHours = (actual, overtime) => { actual + overtime };
+console.log(getHours(8, 2));
+Answer:  error
+
+Task 19
+let getTask = () => { 
+     id: 1,
+     priority: 100 
+};
+console.log(getTask());
+Answer: error
+
+Task 20
+let Task = () => {
+     this.id = 1;
+};
+console.log( new Task() );
+Answer: error
+
+
+
+
+
+
+
+
+
+
+

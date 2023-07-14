@@ -1,0 +1,265 @@
+Task 1
+const entries = [];
+entries.push(‘a’);
+entries.push(‘b’, ‘c’);
+console.log(entries.pop());
+Answer:  c
+
+Task 2
+const entries = [‘a’, 1, true];
+console.log(entries instanceof Array);
+Answer: true
+
+Task 3
+const priority = new Set([“High”, “Low” ]);
+function logSetElements(key, value, set) {
+    console.log(`s[${key}] = ${value}`);
+}
+priority.forEach(logSetElements);
+Answer: s[High] = High
+Answer: s[Low] = Low
+
+Task 4
+const ids = new Set([1, ‘1’]);
+console.log(ids.size);
+Answer: 2
+
+Task 5
+const entries = [‘a’, ‘b’, ‘c’];
+entries.length = 10;
+console.log(entries.length);
+Answer: 10
+
+Task 6
+const priority = [1, 2, 3];
+const priority100 = Array.from(
+	priority, 
+	function(p) {
+		return p*10 + this.adjustment;
+	}, 
+	// context for function
+	{ adjustment: 100 }
+);
+console.log(priority100);
+Answer: [110, 120, 130]
+
+Task 7
+const ratings = [1, 2, 3, 4, 5];
+const result = ratings.reduce(
+     (start, next, index, array) => start * next
+); 
+console.log(result);
+Answer: 120
+
+Task 8
+const priority = [,,];
+for (const item of priority) {
+     console.log(item);
+}
+Answer: undefined
+Answer: undefined
+
+Task 9
+const entries = [‘a’, ‘b’, ‘c’];
+const newEntries = 
+     entries.concat([‘d’, ‘e’, ‘f’], ‘g’, ‘h’);
+console.log(newEntries.length);
+Answer: 8
+
+Task 10
+const priority = [‘Low’, ‘Normal’, ‘High’];
+// … - rest operator
+const [low, …remaining] = priority;
+console.log(remaining);
+Answer: [‘Normal’, ‘High’]
+
+Task 11
+let task = { isDone: false };
+console.log( Object.prototype.isPrototypeOf(task) );
+Answer:  true
+
+Task 12
+let task1 = { id: 1 };
+let task2 = { id: 2, priority: 100 };
+let target = {};
+Object.assign(target, task1, task2);
+console.log(target);
+Answer: { id: 2, priority: 100 }
+
+Task 13
+“use strict”;
+let task = { id: 1 };
+Object.freeze(task);
+task.id = 2;
+task.action = “Create”;
+Object.defineProperty(task, “priority”, {value: “High”})
+console.log(task);
+Answer: { id: 2 };
+
+Task 14
+let task = {
+     isDone: true,
+     estHours: 16
+};
+let anotherTask = task;
+console.log(anotherTask.isDone);
+Answer:  true
+
+Task 15
+class Task {
+     constructor() {
+          console.log(new.target.name);
+     }
+}
+class UrgentTask extends Task {}
+let task = new UrgentTask();
+Answer: UrgentTask
+
+Task 16
+class Task {
+     constructor(id = 2) {
+          console.log(“Constructing Task”);
+          this.taskId = id;
+     }
+     showId() {
+          console.log(this.taskId);
+     }
+}
+let task = new Task();
+task.showId();
+Answer: Constructing Task
+Answer: 2
+
+
+Task 17
+class Task {
+     constructor() {
+          console.log(“Constructing Task”);
+     }
+}
+class UrgentTask extends Task {
+     constructor() {
+          this.action = “Urgent  Task” 
+          super();
+          console.log(this.action);
+     }
+}
+let task = new UrgentTask();
+Answer: error
+
+Task 18 
+let Task = function(action) {
+     this.action = action;
+     this.done = false;
+     this.complete = function() {
+          this.done = true;
+     }
+};
+let task1 = new Task(“create”);
+let task2 = new Task(“delete”);
+console.log(task1.complete === task2.complete);
+Answer: false
+
+Task 19
+let task1 = { action: “Create…” };
+let task2 = { action: “Delete…” };
+let project = new Map();
+project.set(task1, “High Priority”);
+project.set(task2, “Normal Priority”);
+project.clear();
+console.log(project.size);
+Answer: 0
+
+Task 20
+let sum = function() {
+     let x = 0;
+     […arguments].forEach( (arg) => {
+           x += arg;
+     });
+     return x;
+}
+console.log( sum(1, 2, 3) ); 
+Answer: 6
+
+Task 21
+let squareFunc = function square(x, y) {
+     console.log(x * y);
+};
+square(2, 3);
+Answer: error
+
+Task 22
+function square(x, y) {
+     console.log( x * y );
+}
+let v = square(2, 3);
+console.log(v);
+Answer: 6
+
+Task 23
+let person = {
+     firstName: “Anna”,
+     lastName: “Vasilieva”,
+};
+function showFullName() {
+     console.log(`${this.firstName}  ${this.lastName}`);
+}
+showFullName.call(person);
+Answer: Anna Vasilieva
+
+Task 24
+uniqueInteger.count = 0;
+function uniqueInteger() {
+	return uniqueInteger.count++;
+}
+console.log( uniqueInteger() );
+console.log( uniqueInteger() );
+Answer:  0
+Answer:  1
+
+Task 25
+var callback = function(x) { console.log(x); };
+var callAClosure = function(closure) {
+     closure(10);
+};
+callAClosure(callback);
+Answer: 10
+
+Task 26
+var x = 10;
+var capturedClosure = function() {
+     console.log(x);
+};
+(function() {
+	x = x * x;
+})();
+capturedClosure();
+Answer: 100
+
+Task 27
+(function() {
+  “use strict”;
+  document.addEventListener(‘click’, () => console.log(this) );
+})();
+Answer: undefined
+
+Task 28
+let getTaskId = () => { 
+     id: return 1
+};
+console.log(getTaskId());
+Answer: error
+
+Task 29
+let task = {
+     id: 123,
+     done: function() {
+          return p => console.log(this.id, p);
+     }
+};
+let anotherTask = {
+	id: 987
+};
+task.done().bind( anotherTask, 1 )();
+Answer:  123  1
+
