@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>using depricated property __proto__</title>
+		<style>
+			body {
+				background-color: tan;
+				margin: 0;
+				font-family: Verdana, sans-serif;
+			}
+
+			.emph {
+				color: red;
+			}
+
+			.title {
+				color: navy;
+				text-align: center;
+				font-weight: 700;
+			}
+
+			.task {
+				width: 50%;
+				padding: 15px 25px;
+				color: navy;
+				background-color: #e2e2e2;
+				margin: 35px auto;
+			}
+
+			p {
+				width: 80%;
+				margin: 0 auto;
+			}
+
+			pre {
+				width: 50%;
+				background-color: #bebebe;
+				padding-top: 20px;
+				margin: 0 auto;
+			}
+
+			code {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: large;
+			}
+
+			.code-ex {
+				width: 50%;
+				font-family: sans-serif;
+				font-style: italic;
+				background-color: #bebebe;
+				font-size: large;
+				padding-left: 15px;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h2 class="title">
+			Working with prototypes: using old
+			<span class="emph">__proto__</span> property as one of mathods<br />
+			to get/set internal hidden property -
+			<span class="emph">[[Prototype]]</span>
+		</h2>
+
+		<h4 class="task">
+			Що таке властивість __proto__, а що таке [[Prototype]] і чим відрізняється
+			від <i>prototype</i> і як його можна задати?<br />
+			Покажіть приклад, як використати застаріле __proto__ для отримання
+			властивості з прототипу объекта?<br />
+			Покажіть приклад, як використати застаріле __proto__ для отримання методу
+			з прототипу объекта?<br />
+			Покажіть приклад, як використати застаріле __proto__ для отримання
+			необхідних властивостей чи методів пройшовши по ланцюгу прототипів?
+		</h4>
+
+		<p>
+			<code>
+				<pre>
+          let animal = {
+            eats: true
+          };
+
+          let rabbit = { 
+            jumps: true
+          };
+
+          // встановіть для об'єкта rabbit прототип animal ?
+          
+          // візьмемо властивість з прототипу
+          console.log(rabbit.eats); // true
+					// візьмемо власну властивість
+          console.log( rabbit.jumps ); // true
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p><b>Відповідь:</b></p>
+		<br />
+
+		<p>
+			Коли ми хочемо прочитати властивість з об’єкта, а вона відсутня,
+			JavaScript автоматично бере її з прототипу. У програмуванні такий механізм
+			називається <i>успадкуванням прототипу</i>.<br />
+			В об’єктах JavaScript є спеціальна прихована властивість
+			<i>[[Prototype]]</i> (так вона назвається у специфікації), значення якого,
+			або дорівнює <i>null</i>, або має посилання на інший об'єкт. Цей об'єкт
+			називається <i>ПРОТОТИП</i>.<br />
+			Тобто властивість <i>[[Prototype]]</i> є внутрішньою та скритою, і є
+			багато способів її задати. Одним із них є використання застарілої
+			властивості <strong><i>__proto__</i></strong
+			>.<br />
+			Таким чином, <i>__proto__</i> — не те саме, що <i>[[Prototype]]</i>. Це
+			насправді геттер/сеттер для <i>[[Prototype]]</i>. Ця властивість існує за
+			історичними причинами, але в сучасній мові, ця властивість замінена
+			методами<br />
+			<strong
+				><i
+					>Object.getPrototypeOf(obj)/Object.setPrototypeOf(obj,
+					prototypeObj)</i
+				></strong
+			>,<br />
+			які отримують/встановлюють <i>ПРОТОТИП</i> відповідно.<br />
+			Якщо читати специфікації ECMAScript – властивість
+			<i>__proto__</i> визначено в ній як <i>[[Prototype]]</i>. Подвійні
+			квадратні дужки тут важливі, щоб не перепутати його з іншою властивістю,
+			яка називається <b><i>prototype</i></b
+			>.<br />
+			Крім того, необхідно зауважити, що прототип використовується лише для
+			читання властивостей, а от операції з запису/видалення працюють
+			безпосередньо з об’єктом.<br />
+			Таким чином, давайте використаємо цю застарілу властивість для об'єкта
+			<i>rabbit</i> щоб його протиотипом був об'єкт <i>animal</i> ось так:
+		</p>
+		<br />
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          let animal = {
+          eats: true
+        };
+
+        let rabbit = {
+          jumps: true
+        };
+
+        <b>rabbit.__proto__ = animal;</b>
+
+        console.log( rabbit.eats ); // true
+        console.log( rabbit.jumps ); // true
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<script>
+			let animal = {
+				eats: true,
+			};
+
+			let rabbit = {
+				jumps: true,
+			};
+
+			rabbit.__proto__ = animal;
+
+			console.log(rabbit.eats); // true
+			console.log(rabbit.jumps); // true
+		</script>
+
+		<p>
+			Об'єкт, на який вказує посилання <i>__proto__</i>, называется
+			<i>ПРОТОТИПОМ</i>.<br />
+			В даному випадку було задано, що <i>animal</i> є прототипом для
+			<i>rabbit</i>. Друга консоль тут працює очевидним чином - виводить
+			властивість <i>jumps</i> об'єкту <i>rabbit</i>; а перша консоль - хоче
+			вивести властивість <i>rabbit.eats</i>, шукає її в самому об'єкті
+			<i>rabbit</i>, не знаходить і продовжує пошук в об'єкті
+			<i>rabbit.__proto__</i> - тобто в цьому випадку в <i>animal</i>.<br />
+			<br />
+			Ми також можемо використовувати застарілу властивість
+			<b>__proto__</b> для отримання і методів з прототипу. Його можна також
+			задавати і в тілі нового об'єкту, і ми будемо мати доступ як до методів
+			так і до властивостей прототипу, ось так:
+		</p>
+		<br />
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          let animal = {
+          eats: true,
+          walk() { // це метод в прототипі
+            console.info("Animal walk");
+          }
+        };
+
+        let rabbit = {
+          jumps: true,
+          <b>__proto__: animal</b>
+        };
+
+        rabbit.walk(); // Animal walk
+        console.log(rabbit.eats); // true
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<script>
+			let animal2 = {
+				eats: true,
+				walk() {
+					console.info('Animal walk');
+				},
+			};
+
+			let rabbit2 = {
+				jumps: true,
+				__proto__: animal2,
+			};
+
+			rabbit2.walk(); // Animal walk
+			console.log(rabbit2.eats); // true
+		</script>
+
+		<p>
+			У об'єкта, який визначений як <i>__proto__</i>, може мати свою властивість
+			<i>__proto__</i>, а у того – своя, і так далі. При цьому властивості
+			будуть шукатись вверх по ланцюгу, ось так:
+		</p>
+		<br />
+
+		<p class="code-ex">
+			<code>
+				<pre>
+        let animal = { 
+          eats: true, 
+          walk() { 
+            console.info("Animal walk"); 
+          } 
+        };
+
+        let rabbit = { 
+          jumps: true,
+          <b>__proto__: animal</b>
+        };
+
+        let longEar = {
+          earLength: 10,
+          <b>__proto__: rabbit</b>
+        };
+
+        longEar.walk(); // Animal walk (з animal)
+        console.log(longEar.jumps); // true (з rabbit)
+        console.log(longEar.earLength); // 10 (своя властивість)
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<script>
+			let longEar = {
+				earLength: 10,
+				__proto__: rabbit2,
+			};
+
+			// walk взяли з ланцюга прототипів
+			longEar.walk(); // Animal walk
+			console.log(longEar.jumps); // true (з rabbit)
+			console.log(longEar.earLength); // 10 (своя властивість)
+		</script>
+
+		<p>
+			Насправді, ланцюг прототипів може бути досить довгим.<br />
+			Також, можна зробити ще такий висновок:<br />
+			<b
+				><i
+					>Прототип – це 'резервне сховице властивостей та методів' об'єкту, яке
+					автоматично використовується при пошуку.</i
+				></b
+			>
+		</p>
+		<br /><br /><br />
+
+		<script></script>
+	</body>
+</html>

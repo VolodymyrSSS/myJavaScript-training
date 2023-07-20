@@ -1,153 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Add method in prototypes</title>
-    <style>
-      body {
-        background-color: tan;
-        margin: 0;
-        font-family: Verdana, sans-serif;
-      }
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Add method in prototypes</title>
+		<style>
+			body {
+				background-color: tan;
+				margin: 0;
+				font-family: Verdana, sans-serif;
+			}
 
-      .emph {
-        color: red;
-      }
+			.emph {
+				color: red;
+			}
 
-      .title {
-        color: navy;
-        text-align: center;
-        font-weight: 700;
-      }
+			.title {
+				color: navy;
+				text-align: center;
+				font-weight: 700;
+			}
 
-      .task {
-        width: 50%;
-        padding: 15px 25px;
-        color: navy;
-        background-color: #e2e2e2;
-        margin: 35px auto;
-      }
+			.task {
+				width: 50%;
+				padding: 15px 25px;
+				color: navy;
+				background-color: #e2e2e2;
+				margin: 35px auto;
+			}
 
-      p {
-        width: 80%;
-        margin: 0 auto;
-      }
+			p {
+				width: 80%;
+				margin: 0 auto;
+			}
 
-      pre {
-        width: 50%;
-        background-color: #bebebe;
-        padding-top: 20px;
-        margin: 0 auto;
-      }
+			pre {
+				width: 50%;
+				background-color: #bebebe;
+				padding-top: 20px;
+				margin: 0 auto;
+			}
 
-      code {
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: large;
-      }
+			code {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: large;
+			}
 
-      .code-ex {
-        width: 50%;
-        font-family: sans-serif;
-        font-style: italic;
-        background-color: #bebebe;
-        font-size: large;
-        padding-left: 15px;
-        margin: 0 auto;
-      }
+			.code-ex {
+				width: 50%;
+				font-family: sans-serif;
+				font-style: italic;
+				background-color: #bebebe;
+				font-size: large;
+				padding-left: 15px;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
 
-      img {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        /* width: 80%; */
-      }
-    </style>
-  </head>
+	<body>
+		<h2 class="title">
+			Working with prototypes: add method to the
+			<span class="emph">prototype</span>
+		</h2>
 
-  <body>
-    <h2 class="title">
-      Working with prototypes: add method to the
-      <span class="emph">prototype</span>
-    </h2>
+		<h4 class="task">
+			Додайте всім функціям в прототип метод defer(ms). Цей метод має викликати
+			функцію через ms мілісекунд.
+		</h4>
 
-    <h4 class="task">
-      Додайте всім функціям в прототип метод defer(ms). Цей метод має викликати
-      функцію через ms мілісекунд.
-    </h4>
-
-    <p>
-      <code>
-        <pre>
+		<p>
+			<code>
+				<pre>
           function f() {
             console.log("Здоров був хлопаче!");
           }
 
           f.defer(1500); // виведе "Здоров був хлопаче!" через 1.5 секунди
         </pre>
-      </code>
-    </p>
-    <br />
+			</code>
+		</p>
+		<br />
 
-    <p><b>Відповідь:</b></p>
-    <br />
+		<p><b>Відповідь:</b></p>
+		<br />
 
-    <p>
-      Як відомо, усі функції успадковують методи від прототипу.<br />
-      А для того, щоб створити метод в прототипі функцій, потрібно спочатку
-      визначити його в прототипі <b>Function.prototype</b> через крапку, як це
-      робиться у звичайних об'єктах, ось так:
-    </p>
-    <br />
+		<p>
+			Як відомо, усі функції успадковують методи від прототипу.<br />
+			А для того, щоб створити метод в прототипі функцій, потрібно спочатку
+			визначити його в прототипі <b>Function.prototype</b> через крапку, як це
+			робиться у звичайних об'єктах, ось так:
+		</p>
+		<br />
 
-    <p class="code-ex">
-      <code>
-        <pre>
+		<p class="code-ex">
+			<code>
+				<pre>
           Function.prototype.defer
         </pre>
-      </code>
-    </p>
-    <br />
+			</code>
+		</p>
+		<br />
 
-    <p>
-      І далі присвоїти йому функцію з визначеним функціоналом: отримуємо через
-      вхідний параметр затримку кількість мілісекунд ms, а в методі
-      <b>setTimeout</b> задати першим параметром ключове слово <b>this</b>, що
-      буде вказувати на саму функцію та потрібну затримку ms як другий параметр
-      методу, ось так:
-    </p>
-    <br />
+		<p>
+			І далі присвоїти йому функцію з визначеним функціоналом: отримуємо через
+			вхідний параметр затримку кількість мілісекунд ms, а в методі
+			<b>setTimeout</b> задати першим параметром ключове слово <b>this</b>, що
+			буде вказувати на саму функцію та потрібну затримку ms як другий параметр
+			методу, ось так:
+		</p>
+		<br />
 
-    <p class="code-ex">
-      <code>
-        <pre>
+		<p class="code-ex">
+			<code>
+				<pre>
           Function.prototype.defer = function(ms) {
             setTimeout(this, ms);
           };
         </pre>
-      </code>
-    </p>
-    <br />
+			</code>
+		</p>
+		<br />
 
-    <p>
-      Після цього, можемо вже звернутись до метода функції, який буде братись з
-      прототипу фукнції, ось так:
-    </p>
-    <br />
+		<p>
+			Після цього, можемо вже звернутись до метода функції, який буде братись з
+			прототипу фукнції, ось так:
+		</p>
+		<br />
 
-    <p class="code-ex">
-      <code>
-        <pre>
+		<p class="code-ex">
+			<code>
+				<pre>
           f.defer(1500);
         </pre>
-      </code>
-    </p>
-    <br />
+			</code>
+		</p>
+		<br />
 
-    <p class="code-ex">
-      <code>
-        <pre>
+		<p class="code-ex">
+			<code>
+				<pre>
           Кінцевий код має вид:
 
           Function.prototype.defer = function(ms) {
@@ -160,20 +153,20 @@
           
           f.defer(1500); // виведе "Здоров був хлопаче!" через 1.5 секунди
         </pre>
-      </code>
-    </p>
-    <br />
+			</code>
+		</p>
+		<br />
 
-    <script>
-      Function.prototype.defer = function (ms) {
-        setTimeout(this, ms);
-      };
+		<script>
+			Function.prototype.defer = function (ms) {
+				setTimeout(this, ms);
+			};
 
-      function f() {
-        console.log('Здоров був хлопаче!');
-      }
+			function f() {
+				console.log('Здоров був хлопаче!');
+			}
 
-      f.defer(1500); // виведе "Здоров був хлопаче!" через 1.5 секунди
-    </script>
-  </body>
+			f.defer(1500); // виведе "Здоров був хлопаче!" через 1.5 секунди
+		</script>
+	</body>
 </html>
