@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+			rel="stylesheet"
+		/>
+		<title>Document</title>
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+				box-sizing: border-box;
+			}
+			/*стилізація середовища*/
+			body {
+				background-color: tan;
+				font-family: 'Roboto', sans-serif;
+				font-size: 22px;
+			}
+			/*загальна стилізація кнопок*/
+			.button {
+				font-size: 10px;
+				border: none;
+				color: white;
+				padding: 15px 32px;
+				text-align: center;
+				text-decoration: none;
+				display: inline-block;
+				margin: 4px 2px;
+				cursor: pointer;
+				box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
+					0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			}
+			/*стилізація зеленої кнопки модального вікна*/
+			.button.open {
+				background-color: #4caf50;
+			}
+			/*стилізація синьої кнопки модального вікна*/
+			.button.close {
+				background-color: #008cba;
+			}
+			/*загальна стилізація модального вікна*/
+			#modal {
+				display: none;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				border: 1px solid black;
+				padding: 1rem;
+				border-radius: 0.25rem;
+				background-color: white;
+			}
+			/*стилізація шару затінення*/
+			#overlay {
+				display: none;
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background-color: rgba(0, 0, 0, 0.75);
+			}
+			/*додавання стилів при відкритті модального вікна*/
+			#modal.open {
+				display: block;
+				color: white;
+				text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+			}
+			/*відображення затінення модального вікна*/
+			#overlay.open {
+				display: block;
+			}
+		</style>
+	</head>
+	<body>
+		<button id="open-modal-btn" class="button open">Open modal</button>
+
+		<div id="overlay"></div>
+
+		<div id="modal">
+			<h2 class="greetings"></h2>
+			<h3>This is a simple modal window</h3>
+			<button id="close-modal-btn" class="button close">Close modal</button>
+		</div>
+
+		<script>
+			// вибрати усі елементи та присвоїти в змінні вузлів
+			const modal = document.querySelector('#modal');
+			const openModalButton = document.querySelector('#open-modal-btn');
+			const closeModalButton = document.querySelector('#close-modal-btn');
+			const overlay = document.querySelector('#overlay');
+			let greetings = document.querySelector('.greetings');
+
+			// додати клас 'open' по кліку та відкрити модальне вікно
+			openModalButton.addEventListener('click', () => {
+				modal.classList.add('open');
+				overlay.classList.add('open');
+			});
+			// видалити клас 'open' та закрити модальне вікно
+			closeModalButton.addEventListener('click', () => {
+				//   modal.classList.remove('open');
+				//   overlay.classList.remove('open');
+				closeModal();
+			});
+			// видалити клас 'open' та закрити модальне вікно по кліку на будь-яке місце шару затінення
+			overlay.addEventListener('click', () => {
+				//   modal.classList.remove('open');
+				//   overlay.classList.remove('open');
+				closeModal();
+			});
+			// створення функції для обєднання одинакових дій по видаленню класу 'open'
+			function closeModal() {
+				modal.classList.remove('open');
+				overlay.classList.remove('open');
+			}
+			const greetingsList = ['Good Morning', 'Good Afternoon', 'Good Evening'];
+			const currentHour = new Date().getHours();
+			// determine the index of the appropriate greetingsList based on the current hour
+			let index =
+				currentHour >= 12 && currentHour < 17 ? 1 : currentHour >= 17 ? 2 : 0;
+			console.log(greetingsList[index]);
+		</script>
+	</body>
+</html>
