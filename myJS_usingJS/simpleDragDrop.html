@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Drag and Drop API</title>
+	</head>
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+		body {
+			background-color: tan;
+			font-family: 'Helvetica', 'Arial', sans-serif;
+		}
+		h2 {
+			color: navy;
+			text-align: left;
+			padding: 10px;
+		}
+		.forCode {
+			width: 70%;
+			background-color: #eee;
+			padding: 4px;
+			margin: 25px 25px 20px;
+		}
+		#div1 {
+			width: 400px;
+			height: 180px;
+			padding: 10px;
+			border: 2px solid navy;
+			margin: 20px 30px;
+		}
+		#div2,
+		#div3 {
+			float: left;
+			width: 150px;
+			height: 90px;
+			margin: 10px;
+			padding: 10px;
+			border: 2px solid navy;
+		}
+	</style>
+	<body>
+		<h2>HTML Drag and Drop API</h2>
+
+		<h3>Drag and Drop</h3>
+
+		<p>It is when you "grab" an object and drag it to a different location.</p>
+
+		<p>Drag the serif-explenation image into the rectangle:</p>
+
+		<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+		<img
+			id="drag1"
+			src="./images/serif.gif"
+			alt="serif image"
+			draggable="true"
+			ondragstart="drag(event)"
+			width="300"
+			height="120"
+		/>
+
+		<p>Code for this simple drag and drop example:</p>
+
+		<div class="forCode">
+			<pre>
+      <code>
+        &lt;div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"&gt;&lt;/div&gt;
+
+        &lt;img id="drag1" src="./images/serif.gif" draggable="true" ondragstart="drag(event)" width="300" height="120"&gt;
+
+        &lt;script&gt;
+          function allowDrop(ev) {
+            ev.preventDefault(); // to allow a drop, we must prevent the default handling of the element.
+          }
+
+          function drag(ev) {
+            ev.dataTransfer.setData('text', ev.target.id); // method sets the data type and the value of the dragged data
+          }
+
+          function drop(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData('text'); // return any data that was set to the same type in the setData() method
+            // the dragged data is the id of the dragged element ("drag1")
+            ev.target.appendChild(document.getElementById(data)); // append the dragged element into the drop element
+          }
+        &lt;/script&gt;
+      </code>
+    </pre>
+		</div>
+
+		<p>
+			Also, to make an element draggable:<br />
+			1) set the draggable attribute to true - &lt;<i>img draggable="true"</i
+			>&gt;<br />
+			2) specify what should happen when the element is dragged:<br />
+			- <i>ondragstart</i> attribute calls function, <i>drag(event)</i>, that
+			specifies what data to be dragged<br />
+			- the <i>dataTransfer.setData()</i> method sets the data type and the
+			value of the dragged data<br />
+			(In this case, the data type is "text" and the value is the id of the
+			draggable element - "drag1")<br />
+			3) specify where to drop - <i>ondragover</i><br />
+			- the <i>ondragover</i> event specifies where the dragged data can be
+			dropped;<br />
+			- to allow a drop, we must prevent the default handling of the element;<br />
+			4) do the drop - <i>ondrop</i><br />
+			- when the dragged data is dropped, a drop event occurs, so the
+			<i>ondrop</i> attribute calls a function, drop(event)<br />
+		</p>
+
+		<h3>Drag and Drop back and forth</h3>
+
+		<p>
+			This sample for drag (and drop) an image back and forth between two
+			&lt;div&gt; elements.<br />
+			As a matter of fact, script remains the same. Drag the image back and
+			forth between the two div elements to see effect.
+		</p>
+
+		<div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)">
+			<img
+				src="./images/smiley.gif"
+				draggable="true"
+				ondragstart="drag(event)"
+				id="drag2"
+				width="40"
+				height="37"
+			/>
+		</div>
+
+		<div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+		<div style="clear: both"></div>
+
+		<div class="forCode">
+			<pre>
+      <code>
+        &lt;div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"&gt;
+          &lt;img src="./images/smiley.gif" draggable="true" ondragstart="drag(event)" id="drag1" width="40" height="37"&gt;
+        &lt;/div>
+
+        &lt;div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)"&gt;&lt;/div&gt;
+      </code>
+     </pre>
+		</div>
+
+		<script>
+			function allowDrop(ev) {
+				ev.preventDefault();
+			}
+
+			function drag(ev) {
+				ev.dataTransfer.setData('text', ev.target.id);
+			}
+
+			function drop(ev) {
+				ev.preventDefault();
+				var data = ev.dataTransfer.getData('text');
+				ev.target.appendChild(document.getElementById(data));
+			}
+		</script>
+	</body>
+</html>
