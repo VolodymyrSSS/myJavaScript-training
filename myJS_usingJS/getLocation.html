@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Get location</title>
+		<style>
+			@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Roboto:ital,wght@0,400;0,500;1,700&display=swap');
+
+			*,
+			*::before,
+			*::after {
+				box-sizing: border-box;
+				font-family: 'Roboto', sans-serif;
+				font-weight: 400;
+			}
+
+			body {
+				padding: 0;
+				margin: 0;
+				background: linear-gradient(to right, #d09d05, #e57403);
+			}
+
+			.container {
+				display: flex-start;
+				margin-left: 240px;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+			}
+
+			.button {
+				position: relative;
+				background-color: #520d17;
+				border: none;
+				font-size: 28px;
+				color: #ffffff;
+				padding: 20px;
+				width: 200px;
+				text-align: center;
+				transition-duration: 0.4s;
+				text-decoration: none;
+				overflow: hidden;
+				cursor: pointer;
+				border: 2px solid #bebebe;
+			}
+
+			.button:after {
+				content: '';
+				background: #f1f1f1;
+				display: block;
+				position: absolute;
+				padding-top: 300%;
+				padding-left: 350%;
+				margin-left: -20px !important;
+				margin-top: -120%;
+				opacity: 0;
+				transition: all 0.8s;
+			}
+
+			.button:active:after {
+				padding: 0;
+				margin: 0;
+				opacity: 1;
+				transition: 0s;
+			}
+
+			.button:hover {
+				box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+					0 17px 50px 0 rgba(0, 0, 0, 0.19);
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h2>Also, on click, you will get your geografic location</h2>
+
+			<p>
+				To get your location we use
+				<strong><i>getCurrentPosition()</i></strong> method which returns an
+				object on success. The latitude, longitude and accuracy properties are
+				always returned. The other properties are returned if available:<br />
+				1) coords.latitude - The latitude as a decimal number (always returned);
+				<br />
+				2) coords.longitude - The longitude as a decimal number (always
+				returned);<br />
+				3) coords.accuracy - The accuracy of position (always returned);<br />
+				4) coords.altitude - The altitude in meters above the mean sea level
+				(returned if available);<br />
+				5) coords.altitudeAccuracy The altitude accuracy of position (returned
+				if available);<br />
+				6) coords.heading - The heading as degrees clockwise from North
+				(returned if available);<br />
+				7) coords.speed The speed in meters per second (returned if
+				available);<br />
+				8) timestamp The date/time of the response (returned if available);<br />
+			</p>
+
+			<p>
+				As well, it was used an example of animated button with ripple effect
+			</p>
+
+			<h4>Please, find your location in a console, so open it to the right</h4>
+
+			<button class="button">Get location</button>
+
+			<p>
+				The Geolocation object also has other interesting methods:<br />
+				<strong><i>watchPosition()</i></strong> - Returns the current position
+				of the user and continues to return updated position as the user moves
+				(like the GPS in a car).<br />
+				<strong><i>clearWatch()</i></strong> - Stops the watchPosition() method.
+			</p>
+
+			<p>Let's click the button to get your coordinates too.</p>
+
+			<button onclick="getLocation()">Get coordinates</button>
+
+			<p id="myCoordinates"></p>
+		</div>
+
+		<script>
+			const button = document.querySelector('button');
+
+			button.addEventListener('click', () => {
+				navigator.geolocation.getCurrentPosition((position, showError) => {
+					// getting latitude and longitude from position obj
+					const { latitude, longitude } = position.coords;
+					// getting location of passed coordinates using geocoding API
+					const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+
+					fetch(url)
+						.then((res) => res.json())
+						.then((data) => {
+							console.table(data.address);
+						})
+						.catch(() => {
+							console.log('Error fetching data from API');
+						});
+				});
+			});
+
+			var x = document.getElementById('myCoordinates');
+
+			function getLocation() {
+				if (navigator.geolocation) {
+					// it returns a coordinates object to the function specified in the parameter (showPosition)
+					navigator.geolocation.getCurrentPosition(showPosition, showError);
+					// navigator.geolocation.watchPosition(showPosition);
+				} else {
+					x.innerHTML = 'Geolocation is not supported by this browser.';
+				}
+			}
+
+			// function outputs the Latitude and Longitude
+			function showPosition(position) {
+				x.innerHTML =
+					'Latitude: ' +
+					position.coords.latitude +
+					'<br>Longitude: ' +
+					position.coords.longitude;
+			}
+
+			// handle errors
+			function showError(error) {
+				switch (error.code) {
+					case error.PERMISSION_DENIED:
+						x.innerHTML = 'User denied the request for Geolocation.';
+						break;
+					case error.POSITION_UNAVAILABLE:
+						x.innerHTML = 'Location information is unavailable.';
+						break;
+					case error.TIMEOUT:
+						x.innerHTML = 'The request to get user location timed out.';
+						break;
+					case error.UNKNOWN_ERROR:
+						x.innerHTML = 'An unknown error occurred.';
+						break;
+				}
+			}
+		</script>
+	</body>
+</html>
