@@ -39,6 +39,37 @@
 				padding: 4px;
 				margin: 25px 25px 20px;
 			}
+
+			button {
+				background-color: hsl(208, 72%, 39%);
+				display: inline-block;
+				cursor: pointer;
+				color: white;
+				border: 3px solid navy;
+				padding: 0.5em 1em;
+				text-decoration: none;
+				border-radius: 0.25em;
+
+				position: relative;
+				isolation: isolate;
+			}
+			button::after {
+				content: '';
+				position: absolute;
+				z-index: -1;
+				background: navy;
+				inset: 0;
+
+				scale: 0 1;
+				transform-origin: right;
+				transition: scale 450ms;
+			}
+
+			button:hover::after,
+			button:focus-visible::after {
+				transform-origin: left;
+				scale: 1 1;
+			}
 		</style>
 	</head>
 	<body>
@@ -211,7 +242,11 @@
     </pre>
 		</div>
 
-		<p><button onclick="clickCounter()" type="button">Click me!</button></p>
+		<p>
+			<button onclick="clickCounter()" type="button">
+				Click me to increase counter!
+			</button>
+		</p>
 		<div id="result"></div>
 		<p>Click the button to see the counter increase.</p>
 		<p>
