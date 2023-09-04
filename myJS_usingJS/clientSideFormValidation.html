@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Client-Side Form Validation</title>
+		<style>
+			* {
+				margin: 0.5;
+				padding: 0.5;
+				box-sizing: border-box;
+			}
+			body {
+				font-family: sans-serif;
+				background-color: tan;
+			}
+			form {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				max-width: 400px;
+				box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+				padding: 50px;
+			}
+			input[type='text'],
+			input[type='email'] {
+				width: 100%;
+				border: 1px solid #333;
+				box-sizing: border-box;
+			}
+			label {
+				display: block;
+				margin-bottom: 5px;
+			}
+			input:invalid {
+				box-shadow: 0 0 5px 1px red;
+			}
+			input:focus {
+				border: 2px solid #f2796e;
+			}
+			form div input {
+				width: 100%;
+				height: 40px;
+				border-radius: 8px;
+				outline: none;
+				border: 2px solid #c4c4c4;
+				padding: 0 30px;
+				box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+			}
+			form div {
+				position: relative;
+				margin-bottom: 15px;
+			}
+			input:focus {
+				border: 2px solid #f2796e;
+			}
+			button {
+				margin-top: 15px;
+				width: 100%;
+				height: 45px;
+				background-color: #6e98f2;
+				border: 2px solid #6e98f2;
+				border-radius: 8px;
+				color: #fff;
+				font-size: 20px;
+				cursor: pointer;
+				box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+				transition: all 0.1s ease;
+			}
+			.success-icon,
+			.failure-icon {
+				right: 0.5;
+				opacity: 0.5;
+			}
+			button:hover {
+				opacity: 0.7;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h2>Employee Record Keeping System</h2>
+
+		<div class="container">
+			<form id="form" onsubmit="validation()">
+				<div class="title"><b>Please Enter Values</b></div>
+				<!-- First Name input -->
+				<div>
+					<label for="fname">First Name</label>
+					<input type="text" name="fname" id="fname" placeholder="Vivek" />
+					<p id="err1"></p>
+				</div>
+				<!-- Last Name input -->
+				<div>
+					<label for="lname">Last Name</label>
+					<input type="text" name="lname" id="lname" placeholder="Chaudhary" />
+					<p id="err2"></p>
+				</div>
+				<!-- EmployeeId input -->
+				<div>
+					<label for="eid">EmployeeId</label>
+					<input type="text" name="eid" id="eid" placeholder="1234" />
+					<p id="err3"></p>
+				</div>
+				<!-- Email input -->
+				<div>
+					<label for="email">Email</label>
+					<input
+						type="email"
+						name="email"
+						id="email"
+						placeholder="vivch@gmail.com"
+					/>
+					<p id="err4"></p>
+				</div>
+				<!-- Department input -->
+				<div>
+					<label for="did">DeptNo</label>
+					<input type="text" name="did" id="did" placeholder="10" />
+					<p id="err5"></p>
+				</div>
+				<br /><br />
+				<button id="btn" type="submit">Submit</button>
+			</form>
+		</div>
+		<script>
+			// access HTML DOM elements via their IDs:
+			let fname = document.getElementById('fname');
+			let lname = document.getElementById('lname');
+			let eid = document.getElementById('eid');
+			let email = document.getElementById('email');
+			let did = document.getElementById('did');
+			let form = document.getElementById('form');
+			let err1 = document.getElementById('err1');
+			let err2 = document.getElementById('err2');
+			let err3 = document.getElementById('err3');
+			let err4 = document.getElementById('err4');
+			let err5 = document.getElementById('err5');
+			let successIcon = document.getElementsByClassName('success-icon');
+			let failureIcon = document.getElementsByClassName('failure-icon');
+			let deptno = [10, 20, 30, 40, 50];
+			let btn = document.getElementById('btn').type;
+
+			// define RegEx for form components validation
+			var rName = /^[A-Za-z]+$/;
+			var rEmpID = /\d{4}$/;
+			var rEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g;
+			var rDeptno = /^\d{2}$/;
+
+			// define a function for validation
+			function validation() {
+				//first name validation
+				if (fname.value == '' || !fname.value.match(rName)) {
+					err1.innerHTML =
+						'*First name cannot be blank and should be characters';
+					fname.style.border = '2px solid red';
+				} else {
+					err1.innerHTML = '';
+					fname.style.border = '2px solid green';
+				}
+
+				//last name validation
+				if (lname.value == '' || !lname.value.match(rName)) {
+					err2.innerHTML =
+						'*Last name cannot be blank and should be in characters';
+					lname.style.border = '2px solid red';
+				} else {
+					err2.innerHTML = '';
+					lname.style.border = '2px solid green';
+				}
+
+				//email validation
+				console.log('email id is ', email.value);
+				if (email.value == '' && !rEmail.test(email.value)) {
+					console.log('inside email if');
+					err4.innerHTML =
+						'*Email ID should be non-empty and valid. Please follow rules';
+					email.style.border = '2px solid red';
+				} else {
+					err4.innerHTML = '';
+					email.style.border = '2px solid green';
+				}
+
+				//employee ID validation
+				if (eid.value == '' || !rEmpID.test(eid.value)) {
+					err3.innerHTML =
+						'*Please enter a valid Employee ID starting with 2 characters and 4 digits or at least 4 digits';
+					eid.style.border = '2px solid red';
+				} else {
+					err3.innerHTML = '';
+					eid.style.border = '2px solid green';
+				}
+
+				//department no validation
+				dept = Number(did.value);
+				console.log('value of dept ', dept + ' ' + typeof dept);
+
+				if (dept == '' || !rDeptno.test(dept)) {
+					console.log('inside if');
+					err5.innerHTML =
+						'*DeptNo cannot be Empty or non-numeric. Please check again';
+					did.style.border = '2px solid red';
+				} else if (!dept == '' && !deptno.includes(dept)) {
+					console.log(
+						'value of dept entered ',
+						did.value + ' ' + typeof did.value
+					);
+					err5.innerHTML =
+						'*DeptNo should be from list of values: 10,20,30,40. Please check again';
+					did.style.border = '2px solid red';
+				} else if (!dept == '' && deptno.includes(dept)) {
+					console.log('inside 2nd elif');
+					err5.innerHTML = '';
+					did.style.border = '2px solid green';
+				}
+			}
+
+			form.addEventListener(btn, (event) => {
+				event.preventDefault();
+			});
+		</script>
+	</body>
+</html>
