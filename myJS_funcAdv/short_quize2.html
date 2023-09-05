@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Shot quize two</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 55%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">
+      Shot JavaScript quize with answers in ukrainian language
+    </h2>
+    <h4 class="title">
+      Apply <span class="emph">JavaScript knoledge</span> to solve the tasks
+    </h4>
+
+    <h4 class="task">
+      Write a function <em>isBigger</em>. It should accept two arguments and
+      returns <em>true</em> if first one has greater value than a second one or
+      <em>false</em> otherwise.<br />
+      Tip: no need for if/else clause nor ternary operator.
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          isBigger(42, 17); // true 
+          isBigger(5, -1); // true 
+          isBigger(9, 28); // false 
+          isBigger(209.72, 209.12); // true 
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <p>
+      Зважаючи на вимогу не застосовувати вирази if/else та тернарний оператор,
+      можна розглянути використання операторів порівняння, адже усі оператори
+      порівняння повертають значення логічного типу - <em>true/false</em>.
+      Pезультат порівняння можна присвоїти змінній, як і будь-яке значення.
+      Треба зазначити, що при порівнянні значень різних типів JavaScript
+      конвертує кожне з них до числа, ось декілька прикладів:<br />
+      <br />
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          2 > 1;  // true
+          2 == 1; // false
+          2 != 1; // true
+
+          // тут результат порівняння присвоюється змінній result
+          let result = 5 > 4; 
+          console.log( result ); // true
+
+          // тут приклади автоматичної конвертації до числа
+          '2' > 1; // true, рядковий вираз '2' перетворюється до числа 2
+          '01' == 1; // true, рядковий вираз '01' стає числом 1
+
+          // логічні значення true конвертується в 1, а false – 0
+          true == 1; // true
+          false == 0; // true
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Таким чином, функція буде отримувати два числа, а в тілі використаємо
+      оператор порівняння цих двух чисел <em>'більше'</em> - <b>></b>, який буде
+      задовільняти виконання умов завдання, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function isBigger(a, b) {
+            return a > b;
+          }
+
+          isBigger(42, 17); // true 
+          isBigger(5, -1); // true 
+          isBigger(9, 28); // false 
+          isBigger(209.72, 209.12); // true 
+        </pre>
+      </code>
+    </p>
+    <br />
+    <script>
+      function isBigger(a, b) {
+        return a > b;
+      }
+
+      console.log(isBigger(42, 17)); // true
+      console.log(isBigger(5, -1)); // true
+      console.log(isBigger(9, 28)); // false
+      console.log(isBigger(209.72, 209.12)); // true
+    </script>
+
+    <h4 class="task">
+      Write a function <em>stringToNumber</em>. It should accept one argument as
+      a string and return it as a number.<br />
+      Tip: don't worry about incoming string - it's always valid.
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          stringToNumber('1258'); // 1258 
+          stringToNumber('07'); // 7 
+          stringToNumber('-42'); // -42 
+          stringToNumber('169.4'); // 169.4 
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <p>
+      Відомо, що чисельне перетворення відбувається в математичних функціях та
+      виразах. Проте, дуже часто, потрібно явне перетворення на число, особливо
+      коли ми очікуємо отримати число з рядкового контексту слово-виразу. Якщо
+      рядок не може бути явно конвертований до числа, то результатом
+      перетворення буде NaN.<br />
+      Ми можемо використовувати функцію <b>Number(value)</b>, щоб явно
+      перетворити value до числа.<br />
+      Крім того, в JavaScript існують правила числового перетворення:<br />
+      undefined -> в NaN <br />
+      null -> в 0<br />
+      true -> в 1<br />
+      false -> в 0<br />
+      string -> в пробільні символи (пробіли, знаки табуляції \t, знаки нового
+      рядка \n тощо) по краях обрізаються; далі, якщо залишається порожній
+      рядок, то отримуємо 0, інакше з непустого рядка зчитується число; при
+      помилці результат NaN.<br />
+      Ось декілька прикладів:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          let str = "123";
+          console.log(typeof str); // string
+          let num = Number(str); // стає числом 123
+          console.log(typeof num); // number
+          console.log( Number("   123   ") ); // 123
+          console.log( Number(true) ); // 1
+
+          let age = Number("Будь який слово-вираз");
+          console.log(age); // NaN, перетворення не вдалось
+          console.log( Number("123z") ); // NaN (помилка конвертації числа на місці символу "z")
+          stringToNumber('169.4'); // 169.4 
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Таким чином, використаємо в тілі створюваної функції, функцію явного
+      перетворення <b>Number(value)</b> значення value в число, ось так: <br />
+    </p>
+    <br />
+    <p class="code-ex">
+      <code>
+        <pre>
+          function stringToNumber(str) {
+            return Number(str);
+          }
+
+          console.log(stringToNumber('1258')); // 1258
+          console.log(stringToNumber('07')); // 7
+          console.log(stringToNumber('-42')); // -42
+          console.log(stringToNumber('169.4')); // 169.4
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      function stringToNumber(str) {
+        return Number(str);
+      }
+
+      console.log(stringToNumber('1258')); // 1258
+      console.log(stringToNumber('07')); // 7
+      console.log(stringToNumber('-42')); // -42
+      console.log(stringToNumber('169.4')); // 169.4
+    </script>
+
+    <p>
+      Насправді в JavaScript є коротший і простіший варіант конвертації
+      рядкового слово-виразу на число - це використання <em>бінарний плюс</em> -
+      <b>+</b>. Відомо, що плюс існує у двох формах: бінарній, та унарній.
+      Унарний, тобто застосований до одного значення плюс нічого не робить з
+      числами. Але якщо операнд не число, унарний плюс перетворює його на число,
+      ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          // тут унарний плюс не впливає на числа
+          let x = 1;
+          console.log( +x ); // 1
+
+          let y = -2;
+          console.log( +y ); // -2
+
+          // а тут перетвоює нечисла в числа
+          console.log( +true ); // 1
+          console.log( +"" );   // 0
+
+          // а тут використовуємо як бінарний так і унарний плюс
+          let apples = "2";
+          let oranges = "3";
+          console.log( +apples + +oranges ); // 5
+          // більш довший варіант буде такий
+          // console.log( Number(apples) + Number(oranges) ); // 5
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Таким чином, можна застосувати унарний плюс для вирішення поставленого
+      завдання і отримуємо той самий результат, давайте через стрілочну функцію
+      в один рядок, ось так:
+    </p>
+    <br />
+    <p class="code-ex">
+      <code>
+        <pre>
+          const stringToNumber = (str) => +str;
+
+          stringToNumber('1258'); // 1258 
+          stringToNumber('07'); // 7 
+          stringToNumber('-42'); // -42 
+          stringToNumber('169.4'); // 169.4 
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <h4 class="task">
+      Write a function <em>storeNames</em>. It should accept an arbitrary number
+      of strings and return an array of that strings.
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          storeNames('Nick Furry', 'Iron Man', 'Doctor Strange'); 
+                        // ['Nick Furry', 'Iron Man', 'Doctor Strange']
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <p>
+      Багато вбудованих функцій в JavaScript автоматично підтримують отримання
+      довільної кількості аргументів. Ось пара:<br />
+      <em>Math.max(arg1, arg2, ..., argN)</em> – визначає найбільше числове
+      значення з тих, що передані.<br />
+      <em>Object.assign(dest, src1, ..., srcN)</em> – копіює властивості з
+      вихідних об'єктів src1..N у цільовий об'єкт dest.<br />
+      Але в завданні нам потрібно створити власну функцію яка буде повертати
+      аргументи у вигляді масиву рядків.<br />
+      Викликати функцію можна з будь-якою кількістю аргументів, незалежно від
+      того, які будуть братись, а які ні. Зайві аргументи не спричинять помилки,
+      і звичайно, візьмуться лише ті, які потрібні. В JavaScript такі аргументи,
+      які залишились, називають - <em>залишкові</em> та позначаються оператором
+      залишкових параметрів <em>rest operator</em>. Ось так, через три крапки та
+      дається назва - <b>...rest</b>. Звичайно назву залишкових параметрів можна
+      змінювати. Ось хороший приклад:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function showName(firstName, lastName, ...titles) {
+            // Залишкові параметри пішли в масив titles = ["Консул", "Імператор"]
+            console.log(titles[0]); // Консул
+            console.log(titles[1]); // Император
+            console.log(titles.length); // 2
+
+            return firstName + ' ' + lastName; 
+          }
+
+          showName('Юлій', 'Цезар', 'Консул', 'Імператор'); // Юлій Цезар
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Необхідно зауважити, що оператор залишкових параметрів повиннен завжди
+      розташовуватися у кінці. Тобто, він ніби збирає усі аргументи, які
+      залишились та робить з них масив. Тому визначати ще якісь інші аргументи
+      після нього, не правильно і це викличе одразу помилку. Тобто, якщо
+      визначити аргументи ось так:<br />
+      <em>function f(arg1, ...rest, arg2){..}</em> тут arg2 розташовано після
+      ...rest - буде помилка!
+    </p>
+    <br />
+
+    <p>
+      Раніше, в мові не було <em>залишкових параметрів</em>, а усі аргументи
+      функції можна було отримати за допомогою <b>arguments</b>. Цей спосіб все
+      ще працює і його можна знайти в старому коді. Ось попередній, трохи
+      змінений приклад з <em>arguments</em>:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function showName() {
+            console.log( arguments.length );
+            console.log( arguments[0] );
+            console.log( arguments[1] );
+
+            // об'єкт arguments можна перебирати
+            // for (let arg of arguments) alert(arg);
+          }
+
+          showName("Юлій", "Цезар");// 2, Юлій, Цезар
+          showName("Юлій");// 1, Юлій, undefined (другого аргументу немає)
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Але в нього є суттєвий недолік, хоч <em>arguments</em> можна перебирати,
+      але тут не підтримується методів масивів. <em>arguments</em> завджи
+      містить усі аргументи функції - ми не можемо отримати їх частину. А
+      залишкові параметри натомість дозволяють це зробити ну і зрозуміло, що для
+      більш зручної роботи з аргументами, набагато зручніше користуватись
+      залишковими параметрами. Також, стрілкові функції не мають
+      <em>arguments</em> - тобто, якщо ми звернимось до arguments стрілочної
+      функції, то отримаємо аргументи зовнішньої 'нормальної' функції.
+    </p>
+
+    <p>
+      А якщо нам визначитись, щоб помістити усі аргументи в
+      <em>залишкові параметри</em>, адже так ми одразу даємо назву масиву і
+      кладемо усі аргументи в масив. Вже потім можемо працювати з аргументами як
+      з елементами масиву. Ось, для прикладу, функція, яка додає числа, які вона
+      отримує як список аргументів, що може змінюватись:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function sumAll(...args) { // args — ім'я масиву
+          let sum = 0;
+
+          for (let arg of args) sum += arg;
+
+          return sum;
+        }
+
+        sumAll(1); // 1
+        sumAll(1, 2); // 3
+        sumAll(1, 2, 3); // 6
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Таким чином, для вирішення завдання використаєм можливості оператора
+      залишкових параметрів <em>...rest</em>, які власне і використовують для
+      створення функцій із невизначеною кількістю вхідних аргументів:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function storeNames(...names) {
+            // names — ім'я масиву куди кладемо усі аргументи
+            const arrNames = []; // ім'я масиву, який повертає функція
+
+            for (let name of names) arrNames.push(name);
+
+            return arrNames;
+          }
+
+          storeNames('Nick Furry', 'Iron Man', 'Doctor Strange'); 
+                    // ['Nick Furry', 'Iron Man', 'Doctor Strange']);
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      function storeNames(...names) {
+        const arrNames = [];
+
+        for (let name of names) arrNames.push(name);
+
+        return arrNames;
+      }
+
+      console.log(storeNames('Nick Furry', 'Iron Man', 'Doctor Strange')); // ['Nick Furry', 'Iron Man', 'Doctor Strange']);
+    </script>
+
+    <h4 class="task">
+      Write a function <em>getDifference</em>. It should accept two arguments
+      and returns their difference. But the functions never returns a negative
+      value. If second parameter is greater than first one, function will change
+      their order.<br />
+      Tip: consider reusin <em>isBigger</em> function.
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          getDifference(5, 3); // 2 
+          getDifference(5, 8); // 3 
+          getDifference(-2, -6); // 4 
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <p>
+      Для вирішення цієї задачі очевидним є те, що тут потрібно буде
+      використовувати інструкцію if/else - виконання різних дій в залежності від
+      умови. Але краще тут підійде використання оператора
+      <em>запитальний знак</em> - <b>?</b>, або <em>тернарного оператора</em> бо
+      має три аргумента.<br />
+      Цей оператор особливо корисний, коли потрібно визначити якусь змінну в
+      залежності від умов. Ось приклад такого використання:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          let accessAllowed;
+          let age = prompt('Скільки вам років?', '');
+
+          if (age > 18) {
+            accessAllowed = true;
+          } else {
+            accessAllowed = false;
+          }
+
+          alert(accessAllowed);
+
+          // а так виглядає з використанням тернарного оператора
+          let accessAllowed = (age > 18) ? true : false;
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Також, з цим оператором пов'язана особливість - послідовність застосування
+      тернарних операторів дозволяє повернути значення, яке залежить від більше
+      ніж однієї умови. Ось також приклад такого застосування:
+    </p>
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          let age = prompt('Ваш вік?', 18);
+
+          let message = (age < 3) ? 'Привіт, малеча!' :
+            (age < 8) ? 'Привіт пацики' :
+            (age < 18) ? 'Привіт' :
+            (age < 100) ? 'Вітаю Вас!' :
+            'Який поважний і достойний вік !';
+
+          alert( message );
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Тому для вирішення завдання, ми можемо використати вже готову функцію
+      <em>isBigger</em>, яка в дійсності визначає чи перший аргумент більший за
+      другий і повертає true якщо так і ні - коли false. А далі, використавши
+      тернарний оператор задаємо умову взявши цю функцію і кажемо, якщо умова
+      правдива (перше значення більше від другого), то віднімаємо від першого
+      значення друге, а якщо ні, то від другого віднімаємо перше. Ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function getDifference(a, b) {
+            return isBigger(a, b) ? a - b : b - a;
+          }
+
+          console.log(getDifference(5, 3)); // 2
+          console.log(getDifference(5, 8)); // 3
+          console.log(getDifference(-2, -6)); // 4
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      function getDifference(a, b) {
+        return isBigger(a, b) ? a - b : b - a;
+      }
+
+      console.log(getDifference(5, 3)); // 2
+      console.log(getDifference(5, 8)); // 3
+      console.log(getDifference(-2, -6)); // 4
+    </script>
+
+    <h4 class="task">
+      Write a function <em>positiveSum</em>. It should accept an array of
+      numbers and return a result of their addition. But you must calculate only
+      positive numbers and omit negative if any presents.<br />
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          positiveSum([2, 4, 6, 8]); // 20
+          positiveSum([0, -3, 5, 7]); // 12
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <p>
+      Якщо нам потрібно пройтись по кожному елементу масиву – ми можемо
+      використовувати <em>forEach, for або for..of</em>. Якщо нам потрібно
+      перебрати масив і повернути якісь дані для кожного елемента, ми
+      використовуємо <em>map</em>.<br />
+      Так от, методи <em><b>arr.reduce і arr.reduceRight</b></em> схожі на
+      методи вище, але вони трохи складніші. Вони використовуються для
+      обчислення якогось єдиного значення на основі всього масиву. Власне саме
+      те, що нам потрібно для вирішення задачі. Тому, згадаємо синтаксис
+      його:<br />
+      let value = arr.reduce(function(accumulator, item, index, array) {<br />
+      // ...<br />
+      }, [initial]);<br />
+      Функція застосовується по черзі до всіх елементів масиву і переносить свій
+      результат на наступний виклик. Аргументами функції є:<br />
+      <em
+        >accumulator – результат попереднього виклику цієї функції, що дорівнює
+        initial при першому виклику (якщо був переданий initial),<br />
+        item – черговий елемент масиву,<br />
+        index – його індекс,<br />
+        array - сам масив.<br
+      /></em>
+      При виклику функції результат її виклику на попередньому елементі масиву
+      передається як аргумент. Простіше зрозуміти, якщо думати про перший
+      аргумент як «що акумулює» результат попередніх викликів функції. Після
+      закінчення він стає результатом виконання усієї функції як обчислений
+      єдиний результат. Ось приклад:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          let arr = [1, 2, 3, 4, 5];
+
+          let result = arr.reduce((sum, current) => sum + current, 0);
+
+          console.log(result); // 15 - отримаємо суму всіх елементів масиву
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      При першому запуску sum дорівнює initial (останній аргумент reduce), тобто
+      0, а current перший елемент масиву і дорівнює 1. Таким чином, результат
+      функції дорівнює 1. При другому запуску sum = 1 і до нього ми додаємо
+      другий елемент масиву (2). При третьому запуску sum = 3, до якого ми
+      додаємо наступний елемент, і т.д.<br />
+      Подібно до цього, вирішимо завдання. За умовою, на вхід ми отримуємо масив
+      чисел, тому застосуєм метод
+      <em>arr.reduce()</em>. в тілі методу, визначимо першим аргументом
+      акумулятор попередніх обчислень як <em>acc</em>, який буде брати наступне
+      число, що визначено як другий аргумент - <em>current</em> та додавати
+      його. Як початкове значення, визначаємо нуль, бо якщо масив є порожнім, то
+      виклик reduce без початкового значення видасть помилку. Тому створюємо
+      функцію і задаєм значення ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function positiveSum(arr) {
+            let result = arr.reduce((acc, current) => acc + current, 0);
+            return result;
+          }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Проте, число може бути від'ємним, тому потрібно визначити чи число яке
+      буде додаватись є позитивне. Це можна зробити за допомогою тернарного
+      оператора - задаєм умову оператором порівняння, якщо число
+      <em>current</em> не є від'ємним, то його додавати до <em>acc</em>, якщо
+      число є від'ємне - то повертати попередній результат що знаходиться в acc,
+      ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function positiveSum(arr) {
+            let result = arr.reduce(
+              (acc, current) => (current > 0 ? acc + current : acc),
+              0
+            );
+            return result;
+          }
+
+          positiveSum([2, 4, 6, 8]); // 20
+          positiveSum([0, -3, 5, 7]); // 12
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      function positiveSum(arr) {
+        let result = arr.reduce(
+          (acc, current) => (current > 0 ? acc + current : acc),
+          0
+        );
+        return result;
+      }
+
+      console.log(positiveSum([2, 4, 6, 8])); // 20
+      console.log(positiveSum([0, -3, 5, 7])); // 12
+    </script>
+
+    <h4 class="task">
+      Write a function <em>arraysEqual</em> to compare two arrays. It should
+      accept two arrays of numbers and return a true when both arrays are
+      equal.<br />
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          arraysEqual([1, 2], [1, 2]); // true
+          arraysEqual([1, 2], [2, 1]); // false
+          arraysEqual([0, -2, 12, 7], [0, -2, 12, 7]); // true
+          arraysEqual([0, -2, 12, 7], [0, 2, 12, 7]); // false
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <p>
+      Для порівняння двох масивів, нам необхідно першим ділом порівняти їх
+      довжини - кількість елементів в кожному масиві. Порівняти довжини можна
+      використати властивість
+      <em>length</em>, але ми пам'ятаємо, що точніше <em>length</em> - це є
+      найбільший індекс елемента масиву +1 (хоча це зараз неважливо). Так що
+      використаємо його поки так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function arraysEqual(arr1, arr2) {
+            return arr1.length === arr2.length;
+          }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Якщо кількість елементів у них рівна, то далі брати елемент першого та
+      порівнювати його з елементом другого по значенню та індексу і так
+      перебрати кожен елемент масиву. В мові JavaScript є хороші методи для
+      перевірки елементів масиву. До них належать
+      <em><b>arr.some(fn)/arr.every(fn) </b></em>. Функція fn викликається для
+      кожного елементу масиву подібно до методу <em>map</em>.У разі, якщо
+      будь-який/усі результати викликів є true, то метод повертає true, а в
+      іншому випадку - false.<br />
+      От для прикладу метод <em>arr.every(fn)</em> перевіряє чи задовольняють
+      усі елементи масиву умовам, які задані у функції fn. Якщо fn повертає
+      неправдиве значення, arr.every() негайно повертає false та припиняє
+      перебір решти елементів. Доречі, цей метод повертає true при будь-якій
+      умові для пустого масиву. Отже, використаємо цей метод для порівняння двох
+      масивів і задамо умову для перебору елементів масива та порівняння їх за
+      значенням та індексом.<br />
+      Отже ми визначаєм, що значення кожного елементу масива arr1 по його
+      індексу повинно дорівнювати значенню елементу масива arr2 по такому самому
+      індексу як і в arr1. Це можна записати так:<br />
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+            arr1.every((value, index) => value === arr2[index]);
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Тому приєднавши цю умову чкрез логічний оператор && до умови порівняння
+      довжини другого масиву, ми отримаємо повний метод для порівняння двох
+      масивів за довжиною, значенням та індексом, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre style="width: 70%">
+            function arraysEqual(arr1, arr2) {
+              return arr1.length === arr2.length && arr1.every((value, index) => value === arr2[index]);
+            }
+
+            arraysEqual([1, 2], [1, 2]); // true
+            arraysEqual([1, 2], [2, 1]); // false
+            arraysEqual([0, -2, 12, 7], [0, -2, 12, 7]); // true
+            arraysEqual([0, -2, 12, 7], [0, 2, 12, 7]); // false
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      function arraysEqual(arr1, arr2) {
+        return arr1.every((value, index) => value === arr2[index]);
+      }
+
+      console.log(arraysEqual([1, 2], [1, 2])); // true
+      console.log(arraysEqual([1, 2], [2, 1])); // false
+      console.log(arraysEqual([0, -2, 12, 7], [0, -2, 12, 7])); // true
+      console.log(arraysEqual([0, -2, 12, 7], [0, 2, 12, 7])); // false
+    </script>
+
+    <h4 class="task">
+      Write a function <em>letterCount</em>. It accepts two string arguments and
+      return an integer of the count of occurences the 2nd argument is found in
+      the first one. If no occurences can be found, a count of 0 should be
+      returned.<br />
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          letterCount('Maggy', 'g'); // 2
+          letterCount('Barry Grace', 'b'); // 1
+          letterCount('Miss Marple', 'z'); // 0
+          letterCount('Tenotchetlan', 't'); // 3
+          letterCount('', 'm'); // 0
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <p>
+      Створюємо функцію, яка приймає два параметра: <em>stringFrase</em> - рядок
+      слово-виразу та <em>charToFind</em> - букву, яку потрібно шукати в рядку.
+      Функція повертає ціле число, значенням якого є кількість таких букв в
+      рядку слово-виразу. Тобто повертає число, яке може бути взято з довжини,
+      для прикладу масиву <em>arrLetterFound</em> куда потрібно буде зібрати усі
+      букви, які будуть знайдені. Це значить що потрібно використати властивість
+      масивів <em><b>length</b></em
+      >. <br />
+      В рядку слово-виразу зутрічаються букви у великому і малому регістрі, а
+      тому треба їх перевести до єдиного регістру. Зробимо це одразу для двох
+      входжень за допомогою метода <em><b>toLowerCase()</b></em
+      >, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+            function letterCount(stringFrase, charToFind) {
+              const str = stringFrase.toLowerCase();
+              const char = charToFind.toLowerCase();
+              const arrLetterFound;
+              return arrLetterFound.length;
+            }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Тепер необхідно знайти усі букви, які є в рядку слово-виразу та помістити
+      їх в масив <em>arrLetterFound</em>. Отже, спочатку потрібно конвертувати
+      слово-вираз в масив, щоб всі букви слово-виразу стали елементами масиву
+      методом <em><b>split()</b></em
+      >, щоб можна було далі застосувати потрібний метод для масивів, а саме
+      метод <em><b>arr.filter()</b></em
+      >, який використаємо для фільтрації за умовою - отримання тільки тих
+      елементів масиву, які дорівнюють букві що шукається. І вже потім
+      застосувати властивість <em>length</em>, щоб знайти кількість отриманих
+      елементів, ось так:
+    </p>
+    <br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+            function letterCount(stringFrase, charToFind) {
+              const str = stringFrase.toLowerCase();
+              const char = charToFind.toLowerCase();
+
+              const arrLetterFound = str.split('').filter((item) => item === char);
+
+              return arrLetterFound.length;
+            }
+
+            letterCount('Maggy', 'g'); // 2
+            letterCount('Barry Grace', 'b'); // 1
+            letterCount('Miss Marple', 'z'); // 0
+            letterCount('Tenotchetlan', 't'); // 3
+            letterCount('', 'm'); // 0
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      function letterCount(stringFrase, charToFind) {
+        const str = stringFrase.toLowerCase();
+        const char = charToFind.toLowerCase();
+
+        const arrFound = str.split('').filter((item) => item === char);
+
+        return arrFound.length;
+      }
+
+      console.log(letterCount('Maggy', 'g')); // 2
+      console.log(letterCount('Barry Grace', 'b')); // 1
+      console.log(letterCount('Miss Marple', 'z')); // 0
+      console.log(letterCount('Tenotchetlan', 't')); // 3
+      console.log(letterCount('', 'm')); // 0
+    </script>
+
+    <h4 class="task">
+      Our footbal team completed the championship. The result of each match
+      looks like 'x:y'. Results of all matches are recorded in the collection
+      like this: ['3:1', '2:2', '0:1', ...].<br />
+      Write a function <em>countPoints</em>. It should accept a collection of
+      football games score and count the points of our team in the
+      championchip.<br />
+      Rules of counting points for each match:<br />
+      if x > y - 3 points<br />
+      if x < y - 0 points<br />
+      if x = y - 1 point<br />
+      Tips: there are 10 matches in the championship<br />
+      0 <= x <= 4<br />
+      0 <= y <= 4<br />
+      Consider reusing of <em>isBigger</em> function.
+    </h4>
+
+    <p>
+      <code>
+        <pre style="width: 65%">
+          countPoints(['3:1', '1:0', '0:0', '1:2', '4:0', '2:3', '1:1', '0:1', '2:1', '1:0']); // 17
+          countPoints(['1:1', '1:2', '2:0', '4:2', '0:1', '2:3', '1:1', '0:1', '1:1', '3:0']); // 12
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <p>
+      На вхід функції ми отримуємо масив рядків, i в результаті її роботи, ми
+      повинні отримати число - результат обчислення суми очків. Далі, якщо
+      допустити те, що елементи масиву мають бути числами, то можемо застосувати
+      метод для обчислення єдиного результату на основі всіх елементів масиву -
+      метод <em><b>arr.reduce()</b></em
+      >. Тому одразу можемо визначити константи, які будуть братись замість
+      рядкових слово-виразів і за умовами задачі їх має бути три, ось так:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          const SCORE_ONE = 1;
+          const SCORE_THREE = 3;
+          const SCORE_ZERO = 0;
+
+          function countPoints(arrScores) {
+            return arrScores.reduce((sum, current) => sum + current, 0);
+          }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Тепер необхідно визначити яким чином конвертувати рядкові слово-вирази
+      (або результати матчів) в числа. Тобто визначені константи мають братись в
+      залежності від рахунку матчу, який визначений як два числа розділені двома
+      крапками -
+      <em>'3:2'</em>. Позначемо перше число як <em>x</em> а друге число як
+      <em>y</em>. Нам потрібно це для того, щоб брати їх значення для порівняння
+      в умові <em>if/else</em>. Якщо <em>х > y</em> то брати константу
+      SCORE_THREE, якщо <em>х = y</em> то SCORE_ONE, відповідно SCORE_ZERO якщо
+      <em>х < y</em>. Але щоб так зробити, потрібно спочатку кожен такий
+      результат матчу перетворити в масив за допомогою методу
+      <em>split()</em> із роздільником <em>:</em>. В цьому масиві будуть 2а
+      елементи - <em>х</em> та <em>y</em>. Але так як нам потрібні їх значення
+      для аналізу, то за допомогою деструктуризації ми можемо отримати ці
+      значення, ось так:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre style="width: 60%">
+          const [x, y] = 'x:y'.split(':'); // скопіювали потрібні значення в змінні х та у
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Але ньюанс заключається в тому, як функція <em>arr.reduce()</em> повинна
+      брати значення змінних по умові. Це можна здійснити визначивши для неї
+      <em>current</em> як наступний операнд для додавання - тобто в
+      <em>current</em>- визначається яку константу додавати до акумулятора. Тому
+      деструктуризацію потрібно задавати на <em>current</em>, а потім додавати
+      відповідну константу за умовами. Крім того, в умові коли <em>х > у</em>,
+      ми можемо використати функцію <em>isBigger</em>, ось так:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre style="width: 60%">
+          const SCORE_ONE = 1;
+          const SCORE_THREE = 3;
+          const SCORE_ZERO = 0;
+
+          function countPoints(arrScores) {
+            return arrScores.reduce(function (acc, current) {
+              const [x, y] = current.split(':');
+              if (x === y) {
+                acc += SCORE_ONE;
+              } else if (isBigger(x, y)) {
+                acc += SCORE_THREE;
+              } else {
+                acc += SCORE_ZERO;
+              }
+              return acc;
+            }, 0);
+          }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      const SCORE_ONE = 1;
+      const SCORE_THREE = 3;
+      const SCORE_ZERO = 0;
+
+      function countPoints(arrScores) {
+        return arrScores.reduce(function (acc, current) {
+          const [x, y] = current.split(':');
+          if (x === y) {
+            acc += SCORE_ONE;
+          } else if (isBigger(x, y)) {
+            acc += SCORE_THREE;
+          } else {
+            acc += SCORE_ZERO;
+          }
+          return acc;
+        }, 0);
+      }
+
+      console.log(
+        countPoints([
+          '3:1',
+          '1:0',
+          '0:0',
+          '1:2',
+          '4:0',
+          '2:3',
+          '1:1',
+          '0:1',
+          '2:1',
+          '1:0',
+        ])
+      ); // 17
+      console.log(
+        countPoints([
+          '1:1',
+          '1:2',
+          '2:0',
+          '4:2',
+          '0:1',
+          '2:3',
+          '1:1',
+          '0:1',
+          '1:1',
+          '3:0',
+        ])
+      ); // 12
+    </script>
+  </body>
+</html>
