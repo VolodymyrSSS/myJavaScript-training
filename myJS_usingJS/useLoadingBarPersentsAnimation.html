@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+			rel="stylesheet"
+		/>
+		<title>Visualisation of load bar</title>
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+				box-sizing: border-box;
+			}
+			body {
+				font-family: 'Roboto', sans-serif;
+				background-color: tan;
+			}
+			.root {
+				height: 100vh;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+			}
+			.text {
+				font-size: 30px;
+				margin-bottom: 20px;
+			}
+			.container {
+				width: 50vw;
+				height: 50px;
+				border: 2px solid black;
+				border-radius: 4px;
+			}
+			.load {
+				width: 0%;
+				height: 100%;
+				background-color: royalblue;
+				border-radius: 4px;
+				transition: width 0.2s linear;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- <div class="root">
+			<div class="text">89%</div>
+			<div class="container">
+				<div class="load"></div>
+			</div>
+		</div> -->
+		<script>
+			const createElements = () => {
+				const root = document.createElement('div');
+				const text = document.createElement('div');
+				const container = document.createElement('div');
+				const load = document.createElement('div');
+
+				return { root, text, container, load };
+			};
+
+			const setAttribute = ({ root, text, container, load }) => {
+				root.setAttribute('class', 'root');
+				text.setAttribute('class', 'text');
+				container.setAttribute('class', 'container');
+				load.setAttribute('class', 'load');
+			};
+
+			const visualLoading = ({ width, text, load, interval }) => {
+				let count = 0;
+				let intervalId;
+
+				const countLoading = () => {
+					if (count === width) {
+						clearInterval(intervalId);
+						return;
+					}
+
+					text.textContent = `${count}%`;
+					load.style.width = `${count}%`;
+					count++;
+				};
+
+				intervalId = setInterval(countLoading, interval);
+			};
+
+			const init = () => {
+				const { root, text, container, load } = createElements();
+				setAttribute({ root, text, container, load });
+
+				document.body.appendChild(root);
+				root.appendChild(text);
+				root.appendChild(container);
+				container.appendChild(load);
+
+				visualLoading({ width: 75, text, load, interval: 20 });
+			};
+
+			init();
+		</script>
+	</body>
+</html>
