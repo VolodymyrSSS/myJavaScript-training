@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Merge two arrays with sorted elements</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Merge two arrays with sorted elements</h2>
+    <h4 class="title">
+      Working with arrays: using loops
+      <span class="emph">while, for</span>, directive
+      <span class="emph">continue</span>,<br />
+      array method: <span class="emph"> push(), </span> and use testing for
+      <span class="emph">TDD</span>
+    </h4>
+
+    <h4 class="task">
+      В нас є два масиви чисел, які вже відсортовані по збільшенню.<br />
+      Напишіть функцію <i>merge</i>, яка об'єднає усі числа масивів в один
+      відсортований масив.<br />
+      Можете написати тест для цієї функції?
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          const a = [1, 3, 5, 7];
+          const b = [2, 4, 5, 6];
+
+          function merge(a, b) {
+            // ...ваш код ?
+          }
+
+          merge(a, b); // [1, 2, 3, 4, 5, 5, 6, 7]
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <p>
+      Для рішення треба об'явити результуючий масив, куда будемо класти елементи
+      з двох масивів згідно з механізмом: об'явити умовно два вказівника, для
+      кожного з масивів, а потім рухаючись по кожному з масивів, порівнювати -
+      якщо перший показник менше другого, то класти його в результуючий масив,
+      якщо навпаки, то класти другий. При проходженні одної ітерації,
+      збільшувати обидва вказівники на одиницю. Крім того, необхідно передбачити
+      умову, коли вказівники рівні, тоді також їх додавати в результуючий масив.
+      Додати умову, коли один з вказівників <i>undefined</i>, тоді просто
+      додавати другий вказівник. Отже, створюємо функцію:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          function merge(a, b) {
+            let i = 0; // вказівник для масиву а
+            let j = 0; // вказівник для масиву b
+            const result = [];
+
+            return result;
+          }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Далі, потрібно визначати механізм додавання елементів масиву.<br />
+      Це легко робити з циклом <b>while</b>, де будемо задавати умови при яких
+      будемо додавати елемент в результуючий масив методом <b>arr.push()</b>та
+      збільшувати вказівник на одиницю. При чому в умові коли рівні елементи,
+      застосуємо директиву <b>continue</b>. Нагадаємо, що ця директива не
+      пререриває цикл, а переходить до слідуючої ітерації (якщо умова все ще
+      відповідає true), тому, щоб не виконалась далі наступна умова,
+      застосовуємо тут <i>continue</i>, ось так:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          function merge(a, b) {
+            let i = 0;
+            let j = 0;
+            const result = [];
+
+            while (i < a.length || j < b.length) {
+              const firstItem = a[i]; // беремо елемент першого масиву
+              const secondItem = b[j]; // беремо елемент другого масиву
+
+              if (firstItem === secondItem) {
+                result.push(firstItem, secondItem);
+                i += 1;
+                j += 1;
+                continue; // бо одна з умов також відпрацює далі
+              }
+
+              if (firstItem < secondItem) {
+                result.push(firstItem);
+                i += 1; // збільшуємо вказівник
+              }
+
+              if (firstItem > secondItem) {
+                result.push(secondItem);
+                j += 1; // збільшуємо вказівник
+              }
+            }
+
+            return result;
+          }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Але тепер необхідно визначити умову, коли одного з елементів не має, або
+      точніше дорівнює <i>underfined</i>. Може небути або першого або другого
+      елементу. У цьому разі в результуючий масив повинні додаватись відповідні
+      існуючі елементи, ось так:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          function merge(a, b) {
+            let i = 0;
+            let j = 0;
+            const result = [];
+
+            while (i < a.length || j < b.length) {
+              const firstItem = a[i]; // беремо елемент першого масиву
+              const secondItem = b[j]; // беремо елемент другого масиву
+
+              if (firstItem === undefined) {
+                result.push(secondItem);
+                j += 1;
+                continue;
+              }
+
+              if (secondItem === undefined) {
+                result.push(firstItem);
+                i += 1;
+                continue;
+              }
+
+              if (firstItem === secondItem) {
+                result.push(firstItem, secondItem);
+                i += 1;
+                j += 1;
+                continue; // тут передається до іншої ітерації
+              }
+
+              if (firstItem < secondItem) {
+                result.push(firstItem);
+                i += 1;
+              }
+
+              if (firstItem > secondItem) {
+                result.push(secondItem);
+                j += 1;
+              }
+            }
+
+            return result;
+          }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>Для тесту напишемо умову:</p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          test(() => {
+            const a = [1, 3, 5, 7];
+            const b = [2, 4, 5, 6];
+
+            expect(merge(a, b)).toEqual([1, 2, 3, 4, 5, 5, 6, 7]);
+          });
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      // обидва масиви чисел вже відсортовані по збільшенню
+      const a = [1, 3, 5, 7];
+      const b = [2, 4, 5, 6];
+
+      function merge(a, b) {
+        let i = 0;
+        let j = 0;
+        const result = [];
+
+        while (i < a.length || j < b.length) {
+          const firstItem = a[i]; // беремо елемент першого масиву
+          const secondItem = b[j]; // беремо елемент другого масиву
+
+          if (firstItem === undefined) {
+            result.push(secondItem);
+            j += 1;
+            continue;
+          }
+
+          if (secondItem === undefined) {
+            result.push(firstItem);
+            i += 1;
+            continue;
+          }
+
+          if (firstItem === secondItem) {
+            result.push(firstItem, secondItem);
+            i += 1;
+            j += 1;
+            continue; // тут передається до іншої ітерації
+          }
+
+          if (firstItem < secondItem) {
+            result.push(firstItem);
+            i += 1;
+          }
+
+          if (firstItem > secondItem) {
+            result.push(secondItem);
+            j += 1;
+          }
+        }
+
+        return result;
+      }
+
+      console.log(merge(a, b));
+
+      // test(() => {
+      //   const a = [1, 3, 5, 7];
+      //   const b = [2, 4, 5, 6];
+
+      //   expect(merge(a, b)).toEqual([1, 2, 3, 4, 5, 5, 6, 7]);
+      // });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Unique element occurances in two arrays or in one array</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">
+      Unique element occurances in two arrays or in one array
+    </h2>
+    <h4 class="title">
+      Working with arrays: using loop
+      <span class="emph">for</span>, increment
+      <span class="emph">++</span> operator
+      <span class="emph">typeof</span>,<br />
+      methods: <span class="emph"> sort(), reduce()</span>, structure
+      <span class="emph">new Map()</span>,<br />
+      methods <span class="emph">Object.entries(), Object.fromEntries()</span>
+    </h4>
+
+    <h4 class="task">
+      В нас є масив числових значень 'arr'. Потрібно взяти цей масив і
+      підрахувати елементи всередині нього.<br />
+      Результат1 повинен бути у виді двох нових масивів, перший із кожним
+      унікальним елементом, а другий - із кількістю випадків, коли кожен елемент
+      зустрічається.<br />
+      Результат2 А як зробити, щоб результат був у виді об'єкта в якому поле
+      ключа - це значеня кожного унікального елемента, а його значення - це
+      кількість яка зустрічається для кожного унікального елементу?<br />
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+          // Вихідні дані:
+
+          const arr = [2, 2, 2, 8, 2, 2, 4, 5, 5, 2, 4, 5, 9];
+
+          Результат1: [2,4,5,8,9] [6,2,3,1,1]
+          Результат2: {2: 6, 4: 2, 5: 3, 8: 1, 9: 1}
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Рішення:</b></p>
+    <br />
+
+    <p>
+      Для рішення завдання, створюємо функцію <em>CountOccuranceArr</em>, яка
+      буде повертати масив з двома елементами, де перший елемент
+      <i>elOccurance</i> - це буде масив унікальних елементів, другий
+      <i>elCount</i> - це буде масив кількості унікальних значень, які
+      зустрічаються в першому масиві. Створюємо ці два порожні масиви. Функція
+      повинна повертати ці масиви у виді результату у якому перший елемент -
+      масив із унікальними значеннями а другий елемент - кількість зустрічей в
+      масиві. Крім того, визначемо змінну для присвоєння попередніх значень:
+      куди будем тимчасово класти як унікальні значення так і значення кількості
+      їх зустрічей в масиві.<br />
+      Першим ділом, потрібно посортувати елементи масиву методом
+      <b>arr.sort()</b>, який відсортує усі елементи масиву і розставить їх за
+      порядком, ось так:<br />
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          const arr = [2, 2, 2, 8, 2, 2, 4, 5, 5, 2, 4, 5, 9];
+
+          function CountOccuranceArr(arr) {
+            const elOccurance = [];
+            const  elCount = [];
+            let prev;
+
+            arr.sort();
+
+            return [elOccurance, elCount];
+          }
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Отже, пробігаємось по масиву методом <b>for</b> та присвоюємо попередньому
+      значенню взятий елемент масиву. Але при цьому задаєм умову, якщо взятий
+      поточний елемент масиву не дорівнює попередньому елементу, тоді додаєм
+      його до масиву <i>elOccurance</i> методом <b>arr.push()</b>, бо це інший
+      елемент масиву, а якщо це той самий поточний елемент масиву, то збільшуємо
+      його індекс в другому масиві <i>elCount</i> для підрахунку кількості
+      зустрічі унікальних елементів.<br />
+      У випадку взятого першого елементу масиву, одночасно додаємо в другий
+      масив <i>elCount</i> одиницю тим самим методом <i>arr.push()</i>, бо не
+      має в ньому ще ніякого значення, ось так:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          const arr = [2, 2, 2, 8, 2, 2, 4, 5, 5, 2, 4, 5, 9];
+
+          function CountOccuranceArr(arr) {
+            const elOccurance = [];
+            const  elCount = [];
+            let prev;
+
+            arr.sort();
+
+            for (let i = 0; i < arr.length; i++) {
+              if (arr[i] !== prev) {
+                elOccurance.push(arr[i]);
+                elCount.push(1);
+              } else {
+                elCount[elCount.length - 1]++;
+              }
+              prev = arr[i];
+            }
+
+            return [elOccurance, elCount];
+          }
+
+          // перевіримо результат
+          let result = CountOccuranceArr(arr);
+          '[' + result[0] + ']','[' + result[1] + ']''; // [2,4,5,8,9] [6,2,3,1,1]
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      const arr = [2, 2, 2, 8, 2, 2, 4, 5, 5, 2, 4, 5, 9];
+
+      function countOccuranceArr(arr) {
+        const elOccurance = [];
+        const elCount = [];
+        let prev;
+
+        arr.sort();
+
+        for (let i = 0; i < arr.length; i++) {
+          if (arr[i] !== prev) {
+            elOccurance.push(arr[i]);
+            elCount.push(1);
+          } else {
+            elCount[elCount.length - 1]++;
+          }
+          prev = arr[i];
+        }
+
+        return [elOccurance, elCount];
+      }
+      let result = countOccuranceArr(arr);
+      console.log('[' + result[0] + ']', '[' + result[1] + ']');
+    </script>
+
+    <p>
+      Тепер, давайте розглянемо як виводити результат у вигляді об'єкта.<br />
+      Перш за все, потрібно визначити, що результатом буде об'єкт:
+      <em>result = {}</em>, який буде повертати наша функція. А це значить, що
+      все, що буде покладено, буде мати вид властивості об'єкта - пара
+      'ключ-значення'. Це, власне, те що потрібно.<br />
+      Після сортування, в циклі <i>for</i> вже будемо звертатись до властивостей
+      об'єкта <i>result</i>, причому коли проходимо по циклу, значення полів
+      (ключів) цього об'єкту будуть визначатись як унікальні елементи масиву,
+      ось так <em>result[arr[i]]</em>, а їх значення будуть збільшуватись в
+      залежності від їх кількості в масиві.<br />
+      Таким чином, для кожного елементу масиву - це є поле ключа обєкта: і якщо
+      є поточне значення у ключі, то збільшуємо його на одиницю, а якщо це не
+      його поточне значення (взятий інший ключ) - то воно не збільшується. Код
+      рішення буде таким:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          const arr = [2, 2, 2, 8, 2, 2, 4, 5, 5, 2, 4, 5, 9];
+
+          function CountOccuranceArr(arr) {
+            let result = {};
+
+            arr.sort();
+    
+            for(let i = 0; i < arr.length; ++i) {
+              if(!result[arr[i]]) { // не збільшуємо поточне значення ключа
+                result[arr[i]] = 0;
+              }
+              ++result[arr[i]]; // одразу збільшуємо поточне значення ключа
+            }
+            return result;
+          }
+    
+          let res = CountOccuranceArr(arr);
+          console.log(res); // {"2": 6, "4": 2, "5": 3, "8": 1, "9": 1}
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      function countOccuranceArr2(arr) {
+        let result = {};
+        arr.sort();
+
+        for (let i = 0; i < arr.length; ++i) {
+          if (!result[arr[i]]) {
+            result[arr[i]] = 0;
+          }
+          ++result[arr[i]];
+        }
+
+        return result;
+      }
+
+      let res2 = countOccuranceArr2(arr);
+      console.log(res2);
+    </script>
+
+    <p>
+      Можливим варіантом може бути і такий, коли ми задаєм вручну скільки разів
+      зустрічається елемент в масиві через отримання значення властивості
+      об'єкта. Звичайним циклом переберем елементи масиву - <i>arr[i]</i> це
+      будуть ключі об'єкта яким одразу присваюємо значення
+      <i> num = arr[i]</i> та через тернарний оператор здійснюєм підрахунок цих
+      значень в масиві, ось так:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          const arr = [2, 2, 2, 8, 2, 2, 4, 5, 5, 2, 4, 5, 9];
+
+          let counts = {};
+
+          for (let i = 0; i < arr.length; i++) {
+            let num = arr[i];
+            counts[num] = counts[num] ? counts[num] + 1 : 1;
+          }
+
+          console.log( counts[2], counts[8], counts[4], counts[5], counts[9]); 
+                                                          // 6 1 2 3 1
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      let counts = {};
+
+      for (let i = 0; i < arr.length; i++) {
+        let num = arr[i];
+        counts[num] = counts[num] ? counts[num] + 1 : 1;
+      }
+
+      console.log(counts[2], counts[8], counts[4], counts[5], counts[9]);
+    </script>
+
+    <p>
+      Давайте вирішимо задачу з використанням методу <b>arr.reduce()</b> та
+      оператора <b>typeof</b>, де вказується, якщо тип елемента масиву
+      невизначено <i>undefined</i> (не зустрічався), то присвоюємо йому значення
+      <i>1</i>, а якщо він вже був визначений (вже зустрічався), то його
+      значення збільшуємо на одиницю. При цьому, початковим значенням цього
+      методу обов'язково визначимо пустий об'єкт <i>{}</i>, куда будуть кластись
+      визначені методом пара <i>ключ:значення</i> де властивості об'єкта будуть
+      задаватись як <i>acc[curr]</i> i повертаємо цим методом зазвичай
+      акумулятор - <i>acc</i>, ось так:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+          const arr = [2, 2, 2, 8, 2, 2, 4, 5, 5, 2, 4, 5, 9];
+
+          let countOccuranceArr = arr.reduce(function (acc, curr) {
+            if (typeof acc[curr] == 'undefined') {
+              acc[curr] = 1;
+            } else {
+              acc[curr] += 1;
+            }
+
+            return acc;
+          }, {});
+
+          console.log(countOccuranceArr); // {2:6, 4:2, 5:3, 8:1, 9:1}
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      let countOccuranceArr3 = arr.reduce(function (acc, curr) {
+        if (typeof acc[curr] == 'undefined') {
+          acc[curr] = 1;
+        } else {
+          acc[curr] += 1;
+        }
+
+        return acc;
+      }, {});
+
+      console.log(countOccuranceArr3); // {2:6, 4:2, 5:3, 8:1, 9:1}
+    </script>
+
+    <p>
+      А тепер давайте з використанням структуру <b> new Map()</b><br />
+      З теорії JavaScript відомо, що Map – це колекція ключ/значення, така сама
+      як і Object. Але головна відмінність полягає в тому, що Map дозволяє
+      використовувати ключі будь-якого типу.<br />
+      Така структура має ряд методів, ось декілька:<br />
+      - new Map() – створює колекцію.<br />
+      - map.set(key, value) – записує по ключу key значення value.<br />
+      - map.get(key) – повертає значення по ключу чи undefined, у разі якщо ключ
+      key відсутній.<br />
+      - map.size – повертає поточну кількість елементів; та інші методи ...<br />
+      Отже, у разі, якщо ми використаємо цю структуру ми можемо отримати
+      <i>Мар</i> з властивостями <i>ключ:значення</i>. Але щоб цю структуру
+      отримати, треба конвертувати масив у Map використавши метод для масивів
+      <b>arr.reduce()</b>. Це дасть змогу обчислити єдине значення, в нас -
+      кількість входжень унікального елементу масиву, а початковим значенням
+      його задати створення нової колекції Мар - метод <em>new Map()</em>. В
+      тілі масиву отримати в акумуляторі обчислене значення по ключу елементу
+      масиву <i>acc.get(el)</i>. У разі, якщо поточний елемент масиву знову
+      зустрічається, додаєм до його значення одиницю, ось так:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre style="width: 65%">
+          const arr = [2, 2, 2, 8, 2, 2, 4, 5, 5, 2, 4, 5, 9];
+
+          const map = arr.reduce((acc, el) => acc.set(el, (acc.get(el) || 0) + 1), new Map());
+
+          console.log(map); // Map(5) {2 => 6, 8 => 1, 4 => 2, 5 => 3, 9 => 1}
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Щоб отримати результат у виді двух масивів, потрібно спочатку зазначити
+      про те, що для перебору їх властивостей, колекції Map мають 3 методи:<br />
+      map.keys() - повертає масив унікальних елементів по ключам<br />
+      map.values() - повертає масив по значенням ключів<br />
+      map.entries() - поветрає ітерований об'єкт по парам ключ-значення<br />
+      Отже, можемо використати перших два щоб вивести в двох окремих масивах
+      потрібні нам дані, ось так:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre style="width: 65%">
+          const arr = [2, 2, 2, 8, 2, 2, 4, 5, 5, 2, 4, 5, 9];
+
+          const map = arr.reduce((acc, el) => acc.set(el, (acc.get(el) || 0) + 1), new Map());
+
+          // дані беруться для отримання двох масивів:
+          // console.info([...map.keys()]); // [2, 8, 4, 5, 9] - отримання ключів в першому масиві
+          // console.info([...map.values()]); // [6, 1, 2, 3, 1] - отримання значень ключів в другому
+
+          // дані беруться для отримання одного масиву:
+          console.info([...map.entries()]); // [Array(2), Array(2), Array(2), Array(2), Array(2)] ->
+            // 0: -> (2) [2, 6]
+            // 1: -> (2) [8, 1]
+            // 2: -> (2) [4, 2]
+            // 3: -> (2) [5, 3]
+            // 4: -> (2) [9, 1]
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+      Давайте згадаємо метод <b>Object.entries()</b>, який повертає
+      <i>масив</i> власних властивостей (що можуть перераховуватись) самого
+      об'єкта в форматі <em>[key, value]</em>. Порядок елементів у масиві, який
+      повертається <i>Object.entries()</i> не залежить від того, як об'єкт був
+      об'явлений. Простіше сказати отримує об'єкт та повертаємо масив пар
+      ключ-значення. <br />
+      Але ми маємо результати у виді масиву, тому візьмемо інший метод
+      <b>Object.fromEntries</b>, робить протилежне: отрмавши масив пар у виді
+      [ключ, значенння], він створює з них об'єкт:
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre style="width: 65%">
+          const arr = [2, 2, 2, 8, 2, 2, 4, 5, 5, 2, 4, 5, 9];
+
+          const map = arr.reduce((acc, el) => acc.set(el, (acc.get(el) || 0) + 1), new Map());
+
+          // дані беруться для отримання двох масивів:
+          // console.info([...map.keys()]); // [2, 8, 4, 5, 9] - отримання ключів в першому масиві
+          // console.info([...map.values()]); // [6, 1, 2, 3, 1] - отримання значень ключів в другому
+
+          // дані беруться для отримання одного масиву:
+          console.info([...map.entries()]); // [Array(2), Array(2), Array(2), Array(2), Array(2)] ->
+            // 0: -> (2) [2, 6]
+            // 1: -> (2) [8, 1]
+            // 2: -> (2) [4, 2]
+            // 3: -> (2) [5, 3]
+            // 4: -> (2) [9, 1]
+
+          // отримаємо результат у виді об'єкту:
+          let uniqueOccurances = Object.fromEntries(map.entries()); // створюємо звичайний об'єкт з масиву
+          console.log(uniqueOccurances); // {2: 6, 4: 2, 5: 3, 8: 1, 9: 1}
+
+
+          // або ось інше рішення:
+
+          const aCount = new Map([...new Set(arr)].map(
+            x => [x, arr.filter(y => y === x).length]
+          ));
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      const arr4 = [2, 2, 2, 8, 2, 2, 4, 5, 5, 2, 4, 5, 9];
+
+      const map = arr4.reduce(
+        (acc, el) => acc.set(el, (acc.get(el) || 0) + 1),
+        new Map()
+      );
+      console.log(map); // Map(5) {2 => 6, 8 => 1, 4 => 2, 5 => 3, 9 => 1}
+
+      console.info([...map.keys()]); // [2, 8, 4, 5, 9]
+      console.info([...map.values()]); // [6, 1, 2, 3, 1]
+      // console.info([...map.entries()]); // [Array(2), Array(2), Array(2), Array(2), Array(2)] ->
+      // 0: -> (2) [2, 6]
+      // 1: -> (2) [8, 1]
+      // 2: -> (2) [4, 2]
+      // 3: -> (2) [5, 3]
+      // 4: -> (2) [9, 1]
+
+      let uniqueOccurances = Object.fromEntries(map.entries()); // створюємо звичайний об'єкт
+      console.log(uniqueOccurances);
+    </script>
+  </body>
+</html>
