@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>scopes</title>
+		<style>
+			body {
+				background-color: tan;
+				margin: 0;
+				font-family: Verdana, sans-serif;
+			}
+
+			.emph {
+				color: red;
+			}
+
+			.title {
+				color: navy;
+				text-align: center;
+				font-weight: 700;
+			}
+
+			.task {
+				width: 50%;
+				padding: 15px 25px;
+				color: navy;
+				background-color: #e2e2e2;
+				margin: 35px auto;
+			}
+
+			p {
+				width: 80%;
+				margin: 0 auto;
+			}
+
+			pre {
+				width: 50%;
+				background-color: #bebebe;
+				padding-top: 20px;
+				margin: 0 auto;
+			}
+
+			code {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: large;
+			}
+
+			.code-ex {
+				width: 50%;
+				font-family: sans-serif;
+				font-style: italic;
+				background-color: #bebebe;
+				font-size: large;
+				padding-left: 15px;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h2 class="title">Global scope</h2>
+		<h4 class="title">
+			Scopes: сутність
+			<span class="emph">Global scope</span>
+		</h4>
+
+		<h4 class="task">
+			Дайте відповідь, що таке глобальна область видимості?<br />
+		</h4>
+
+		<p><b>Відповідь:</b></p>
+		<br />
+
+		<p>
+			Саме слово <em><b>область видимості</b></em> - визначає доступність
+			змінних, об’єктів і функцій з різних частин коду.<br />
+			До ES6 (2015) JavaScript мав лише
+			<em><b>глобальну область видимості</b></em> та
+			<em><b>область видимості функцій</b></em
+			>. І отже змінні, які оголошені глобально (поза будь-якою функцією), мають
+			<i>глобальну область видимості</i>. Незабуваємо, що в JavaScript об'єкти і
+			функції - також можуть бути змінними, а тому вони також мають глобальну
+			область видимості.<br />
+			Час життя змінної JavaScript починається з моменту її оголошення.
+			Функціональні (локальні) змінні видаляються, коли функція завершується. А
+			от у веб-браузері глобальні змінні видаляються, коли ви закриваєте вікно
+			(або вкладку) браузера.<br /><br />
+			Змінні, оголошені за допомогою <b>var</b>, <b>let</b> і <b>const</b>, дуже
+			схожі, коли оголошені поза блоком. Усі вони мають глобальну область
+			видимості:
+		</p>
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          var x = 2;       // оголошена в глобальній області видимості
+          let x = 2;        // оголошена в глобальній області видимості
+          const x = 2;   // оголошена в глобальній області видимості
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p>
+			Доступ до глобальних змінних можна отримати з будь-якого місця в програмі
+			JavaScript.<br />
+		</p>
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          let carName = "Volvo";
+          // тут код може використовувати змінну carName
+
+          function myFunction() {
+            // код тут також може використовувати carName
+          }
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p>
+			У разі, якщо ви присвоїте значення змінній, яка не була оголошена, вона
+			автоматично стане <em><b>глобальною</b></em> змінною. Але в "строгому
+			режимі" неоголошені змінні не є автоматично глобальними.<br />
+			Ось приклад коли змінна <i>carName</i> стане автоматично
+			<i>глобальною</i>, навіть якщо значення присвоєно всередині функції:
+		</p>
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          myFunction();
+
+          // код тут може використовувати змінну carName
+
+          function myFunction() {
+	          carName = "Volvo";
+          }
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p>
+			Необхідно зазначити, що в JavaScript глобальна область дії – це саме
+			середовище JavaScript. А ось в HTML, глобальною областю є об’єкт
+			глобального вікна <em><b>Window</b></em
+			>, і всі <i>глобальні змінні</i>, які визначені за допомогою ключового
+			слова <em><b>var</b></em
+			>, належать глобальному об’єкту вікна <em><b>Window</b></em
+			>, ось приклад:
+		</p>
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          var carName = "Volvo";
+          // код тут <b>може</b> використовувати <b>window.carName</b>
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p>
+			А от <i>глобальні змінні</i>, визначені ключовим словом <em><b>let</b></em
+			>, не належать об’єкту <em><b>Window</b></em
+			>:
+		</p>
+		<p class="code-ex">
+			<code>
+				<pre>
+          let carName = "Volvo";
+          // тут код <b>не може</b> використовувати window.carName
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p>
+			ВАЖЛИВО ПАМ'ЯТАТИ:<br />
+			1) Не створюйте глобальні змінні, хіба що ви цього намірено хочете
+			зробити.<br />
+			2) Ваші глобальні змінні (або функції) можуть перезаписати змінні (або
+			функції), які вже визначені в об'єкті глобального вікна
+			<em><b>Window</b></em
+			>.<br />
+			3) Будь-яка інша глобальна функція, включаючи глобальний об’єкт вікна
+			<em><b>Window</b></em
+			>, може перезаписати ваші глобальні змінні та функції, які ви створили.<br />
+		</p>
+		<br /><br />
+	</body>
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>scopes</title>
+		<style>
+			body {
+				background-color: tan;
+				margin: 0;
+				font-family: Verdana, sans-serif;
+			}
+
+			.emph {
+				color: red;
+			}
+
+			.title {
+				color: navy;
+				text-align: center;
+				font-weight: 700;
+			}
+
+			.task {
+				width: 50%;
+				padding: 15px 25px;
+				color: navy;
+				background-color: #e2e2e2;
+				margin: 35px auto;
+			}
+
+			p {
+				width: 80%;
+				margin: 0 auto;
+			}
+
+			pre {
+				width: 50%;
+				background-color: #bebebe;
+				padding-top: 20px;
+				margin: 0 auto;
+			}
+
+			code {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: large;
+			}
+
+			.code-ex {
+				width: 50%;
+				font-family: sans-serif;
+				font-style: italic;
+				background-color: #bebebe;
+				font-size: large;
+				padding-left: 15px;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h2 class="title">Variables Scopes</h2>
+		<h4 class="title">
+			Scopes: сутність
+			<span class="emph">Variables Scopes</span>
+		</h4>
+
+		<h4 class="task">Розкажіть про область видимості змінних в JavaScript.</h4>
+
+		<p><b>Відповідь:</b></p>
+		<br />
+
+		<p><b>Області видимості змінних</b></p>
+
+		<p>
+			Області видимості є важливою концепцією, яка визначає доступність змінних.
+			Зазвичай вважається, що JavaScript має дві області: глобальну та локальну.
+			Але для кращого розуміння давайте розділимо на чотири категорії:
+			глобальний(global), модульний (modular), блоковий (block) і функціональний
+			(functional).
+		</p>
+		<br />
+
+		<p><b>Global Scope</b></p>
+		<p>
+			Глобальна область видимості — це найвищий рівень видимості в JavaScript.
+			Доступ до змінних і функцій, оголошених у глобальній області видимості,
+			можна отримати з будь-якої частини коду.
+		</p>
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          // global variable
+          const name = 'Pavel'
+          // global variable
+          Array
+          // global variable
+          window
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p><b>Modular Scope</b></p>
+		<p>
+			Модулі ES6 також створюють власну область, яка називається модульною
+			областю видимості.
+		</p>
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          // file constants.js
+
+          // import from another module
+          import { get } from "lodash";
+
+          // That variable can be only accessible within module
+          const person = {
+            name: "Pavel",
+            surname: "Pogosov",
+            age: 21
+          };
+
+          // That function is exported from module, so can be reused
+          export const getPersonName = get(person, "name");
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p><b>Block Scope</b></p>
+		<p>
+			Блокова область – це область, створена у фігурних дужках {} або всередині
+			інструкцій if, for і while. Майте на увазі, що його мають лише змінні,
+			оголошені за допомогою ключових слів let і const. Змінні, оголошені за
+			допомогою ключового слова var, його не мають.
+		</p>
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          // The same behaviour will be inside if, while, and for
+          {
+            const name = 'Modest';
+            var surname = 'Asenchame';
+            let age = 42;
+          }
+          console.log(name, age); // ReferenceError
+          console.log(surname); // Asenchame
+
+          for (const mainColor of ['blue', 'red', 'yellow']) {
+            let mCol = mainColor;
+          }
+          console.log(mainColor); // ReferenceError
+
+          for (var secondaryColor of ['Green', 'violet', 'orange']) {
+            var secCol = secondaryColor;
+          }
+          console.log(secondaryCol); // orange
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<script>
+			// The same behaviour will be inside if, while, and for
+			{
+				const name = 'Modest';
+				var surname = 'Asenchame';
+				let age = 42;
+			}
+			// console.log(name, age); // ReferenceError
+			console.log(surname); // Asenchame
+
+			for (const mainColor of ['blue', 'red', 'yellow']) {
+				let mCol = mainColor;
+			}
+			// console.log(mainColor); // ReferenceError
+
+			for (var secondaryColor of ['green', 'violet', 'orange']) {
+				var secCol = secondaryColor;
+			}
+			console.log(secondaryColor); // orange
+		</script>
+
+		<p><b>Functional Scope</b></p>
+
+		<p>
+			Термін функціональна область у JavaScript стосується видимості змінних
+			всередині цієї функції. Змінні, оголошені у функції, доступні лише в цій
+			функції а також у будь-яких вкладених функціях цієї функції, ось приклад:
+		</p>
+		<br />
+
+		<p class="code-ex">
+			<code>
+				<pre style="width: 65%">
+          // Functional scope
+          function log() {
+            const message = 'Message';
+            return message;
+          }
+          log();
+          console.log(message); // ReferenceError
+
+          // Nested scope
+          function run() {
+            const message = 'Run, Forrest, Run!';
+            (function () {
+              const friend = 'John';
+              console.log(message); // Run, Forrest, Run!
+            })();
+            console.log(friend); // ReferenceError
+          }
+          run();
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<script>
+			// Functional scope
+			function log() {
+				const message = 'Message';
+				return message;
+			}
+			log();
+			// console.log(message); // ReferenceError
+
+			// Nested scope
+			function run() {
+				const message = 'Run, Forrest, Run!';
+				(function () {
+					const friend = 'John';
+					console.log(message); // Run, Forrest, Run!
+				})();
+				// console.log(friend); // ReferenceError
+			}
+			run();
+		</script>
+	</body>
+</html>

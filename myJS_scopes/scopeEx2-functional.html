@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>scopes</title>
+		<style>
+			body {
+				background-color: tan;
+				margin: 0;
+				font-family: Verdana, sans-serif;
+			}
+
+			.emph {
+				color: red;
+			}
+
+			.title {
+				color: navy;
+				text-align: center;
+				font-weight: 700;
+			}
+
+			.task {
+				width: 50%;
+				padding: 15px 25px;
+				color: navy;
+				background-color: #e2e2e2;
+				margin: 35px auto;
+			}
+
+			p {
+				width: 80%;
+				margin: 0 auto;
+			}
+
+			pre {
+				width: 50%;
+				background-color: #bebebe;
+				padding-top: 20px;
+				margin: 0 auto;
+			}
+
+			code {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: large;
+			}
+
+			.code-ex {
+				width: 50%;
+				font-family: sans-serif;
+				font-style: italic;
+				background-color: #bebebe;
+				font-size: large;
+				padding-left: 15px;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h2 class="title">Function scope</h2>
+		<h4 class="title">
+			Scopes: сутність
+			<span class="emph">Function scope</span>
+		</h4>
+
+		<h4 class="task">
+			Дайте відповідь, що таке область видимості функції?<br />
+		</h4>
+
+		<p><b>Відповідь:</b></p>
+		<br />
+
+		<p>
+			Саме слово <em><b>область видимості</b></em> - визначає доступність
+			змінних, об’єктів і функцій з різних частин коду.<br />
+			До ES6 (2015) JavaScript мав лише
+			<em><b>глобальну область видимості</b></em> та
+			<em><b>область видимості функцій</b></em
+			>. І отже змінні, які оголошені всередині функції, створюють
+			<i>область видимості функції</i> або
+			<i>функційну область видимості</i>.<br />
+			Змінні, визначені всередині функції, недоступні (видимі) ззовні функції.
+			Час життя змінної JavaScript починається з моменту її оголошення.
+			Функціональні (локальні) змінні видаляються, коли функція завершується. А
+			от у веб-браузері глобальні змінні видаляються, коли ви закриваєте вікно
+			(або вкладку) браузера.<br /><br />
+			Змінні, оголошені за допомогою <b>var</b>, <b>let</b> і <b>const</b>, дуже
+			схожі, коли оголошені всередині функції. Усі вони мають
+			<em><b>функційну область видимості</b></em
+			>:
+		</p>
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          function myFunction() {
+            <b>var</b> carName = "Volvo";   // Function Scope
+          }
+
+          function myFunction() {
+            <b>let</b> carName = "Volvo";   // Function Scope
+          }
+
+          function myFunction() {
+            <b>const</b> carName = "Volvo";   // Function Scope
+          }
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p>
+			Як відомо, ES6 ввів для використання важливі ключові слова для оголошення
+			змінних в JavaScript: <em><b>let</b></em> і <em><b>const</b></em
+			>. Ці два ключові слова забезпечують впровадження в JavaScript розуміння
+			та використання <em><b>блочної області</b></em> - змінні, оголошені
+			всередині блоку <em><b>{}</b></em
+			>, не можуть бути доступні поза блоком:<br />
+		</p>
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          {
+            <b>let</b> x = 2;
+          }
+          // x <b>не може</b> бути використана/доступна тут
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p>
+			Змінні, які оголошені за допомогою ключового слова <em><b>var</b></em
+			>, не можуть мати <b>блочної області</b>. Такі змінні, хоч і оголошені
+			всередині блоку <i>{}</i>, можна отримати ззовні блоку:
+		</p>
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          {
+            <b>var</b> x = 2;
+          }
+          // x <b>може</b> бути використана/доступна
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p>
+			Необхідно зазначити, що в JavaScript змінні, оголошені в функції, стають
+			<b>лоакльними</b> для цієї функції. А <i>локальні змінні</i> мають
+			<em><b>функційну область видимості</b></em
+			>. До них можна отримати доступ лише зсередини функції:
+		</p>
+
+		<p class="code-ex">
+			<code>
+				<pre>
+        // тут код <b>не може</b> використовувати змінну carName
+
+        function myFunction() {
+          let carName = "Volvo";
+          // тут код <b>може</b> використовувати змінну carName
+        }
+
+        // тут код <b>не може</b> використовувати змінну carName
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p>
+			Оскільки локальні змінні розпізнаються лише всередині своїх функцій,
+			змінні з однаковими іменами можна використовувати в різних функціях.<br />
+			Локальні змінні створюються, коли функція запускається, і видаляються,
+			коли функція завершується.
+		</p>
+		<br /><br />
+	</body>
+</html>

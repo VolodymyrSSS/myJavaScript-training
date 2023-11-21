@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>scopes</title>
+		<style>
+			body {
+				background-color: tan;
+				margin: 0;
+				font-family: Verdana, sans-serif;
+			}
+
+			.emph {
+				color: red;
+			}
+
+			.title {
+				color: navy;
+				text-align: center;
+				font-weight: 700;
+			}
+
+			.task {
+				width: 50%;
+				padding: 15px 25px;
+				color: navy;
+				background-color: #e2e2e2;
+				margin: 35px auto;
+			}
+
+			p {
+				width: 80%;
+				margin: 0 auto;
+			}
+
+			pre {
+				width: 50%;
+				background-color: #bebebe;
+				padding-top: 20px;
+				margin: 0 auto;
+			}
+
+			code {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: large;
+			}
+
+			.code-ex {
+				width: 50%;
+				font-family: sans-serif;
+				font-style: italic;
+				background-color: #bebebe;
+				font-size: large;
+				padding-left: 15px;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h2 class="title">Variables Scopes</h2>
+		<h4 class="title">
+			Scopes: сутність
+			<span class="emph">Variables Scopes</span>
+		</h4>
+
+		<h4 class="task">
+			Дайте відповідь, що буде в консолі після виконання коду?<br />
+			Що потрібно зробити щоб досягти правельний результат?
+		</h4>
+
+		<p>
+			<code>
+				<pre style="width: 55%">
+          // Вихідні дані:
+
+          for (var i = 0; i < 5; i++) {
+            setTimeout(() => console.log(i)); // ???
+          }
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<p><b>Рішення:</b> 5 times x 5</p>
+		<br />
+
+		<p>
+			Як ми знаємо, змінна оголошена з <em><b>var</b></em> не має блочної
+			області видимості, вона доступна з любого місця коду, а тому створюється
+			лише один раз. До моменту виклику функції колбеку setTimeout воно вже
+			дорівнює п’яти бо в нас і++ це постфіксний інкремент (при негайному
+			застосуванні береться/виводиться старе значення при збільшенні на
+			одиницю).
+		</p>
+		<br />
+
+		<script>
+			// change var for let
+			for (var i = 0; i < 5; i++) {
+				setTimeout(() => console.log(i)); // 0..4
+			}
+		</script>
+
+		<p>
+			Що ми повинні зробити, щоб отримати від 0 до 4?<br />
+			Це використати оголошення змінної через <em><b>let</b></em
+			>. Ця змінна має блочну область видимості, а тому до моменту виклику
+			функції колбеку setTimeout, збільшиться тільки на одиницю у своїй області
+			та не буде збільшуватись (бо вже створена область із конкретним
+			значенням), а буде передана до фукнції колбеку для виконання. Таким чином,
+			кожне наступне значення буде створювати свою область.
+		</p>
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          // change var for let
+          for (let i = 0; i < 5; i++) {
+            setTimeout(() => console.log(i)); // 0..4
+          }
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<script>
+			// change var for let
+			for (let i = 0; i < 5; i++) {
+				setTimeout(() => console.log(i)); // 0..4
+			}
+		</script>
+
+		<p>
+			Другим варіантом рішення може бути застосування самовикликаючої функції
+			<em><b>IIFE</b></em> у яку поміщають функцію колбеку setTimeout із
+			переданим в параметри значенням змінної <em><b>і</b></em
+			>, ось так:
+		</p>
+
+		<p class="code-ex">
+			<code>
+				<pre>
+          // pass argument via IIFE
+          for (var i = 0; i < 5; i++) {
+            (function (x) {
+              setTimeout(() => console.log(x)); // 0..4
+            })(i);
+          }
+        </pre>
+			</code>
+		</p>
+		<br />
+
+		<script>
+			// pass argument via IIFE
+			for (var i = 0; i < 5; i++) {
+				(function (x) {
+					setTimeout(() => console.log(x)); // 0..4
+				})(i);
+			}
+		</script>
+	</body>
+</html>
