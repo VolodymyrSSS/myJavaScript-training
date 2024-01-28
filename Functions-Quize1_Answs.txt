@@ -5,6 +5,13 @@ function square(x, y) {
 let v1 = square;
 let v2 = v1(5, 5);
 console.log(v2);
+
+/* The "square" function is defined.
+The function is assigned to the variable "v1".
+"v1(5, 5)" is called, which is equivalent to calling 
+"square(5, 5"). This results in the value 25 (5 * 5).
+The value 25 is assigned to the variable "v2".
+The value of "v2" (which is 25) is logged to the console */
 Answer: 25
 
 Task 2
@@ -14,13 +21,37 @@ console.log(v);
 let square = function (x, y) {
    return x * y;
 };
+
+/* the attempt to call "square" before it is defined. In 
+JavaScript, function declarations are hoisted to the top 
+of their scope, but function expressions (like this one)
+are not. When JavaScript encounters the "line let v = square(5, 5)",
+it attempts to call the function "square. However, at this
+point in the code, the square function has not been 
+defined yet because it's defined later as a function 
+expression. To fix this issue, you should reorder the code
+so that the function is defined before it is called.*/
 Answer: referenceError: square is not defined
 
 Task 3
 let squareFunc = function square(x, y) {
-	console.log(x * y);
+   console.log(x * y);
 };
 square(2, 3);
+
+/* the call "square(2, 3)" caused an error because the 
+function "square" was defined as part of a function 
+expression and was given the name "squareFunc". In 
+JavaScript, when a function is named in a function 
+expression, that name is only accessible within the 
+function itself (it's known as a "named function 
+expression").
+So, when you tried to call "square(2, 3)" outside of the 
+function expression, JavaScript couldn't find a function 
+named "square" in the outer scope, leading to a 
+ReferenceError. The correct way to call the function in 
+this case is to use the variable to which the function 
+expression was assigned, which is "squareFunc(2, 3)" */
 Answer: referenceError: square is not defined
 
 Task 4
@@ -28,6 +59,22 @@ let numberToSquare = 5;
 (function(x) {
    console.log(x * x);
 })(numberToSquare);
+
+/* the code involves an Immediately Invoked Function 
+Expression (IIFE). The IIFE is created using 
+"(function(x) { ... })(numberToSquare)". This pattern 
+involves wrapping a function in parentheses and 
+immediately invoking it. The parameter x is defined in 
+the function signature.
+"(numberToSquare)" at the end of the IIFE is the 
+argument passed to the function. It's equivalent to "x"
+inside the IIFE taking the value of numberToSquare.
+Inside the IIFE, console calculates and logs the square 
+of the passed argument to the console.
+The use of an IIFE in this case allows you to create a 
+scope for the variable "x" without polluting the global 
+scope. It's a common pattern for encapsulating logic 
+and avoiding naming conflicts */
 Answer: 25
 
 Task 5
@@ -37,6 +84,15 @@ async function sum() {
    return a + b;
 }
 sum().then(console.log);
+
+/* it logs the result of the asynchronous addition to the 
+console after the promises for a and b are resolved.
+The "sum" function is declared as an asynchronous 
+function. Inside "sum", "await Promise.resolve(2)" 
+resolves to 2, and "await Promise.resolve(3)" resolves to
+3. The sum of a and b (i.e., 2 + 3) is then returned as a 
+Promise. The ".then(console.log)" is used to log the 
+resolved value of the Promise to the console */
 Answer: 5
 
 Task 6
@@ -47,19 +103,40 @@ function square(x, y) {
 }
 let v = square(2, 3);
 console.log(v);
+
+
+/* "use strict"; enables strict mode for the JavaScript 
+code. So the line "let v = square(2, 3)" calls the "square" 
+function with arguments 2 and 3. However, since strict 
+mode is enabled, "this" inside the function will be 
+"undefined" in non-method function calls.
+The value "undefined" is logged to the console as a 
+result of "console.log(this)". The product of 2 and 3 (i.e.,
+6) is assigned to the variable "v". "console.log(v)" logs 
+the value of "v" (which is 6) to the console */
 Answer: undefined
 Answer: 6
 
 Task 7
 let person = {
     firstName: “Anna”,
-    lastName: “Moskalevska”,
-   showFullName: function () {
+    lastName: “Brody”,
+    showFullName: function () {
        console.log(`${this.firstName} ${this.lastName}`);
    }
 };
 person.showFullName();
-Answer: Anna Moskalevska
+
+/* the "showFullName" method is a function within 
+the object, and it logs the concatenation of 
+"this.firstName" and "this.lastName" to the console. The
+ "this" keyword inside the "showFullName" method 
+refers to the object ("person" in this case), so it correctly 
+accesses the "firstName" and "lastName" properties of 
+the object. "person.showFullName()" calls the 
+"showFullName" method on the "person" object. The 
+method logs the full name */
+Answer: Anna Brody
 
 Task 8
 function showFullName(param) {
@@ -67,6 +144,22 @@ function showFullName(param) {
    console.log(param);
 }
 showFullName.apply(null, [1]);
+
+/* This demonstrates the use of the apply method to 
+set the value of "this" within a function and pass 
+arguments to it. 
+The "showFullName" function is defined to log both 
+"this" and the "param" to the console. 
+"showFullName.apply(null, [1])" calls the "showFullName"
+function using the apply method. The first argument 
+(null in this case) sets the value of "this" within the 
+function, and the "array [1]" contains the arguments 
+to be passed to the function. The "console.log(this)" 
+logs the value of "this" to the console. In this case, 
+because "null" is passed as the first argument to apply,
+"this" refers to the global object (which is Window in a 
+browser environment). The "console.log(param)" logs 
+the value of the "param" (which is "1") to the console */
 Answer: Window {…}
 Answer: 1
 
@@ -78,14 +171,23 @@ let sum = function() {
     });
     return x;
 }
-console.log( sum(1, 2, 3) ); 
+console.log( sum(1, 2, 3) );
+
+/* "arguments" is not an array, and it does not have a 
+forEach method. To iterate over the arguments, you can
+convert arguments to an array using various methods 
+like the spread operator or Array.from */
 Answer: TypeError: arguments.forEach is not a function
 
 Task 10
 let sum = function( opt_a=0, opt_b=0) {
    return opt_a + opt_b;
 };
-console.log( sum() ); 
+console.log(sum());
+
+/* when you call "sum()" without providing any 
+arguments, the default values are used. The function 
+returns the sum of the default values, which is 0 + 0 */
 Answer: 0
 
 Task 11
@@ -93,6 +195,9 @@ function sum(a, b) {
    return a + b;
 }
 console.log( sum.length );
+
+/* length property on function prints the length of 
+arguments a function is expecting */
 Answer: 2
 
 Task 12
@@ -102,6 +207,10 @@ let func = function() {
    };
 };
 func()();
+
+/* "func()" is the first invocation, which returns the 
+inner function. The returned inner function is 
+immediately invoked with second () */
 Answer: Hello
 
 Task 13
@@ -118,6 +227,14 @@ function sayHi(person) {
      } 
 }
 sayHi({ name: “Ann”, age: 17 });
+
+/* inside "sayHi", "makeMessage" is invoked and the 
+result is stored in the variable "message".
+"makeMessage" itself uses "getHello" to determine 
+whether to say "Hello" or "Hi" based on the person's 
+age.
+Given the input { name: "Ann", age: 17 }, the age is 17,
+and "getHello" returns "Hi" because 17 is less than 18*/
 Answer: Hi Ann
 
 Task 14
@@ -129,6 +246,18 @@ const callAClosure = function() {
      closure();
 };
 callAClosure();
+
+/* The "callAClosure" function is defined, and inside it, 
+there is a local variable "x" with a value of 10. The 
+closure function is defined, but it does not have its own
+"x" variable. Instead, it is trying to log the value of x 
+from its outer scope. When "callAClosure()" is called, it 
+invokes the "closure" function, but since there is no "x" 
+defined in the scope of closure, it results in a ReferenceError.
+To fix this and have the "closure" function access the 
+variable "x" from its outer scope, you should pass "x" as 
+a parameter to the "closure" function like that: 
+const closure = function(x) console.log(x);*/
 Answer: ReferenceError: x is not defined
 
 Task 15
@@ -138,6 +267,16 @@ const capturedClosure = function() {
 };
 var x = 100;
 capturedClosure();
+
+/* JavaScript has function-level scope (prior to ES6) and
+block-level scope (with let and const introduced in ES6).
+However, the variable x is declared using var, which has
+a function-level scope. This means that there is only 
+one "x" variable in the entire function, and it is accessible
+throughout the entire function.
+When "capturedClosure()" is called, it logs the value of 
+the shared variable "x", which has been updated to 100
+by the time the closure is executed */
 Answer: 100
 
 Task 16
@@ -148,11 +287,26 @@ const callAClosure = function(closure) {
      closure(10);
 };
 callAClosure(callback);
+
+/* "callback" is a function that takes a parameter "x" and 
+logs its value to the console. "callAClosure" is a function 
+that takes another function (closure) as a parameter and
+invokes it with the argument 10. "callAClosure(callback)"
+is calling "callAClosure" and passing the callback function
+as an argument. The callback function is then invoked 
+with the argument 10. "callback(10)" logs the value of 
+10 to the console */
 Answer: 10
 
 Task 17
 let getTaskId = () => 5;
 console.log( typeof getTaskId );
+
+/* in JavaScript, functions are first-class citizens, which 
+means they can be treated like any other value. The 
+typeof operator, when applied to a function, returns 
+"function". This is because the arrow function syntax is 
+just a concise way of writing a function expression */
 Answer: function
 
 Task 18
@@ -160,6 +314,10 @@ let getHours = (actual, overtime) => {
      return actual + overtime;
 }
 console.log(getHours(8, 4));
+
+/* "getHours(8, 4)" is called with the arguments 8 and 4,
+and the result (8 + 4) is 12.  It simply adds the values of
+actual and overtime together */
 Answer: 12
 
 Task 19
@@ -167,14 +325,238 @@ const getTask = task => () => task;
 const specialGetTask = getTask(‘Create’);
 const result = specialGetTask(); 
 console.log(result);
+
+/* The "getTask" function takes a "task" parameter and 
+returns another function. This returned function, when 
+invoked, will return the value of the "task" parameter. 
+It's essentially creating a closure over the "task" variable.
+"specialGetTask" is then assigned the result of calling 
+"getTask('Create')", effectively creating a closure where 
+the inner function remembers the value 'Create'.
+Finally, "result" is assigned the result of calling 
+"specialGetTask()", which means the inner function is 
+invoked, returning the value 'Create'.*/
 Answer: Create
 
 Task 20
 let getTaskId = () => 1;
 console.log(getTaskId.hasOwnProperty(“prototype”)
 );
+
+/* in JavaScript, arrow functions do not have a 
+prototype property and do not have their own "this"
+value. They are not intended to be used as constructor 
+functions, and they don't have the concept of prototype
+inheritance like regular functions do */
 Answer: false
 
+Task 21
+function magicalFunc() {
+  return cosmic = 90_000;
+}
+console.log(magicalFunc());
+
+/* we can interpret this as:
+const res = cosmic = 90_000;
+return res;
+Undeclared cosmic will be added to global scope 
+and 90_000 will be returned */
+Answer: 90_000;
+
+Task 22
+addWater();
+function addWater() {
+  console.log("Water Added");
+}
+addSugar();
+var addSugar = function () {
+  console.log("Sugar Added");
+}
+
+/* in JavaScript, function declarations are hoisted, 
+which means they are moved to the top of their 
+containing scope during the compilation phase. 
+Therefore, calling "addWater()" before its declaration 
+works fine.
+"addSugar" is declared using a variable assignment 
+with "var", and variables declared with "var" are hoisted,
+but only the declaration is hoisted, not the assignment.
+So, variable is hoisted to the top, but its assignment 
+(the function expression) remains at the original 
+position. It reaults  in a TypeError because at that point 
+addSugar is undefined and not a function.*/
+Answer: Water Added
+Answer: TypeError: addSugar is not a function
+
+Task 23
+function makeIce(size, money) {
+  // ....
+}
+function makeCream(flavour, color, temp=0, name) {
+  // ....
+}
+console.log(makeIce.length);
+console.log(makeCream.length);
+
+/* length property on function prints the length of 
+arguments a function is expecting.  The "temp" para-
+meter has a default value of 0. In JavaScript, parameters 
+with default values are considered optional, and they 
+do not contribute to the function's length. So, if there is
+any optional argument, then all argument after that will
+be considered option, not matter if we declare them 
+optional or not. It is always a good practice to include 
+optional arguments in the last */
+Answer: 2
+Answer: 2
+
+Task 24
+function count (message) {
+  console.log(this.length, message);
+}
+const data = [count, "Hindi", "100"];
+data[0]("Hello");
+
+/* if consider "count" function separately, "this" refers 
+to the global object. The length property of the global
+object is undefined. But the "count" function is part of 
+an array, and when you call it using data[0]("Hello"), 
+"this" inside the "count" function refers to the array 
+itself and the length of array is 3 */
+Answer: 3, Hello
+
+Task 25
+const obj = {
+     lang: 'React',
+     showLang: () => {
+        console.log(this.lang);
+     }
+};
+
+function Show() {
+     this.lang = 'Vue';
+     this.showLang = () => {
+        console.log(this.lang);
+   }  
+}
+console.log(obj.showLang());
+const x = new show();
+console.log(x.showLang());
+
+/*arrow functions don't have their own this binding; 
+instead, they inherit the this value from the enclosing 
+scope. In this case, it refers to the global scope (usually the window object in a 
+browser). So, when you call obj.showLang(), it prints
+undefined because this.lang is not defined in the 
+global scope.
+In a constructor function "Show", when you instantiate 
+an object using new show(), it creates a new object (x in
+this case). When you call x.showLang(), the arrow
+function retains the "this" value from the "Show"
+constructor, therefore, it logs "Vue" */
+Answer: undefined
+Answer: Vue
+
+Task 26
+function SuperHero () {
+   this.make = "Galactus";
+   return { make: "Silver Surfer"};
+}
+const mySuperHero = new SuperHero();
+console.log(mySuperHero.make);
+
+/*when we return a property, the value of the property 
+is equal to the returned value, not the value set in the 
+constructor function */
+Answer: Silver Surfer
+
+Task 27
+class Cosmic {
+   // .....
+}
+console.log(typeof Cosmic);
+
+/*Classes in JS are functions under the hood*/
+Answer: function
+
+Task 28
+(() => {
+   let x, y;
+   try {
+      throw new Error();
+   } catch (x) {
+      (x = 2), (y = 3)
+       console.log(x);
+    }
+    console.log(x);
+    console.log(y);
+})();
+
+/* a self-invoking arrow function is defined, creating a 
+new scope. Inside the function, "let x, y" declares variables
+"x" and "y". The try block throws a new Error. The catch 
+block receives the error and declares a new variable "x" 
+that shadows the outer "x". Inside the catch block, 
+"(x = 2), (y = 3)" assigns values to the inner "x" and "y".
+The catch block has its own scope. That is why 
+"console.log(x)" inside the catch block logs the value of 
+the inner "x", which is 2. This is because the catch block 
+has its own "x" variable that shadows the outer "x".
+"console.log(x)" outside the catch block logs the value 
+of the outer "x", which is "undefined" since the inner "x"
+is scoped to the catch block.
+"console.log(y)" logs the value of the outer "y", which is
+"3" because the assignment "(y = 3)" inside the catch 
+block affects the outer "y". This is because the catch 
+block does not create a new "y" variable; it modifies the
+existing "y" variable in the outer scope */
+Answer: 2
+Answer: undefined
+Answer: 3
+
+Task 29
+const p1 = Promise.resolve(1);
+const p2 = Promise.resolve(2);
+p1.then(console.log);
+p1.then(console.log);
+p2.then(console.log).then(console.log);;
+
+/* "p1.then(console.log)" resolves p1 with the value "1"
+and logs "1" to the console.
+"p1.then(console.log)" resolves p1 again (promises are 
+stateless once resolved), and logs "1" to the console 
+again.
+"p2.then(console.log).then(console.log)" resolves p2 
+with the value "2", logs "2" to the console, and returns 
+a new promise. The subsequent ".then(console.log)" logs
+"undefined" because the previous ".then" does not 
+return a value (or undefined) */
+Answer: 1
+Answer: 1
+Answer: 2
+Answer: undefined
+
+Task 30
+function getPersonInfo(one, two, three) {
+   console.log(one);
+   console.log(two);
+   console.log(three);
+}
+const superHero = "Thor";
+const age = 1000;
+getPersonInfo` ${superHero} is a ${age} years old` ;
+getPersonInfo` hey there, are you amazed` ;
+
+/*if we use tagged template literals (tag functions), the 
+value of the first argument is always an array of the 
+string values. The remaining arguments get the values 
+of the passed expressions */
+Answer: one - [ "", " is a ", " years old"]
+               two - Thor
+               three - 1000
+Answer: one - [" hey there, are you amazed"]
+               two - undefined
+               three - undefined
 
 
 

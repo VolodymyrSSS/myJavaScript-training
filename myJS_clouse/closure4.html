@@ -1,89 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>The essence of closure</title>
-    <style>
-      body {
-        background-color: tan;
-        margin: 0;
-        font-family: Verdana, sans-serif;
-      }
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>The essence of closure</title>
+		<style>
+			body {
+				background-color: tan;
+				margin: 0;
+				font-family: Verdana, sans-serif;
+			}
 
-      .emph {
-        color: red;
-      }
+			.emph {
+				color: red;
+			}
 
-      .title {
-        color: navy;
-        text-align: center;
-        font-weight: 700;
-      }
+			.title {
+				color: navy;
+				text-align: center;
+				font-weight: 700;
+			}
 
-      .task {
-        width: 50%;
-        padding: 15px 25px;
-        color: navy;
-        background-color: #e2e2e2;
-        margin: 35px auto;
-      }
+			.task {
+				width: 50%;
+				padding: 15px 25px;
+				color: navy;
+				background-color: #e2e2e2;
+				margin: 35px auto;
+			}
 
-      p {
-        width: 80%;
-        margin: 0 auto;
-      }
+			p {
+				width: 80%;
+				margin: 0 auto;
+			}
 
-      pre {
-        width: 50%;
-        background-color: #bebebe;
-        padding-top: 20px;
-        margin: 0 auto;
-      }
+			pre {
+				width: 50%;
+				background-color: #bebebe;
+				padding-top: 20px;
+				margin: 0 auto;
+			}
 
-      code {
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: large;
-      }
+			code {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: large;
+			}
 
-      .code-ex {
-        width: 50%;
-        font-family: sans-serif;
-        font-style: italic;
-        background-color: #bebebe;
-        font-size: large;
-        padding-left: 15px;
-        margin: 0 auto;
-      }
+			.code-ex {
+				width: 50%;
+				font-family: sans-serif;
+				font-style: italic;
+				background-color: #bebebe;
+				font-size: large;
+				padding-left: 15px;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
 
-      pre2 {
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: larger;
-        font-weight: 700;
-      }
-    </style>
-  </head>
+	<body>
+		<h2 class="title">The essence of <span class="emph"> closure</span></h2>
 
-  <body>
-    <h2 class="title">The essence of  <span class="emph"> closure</span></h2>
+		<h4 class="task">
+			У нас є дві глобальні змінні, значеннями яких є для першої - слово-вираз,
+			а для другої - об'єкт у якого одна з властивостей є також об'єкт. В свою
+			чергу, у властивості-об'єта, є властивість - функція. Де є тут замикання і
+			поясніть, що буде виведено в кожному конкретному випадку у консолі?
+			<br />
+		</h4>
 
-    <h4 class="task">
-      У нас є дві глобальні змінні, значеннями яких є для першої - слово-вираз, а для другої - об'єкт у якого одна з властивостей є також об'єкт. В свою чергу,  у властивості-об'єта,  є властивість - функція. Де є тут замикання і поясніть, що буде виведено в кожному конкретному випадку у консолі?
-      <br>
-    </h4>
-
-    <p>
-      <code>
-        <pre>
+		<p>
+			<code>
+				<pre>
           var fullname = 'John Doe'; 
           var  obj= { 
               fullname: 'Colin Ihrig', 
               prop: { 
                   fullname: 'Aurelio De Rosa', 
-                  getFullname: function() {
-                  return this.fullname; 
-                  }
+                  <b>getFullname: function() {
+                      return this.fullname; 
+                  }</b>
               } 
           };
 
@@ -99,92 +96,131 @@
 
           console.log(this.fullname); // ???
         </pre>
-      </code>
-    </p><br>
+			</code>
+		</p>
+		<br />
 
-    <p><b>Відповідь</b>:</p><br>
+		<p><b>Відповідь</b>:</p>
+		<br />
 
-    <p>Замикання - це функція, яка запам'ятовує свої зовнішні змінні і може отримати до них доступ. В нашому випадку функція 'getFullname', має доступ до зовнішніх змінних fullname із значенням 'Aurelio De Rosa'  об'єкта prop. <br>
-    Також зазначемо, що функція 'getFullname' є "вкладеною" функцією, тобто коли вона створюється всередині іншої функції. Що ще цікавіше, вкладена функція може бути повернута: або в якості властивості нового об'єкта (якщо зовнішня функція створює об'єкт з методами), або сама по собі. І потім може бути використана в будь-якому місці. Не важливо де, вона все так само буде мати доступ до тих самих зовнішніх змінних. Розглянемо перший console.log. Тут функція getFullname має доступ до зовнішніх змінних які відповідають властивості fullname зі значенням 'Aurelio De Rosa' об'єкта 'prop' і, отже, вивести його в консолі:
-    </p>
+		<p>
+			Замикання - це функція, яка запам'ятовує свої зовнішні змінні і може
+			отримати до них доступ. В нашому випадку функція 'getFullname', має доступ
+			до зовнішніх змінних fullname із значенням 'Aurelio De Rosa' об'єкта prop.
+			<br />
+			Також зазначемо, що функція 'getFullname' є "вкладеною" функцією, тобто
+			коли вона створюється всередині іншої функції. Що ще цікавіше, вкладена
+			функція може бути повернута: або в якості властивості нового об'єкта (якщо
+			зовнішня функція створює об'єкт з методами), або окремо сама по собі. І
+			потім може бути використана в будь-якому іншому місці. Не важливо де, вона
+			все так само буде мати доступ до тих самих зовнішніх змінних з якими вона
+			була створена.<br />
+			Розглянемо перший console.log. Тут функція getFullname має доступ до
+			зовнішніх змінних які відповідають властивості fullname зі значенням
+			'Aurelio De Rosa' об'єкта 'prop' і, отже, виведе його в консоль:
+		</p>
 
-    <p class="code-ex">
-      <code>
-        <pre>
+		<p class="code-ex">
+			<code>
+				<pre>
           console.log(obj.prop.getFullname()); // Aurelio De Rosa
         </pre>
-      </code>
-    </p><br>
+			</code>
+		</p>
+		<br />
 
-    <p>Далі як видно, глобальній змінній 'test' ми присвоюємо тіло функції getFullnameю i в другому console.log ми викликаємо цю функцію. Важливим моментом є те, що функція викликається в момент, коли доступ до її зовнішніх змінних будуть відповідати змінній fullname із значенням 'John Doe', що вона і виведе в консоль:
-    </p>
+		<p>
+			Далі як видно, глобальній змінній 'test' ми присвоюємо тіло функції
+			'getFullname' i в другому console.log ми викликаємо цю функцію. Важливим
+			моментом є те, що функція викликається в момент, коли доступ до її
+			зовнішніх змінних будуть тепер змінені і 'fullname' вже має значенням
+			'John Doe', що і виведеться в консолі:
+		</p>
 
-    <p class="code-ex">
-      <code>
-        <pre>
+		<p class="code-ex">
+			<code>
+				<pre>
           var test = obj.prop.getFullname; 
 
           console.log(test()); // John Doe
         </pre>
-      </code>
-    </p><br>
+			</code>
+		</p>
+		<br />
 
-    <p>Як відомо, метод call викликає функцію з вказаним значенням this (як перший аргумент) і індивідуально наданими аргументами (або списком аргументів). В третій console.log ми і використовуємо цей метод call де як this - передається значення obj.prop, що потрібно для виклику функції 'test'. Отже, передавши першим параметром в 'call' об'єкт obj.prop ми викликаємо функцію 'test' яка бере (має доступ до) значення зовнішніх змінних 'Aurelio De Rosa', і виводимо в консолі:</p>
+		<p>
+			Як відомо, метод call викликає функцію з вказаним значенням this (як
+			перший аргумент) і індивідуально наданими аргументами (або списком
+			аргументів). В третій console.log ми і використовуємо цей метод call де як
+			this - передається значення obj.prop, що потрібно для виклику функції
+			'test'. Отже, передавши першим параметром в 'call' об'єкт obj.prop ми
+			викликаємо функцію 'test' яка бере (має доступ до) значення зовнішніх
+			змінних 'Aurelio De Rosa', і виводимо в консолі:
+		</p>
 
-    <p class="code-ex">
-      <code>
-        <pre>
+		<p class="code-ex">
+			<code>
+				<pre>
           console.log(test.call(obj.prop)); // Aurelio De Rosa
         </pre>
-      </code>
-    </p><br>
+			</code>
+		</p>
+		<br />
 
-    <p>Вже у четвертій console.log ми використовуємо той самий метод call, але передавши першим параметром в 'call' тільки об'єкт obj ми змінили доступ функції 'test' до зовнішніх змінних, а саме до змінної fullname із значенням 'Colin Ihrig'.<br>
-    </p>
+		<p>
+			Вже у четвертій console.log ми використовуємо той самий метод call, але
+			передавши першим параметром в 'call' тільки об'єкт obj ми змінили доступ
+			функції 'test' до зовнішніх змінних, а саме до змінної fullname із
+			значенням 'Colin Ihrig'.<br />
+		</p>
 
-    <p class="code-ex" style="width: 70%">
-      <code>
-        <pre>
-          cconsole.log(test.call(obj)); // Colin Ihrig
+		<p class="code-ex" style="width: 70%">
+			<code>
+				<pre>
+          console.log(test.call(obj)); // Colin Ihrig
         </pre>
-      </code>
-    </p><br>
+			</code>
+		</p>
+		<br />
 
-    <p>І в останній console.log, ключове слово this вказує на доступ до глобальної змінної fullname із значенням 'John Doe'.</p>
+		<p>
+			І в останній console.log, ключове слово this вказує на доступ до
+			глобальної змінної fullname із значенням 'John Doe'.
+		</p>
 
-    <p class="code-ex" style="width: 70%">
-      <code>
-        <pre>
+		<p class="code-ex" style="width: 70%">
+			<code>
+				<pre>
           console.log(this.fullname); // John Doe
         </pre>
-      </code>
-    </p><br>
-    <br>
-    
-    <script>
-      var fullname = 'John Doe'; 
-      var  obj= { 
-          fullname: 'Colin Ihrig', 
-          prop: { 
-              fullname: 'Aurelio De Rosa', 
-              getFullname: function() {
-              return this.fullname; 
-              }
-          } 
-      };
+			</code>
+		</p>
+		<br />
+		<br />
 
-      console.log(obj.prop.getFullname()); // Aurelio De Rosa
+		<script>
+			var fullname = 'John Doe';
+			var obj = {
+				fullname: 'Colin Ihrig',
+				prop: {
+					fullname: 'Aurelio De Rosa',
+					getFullname: function () {
+						return this.fullname;
+					},
+				},
+			};
 
-      var test = obj.prop.getFullname; 
+			console.log(obj.prop.getFullname()); // Aurelio De Rosa
 
-      console.log(test()); // John Doe
+			var test = obj.prop.getFullname;
 
-      console.log(test.call(obj.prop)); // Aurelio De Rosa
+			console.log(test()); // John Doe
 
-      console.log(test.call(obj)); // Colin Ihrig
+			console.log(test.call(obj.prop)); // Aurelio De Rosa
 
-      console.log(this.fullname); // John Doe
-      
-    </script>
-  </body>
+			console.log(test.call(obj)); // Colin Ihrig
+
+			console.log(this.fullname); // John Doe
+		</script>
+	</body>
 </html>

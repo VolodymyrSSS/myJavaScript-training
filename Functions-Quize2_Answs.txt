@@ -174,11 +174,13 @@ Answer: 2
 Task 17
 let getHours = (actual, overtime) => actual + overtime;
 console.log(getHours(8, 2));
+
 Answer: 10
 
 Task 18
 let getHours = (actual, overtime) => { actual + overtime };
 console.log(getHours(8, 2));
+
 Answer:  error
 
 Task 19
@@ -186,7 +188,8 @@ let getTask = () => {
      id: 1,
      priority: 100 
 };
-console.log(getTask());
+console.log( getTask() );
+
 Answer: error
 
 Task 20
@@ -194,6 +197,7 @@ let Task = () => {
      this.id = 1;
 };
 console.log( new Task() );
+
 Answer: error
 
 

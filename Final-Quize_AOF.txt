@@ -263,3 +263,32 @@ let anotherTask = {
 task.done().bind( anotherTask, 1 )();
 Answer:  123  1
 
+Task 30
+let name = "Silver Surfer";
+console.log(name.padStart(14));
+console.log(name.padStart(4));
+
+Answer: " Silver Surfer"
+Answer: "Silver Surfer"
+/*with the padStart method, we can add padding to the 
+beginning of a string. The value passed to this method 
+is the total length of the string together with the padding. 
+The string "Silver Surfer" has a length of 13. 
+name.padStart(14) inserts 1 space at the start of the 
+string, because 13 + 1 is 14.  If the argument passed to
+the padStart method is smaller than the length of the 
+array, no padding will be added */
+
+Task 31
+console.log(parseInt("7"));
+console.log(parseInt("7*6"));
+console.log(parseInt("7Din"));
+
+Answer: 7
+Answer: 7
+Answer: 7
+/*if we pass string and number combination to parseInt,
+what parseInt does is, it check at which position wrong 
+datatype is getting started, if value before the wrong 
+datatype is a valid number, it will return the valid 
+number */

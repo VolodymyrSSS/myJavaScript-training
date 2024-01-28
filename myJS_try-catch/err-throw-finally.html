@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Using try..catch..throw</title>
+		<style>
+			body {
+				background-color: tan;
+				margin: 0;
+				font-family: Verdana, sans-serif;
+			}
+
+			.title {
+				color: navy;
+				text-align: center;
+				font-weight: 700;
+			}
+
+			.code-ex {
+				width: 50%;
+				font-family: sans-serif;
+				background-color: #bebebe;
+				font-size: large;
+				padding-left: 15px;
+				margin: 0 auto;
+			}
+
+			div > .demonstration {
+				width: 50%;
+				background-color: #bebebe;
+				margin: 35px auto;
+			}
+
+			.task {
+				width: 50%;
+				padding: 15px 25px;
+				color: navy;
+				background-color: #e2e2e2;
+				margin: 35px auto;
+			}
+
+			.emph {
+				color: red;
+			}
+
+			.emph2 {
+				color: navy;
+			}
+
+			.code-ex {
+				width: 50%;
+				font-family: sans-serif;
+				font-style: italic;
+				background-color: #bebebe;
+				font-size: large;
+				padding-left: 15px;
+				margin: 0 auto;
+			}
+
+			p {
+				width: 80%;
+				margin: 0 auto;
+			}
+
+			pre {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: larger;
+				font-weight: 700;
+				margin-left: 95px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h2 class="title">
+			try..catch: використання <span class="emph">throw</span> та
+			<span class="emph">finally</span> разом з try..catch
+		</h2>
+
+		<h4 class="task">
+			Потрібно показати (вивести) на 1.5 секунди сконструйовану вами помилку при
+			введенні в текстове поле значення яке попадає поза визначений діапазон.<br />
+			Тобто коли буде введено значення, яке не є числом, пустим рядком чи
+			пробілом, або значення не відповідає заданому діапазону, то нижче поля
+			введення має з'явитись повідомлення помилки, яку ви сконструюєте з
+			текстом: у разі нечисла - 'not a number', у разі пустого рядка чи пробілів
+			- 'empty', у разі значення меньшого заданому діапазону - 'too low' чи
+			більшого від заданого - 'too high'. Якщо введене число задовольняє умову,
+			то ніякої помилки не виникає. Після кожного введення потрібно очищати поле
+			введення, щоб можна було вводити інші значення.<br />
+			<br />
+		</h4>
+		<div class="demonstration">
+			<p class="code-ex">
+				<br />
+				Вихідні дані:<br />
+				<code
+					><br />
+					&lt;p&gt;Please input a number between 5 and 10:&lt;/p&gt;<br /><br />
+					&lt;input id="demo" type="text" /&gt; &lt;button type="button"
+					onclick="myFunction()"&gt;<br />
+					&nbsp;&nbsp;Test Input<br />
+					&lt;/button&gt;<br /><br />
+					&lt;p id="p01" style="color:red"&gt;&lt;/p&gt;
+					<br /><br />
+				</code>
+			</p>
+		</div>
+		<br /><br />
+
+		<p>Please input a number between 5 and 10:</p>
+		<input id="demo" type="text" style="margin-left: 185px" />
+		<button type="button" onclick="myFunction()">Test Input</button>
+		<p id="p01" style="color: red"></p>
+		<br /><br />
+
+		<p><b>Рішення</b>:</p>
+		<br />
+
+		<p>
+			Інструкція <em><b>throw</b></em> дозволяє створити власну помилку.<br />
+			Коли виникає помилка, JavaScript зазвичай зупиняється та генерує
+			повідомлення про помилку. В JavaScript це інтерпретується ще так:
+			'викинути виняток', або 'викинути помилку' (throw an exception / throw an
+			error).<br />
+			Технічно ми можемо створювати <i><b>'власну'</b></i> помилку, або виняток.
+			Такою помилкою/винятком може бути текстовий рядок, число, логічне значення
+			або об’єкт:
+		</p>
+
+		<p class="code-ex" style="width: 70%">
+			<code>
+				<pre>
+          throw "Too big";    // throw a text
+          throw 500;          // throw a number
+        </pre>
+			</code>
+		</p>
+
+		<p>
+			Aле краще, щоб це був об'єкт, бажано з властивостями name та message для
+			сумісності з вже вбудованими об'єктами помилки.<br />
+			Таких вбудованих стандартних помилок В JavaScript є багато: Error,
+			SyntaxError, ReferenceError, TypeError та інші. Ось синтаксис деяких:<br />
+		</p>
+
+		<p class="code-ex" style="width: 70%">
+			<code>
+				<pre>
+          let error = new Error(message);<br />
+          let error = new TypeError(message); - is thrown if you use a value that is outside the range of expected types<br>
+          let error = new SyntaxError(message); - is thrown if you try to evaluate code with a syntax error<br />
+          let error = new ReferenceError(message); -  is thrown if you use (reference) a variable that has not been declared<br />
+          let error = new RangeError(message); -  is thrown if you use a number that is outside the range of legal values
+          ...
+        </pre>
+			</code>
+		</p>
+
+		<p>
+			Для стандартних помилок (підкреслимо, тільки для них!), властивість
+			<i>name</i> – це в точності ім'я конструктора, а властивість
+			<i>message</i> береться з аргумента конструктора.<br />
+			<br />
+			Ось для прикладу ми маємо стандартну помилку:
+		</p>
+
+		<p class="code-ex" style="width: 70%">
+			<code>
+				<pre>
+          let error = new Error(" Ого, є помилка! o_O");
+
+          // візьмемо назву помилки та її повідомлення
+          alert(error.name); // Error
+          alert(error.message); //  Ого, є помилка! o_O
+        </pre>
+			</code>
+		</p>
+
+		<p>
+			Отже, якщо використовується
+			<em><b>throw</b></em> разом із <b>try</b> and <b>catch</b> то можна
+			контролювати потік виконання коду та створювати власні повідомлення про
+			помилку.<br /><br />
+			Для того, щоб виведена помилка зникла через 1.5 секунди потрібно
+			використати функцію <em><b>setTimeout()</b></em> у тіло якої додаємо
+			інструкцію присвоєння пустого рядка <b><i>''</i></b> типу<br />
+			setTimeout(() => {<br />
+			message.innerHTML = '';<br />
+			}, 1500);<br />
+			<br />
+			Для очистки поля, потрібно змінній <i>message</i> присвоїти значення
+			пустого рядка <b><i>''</i></b> а для того, щоб очищалось кожного разу,
+			потрібно помістити його в блок <em><b>finally</b></em
+			>. Ця інструкція дозволяє виконувати код після <i>try</i> та
+			<i>catch</i> незалежно від результату, що і дасть змогу виконувати її
+			кожен раз після введення попереднього значення.<br />
+			Остаточне рішення буде таким:
+		</p>
+
+		<p class="code-ex">
+			<code>
+				<pre style="width: 70%; background-color: wheat">
+          
+				  function myFunction() {
+				    const message = document.getElementById('p01');
+				    message.innerHTML = '';
+				    let x = document.getElementById('demo').value;
+
+				    try {
+					    if (x.trim() == '') throw 'empty'; // генеруємо помилку
+					    if (isNaN(x)) throw 'not a number'; // генеруємо помилку
+
+					    x = Number(x); // конвертуємо в число
+					    if (x < 5) throw 'too low'; // генеруємо помилку
+					    if (x > 10) throw 'too high'; // генеруємо помилку
+				    } catch (err) {
+					    message.innerHTML = 'Input is ' + err; // тут перехоплюємо помилку
+					    setTimeout(() => {
+					      message.innerHTML = ''; // зникає помилка через 1.5сек
+					    }, 1500);
+				    } finally {
+					    document.getElementById("demo").value = ""; // очищаємо поле
+				    }
+				  }
+        </pre>
+			</code>
+		</p>
+		<br />
+		<p>
+			Таким чином, сконструйована помилка буде викидатись та перехоплюватись в
+			блоці <i>catch</i> А в блоці <i>finally</i> буде текстове поле очищатись
+			незалежно від того як виконався код.<br />
+		</p>
+		<br />
+		<br />
+
+		<script>
+			function myFunction() {
+				const message = document.getElementById('p01');
+				message.innerHTML = '';
+				let x = document.getElementById('demo').value;
+				try {
+					if (x.trim() == '') throw 'empty';
+					if (isNaN(x)) throw 'not a number';
+					x = Number(x);
+					if (x < 5) throw 'too low';
+					if (x > 10) throw 'too high';
+				} catch (err) {
+					message.innerHTML = 'Input is ' + err;
+					setTimeout(() => {
+						message.innerHTML = '';
+					}, 1500);
+				} finally {
+					document.getElementById('demo').value = '';
+				}
+			}
+		</script>
+	</body>
+</html>

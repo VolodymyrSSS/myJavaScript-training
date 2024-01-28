@@ -1,0 +1,30 @@
+Task 1
+const arr = new Array(3).map(item => item * 2);
+console.log(arr);
+
+Answer: [<empty> x 3]
+
+Task 2
+const array = [{name:'JS'}, '2', 'Hello'];
+delete array[1];
+console.log(array.length); 
+
+/* delete operator will delete the element from the array,
+leaving a empty slot in place of deleted element. In 
+order to delete element prefer to use pop, slice or splice.*/
+Answer: 3
+
+Task 3
+const val = [2, 4, 8]
+const valTwo = val.map(function(el) {
+   return el ** 2;
+})
+console.log(valTwo);
+
+/* "**" operator returns the result of raising the first 
+operand to the power of the second operand. It is 
+equivalent to "Math.pow()", except it also accepts
+"BigInts" as operands */
+Answer: [4, 16, 64]
+
+

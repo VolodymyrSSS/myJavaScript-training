@@ -1,0 +1,495 @@
+Task 1
+const name = "Ben"
+function sayHi() {
+   console.log(name);
+}
+setTimeout(function() {
+   const name = "John";
+   sayHi();
+}, 1000);
+
+/* in this case, the concept of closure is at play. The 
+"sayHi" function retains access to the lexical scope in 
+which it was defined, and it "closes over" the variable 
+"name". Even though a new variable named "name" is 
+declared inside the setTimeout callback, it does not 
+affect the name variable that "sayHi" has access to, 
+thanks to closure */
+Answer: Ben
+
+
+Task 2
+let person = {name: “Noren Red”}
+const members = [person];
+person = null;
+console.log(members);
+
+/*in reality, we are only setting new reference to person
+variable, not to members variable. That is why previous 
+reference will be used in members array.
+In Short, { name: "Noren Red"} lives in some 
+memory space whose address is X201 and this is how 
+referencing is working
+let person = X201
+const members = [ X201 ]
+person = null */
+Answer: [{name: “Noren Red”}]
+
+Task 3
+const name = "John";
+const user = {
+   name: "Ben",
+   getName() {
+      return this.name;
+   }
+}
+const getUserName = user.getName;
+console.log(getUserName());
+
+/* the variable "name" is declared with the value "John"
+in the outer scope. An object "user" is created with a 
+"name" property set to "Ben" and a method "getName"
+that returns "this.name". The method "getName" relies 
+on the "this" context, so when it's invoked as 
+"user.getName()", it correctly returns "Ben". 
+However, when "getUserName" is assigned the value of 
+"user.getName", it loses its binding to the "user" object. 
+Now, "getUserName" is just a reference to the function 
+"getName" without any specific context. When 
+"getUserName()" is invoked, it's essentially like calling 
+the standalone function "user.getName()" without the 
+object context. This results in an attempt to access 
+"this.name", but this is not bound to any object or we 
+can say  "this" is not bound to the "user" object. Therefore,
+the attempt to access "this.name" may results in 
+"undefined" or even throw an Error */
+Answer: undefined or Error
+
+Task 4
+const foo = 1;
+function bar() {
+   console.log(foo);
+   const foo = 10;
+}
+bar();
+
+/* in JavaScript, both "var" and "function" declarations are 
+hoisted to the top of their containing scope and 
+initialized with "undefined". However, "let" and "const" 
+declarations are also hoisted but not initialized.
+"const foo = 1" declares a constant variable "foo" and
+assigns it the value "1" in the outer scope. Inside the 
+"bar" function, "console.log(foo)" attempts to log the 
+value of "foo". However, there's a "const foo = 10"
+declaration within the same function. In the hoisting 
+phase, the "const foo = 10" is hoisted to the top of the 
+"bar" function, but it is not initialized with "undefined". 
+It remains uninitialized until the actual declaration 
+statement is reached during execution.
+The "console.log(foo)" line is encountered before the 
+"const foo = 10" declaration is reached during 
+execution. At this point, "foo" inside "console.log(foo)" 
+refers to the outer "foo", which has a value of "1". 
+However, since "const foo = 10" redeclares "foo" within 
+the "bar" function, it triggers a ReferenceError because
+you cannot redeclare a "const" variable. If you change 
+the "const" declaration inside the "bar" function to "let",
+you would observe the result as "undefined". */
+Answer: ReferenceError
+
+Task 5
+function phoo() {
+   return pfoo;
+}
+const phoObject = new phoo();
+console.log(phoObject instanceof phoo);
+
+/* when a function is invoked with the new keyword in
+JavaScript, a new object is created. If there is an explicit
+return statement in the function, the returned value is 
+used as the result of the new operation.
+In this code, the "phoo" function explicitly returns "pfoo",
+but "pfoo" is not defined, resulting in a "ReferenceError".
+Due to the error, the "new phoo()" operation may not 
+proceed as expected, and "phoObject" might not be an
+instance of "phoo". 
+To make the code work and properly check if "phoObject" 
+is an instance of phoo, you should define "pfoo" or 
+update the code accordingly. For example:
+function phoo() {
+   return this;
+} -  here, the "phoo" function returns "this", which refers
+to the newly created object, making "phoObject" an 
+instance of "phoo".
+instanceof also takes inheritance into account, it checks
+the whole prototype chain to match the instance. To 
+understand this let’s take this examples:
+const fruits = ["Orange", "Kiwi", "Banana"]; 
+console.log(fruits instanceof Array);  // true
+console.log(fruits instanceof Object);  // true (Array is 
+			    inherited from Object)
+console.log(fruits instanceof Number); // false
+console.log(fruits instanceof String); // false*/
+Answer: false
+
+Task 6
+var y = 1;
+if (function f() {}) {
+   y += typeof f;
+}
+console.log(y);
+
+/* In above code, "function f(){}" is treated as a function
+expression because it's used within an expression 
+context (as part of the if condition). Function expressions
+do not get hoisted to the top of the scope like function 
+declarations do. Instead, they are only defined and 
+available for use after the point where they are defined 
+in the code.
+"if (function f(){}) { ... }" the anonymous function f(){} is 
+treated as a function expression. It is not hoisted to the 
+top of the scope, and it's only defined from this point 
+onward. Therefore, it's not available before or after this
+line. */
+Answer: undefined
+
+Task 7
+What will be the order of logs in the console?
+var z = 1, y = z = typeof y;
+console.log(y);
+
+/* According to the associativity rule, operators with 
+the same precedence are processed based on the 
+associativity property of the operator. Here, the asso-
+ciativity of the assignment operator is Right to Left, so 
+typeof "y" will evaluate first , which is "undefined". It
+will be assigned to "z", and then "y" would be assigned
+the value of "z" and then "z" would be assigned the 
+value "1" */
+Answer: undefined
+
+Task 8
+function foo1() {
+  console.log("A");
+  foo2();
+  console.log("D");
+}
+
+async function foo2() {
+  await foo3();
+  console.log("C");
+}
+
+async function foo3() {
+  console.log("B");
+}
+
+foo1();
+
+/* whatever code we have written after "await" will run 
+on the microtask queue. As soon as "foo3()" is executed,
+next line "console.log("C")" will be pushed to microtask
+queue, and once callstack is empty then it will get 
+executed */
+
+Task 9
+Which option will execute console after 3000ms?
+Option A: setTimeout(console.log("A"), 3000)
+Option B: setTimeout.call(null, ()=> console.log("YES"), 3000);
+Option C: setTimeout.call(null, console.log("YES"), 3000);
+
+/* for option A - this doesn't delay the execution of 
+"console.log("A")". It immediately invokes console.log("A"),
+and the result of this function call ("undefined") is 
+passed to "setTimeout". Therefore, this option does not 
+achieve the intended delay;
+for option B - in JS, when using "setTimeout", it's crucial
+to pass a function reference as the first argument to 
+delay its execution. In the case the arrow 
+"function () => console.log("YES")" is passed as a 
+function reference, ensuring that it will be invoked 
+after the specified delay;
+for Option C - the "console.log('YES')" is immediately 
+executed, and the result ("undefined") is passed to 
+"setTimeout". As a result, the "console.log('YES')" is not 
+delayed. 
+Actually we can say  except B in all other option we 
+aren’t passing function, instead we are calling it */
+Answer: B
+
+Task 10
+function fetchA() {
+  A = 7;
+  console.log(A);
+}
+
+let A;
+fetchA();
+
+/* variable named "A" is declared using the "let" keyword. 
+This variable is declared in the global scope (or the 
+scope of the block containing it). Variables declared
+with "let" are not initialized with any value during
+the hoisting process. They are in a "temporal dead zone"
+until they are explicitly assigned a value.
+Function call "fetchA()" triggers the execution of the 
+function's code, inside the function, the line "A = 7" 
+assigns the value "7" to the global variable "A". This 
+variable "A" is the same one that was declared using 
+let in the outer scope and console logs the value of "A" */
+Answer: 7
+
+Task 11
+console.log(42.toString());
+
+/* due to language grammar limitation, the "dot(.)" 
+character could mean different things in JS. It can be 
+seen as the member operator, or a decimal, depending 
+on its placement.
+In order to make above code work we have to either 
+use parenthesis or an additional dot to make the 
+expression valid, like:
+21..toString(); // "21" or (21).toString(); // "21" */
+Answer: SyntaxError: identifier starts immediately after numeric literal
+
+Task 12
+function toTheMoon() {
+  console.log(arguments.constructor === {}.constructor);
+  console.log(arguments.constructor === [].constructor)
+}
+ toTheMoon();
+
+/* the line "arguments.constructor === {}.constructor" 
+checks if the constructor property of the arguments 
+object is equal to the constructor of an object ({}). The 
+result of this comparison will be "true" if arguments is an
+object;
+the line "arguments.constructor === [].constructor"
+checks if the constructor property of the arguments 
+object is equal to the constructor of an array ([]). The 
+result of this comparison will be "true" if arguments is 
+an array;
+So,  the arguments object in JavaScript is an object, so 
+the first console.log statement will print true. But the 
+arguments object is not an array, so the second console
+statement will print "false" */
+Answer: true
+Answer: false
+
+Task 13
+function toTheJupiter() {
+   var a = [];
+   a[Array.prototype.pop.apply(arguments)] = 1;
+   return a;
+}
+console.log(toTheJupiter(0).length);
+console.log(toTheJupiter(100).length);
+console.log(toTheJupiter(Infinity).length);
+console.log(toTheJupiter(NaN).length);
+
+/* Points to concider:
+point 1: "pop" array method removes element from last index, and 
+returns the removed element.
+point 2: we can increase the length of an array by 
+simple assigning values to index. Examples:
+const arr = []; // arr.length = 0
+arr[4] = 1; // arr.length = 5
+arr[400] = 1; // arr.length = 401
+point 3: we can set values agains string keys other than
+numerical indices; examples:
+const arr = [];
+arr["JS"] = 1 // no effect on length arr.length = 0
+but arr["JS"] // arr.length = 1
+point 4: "apply" method is used to call a function whose
+context is defined by the first argument passed, and it 
+accepts a second argument an array of parameters 
+which is optional. Example:
+const obj = {
+  lang: 'JS'
+}
+function show() {
+   console.log(this.lang);
+}
+show(); // logs "undefined"
+show.apply(obj);  // logs "JS"
+point 5: "arguments" - special array like object exist in 
+every function, that is declared using function keyword.
+This arguments object behaves similarly to an array in 
+that it has numerical indices and a length property, but
+it is not a proper array (it's array-like).
+However, by using the "apply" or "call" method, you can
+borrow methods from the "Array.prototype" and use
+them on the arguments object or any other object.
+We can convert arguments into array, to have all methods
+by this way:
+const argsArray = Array.prototype.slice.call(arguments);
+
+for line "toTheJupiter(0)" - it applies pop on arguments,
+which removes the last element "0" from arguments and
+assigns it to "a[0] = 1". So, the array "a" becomes "[1]", 
+and "console.log(toTheJupiter(0).length)" prints "1";
+for line "toTheJupiter(100)" - similar to the first case, it 
+applies pop on arguments (removing 100) and assigns 
+it to "a[100] = 1". The array "a" becomes an array with a
+length of 101 "([<empty>, <empty>, ..., <empty>, 1])", 
+and console.log(toTheJupiter(100).length) prints "101".
+for line "console.log(toTheJupiter(Infinity).length)" - the
+array "a" got "arguments = Infinity" and after "pop", 
+Infinity will return "index = Infinity" and array "a" looks 
+like "a[Infinity] = 1" and the length is "0".
+for line "console.log(toTheJupiter(NaN).length)" - similarly, 
+the array "a" becomes "a[NaN] = 1", and the length 
+is "0" */
+Answer: 1
+Answer: 101
+Answer: 0
+Answer: 0
+
+Task 14
+var a = 1;
+
+function toTheMoon() {
+   if (!a){
+      var a = 10;
+    }
+    console.log(a);
+}
+
+toTheMoon();
+console.log(a);
+
+/* "var a = 1" - this variable has a global scope because
+it is declared outside any function;
+line "if (!a) { var a = 10; }" checks if "a" is falsy. If true, it 
+declares a new variable "a" with the value "10" within 
+the function's scope. However, due to hoisting, the 
+variable declaration is moved to the top of the function,
+so it does not affect the outer "a" variable;
+"console.log(a)" prints the value of the local variable "a"
+within the function's scope. Since there is a local 
+variable "a", it logs 10. But outer "console.log(a)" prints 
+the value of the global variable "a". This logs "1" because
+the local variable inside the function does not affect the
+global variable. Let's re-factor the code for the function:
+ function toTheMoon() {
+     var a; // var has function scope, hence it's declaration 
+                will be hoisted
+      if(!a) {
+          a = 10;
+       }
+        console.log(a); // 10  precendence will be given to 
+	               local scoped variable.
+ } */
+Answer: 10
+Answer: 1
+
+Task 15
+How long will this data will be available?
+sessionStorage.setItem("JS", 99991);
+
+Answer: "sessionStorage.setItem("JS", 99991)" will be 
+available for as long as the current browser session is 
+active. Once the session ends (e.g., the user closes the 
+tab or browser), the data will be cleared. As a matter 
+of fact it will survive the refresh.
+
+Task 16
+const User = function() {};
+User.prototype.attributes = {
+   isAdmin: false
+};
+const admin = new User("X");
+const guest = new User("Y");
+admin.attributes.isAdmin = true;
+
+console.log(admin.attributes.isAdmin);
+console.log(guest.attributes.isAdmin);
+
+/* both "admin" and "guest" object shares same 
+prototype chain defined by "User.prototype.attributes"
+When we are calling "admin.attributes.isAdmin" , JS 
+engine will try to find the attributes key is "admin" 
+object, when it doesn’t get any key with this name, it 
+will look for the key in prototype chain. And guess what,
+we have a key named "attributes" in prototype chain of
+"admin" object. And hence JS engine will update the 
+attributes key in prototype Object of "User" . Due to this
+reason, when "guest" object will try to access this 
+property it will also get "true".
+To fix this, we should use attribute key separatley for 
+each object. we should only use prototypes to share 
+common functionality like this:
+const User = function() {
+  this.attributes = {
+    isAdmin: false
+  };
+};
+const admin = new User();
+const guest = new User();
+admin.attributes.isAdmin = true;
+console.log(admin.attributes.isAdmin);  // true
+console.log(guest.attributes.isAdmin);  // false
+And if we to the prototype way, we have to use 
+"defineProperty" and use "getter" and "setter" to enfore 
+the restriction, like here"
+function User() {}
+Object.defineProperty(User.prototype, "isAdmin", {
+  get: function() {
+    return this._attributes.isAdmin;
+  },
+  set: function(value) {
+    console.error("Cannot directly modify isAdmin property on prototype.");
+  }
+});
+
+User.prototype._attributes = {
+  isAdmin: false
+};
+const admin = new User();
+const guest = new User();
+admin.isAdmin = true;  // This will trigger the error message and not actually modify the property
+console.log(admin.isAdmin);  // false
+console.log(guest.isAdmin);  // false */
+Answer: true
+Answer: true
+
+Task 17
+(function() {
+  var foo = 3;
+  console.log(foo);
+})();
+console.log(foo);
+
+/* the purpose of a self-executing function or IIFE - it’s 
+all about variable scoping. By default, variables declared
+in the self-executing function are only available to code
+within the self-executing function. This allows code to be
+written without concern of how variables are named in 
+other blocks of JavaScript code */
+Answer: 3
+Answer: error - 'foo' is not defined
+
+Task 18
+(function() {
+    var a = 1;
+    (new Function('a = 2'))();
+    console.log('a1 is ', a) ;
+})();
+console.log('a2 is ', a);
+
+/* in JS, you can create a function using the Function 
+constructor. The Function constructor takes a variable 
+number of string arguments, where each string represents
+a parameter name, followed by the function body as the
+last argument. Here's the general syntax:
+const funcName = new Function(arg1, arg2, ..., funcBody);
+Here’s an example of how you can use the Function 
+constructor to create a simple function:
+const add = new Function('a', 'b', 'return a + b;');
+console.log(add(2, 3));  // Output: 5
+So, in this line, (new Function('a=2'))();
+in the function body we are doing 'a=2' , this 'a' will be 
+added to the global scope, and hence we get 2 as a 
+result of 'console.log('a2 is ', a)' */
+Answer: a1 is 1
+Answer: a2 is 2

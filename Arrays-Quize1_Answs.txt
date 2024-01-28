@@ -194,6 +194,48 @@ for (let p of project) {
 }
 Answer:  Error - project is not iterable
 
+Task 31
+console.log(42.toString());
+Answer: SyntaxError
+/*
+Here, identifier starts immediately after numeric literal
+The dot(.) can be seen as the member operator, or 
+a decimal, depending on its placement. Code works
+when 42..toString(); // "42"; or (42).toString(); // "42";
+*/
 
+Task 32
+const result = [] == ![];
+console.log(result);
+Answer: true
+/*
+Whenever we do a double equality check, JS engine
+ will try to convert both values in Number. So:
+Number([]) == Number(![]);
+0 == Number(false); // ![] will give false
+0 == 0 // true
+*/
 
+Task 33
+let hindiMarks = "45";
+let mathsMarks = "90";
+hindiMarks += hindiMarks + 20;
+mathsMarks++;
+++mathsMarks;
+console.log(hindiMarks, mathsMarks);
+Answer: "4520", 92
 
+Task 34
+const arr = [3, 10, 7, 20];
+console.log(arr.sort());
+Answer: [10, 20, 3, 7]
+
+Task 35
+[1, 2, 3, 4].reduce((x, y) => console.log(x, y));
+
+/* if we don't pass initial value, then by default x will be
+first value of array, and y will be second value of array,
+after acumulator which is not calculated here*/
+Answer: 1,  2, 
+               undefined, 3, 
+               undefined, 4

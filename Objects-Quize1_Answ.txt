@@ -195,10 +195,8 @@ Answer:  Delete… - Low Priority
 Task 20
 let task1 = { action: “Create…” };
 let task2 = { action: “Delete…” };
-
 let project = new WeakMap();
 project.set(task1, “High Priority”);
 console.log(project.has(task2));
+
 Answer: false
-
-

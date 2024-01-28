@@ -1,0 +1,172 @@
+Task 1
+const x = y = {};
+y.name = 'JS';
+
+console.log(x);
+console.log(y)
+
+/* "x" and "y" both are assigned to same object. In fact,
+we copied the reference to the same object. Therefore, 
+changes in one object will lead to changes in another z
+object. If we break down above code, then we get 
+something like this: 
+const y = {};
+const x = y;
+Hence in the console "{name:’JS’}" will be printed twice.
+One time for "x" and one time for "y" */
+Answer: {name:'JS'} {name:'JS'}
+===================================
+
+Task 2
+class Test {
+     constructor(lang) {
+        this.lang = lang
+     }
+     static showName() {
+       console.log(this)
+     }
+};
+Test.showName();
+
+/*the value of this inside a static function is class itself.
+When we log this inside static method whole class will 
+be logged*/
+Answer: class Test { 
+                        constructor(lang) {    
+                              this.lang  = lang; 
+                          }  
+                          static showName() {    
+                               console.log(this, this.lang); 
+                           } 
+                   }
+===================================
+
+Task 3
+const obj = { 1: “random” };
+console.log(obj.hasOwnProperty(1));
+console.log(obj.hasOwnProperty("1"));
+Answer: true
+Answer: true
+===================================
+
+Task 4
+const person = { name: “Lydia” };
+Object.defineProperty(person, “age”, {value: 42});
+console.log(person.age);
+console.log(Object.keys(person));
+
+/*age won’t be included. Because property defined with 
+defineProperty are non enumerable by default*/
+Answer: 42
+Answer: { name: “Lydia” }
+===================================
+
+Task 5
+const name =  “Noren Red”;
+age = 42
+
+console.log(delete name);
+console.log(delete age);
+console.log(typeof age);
+
+/*when we don't use any declaration before any variable,
+it will be treated as a global variable, and will be added
+as deletable entity in window object */
+Answer: false // delete operator only deletes a key in object
+Answer: true
+Answer: undefined
+===================================
+
+Task 6
+const foo = {};
+
+const bar = {key: 'bar'};
+const baz = {key: 'baz'};
+const quux = {key: 'quux'}
+
+foo[bar] = 1; foo = { [object Object]: 1 }
+foo[baz] = 2; foo = { [object Object]: 2 }
+foo[quux] = 3; foo = { [object Object]: 3 }
+
+console.log(foo[baz]); 
+
+/*  in JavaScript, when you use an object as a key in 
+another object, the object is automatically converted to 
+a string. This conversion involves calling the "toString" 
+method on the object. For plain objects like "{key: 'baz'}", 
+the default toString method returns "[object Object]".
+Now, let's look at the sequence of operations:
+foo[bar] = 1; // foo = { '[object Object]': 1 }
+foo[baz] = 2; // foo = { '[object Object]': 2 }
+foo[quux] = 3; // foo = { '[object Object]': 3 }
+so,  the foo object is:
+foo = { '[object Object]': 3 }
+When we attempt to access foo[baz], it is equivalent to 
+accessing "foo['[object Object]']" because "baz" is an 
+object, and it is implicitly converted to the string 
+"[object Object]". Therefore, "console.log(foo[baz])" 
+prints the value associated with the key '[object Object]'
+in the "foo" object, which is "3".
+Despite each object (bar, baz, quux) is being used 
+as a unique key in the "foo" object and each assignment 
+creates a new property in the "foo" object, they are all 
+converted to the same string representation, which is 
+"[object Object]". Therefore, subsequent assignments 
+with different objects as keys overwrite the previous 
+values associated with the key "[object Object]" */
+Answer: 3
+===================================
+
+Task 7
+const obj= { name: "JS" };
+obj.ref = obj;
+
+JSON.stringify(obj);
+
+/* code creates an object "obj" with a property name 
+set to the string "JS". Then, it adds a circular reference 
+by assigning "obj" to its own property "ref". Finally, it 
+attempts to stringify the object using "JSON.stringify(obj)".
+However, when trying to stringify an object with 
+circular references using "JSON.stringify", it results in an
+error. The reason is that "JSON.stringify" cannot handle 
+circular references by default. JSON is a data interchange
+format, and circular references cannot be represented 
+in it.
+If you want to stringify an object with circular references,
+you need to provide a "replacer" function as the second
+argument to "JSON.stringify". For example:
+const jsonString = JSON.stringify(obj, (key, value) => {
+  if (typeof value === 'object' && value !== null) {
+    if (value === obj) {
+      return '[Circular Reference]';
+    }
+  }
+  return value;
+});
+console.log(jsonString);
+This code checks for circular references and replaces 
+them with the string "[Circular Reference]". If you run 
+this modified code, it will stringify the object without 
+throwing an error, and you'll see the circular reference 
+handled appropriately.
+*/
+Answer: TypeError: Converting circular structure to JSON
+===================================
+
+Task 8
+const person = {
+      name: "Modest",
+      age: 42,
+      isAdmin: false,
+      ["loves paintings"]: true
+}
+Object.freeze(person);
+person.age = 43
+console.log(person.age);
+	
+/* The Object.freeze() method freezes an object, making
+it immutable by preventing adding, modifying, or deleting
+properties.*/
+Answer: 42
+===================================
