@@ -170,3 +170,24 @@ it immutable by preventing adding, modifying, or deleting
 properties.*/
 Answer: 42
 ===================================
+
+Task 9
+const letters = new Set(["a","b","c"]);
+
+const iterator = letters.entries();
+let text = "";
+for (const entry of iterator) {
+  text += entry;
+}
+console.log(text);
+
+/*A JavaScript Set is a collection of unique values.
+Each value can only occur once in a Set. A Set can 
+hold any value of any data type. But Set has no keys.
+Method keys() returns an Iterator object containing all 
+the values in a Set, the same like values() method. 
+Method entries() returns [value,value] pairs instead of 
+[key,value] pairs.This makes Sets compatible with Maps.*/
+Answer:  a,a
+Answer:  b,b
+Answer:  c,c

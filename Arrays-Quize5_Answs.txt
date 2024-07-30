@@ -1,0 +1,26 @@
+Task 1
+console.log([...[...'abc']]);
+Answer: ['a', 'b', 'c'];
+
+Task 2
+while(true) {
+   console.log(setTimeout('Test'));
+}
+
+/* stack will be overloaded.*/
+Answer: Uncaught TypeError: Failed to execute 'setTimeout' on 'Window'
+
+Task 3
+const val = [2, 4, 8]
+const valTwo = val.map(function(el) {
+   return el ** 2;
+})
+console.log(valTwo);
+
+/* "**" operator returns the result of raising the first 
+operand to the power of the second operand. It is 
+equivalent to "Math.pow()", except it also accepts
+"BigInts" as operands */
+Answer: [4, 16, 64]
+
+
