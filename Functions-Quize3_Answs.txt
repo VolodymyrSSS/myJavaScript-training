@@ -91,11 +91,11 @@ The "console.log(foo)" line is encountered before the
 execution. At this point, "foo" inside "console.log(foo)" 
 refers to the outer "foo", which has a value of "1". 
 However, since "const foo = 10" redeclares "foo" within 
-the "bar" function, it triggers a ReferenceError because
+the "bar" function, it triggers a Reference Error because
 you cannot redeclare a "const" variable. If you change 
 the "const" declaration inside the "bar" function to "let",
 you would observe the result as "undefined". */
-Answer: ReferenceError
+Answer: Reference Error
 
 Task 5
 function phoo() {
@@ -109,7 +109,7 @@ JavaScript, a new object is created. If there is an explicit
 return statement in the function, the returned value is 
 used as the result of the new operation.
 In this code, the "phoo" function explicitly returns "pfoo",
-but "pfoo" is not defined, resulting in a "ReferenceError".
+but "pfoo" is not defined, resulting in a "Reference Error".
 Due to the error, the "new phoo()" operation may not 
 proceed as expected, and "phoObject" might not be an
 instance of "phoo". 
@@ -189,7 +189,7 @@ foo1();
 /* whatever code we have written after "await" will run 
 on the microtask queue. As soon as "foo3()" is executed,
 next line "console.log("C")" will be pushed to microtask
-queue, and once callstack is empty then it will get 
+queue, and once call stack is empty then it will get 
 executed */
 
 Task 9
@@ -250,7 +250,7 @@ In order to make above code work we have to either
 use parenthesis or an additional dot to make the 
 expression valid, like:
 21..toString(); // "21" or (21).toString(); // "21" */
-Answer: SyntaxError: identifier starts immediately after numeric literal
+Answer: Syntax Error: identifier starts immediately after numeric literal
 
 Task 12
 function toTheMoon() {
@@ -287,7 +287,7 @@ console.log(toTheJupiter(100).length);
 console.log(toTheJupiter(Infinity).length);
 console.log(toTheJupiter(NaN).length);
 
-/* Points to concider:
+/* Points to consider:
 point 1: "pop" array method removes element from last index, and 
 returns the removed element.
 point 2: we can increase the length of an array by 
@@ -377,7 +377,7 @@ global variable. Let's re-factor the code for the function:
       if(!a) {
           a = 10;
        }
-        console.log(a); // 10  precendence will be given to 
+        console.log(a); // 10  precedence will be given to 
 	               local scoped variable.
  } */
 Answer: 10
@@ -430,7 +430,7 @@ admin.attributes.isAdmin = true;
 console.log(admin.attributes.isAdmin);  // true
 console.log(guest.attributes.isAdmin);  // false
 And if we to the prototype way, we have to use 
-"defineProperty" and use "getter" and "setter" to enfore 
+"defineProperty" and use "getter" and "setter" to enforce 
 the restriction, like here"
 function User() {}
 Object.defineProperty(User.prototype, "isAdmin", {
@@ -477,7 +477,24 @@ Task 18
 })();
 console.log('a2 is ', a);
 
-/* in JS, you can create a function using the Function 
+/* 
+An immediately-invoked function expression (IIFE) is
+used to create a new function scope. Inside this IIFE,
+a variable "a" is declared and initialized to 1.
+A new function is then created using the Function 
+constructor (new Function('a = 2')()). Functions created
+using the Function constructor do not inherit the scope 
+from where they are created. Instead, they are always 
+created in the global scope. The line a = 2 attempts to
+assign the value 2 to a variable "a" in the global scope.
+If "a" does not exist globally (which it doesn't here),
+it will be implicitly created in non-strict mode or throw
+a reference error in strict mode. 
+The console.log('a1 is ', a); within the IIFE will print
+the local variable "a" which remains "1" since the previous
+function did not change the local "a" but rather tried to 
+modify or create a global variable "a".
+in JS, you can create a function using the Function 
 constructor. The Function constructor takes a variable 
 number of string arguments, where each string represents
 a parameter name, followed by the function body as the
@@ -487,9 +504,33 @@ Here’s an example of how you can use the Function
 constructor to create a simple function:
 const add = new Function('a', 'b', 'return a + b;');
 console.log(add(2, 3));  // Output: 5
-So, in this line, (new Function('a=2'))();
-in the function body we are doing 'a=2' , this 'a' will be 
-added to the global scope, and hence we get 2 as a 
-result of 'console.log('a2 is ', a)' */
+In a line, (new Function('a=2'))(): since "a" was declared
+inside the IIFE, it is not accessible outside of that 
+function (IIFE creates a local scope for a).
+Because new Function('a = 2')() executes in the global scope
+and in non-strict mode, it attempts to create and set a global
+variable "a". As a result, running this code outside the IIFE
+where we try to log a globally, you would either see a2 is 2 
+if a was successfully created globally, or it could also raise 
+a reference error if the environment is strict about implicit 
+global variable creation. */
 Answer: a1 is 1
 Answer: a2 is 2
+
+Task 19
+function f1(a, b) {
+   console.log(a, b);
+}
+let f2 = f1.bind(null, "boo");
+f2("bar", "bac");
+
+/* The given JavaScript code defines a function f1 that accepts
+two parameters, a and b, and logs them to the console. Then, it
+creates a new function f2 using the bind method on f1, with the
+first argument a pre-set to "boo" and "this" value set to null.
+When f2 is called with the arguments "bar" and "bac", it will call
+the original function f1 with a preset to "boo" and b set to the
+first argument provided to f2, which is "bar". The "bac" argument
+passed to f2 is essentially ignored because f1 only logs the first
+two arguments it receives. */
+Answer: "boo", "bar"
