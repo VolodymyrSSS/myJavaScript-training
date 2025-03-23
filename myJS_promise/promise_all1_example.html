@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Working with Promise: Promise.all() ex1</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">Promise.all()</h2>
+    <h4 class="title">
+      Working with Promise: using method:
+      <span class="emph"> Promise.all()</span>
+    </h4>
+
+    <h4 class="task">
+      В нас є функція delay яка на вхід отримує час затримки та 
+      певне значення і повертає новий проміс із цим значенням через
+      визначену затримку.<br />
+      Можете переписати в методі forEach частину коду, щоб гарантувати
+      вивід в консоль масиву із 1,2,3? <br />
+    </h4>
+
+    <p>
+      <code>
+        <pre>
+            const delay = (ms, returnValue) {
+                return new Promise ((resolve) => {
+                    setTimeout(() => {
+                        return resolve(returnValue)
+                    }, ms)
+                });
+              }
+        
+            const values = [1,2,3];
+            const resultPromises = [];
+
+            values.forEach(async (value) => {
+                const result = await delay(1000, value); // переписати ...
+                console.log(result);
+            });
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p><b>Рішення:</b> використаєм метод Promise.all()</p>
+    <br />
+
+    <p>
+      Спочатку потрібно запушити в масив з промісами результати виконаних
+      усіх промісів. Потім дочикаємось усі проміси - повернуті значення та 
+      через метод <i>then</i> виведемо результат в консоль, ось так:<br />
+    </p>
+    <br />
+
+    <p>
+      <code>
+        <pre>
+            Promise.all(resultPromises).then((result) => {
+                console.log(result);
+            });
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <p>
+       Таким чином, остаточний код буде мати вигляд:<br />
+    </p><br />
+
+    <p>
+    <code>
+        <pre>
+            const delay = (ms, returnValue) {
+                return new Promise ((resolve) => {
+                    setTimeout(() => {
+                        return resolve(returnValue)
+                    }, ms)
+                });
+              }
+        
+              const values = [1,2,3];
+              const resultPromises = [];
+        
+              values.forEach(async (value) => {
+                resultPromises.push(delay(1000, value));
+              });
+        
+              Promise.all(resultPromises).then((result) => {
+                console.log(result) // [1, 2, 3]
+              });
+        </pre>
+    </code>
+    </p><br />
+    <br />
+
+    <script>
+      const delay = (ms, returnValue) => {
+        return new Promise ((resolve) => {
+            setTimeout(() => {
+                resolve(returnValue)
+            }, ms);
+        });
+      }
+
+      const values = [1,2,3];
+      const resultPromises = [];
+
+      values.forEach(async (value) => {
+        resultPromises.push(delay(1000, value));
+      });
+
+      Promise.all(resultPromises).then((result) => {
+        console.log(result) // [1, 2, 3]
+      });
+    </script>
+  </body>
+</html>
