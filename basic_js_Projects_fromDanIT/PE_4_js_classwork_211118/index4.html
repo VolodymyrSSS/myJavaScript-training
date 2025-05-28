@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SetTimeout example</title>
+</head>
+<style>
+    .btn {
+        display: inline-block;
+        padding: 10px 25px;
+        border: 1px solid blue;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+    .btn.active {
+        background-color: red;
+        color: white;
+        border-color: red;
+    }
+    .reklama {
+        width: 300px;
+        height: 300px;
+        border: 1px solid black;
+        border-radius: 10px;
+        position: absolute;
+        z-index: 100;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        /*transition: 2s;*/
+    }
+    .reklama.show {
+        opacity: 1;
+    }
+</style>
+<body>
+
+<!--<a href="#" id="start" class="btn btn-start">-->
+<!--Start</span> now-->
+<!--</a>-->
+
+<a href="#" class="btn" id="modal">Астанавить рекламу!</a>
+
+<div id="modal-reclama" class="reklama">
+    <a href="#" class="btn">Покупайте наши холодильники!</a>
+</div>
+
+<script>
+    let modalName = "modal-reclama";
+    let modalReklama = document.getElementById(modalName);
+
+    function showModal(modalWindow) {
+        modalWindow.classList.toggle("show");
+    }
+
+    let timerID = setInterval(showModal, 200, modalReklama);
+
+    let btnName = document.getElementById("modal");
+    btnName.addEventListener("click", function () {
+        clearInterval(timerID);
+    });
+
+</script>
+
+
+</body>
+</html>

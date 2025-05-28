@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Object cloning</title>
+    <style>
+        body {
+            background-color: tan;
+        }
+        h1, h3 {
+            text-align: center;
+        }
+        p {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 16px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h1>Реалізувати функцію повного клонування об'єкту.</h1>
+
+    <p>Даний об’єкт worker, який має багаторівневу структуру вкладеності даних.<br>
+      Керівництво компанії хоче по типу цього об’єкту створити незалежну копію (клон)<br>
+      щоб у подальшому, можна було створювати по його типу інших працівників.
+    </p>
+
+    <code>
+      <pre style="width: 70%">
+        let worker = {
+          name: 'Modest',
+          surname: 'Opakhan',
+          age: 42,
+          job: {
+            speciality: 'frontend',
+            skils: ['HTML5', 'CSS3', 'JavaScript', 'React', 'PostreSQL', 'NodeJS'],
+            'in Orange team': true,
+          },
+          'company friends': null,
+          statuses: {
+            inWork: {
+              isAdmin: false,
+              isBuisinessAnalitic: false,
+              isDeveloper: true,
+              isDesigner: false,
+              isQA: false,
+              passID: 452744879924484,
+              annualWage: 120_000,
+            },
+            inLife: {
+              isMaried: false,
+              isSingle: false,
+              isDivorse: true,
+              children: {
+                sons: [
+                  {name: 'Tarry', birthday: '01/09/2000'},
+                ],
+                daughters: [
+                  {name: 'Ellis', birthday: '14/07/2017'},
+                  {name: 'Caroll', birthday: '04/06/2023'}
+                ],
+              },
+              hobbies: ['oil painting', 'arrow hunting'],
+            }
+          }
+        };
+      </pre>
+    </code>
+
+    <p>
+      Написати функцію для рекурсивного повного клонування об’єкту (без жодної<br> 
+      передачі за посиланням) при цьому внутрішня вкладеність властивостей об’єкту<br>
+      може бути досить великою (як от у об’єкта worker);<br>
+      Функція має успішно клонувати властивості у вигляді об’єктів та масивів на<br>
+      будь-якому рівні вкладеності;<br>
+      Використовуйте синтаксис ES6 для роботи зі змінними, функціями та об’єктами.<br>
+      Напишіть декілька варіантів можливого глибокого клонування об’єктів.<br>
+      Виведіть склонований об’єкт на екран та у консоль.<br>
+    </p>
+
+    <h3>Результат роботи функції - копія об’єкту worker</h3>
+    <p> Необхідно зауважити, що відображення рекурсивно склонованого об’єкту на сторінці виконано через<br>
+      серіалізацію в JSON - за допомогою <b>JSON.stringify</b> ось таким чином:<br>
+      <br>
+      document.getElementById("obj-copied").innerText = <b>JSON.stringify(clonedWorker, null, 4)</b>;<br>
+      <br>
+      Також, відображення склонованого об’єкту на сторінці здійснюється з відповідним форматуванням<br> 
+      JSON та відступами з використаєм <b>innerText</b>, що гарантує що рядок JSON відтворюється<br>
+      правильно, не впливаючи на нього спеціальними символами HTML і не викликаючи випадкових зсувів<br>
+      у макеті, ось так:
+    </p>
+
+    <pre id="obj-copied" style="width: 70%"></pre>
+
+    <script src="./js/script_W24_hw5_v1.js"></script>
+</body>
+</html>

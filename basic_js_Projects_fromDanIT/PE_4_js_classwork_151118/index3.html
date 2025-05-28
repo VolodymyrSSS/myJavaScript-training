@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="./CSS/style.css">
+</head>
+<body>
+    <img id="dogs" src="img/dog.jpg" alt="img_of_dog" class="dogs">
+    <img id="no-dogs" src="img/no-dog.jpg" alt="img_of_hotdog" class="no-dog">
+<script>
+        let res = prompt('dogs or no-dogs?');
+    
+        let dogs = document.getElementById(res.toLowerCase());// dogs либо no-dogs
+        dogs.style.opacity = 1;
+</script>
+</body>
+</html>

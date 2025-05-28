@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    function unicArray(inArray) {
+        let resultArray = [];
+        inArray.forEach(function (value) {
+            if (resultArray.indexOf(value) == -1) {resultArray.push(value)};
+        })
+
+        return resultArray;
+    }
+
+    let names = ["John", "Harry", "Mary", "Harry", "Beth", "Harry", "Mary", "John"];
+    console.log(unicArray(names));
+    
+    </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jquery</title>
+
+</head>
+<body>
+
+<a href="#" class="btn">Item 1</a>
+<a href="#" class="btn">Item 2</a>
+<a href="#" class="btn">Item 3</a>
+<a href="#" class="btn">Item 4</a>
+
+<!--<script>-->
+
+    <!--function hideBtn() {-->
+        <!--this.style.display = "none";-->
+    <!--}-->
+
+    <!--let buttons = document.getElementsByClassName("btn");-->
+    <!--for(let i = 0; i < buttons.length; i++) {-->
+        <!--buttons[i].addEventListener("click", hideBtn);-->
+    <!--}-->
+<!--</script>-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+    $(".btn").click(function () {
+        $(this).hide(400);
+    });
+</script>
+
+</body>
+</html>

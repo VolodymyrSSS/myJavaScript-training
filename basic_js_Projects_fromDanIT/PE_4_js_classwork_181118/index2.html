@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ShowHide</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a href="#" class="show-text">Open hint</a>
+<p id="hint" class="hint">Подсказок нет и не будет!</p>
+
+    <!--<a href="#" id="friend-button" onclick="showMessage()" class="btn">Click me!</a>-->
+    <!--<a href="#" id="my-button" class="btn">Click me!</a>-->
+    <!--<a href="#" id="sleep-btn" class="btn">Click me!</a>-->
+
+    <script>
+
+    let hints = document.getElementsByClassName("show-text");
+    for(let i = 0; i < hints.length; i++) {
+        hints[i].addEventListener("click", ShowText);
+    }
+
+    function ShowText () {
+        hint.style.visibility = "visible";
+    }
+
+        //
+        // function showMessage() {
+        //     alert("Ну и зачем ты меня нажал? Нормально же общались!");
+        // }
+        //
+        // function showMessage2() {
+        //     alert("Я буду жаловаться управдому!");
+        // }
+        //
+        // let button = document.getElementById("my-button");
+        // button.onclick = function () {
+        //     alert("Я вообще только проснулся!");
+        // }
+        //
+        // let button2 = document.getElementById("sleep-btn");
+        // button2.addEventListener("click", showMessage);
+        // button2.addEventListener("click", showMessage2);
+
+    </script>

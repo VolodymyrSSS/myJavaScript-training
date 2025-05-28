@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>Title</title>
+</head>
+<body>
+<ul class="menu">
+    <li class="menu-item"><a href="#" class="menu-item-link">Главная</a></li>
+    <li class="menu-item"><a href="#" class="menu-item-link">Проекты</a></li>
+    <li class="menu-item"><a href="#" class="menu-item-link">Вакансии</a></li>
+    <li class="menu-item"><a href="#" class="menu-item-link">Контакты</a></li>
+</ul>
+
+<script>
+  function menuClick() {
+      let menuItems = document.getElementsByClassName(this.classList[0]);
+      for(let i = 0; i < menuItems.length; i++) {
+          menuItems[i].classList.remove("selected");
+      }
+
+      this.classList.add('selected');
+
+
+  }
+
+  let menuItems = document.getElementsByClassName("menu-item-link");
+  for(let i = 0; i < menuItems.length; i++) {
+      menuItems[i].addEventListener("click", menuClick);
+  }
+
+</script>
+
+</body>
+</html>

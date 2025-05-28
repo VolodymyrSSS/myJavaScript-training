@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Зміна розміру тексту по кліку на кнопку</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+</head>
+
+<style>
+    .btn {
+        color: black;
+        font-size: 20px;
+        background-color: aqua;
+        padding: 15px;
+        text-decoration: none;
+    }
+    .text {
+        font-size: 18px;
+    }
+
+</style>
+
+<body>
+<p class="text">Lorem ipsum dolor sit amet </br>
+    consectetur adipis veritatis voluptas! Deleniti, perferendis?
+</p>
+<a href="#" id='zoom' class="btn">Изменить размер текста</a>
+<!--<a href="#" id='zoom-out' data-info="0.9" class="btn">Уменьшить текст</a>-->
+<input id="fontSize" type="text">
+
+
+<script>
+    $('.btn').click(function () {
+        let fontSize = $('.text').css('font-size');
+        fontSize = parseInt(fontSize);
+        fontSize = $('#fontSize').val();
+        // if ($(this).attr('id') == 'zoom-in') {
+        //     fontSize *= 1.1;
+        // }
+        // else {fontSize *= 0.9;}
+        fontSize = fontSize + 'px';
+        $('.text').css('font-size', fontSize);
+    });
+
+
+
+    //console.log(fontSize);
+
+</script>
+</body>
+</html>

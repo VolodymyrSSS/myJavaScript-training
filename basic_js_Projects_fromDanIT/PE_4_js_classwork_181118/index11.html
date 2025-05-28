@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Append and Delete element</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a href="#" id="btn-add" class="btn">Add p</a>
+<div id="paragraph-list">
+    <p>1. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad dolorem doloribus ea eaque ex explicabo incidunt inventore libero, magni pariatur possimus rem similique veniam voluptas voluptatibus? At illum quae reprehenderit!</p>
+    <p>2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet architecto dolor enim, ipsa itaque labore molestiae molestias nisi nobis pariatur porro quaerat quidem sapiente similique suscipit tempore voluptatem. Aliquid, dolores.</p>
+    <p>3. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus atque consequuntur cum debitis eaque eius explicabo ipsa laudantium molestiae nam nihil odio odit omnis, pariatur porro, praesentium quia soluta vitae?</p>
+</div>
+
+<script>
+
+    let addButton = document.getElementById("btn-add");
+    addButton.addEventListener("click", AddParagraph);
+    function AddParagraph() {
+        let paragraph = document.createElement("p");
+        paragraph.textContent = "Some text";
+        paragraph.style.color = "green";
+        let paragraphList = document.getElementById("paragraph-list");
+        // paragraphList.insertBefore(paragraph, paragraphList.children[1]);
+        paragraphList.children[0].remove();
+        paragraphList.appendChild(paragraph);
+        // paragraph = document.createElement("p");
+        // paragraph.textContent = "Some text 2";
+        // paragraph.style.color = "red";
+        // paragraphList.appendChild(paragraph);
+    }
+
+</script>
+</body>
+</html>

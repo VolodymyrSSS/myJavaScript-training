@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+     let date = new Date(); // создаете объект, в свойствах которого храняться КОНКРЕТНЫЕ СОСТАВНЫЕ ЧАСТИ ДАТЫ
+    console.log(date.getFullYear());
+    console.log(date);
+    let date2 = new Date(2011, 1);
+    console.log(date2);
+
+    let date3 = new Date(2014); // нельзя указывать только год
+    console.log(date3);
+
+    let date4 = new Date(2018, 8, 5);
+    console.log(date4);
+
+    let date5 = new Date("2015-03-25") // YYYY-MM-DD
+    console.log(date5);
+    let date6 = new Date("2015.03.25") // YYYY.MM.DD
+    console.log(date6);
+    let date7 = new Date("2015/03/25") // YYY/MM/DD
+    console.log(date7);
+
+    let dateBirthday = prompt("Введите дату в формате YYYY-MM-DD");
+    dateBirthday = new Date(dateBirthday);
+    console.log(dateBirthday);
+    let date9 = new Date(2018, 11, 2);
+    console.log(date9);
+    </script>
+</body>
+</html>

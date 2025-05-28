@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    function unique(inArray) {
+        let result = new Set();
+        inArray.forEach(function (value) {
+            result.add(value); // если хранящееся в value значение еще нет внутри result, он будет в него добавлен
+        });
+
+        return result;
+    }
+
+    let names = ["John", "Harry", "Mary", "Harry", "Beth", "Harry", "Mary", "John"];
+    /* let uniqueNames = unique(names);*/
+    let uniqueNames = new Set(names);
+    console.log(uniqueNames);
+    
+    </script>
+</body>
+</html>

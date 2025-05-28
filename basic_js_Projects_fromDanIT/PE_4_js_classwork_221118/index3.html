@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        body{
+
+        }
+        
+        .btn{
+            position:absolute;
+            top:50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: inline-block;
+            padding: 10px 20px 10px 20px;
+            border: 1px solid green;
+            text-decoration: none;
+            border-radius: 3px;
+            background-color: yellow;
+        }
+
+        .btn-click{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+<a href="#" class="btn">Button</a>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+    let btnFirstText = $(".btn").text();
+    $(".btn").click(function(){
+        // $(this).text("New text").css("background-color", "red");
+        // $(this).text("New text").addClass("btn-click");
+        $(this).text("New text");
+        if($(this).hasClass("btn-click")){
+            $(this).removeClass("btn-click");
+            $(this).text(btnFirstText);
+        }
+        else{
+            $(this).addClass("btn-click");
+            $(this).text("New tex");
+        }
+    })
+
+</script>
+</body>
+</html>

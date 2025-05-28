@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Case</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a href="#" id="case" class="btn">Add case</a>
+<ul id="case-list"></ul>
+<script>
+    let button = document.getElementById('case');
+    button.addEventListener('click', addCase);
+
+    function addCase() {
+        let text = prompt('Что вы желаете записать?');
+        let caseItem = document.createElement('li');
+        let caseList = document.getElementById('case-list');
+        let liList = caseList.getElementsByTagName('li');
+
+        caseItem.textContent = `${liList.length + 1}. ${text}`;
+        caseList.appendChild(caseItem);
+    }
+</script>
+</body>
+</html>

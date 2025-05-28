@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Вивести абзац тексту - при наведенні мишки стає плавно більшим, а при забиранні курсора - повертався до попер розміру</title>
+
+    <style>
+        .txt {
+            transition: 0.4s;
+            font-size: 16px;
+        }
+        .txt-big{
+            transition: 0.4s;
+            font-size: 24px;
+        }
+
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+<p class="txt">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis consequatur culpa cum delectus deleniti dicta dolorem, doloremque ducimus eum explicabo illum impedit iure iusto molestias praesentium quibusdam sequi unde voluptates?</span><span>Aliquam animi consequatur consequuntur delectus ea est excepturi expedita facere inventore ipsa ipsam labore laborum maiores molestiae necessitatibus nemo officiis possimus ratione recusandae rem, reprehenderit rerum sint sit tenetur vero.</span><span>Adipisci aliquid aut beatae blanditiis doloribus eaque est, incidunt laborum minus quidem quo, tempora? Asperiores blanditiis consectetur consequuntur dolor et eveniet magnam magni obcaecati omnis, praesentium sunt totam ut, vitae?</span><span>Consectetur dicta ea eaque molestias nesciunt quam veritatis? Aliquam assumenda ducimus facere quae sapiente temporibus ut. Accusamus alias aliquam ea ex libero nulla perspiciatis quod, recusandae, reprehenderit sed temporibus vitae?</span><span>Accusantium architecto asperiores, blanditiis consectetur corporis dignissimos dolor, dolore doloribus enim impedit ipsum iusto laboriosam neque officia, quos reprehenderit sunt veritatis. Ex quam ratione totam vel vero vitae! Iure, reiciendis.</p>
+
+<script>
+    $(".txt").mouseover(function () {
+        $(this).removeClass("txt").addClass('txt-big');
+
+    });
+    $(".txt").mouseout(function () {
+        $(this).removeClass("txt-big").addClass('txt');
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+		
+    <a href="#" id="friend-button" onclick="showMessage()" class="btn">Click me!</a>
+    <a href="#" id="my-button" class="btn">Click me!</a>
+    <a href="#" id="sleep-btn" class="btn">Click me!</a>
+
+    <script>
+
+        function showMessage() {
+            alert("Ну и зачем ты меня нажал? Нормально же общались!");
+        }
+
+        function showMessage2() {
+            alert("Я буду жаловаться управдому!");
+        }
+
+        let button = document.getElementById("my-button");
+        button.onclick = function () {
+            alert("Я вообще только проснулся!");
+        }
+
+        let button2 = document.getElementById("sleep-btn");
+        button2.addEventListener("click", showMessage);
+        button2.addEventListener("click", showMessage2);
+
+    </script>
+</body>
+</html>

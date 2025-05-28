@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>The essence of context - this and methods call/apply</title>
+    <style>
+      body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+      }
+
+      .emph {
+        color: red;
+      }
+
+      .title {
+        color: navy;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .task {
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+      }
+
+      p {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      pre {
+        width: 50%;
+        background-color: #bebebe;
+        padding-top: 20px;
+        margin: 0 auto;
+      }
+
+      code {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+      }
+
+      .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        font-style: italic;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 class="title">
+      Working with context - keyword <span class="emph">this</span>, the methods
+      <span class="emph">call/apply</span> and <span class="emph">bind</span>
+    </h2>
+
+    <h4 class="task">
+      Поясніть сутність роботи функцій call/apply та bind на простих прикладах?
+      <br />
+    </h4>
+
+    <p><b>Відповідь</b>:</p>
+    <br />
+
+    <p>
+      <b><i>call</i></b> - це функція за допомогою якої можемо змінити контекст
+      функції, що викликається.<br>
+      Більш простою мовою, це функція, яка замінює значення ключовового
+      слова <b><i>this</i></b> всередені функції на будь-яке потрібне значення.<br>
+      Тобто, аргументом ми передаємо потрібне окреме значення, яке хочимо отримати 
+      як контекст.
+    </p><br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function fullName(greet) {
+            console.log(greet + " " + this.firstName + " " + this.lastName);
+          }
+
+          const person1 = {
+            firstName: "Marko",
+            lastName: "Polo"
+          };
+
+          const person2 = {
+            firstName: "Robinson",
+            lastName: "Cruzo"
+          }
+
+          fullName.call(person1, "Hello"); // Hello Marko Polo
+          fullName.call(person2, "Hi"); // Hi Robinson Cruzo
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      function fullName(greet) {
+        console.log(greet + " " + this.firstName + " " + this.lastName);
+      }
+
+      const person1 = {
+        firstName: "Marko",
+        lastName: "Polo"
+      };
+
+      const person2 = {
+        firstName: "Robinson",
+        lastName: "Cruzo"
+      }
+
+      console.log(fullName.call(person1, "Hello")); // Hello Marko Polo
+      console.log(fullName.call(person2, "Hi")); // Hi Robinson Cruzo
+    </script>
+
+    <p>
+      <b><i>apply</i></b> - це функція подібна до <i>call</i> лише в <i>apply</i> ми
+      передаємо масив замість окремого значення.<br>
+      Ось приклад:
+    </p><br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function fullName(greet) {
+            console.log(greet + " " + this.firstName + " " + this.lastName);
+          }
+
+          const person1 = {
+            firstName: "Marko",
+            lastName: "Polo"
+          };
+
+          const person2 = {
+            firstName: "Robinson",
+            lastName: "Cruzo"
+          }
+
+          fullName.apply(person1, ["Hello"]); // Hello Marko Polo
+          fullName.call(person2, ["Hi"]); // Hi Robinson Cruzo
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      console.log(fullName.apply(person1, ["Hello"])); // Hello Marko Polo
+      console.log(fullName.apply(person2, ["Hi"])); // Hi Robinson Cruzo
+    </script>
+
+    <p>
+      <b><i>bind</i></b> - це функція, яка допоможе створити іншу функцію,
+      яку можна викликати пізніше із потрібним заданим <b><i>this</i></b>.<br>
+    </p><br />
+
+    <p class="code-ex">
+      <code>
+        <pre>
+          function fullName(greet) {
+            console.log(greet + " " + this.firstName + " " + this.lastName);
+          }
+
+          const person1 = {
+            firstName: "Marko",
+            lastName: "Polo"
+          };
+
+          const person2 = {
+            firstName: "Robinson",
+            lastName: "Cruzo"
+          }
+
+          // створимо інші функції
+          const person1FullName = fullName.bind(person1);
+          const person2FullName = fullName.bind(person2);
+
+          person1FullName("Hello"); // Hello Marko Polo
+          person2FullName("Hi"); // Hi Robinson Cruzo
+        </pre>
+      </code>
+    </p>
+    <br />
+
+    <script>
+      const person1FullName = fullName.bind(person1);
+      const person2FullName = fullName.bind(person2);
+
+      console.log(person1FullName("Hello")); // Hello Marko Polo
+      console.log(person2FullName("Hi")); // Hi Robinson Cruzo
+    </script>
+
+  </body>
+</html>

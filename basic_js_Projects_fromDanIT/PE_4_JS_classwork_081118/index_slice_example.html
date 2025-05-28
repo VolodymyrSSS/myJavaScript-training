@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Slice_exsample</title>
+</head>
+<body>
+    <script>
+        let deputats = ["Иван Плющ", "Парубий", "Саакашвили пролез", "Порошенко-младщий"];
+    let excluded = deputats.splice(2, 2);
+    console.log(deputats);
+    console.log(excluded);
+    let newDeputats = deputats.splice(0, 1, "БЮТ - байкеры Юлии Тимошнеко");
+    console.log(newDeputats);
+    </script>
+</body>
+</html>

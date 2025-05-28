@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SetTimeout example</title>
+</head>
+<style>
+    .btn {
+        display: inline-block;
+        padding: 10px 25px;
+        border: 1px solid blue;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+    .btn.active {
+        background-color: red;
+        color: white;
+        border-color: red;
+    }
+    .top-menu {
+        background-color: black;
+        list-style: none;
+        width: 500px;
+        text-align: center;
+        margin: 0 auto;
+    }
+    .top-menu-item {
+        display: inline-block;
+    }
+    .top-menu-link {
+        display: inline-block;
+        padding: 10px 25px;
+        text-decoration: none;
+        color: white;
+    }
+    .top-menu-link.active { /*если у тега есть два класса*/
+        background-color: blue;
+        font-family: Arial;
+    }
+</style>
+<body>
+<ul class="top-menu">
+    <li class="top-menu-item">
+        <a href="#" class="top-menu-link">Item 1</a>
+    </li>
+    <li class="top-menu-item">
+        <a href="#" class="top-menu-link">Item 2</a>
+    </li>
+    <li class="top-menu-item">
+        <a href="#" class="top-menu-link">Item 3</a>
+    </li>
+    <li class="top-menu-item">
+        <a href="#" class="top-menu-link">Item 4</a>
+    </li>
+</ul>
+<script>
+    let menuLinks = document.getElementsByClassName("top-menu-link");
+    for(let i = 0; i < menuLinks.length; i++) {
+        menuLinks[i].addEventListener("click", changeBg);
+    }
+    function changeBg() {
+        this.classList.toggle("active");
+    }
+</script>
+<!--<a href="#" id="start" class="btn btn-start">-->
+      <!--Start</span> now-->
+<!--</a>-->
+
+<!--<a href="#" id="start" class="btn">-->
+    <!--<span class="btn-start">Start</span>-->
+    <!--<p class="new">-->
+        <!--<span class="btn-start">Start</span> now-->
+    <!--</p>-->
+<!--</a>-->
+<!--<span class="btn-start">Start</span>-->
+<!--<script>-->
+
+    <!--// setTimeout(changeBtn, 2000);-->
+
+    <!--btn = document.getElementById("btn-start");-->
+    <!--btn.addEventListener("click", changeBtn);-->
+    <!--function changeBtn() {-->
+        <!--btn.classList.add("btn-start");-->
+    <!--}-->
+
+<!--</script>-->
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mouse over exampple</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a href="#" id="btn" class="btn">New element</a>
+<script>
+
+    let button = document.getElementById("btn");
+    button.addEventListener("mouseover", ReverseButton);
+    button.addEventListener("mouseleave", ReverseButton);
+
+    function ReverseButton() {
+        this.classList.toggle("over");
+        if (this.textContent == 'Добро пожаловать'){
+            this.textContent = "Уже уходите";
+        }
+        else {
+            this.textContent = 'Добро пожаловать';
+        }
+    }
+
+</script>
+</body>
+</html>

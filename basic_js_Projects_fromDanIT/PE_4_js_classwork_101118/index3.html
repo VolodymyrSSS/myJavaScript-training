@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    let jehovahWitnesses = ["Мария Ивановна", "Святослав Федорович", "Алексей Андреевич", "Прокоп Игнатьевич", "Гена", "Петр Алексеевич", "Анастасия Антоновна", "Любовь Кириловна"];
+    let seventhDayAdventists = ["Михаил Карлович", "Святослав Федорович", "Сергей Потапыч", "Прокоп Игнатьевич", "Гена", "Петр Алексеевич", "Анастасия Антоновна", "Алена Солнышко"];
+    function ThatWhoHaveHell(firstSect, secondSect) {
+       /* let resultList = [];
+        firstSect.forEach(function (value) {
+            if (!secondSect.includes(value)) {resultList.push(value)};
+//            if (secondSect.indexOf(value)==-1) {resultList.push(value)};
+        });*/
+       let resultList = firstSect.filter(function (value) {
+          return !secondSect.includes(value);
+       });
+        return resultList;
+    }
+
+
+    console.log(ThatWhoHaveHell(jehovahWitnesses,seventhDayAdventists));
+    </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        
+let LadyBag = ["Телефон","Помада","Косметичка","Салфетки","Ключи","Второй Телефон(любовник)","Планшет","Журнал","Деньги","Кредитка"]; // создаешь сумку
+
+function BagSearch(bagname,searchItem) {
+    searchItem = searchItem.toLowerCase();
+    let searchResult = false;
+    let searchIndex = null;
+        bagname.forEach(function (value, number) {
+        if(value.toLowerCase() == searchItem){
+            searchResult = true;
+            searchIndex = number + 1;
+        }
+    })
+
+    return [searchResult, searchIndex];
+
+}
+let Urgent = prompt("Что искать?");
+let searchThing = BagSearch(LadyBag,Urgent); // searchThing = [searchResult, searchIndex];
+    /*
+    searchThing = {
+    0: searchResult,
+    1: searchIndex
+    }
+    */
+if (searchThing[0]) {
+    console.log(`Нашел ${searchThing[1]}-м`);
+    if (searchThing[1] > 5){
+        console.log("В сумке много вещей!");
+    }
+}
+
+
+/*
+let bagname =  LadyBag;
+let searchItem = Urgent;
+тело функции
+searchThing = searchResult;
+delete bagname;
+delete searchThing;
+
+* */
+    </script>
+</body>
+</html>

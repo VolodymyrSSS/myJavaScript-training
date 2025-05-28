@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>У 1у парагр - по навед мишки буде плавно збільш тільки ссилка тексту і забрати - зменшув, у 2у парагр - по кліку те саме</title>
+
+    <style>
+        .txt, .txt-2 {
+            transition: 1s;
+            font-size: 16px;
+        }
+        .txt-big{
+            transition: 1s;
+            font-size: 24px;
+        }
+
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+<p class="txt">Lorem <a href="#">the first link</a> ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis consequatur culpa cum delectus deleniti dicta dolorem, doloremque ducimus eum explicabo illum impedit iure iusto molestias praesentium quibusdam sequi unde voluptates?</span><span>Aliquam animi consequatur consequuntur delectus ea est excepturi expedita facere inventore ipsa ipsam labore laborum maiores molestiae necessitatibus nemo officiis possimus ratione recusandae rem, reprehenderit rerum sint sit tenetur vero.</span><span>Adipisci aliquid aut beatae blanditiis doloribus eaque est, incidunt laborum minus quidem quo, tempora? Asperiores blanditiis consectetur consequuntur dolor et eveniet magnam magni obcaecati omnis, praesentium sunt totam ut, vitae?</span><span>Consectetur dicta ea eaque molestias nesciunt quam veritatis? Aliquam assumenda ducimus facere quae sapiente temporibus ut. Accusamus alias aliquam ea ex libero nulla perspiciatis quod, recusandae, reprehenderit sed temporibus vitae?</span><span>Accusantium architecto asperiores, blanditiis consectetur corporis dignissimos dolor, dolore doloribus enim impedit ipsum iusto laboriosam neque officia, quos reprehenderit sunt veritatis. Ex quam ratione totam vel vero vitae! Iure, reiciendis.</p>
+<p class="txt-2">Lorem ipsum dolor <a href="#">the second link</a>  sit amet, consectetur adipisicing elit. Blanditiis consequatur culpa cum delectus deleniti dicta dolorem, doloremque ducimus eum explicabo illum impedit iure iusto molestias praesentium quibusdam sequi unde voluptates?</span><span>Aliquam animi consequatur consequuntur delectus ea est excepturi expedita facere inventore ipsa ipsam labore laborum maiores molestiae necessitatibus nemo officiis possimus ratione recusandae rem, reprehenderit rerum sint sit tenetur vero.</span><span>Adipisci aliquid aut beatae blanditiis doloribus eaque est, incidunt laborum minus quidem quo, tempora? Asperiores blanditiis consectetur consequuntur dolor et eveniet magnam magni obcaecati omnis, praesentium sunt totam ut, vitae?</span><span>Consectetur dicta ea eaque molestias nesciunt quam veritatis? Aliquam assumenda ducimus facere quae sapiente temporibus ut. Accusamus alias aliquam ea ex libero nulla perspiciatis quod, recusandae, reprehenderit sed temporibus vitae?</span><span>Accusantium architecto asperiores, blanditiis consectetur corporis dignissimos dolor, dolore doloribus enim impedit ipsum iusto laboriosam neque officia, quos reprehenderit sunt veritatis. Ex quam ratione totam vel vero vitae! Iure, reiciendis.</p>
+
+<script>
+    $(".txt").mouseover(function () {
+        $(this).find("a").toggleClass('txt-big');
+        });
+    $(".txt").mouseout(function () {
+        $(this).find("a").toggleClass('txt-big');
+    });
+
+    $(".txt-2").click(function () {
+        $(this).find("a").toggleClass("txt-big");
+    });
+</script>
+
+</body>
+</html>

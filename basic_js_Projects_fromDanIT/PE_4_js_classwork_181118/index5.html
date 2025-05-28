@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>button-click</title>
+    <link rel="stylesheet" href="./css/style.css">
+
+</head>
+<body>
+
+    <a href="#" class="btn">Click me,please</a>
+
+
+    <script>
+        let btns = document.getElementsByClassName('btn');
+        for(let i = 0; i < btns.length; i++){
+            btns[i].addEventListener("click", changeText);
+        }
+
+        function changeText() {
+            this.classList.toggle('change-bg'); // добавляет класс если его нет. Удаляет если он есть
+
+           if(this.textContent == 'Click me,please'){
+               this.textContent = 'done!';
+           }
+           else{
+               this.textContent = 'Click me,please';
+           }
+        }
+
+    </script>
+
+</body>
+</html>

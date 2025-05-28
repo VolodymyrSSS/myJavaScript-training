@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>To-Do List</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+</head>
+<body>
+<h2>Список дел</h2>
+<ul id="to-do-list">
+
+</ul>
+<input type="text" placeholder="Описание дела" id="case-description">
+<p class="alert">Введите описание дела</p>
+<button id="add-case">Добавить дело в список</button>
+<script>
+
+    $(".alert").hide();
+    $("#add-case").click(function(){
+        let text=$("#case-description").val();
+        if (text != ''){
+            $("#to-do-list").append(`<li>${text}</li>`);
+            $(".alert").hide(400);
+            $('#case-description').val("");
+        }
+        else{
+            $(".alert").show(2000);
+        }
+
+    });
+</script>
+</body>
+</html>
+
+</body>
+</html>

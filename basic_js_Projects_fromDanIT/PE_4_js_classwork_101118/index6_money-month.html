@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    let dayPay = prompt("Оплата за день");
+    let month = prompt("Оплата за месяц");
+    
+    console.log(monthPay(dayPay,month));
+    
+    function monthPay(price, month){
+
+        // let date = new Date(2018,2,0) - з точки зору JS 2 місяць є березень, але 0-день 2 місяця є 28 лютого 2018 року
+        let date = new Date(2018,month,0);
+        console.log(date.getDate());
+        let money = price * date.getDate;
+        return money
+    }
+    </script>
+</body>
+</html>

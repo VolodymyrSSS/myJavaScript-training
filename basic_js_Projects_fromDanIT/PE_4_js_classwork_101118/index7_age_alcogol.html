@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    let dateOfBirthday = prompt("Введите дату своего рождения");
+    function checkAge(age){
+        age = new Date(age);
+        let date = new Date();
+        age = Math.round(date-age) / (365*24*60*60*1000);
+        console.log(age);
+        return age;
+    }
+    
+
+    let age = checkAge(dateOfBirthday);
+    if (age>=18) {
+        alert("Добро пожаловать!");
+        if (age>=21) {
+            alert("Пей");
+        }
+        else {
+            alert("Сделай паспорт в фотошопе");
+        }
+    }
+    
+    
+    </script>
+</body>
+</html>

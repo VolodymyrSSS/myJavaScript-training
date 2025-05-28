@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Table</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+</head>
+<body>
+<table class="table-price">
+    <thead>
+    <tr>
+        <th>Товар</th>
+        <th>Количество</th>
+        <th>Цена</th>
+        <th>Сумма</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Смартфон</td>
+        <td>100</td>
+        <td>499</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Холодильник</td>
+        <td>10</td>
+        <td>800</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Фен</td>
+        <td>200</td>
+        <td>50</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Клей</td>
+        <td>300</td>
+        <td>70</td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>
+<script>
+    $('td').click(function () {
+       //$(this).css('background-color','blue').css('color','white');
+       //$(this).siblings().css('background-color','blue').css('color','white');
+       // $(this).css('background-color','blue').css('color','white').siblings().css('background-color','blue').css('color','white');
+       //  $(this).parent().css('background-color','blue').css('color','white');
+        $(this).closest("tr").css('background-color','blue').css('color','white');
+        
+    });
+</script>
+
+
+</body>
+</html>

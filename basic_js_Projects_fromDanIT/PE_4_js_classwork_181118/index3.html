@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ShowHide</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+        <button class="show-text">Open hint</button>
+        <p id="hint" class="hint">Подсказок нет и не будет!</p>
+        
+        
+        <script>
+            let hints = document.getElementsByClassName("show-text");
+            for(let i = 0; i < hints.length; i++) {
+                hints[i].addEventListener("click", ShowText);
+                // hints[i].addEventListener("click", hideText);
+            }
+        
+            function ShowText () {
+                hint.classList.add("visible");
+            }
+            // function hideText () {
+            //     hint.style.visibility = "hidden";
+            // }
+        </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>To-Do List з кнопкою забрати виведену справу але вона активна</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <style>
+        .delete-case{
+            color:red;
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+<h2>Список дел</h2>
+<ul id="to-do-list">
+
+</ul>
+<input type="text" placeholder="Описание дела" id="case-description">
+<p class="alert">Введите описание дела</p>
+<button id="add-case" disabled>Добавить дело в список</button>
+<script>
+
+    $(".alert").hide();
+    $("#add-case").click(function(){
+        let text=$("#case-description").val();
+        if (text != ''){
+            $("#to-do-list").append(`<li>${text} <span class="delete-case">X</span></li>`);
+            $(".alert").hide(400);
+            $('#case-description').val("");
+        }
+        else{
+            $(".alert").show(2000);
+        }
+
+    });
+    $('#case-description').on('keyup', function() {
+        let text=$(this).val();
+        if (text != ""){
+            $("#add-case").removeAttr("disabled");
+        }
+        else {
+            $("#add-case").attr("disabled", true);
+
+        }
+
+    });
+
+    $("body").on("click", ".delete-case", function () {
+        $(this).closest("li").remove();
+    });
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+        <h2 class="serseya-lannitser">
+            Серсея <span id="slogan">не королева</span> Ланнистер
+        </h2>
+    
+        <h2>Великие Бастарды Эйгона Недостойного</h2>
+        <ul id="great-bastards">
+            <li>Дэймон Блэкфайер</li>
+            <li>Эйгон Риверс</li>
+            <li>Бринден Риверс</li>
+            <li>Шира Морская Звезда</li>
+        </ul>
+    
+        <ul>
+            <li>The Queen</li>
+            <li>U2</li>
+            <li>Океан Эльзи</li>
+            <li>Винник</li>
+        </ul>
+    
+        <!--<h2 class="serseya-lannitser">-->
+            <!--Дейенерис <span id="slogan">Мать Драконов</span> Таргариен снимет гараж на длительный срок-->
+        <!--</h2>-->
+        <script>
+            // let slog = document.getElementById("slogan");
+            slogan.style.color = "red";
+            slogan.style.fontSize = "42px";
+    
+            let greatBastards = document.getElementById("great-bastards");
+            let bastardsName = greatBastards.getElementsByTagName("li");
+            console.log(bastardsName);
+    
+            bastardsName = Array.prototype.slice.call(bastardsName);
+    
+            bastardsName.forEach(function (value) {
+                // value.style.color = "blue";
+                console.log(value.textContent);
+            })
+    
+            // for(let i = 0; i < bastardsName.length; i++) {
+            //     bastardsName[i].style.color = "red";
+            // }
+        </script>
+</body>
+</html>

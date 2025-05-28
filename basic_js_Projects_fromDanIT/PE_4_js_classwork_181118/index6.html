@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Paragraph</title>
+</head>
+<body>
+<p class="edit">Lorem ipsum dolor sit amet,
+    consectetur adipisicing elit. Architecto
+    distinctio itaque voluptatem.
+</p>
+<p class="edit">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad commodi corporis, delectus error eum fugit illo illum ipsa ipsum iure labore maxime placeat quia quo repudiandae tenetur unde vitae?</p>
+<script>
+
+    function editText(className){
+        function changeText() {
+            let y = prompt("Введите текст");
+            this.textContent = y;
+        }
+        let editText = document.getElementsByClassName(className);
+        for (let i=0; i < editText.length; i++) {
+            editText[i].addEventListener("click", changeText)
+        }
+
+    }
+    editText("edit");
+</script>
+
+</body>
+</html>

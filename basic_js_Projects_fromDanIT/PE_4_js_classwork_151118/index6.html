@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+<body>
+        <table id="Dan-IT-student">
+            <thead>
+                <tr>
+                    <th>Имя</th>
+                    <th>Фамилия</th>
+                    <th>Возраст</th>
+                    <th>Домашнее животное</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Святослав</td>
+                    <td>Вакарчук</td>
+                    <td>43-44</td>
+                    <td>Океан Эльзы</td>
+                </tr>
+                <tr>
+                    <td>Олег</td>
+                    <td>Винник</td>
+                    <td>50</td>
+                    <td>Волчица</td>
+                </tr>
+                <tr>
+                    <td>Богдан</td>
+                    <td>Лямзин</td>
+                    <td>32</td>
+                    <td>pe-4</td>
+                </tr>
+                <tr>
+                    <td>Петр</td>
+                    <td>Порошенко</td>
+                    <td>55</td>
+                    <td>Украина</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </tfoot>
+        </table>
+        <script>
+            let table = document.getElementById("Dan-IT-student");
+            let students = table.getElementsByTagName("tbody");
+            let rows = students[0].getElementsByTagName("tr");
+            for (let i=1; i < rows.length; i+=2) {
+            rows[i].style.backgroundColor = "pink";
+            }
+        </script>
+</body>
+</html>
