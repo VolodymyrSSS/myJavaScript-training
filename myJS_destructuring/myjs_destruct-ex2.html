@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>myjs-destructuring: exercise Максимальная зарплата</title>
+    <title>Destructuring: Найвища заробітна плата</title>
     <style>
     body {
         background-color: tan;
@@ -52,79 +52,125 @@
 </head>
 <body>
 
-    <h2 class="title">myjs-destructuring: exercise Максимальная зарплата</h2>
+    <h2 class="title">Destructuring: Максимальная зарплата</h2>
 
-    <h4 class="task">У нас есть объект salaries с зарплатами программистов за 2 недели.<br>
-        Создайте функцию topSalary(salaries), которая возвращает имя самого высокооплачиваемого сотрудника.
-        Если объект salaries пустой, то нужно вернуть null.
-        Если несколько высокооплачиваемых сотрудников, можно вернуть любого из них.<br>
-        P.S. Используйте Object.entries и деструктурирование, чтобы перебрать пары ключ/значение.
+    <h4 class="task">В нас є об'єкт salaries, у якому визначено заробітну плату програмістів<br>
+        орієнтовно за 2 тижні. Потрібно створити функцію topSalary, яка буде повертати<br>
+        ім'я співробітника із найвищою заробітною платою.<br>
+        Якщо об'єкт salaries пустий, то функція повертає null, а у разі, якщо є декілька<br>
+        таких високооплачуваних співробітників, можна повернути будь-якого з них.<br>
+        При вирішенні використайте метод Object.entries та деструктуризацію, для<br>
+        перебору пар ключ/значення.<br>
     </h4>
 
     <p class="code-ex">
         <code>
-            let salaries = {<br>
-                'John': 1100,<br>
-                'Pete': 1300,<br>
-                'Mary': 1250<br>
-                'Samuel': 968<br>
-              };<br>
+            <br>
+            let salaries1 = {<br>
+            &nbsp;&nbsp;&nbsp;'John': 1100,<br>
+            &nbsp;&nbsp;&nbsp;'Pete': 1300,<br>
+            &nbsp;&nbsp;&nbsp;'Mary': 1250<br>
+            &nbsp;&nbsp;&nbsp;'Samuel': 968<br>
+            };<br>
+            <br>
+            або такий обєкт:<br>
+            <br>
+            let salaries2 = {<br>
+            &nbsp;&nbsp;&nbsp;'Matthew': 920,<br>
+            &nbsp;&nbsp;&nbsp;'Ketty': 780,<br>
+            &nbsp;&nbsp;&nbsp;'Bob': 695<br>
+            &nbsp;&nbsp;&nbsp;'Emely': 920<br>
+            };<br>
+            <br>
+            або такий:<br>
+            <br>
+            let salaries3 = {}<br>
+            <br>
+            <b>function topSalary</b>(salaries) {<br>
+            &nbsp;&nbsp;&nbsp;// ... ваш код ...<br>
+            }<br>
+            <br>
+            console.log(topSalary(salaries1)); // Pete<br>
+            console.log(topSalary(salaries2)); // Matthew або Emely<br>
+            console.log(topSalary(salaries3)); // null - нічого<br>
+            <br>
         </code>
     </p><br>
 
     <script>
-        let salaries = {
-          "John": 1100,
-          "Pete": 1300,
-          "Mary": 1250,
-          "Samuel": 968
+        let salaries1 = {
+           "John": 1100,
+           "Pete": 1300,
+           "Mary": 1250,
+           "Samuel": 968
         };
+
+        let salaries2 = {
+           'Matthew': 920,
+           'Ketty': 780,
+           'Bob': 695,
+           'Emely': 920
+        };
+
+        let salaries3 = {}
     </script>
 
-    <p><b>Решение</b>:<br><br>
-        Функция должна возвращать имя, а на вход, должна получать объект с зарплатами ключи которых мы
-        должны перебрать с помощью for of (для объектов). Для сравнения - используем оператор '<>'.<br>
-        Кроме того, Object.entries(obj) – возвращает массив пар [ключ, значение] поэтому деструктуризацию 
-        будем делать как для массивов.
+    <p><b>Рішення</b>:<br><br>
+        Отже, функція повинна повертати ім'я і на вхід отримує об'єкт - зарплати.<br>
+        Властивості/ключі об'єкта ми можемо перебрати методом для об'єктів <b>for..of</b>.<br>
+        Для необхідності порівняння значень, будемо використовувати оператор <b><</b> або <b>></b>.<br>
+        Крім того, метод <b>Object.entries(obj)</b> – повертає масив із двох значень:<br>
+        пара [ключ, значення], а тому, тут потрібно зробити деструктуризацію для масивів <br> 
+        щоб можна було брати ці значення масиву для їх подальшого порівняння або перепризначення.<br>
     </p><br>
 
     <p class="code-ex" style="width: 65%;">
         <code>
+            <br>
             function topSalary(salaries) {<br>
-                <br>
-                let max = 0;<br>
-                let maxName = null;<br>
-                <br>
-                for(<b>const [name, salary] of Object.entries(salaries)</b>) {<br>
-                  if (max < salary) {<br>
-                  max = salary;<br>
-                  maxName = name;}<br>
-                }<br>
-                <br>
-                return maxName;<br>
+            <br>
+            &nbsp;&nbsp;/* визначаємо змінну для максимальної зарплати, щоб далі її порівнювати і присвоювати туда максимальне<br>
+            &nbsp;&nbsp;значення. Також, визначаємо змінну для імені яке буде відповідати максимальному значенню заробітної<br>
+            &nbsp;&nbsp;плати із початковим значенням null у разі якщо вхідний об'єкт пустий і нічого не треба повертати: */<br>
+            <br>
+            &nbsp;&nbsp;let max = 0; <br>
+            &nbsp;&nbsp;let maxName = null;<br>
+            <br>
+            &nbsp;&nbsp;for(<b>const [name, salary] of Object.entries(salaries)</b>) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if (max < salary) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;max = salary;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maxName = name;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;return maxName;<br>
             }<br>
             <br>
-            console.log(topSalary(salaries)); // Pete<br>
         </code>
+
+        // Перевірка роботи:<br>
+        console.log(topSalary(salaries3)); // null<br>
+        <br>
     </p><br>
 
     <script>
         function topSalary(salaries) {
-  
           let max = 0;
           let maxName = null;
 
           for(const [name, salary] of Object.entries(salaries)) {
             if (max < salary) {
-            max = salary;
-            maxName = name;
+              max = salary;
+              maxName = name;
             }
           }
 
           return maxName;
         }
 
-        console.log(topSalary(salaries)); // Pete
+        console.log(topSalary(salaries1));
+        console.log(topSalary(salaries2));
+        console.log(topSalary(salaries3));
     </script>
 
 </body>

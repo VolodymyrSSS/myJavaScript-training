@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Destructuring: Вкладена деструктуризація</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">Destructuring: Вкладена деструктуризація</h2>
+
+    <h4 class="task">В нас є об'єкт "options" який має другий рівень вкладеності у<br>
+        властивості size (вкладений об'єкт) та у властивості items (вкладений масив).<br>
+        Покажіть як зробити деструктуризацію цього об'єкта та отримати значення кожної 
+        другої властивості вкладеного об'єкту та масиву.<br>
+        Крім того, додайте властивість title із дефолтним значенням "Menue" та переназвіть
+        властивість "extra" на "otherParameters" із дефолтним значенням "true".
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            <br>
+            let options = {<br>
+            &nbsp;&nbsp;size: {width: 100, height: 200},<br>
+            &nbsp;&nbsp;items: ['Cake', 'Donat'],<br>
+            &nbsp;&nbsp;extra: true<br>
+            };<br>
+            <br>
+            console.log(title); // Menu<br>
+            console.log(height); // 200<br>
+            console.log(item2); // Donut<br>
+            <br>
+        </code>
+    </p><br>
+
+    <p><b>Рішення</b>:<br><br>
+        Якщо об'єкт або масив містить інші вкладені об'єкти або масиви, то можна використовувати більш<br> 
+        складні шаблони з лівого боку, щоб отримати вкладені властивості. Власне для деструктуризації<br>
+        необхідно повторити структуру дерева вкладеностей об'єкта. Крім того, нагадаємо, що<br>
+        - для зміни назви властивості використовуєм оператор <b>:</b> ,<br>
+        - для визначення дефолтного значення використовуєм оператор <b>=</b> .<br>
+        При чому оператори <b>:</b> та <b>=</b> можуть бути поєднані. Отже деструктуризація цьго об'єкта буде:<br>
+    </p><br>
+
+    <p class="code-ex" style="width: 50%;">
+        <code>
+            <br>
+            let options = {<br>
+            &nbsp;&nbsp;size: {width: 100, height: 200},<br>
+            &nbsp;&nbsp;items: ['Cake', 'Donat'],<br>
+            &nbsp;&nbsp;extra: true<br>
+            }; // зробимо його диструктуризацію як:<br>
+            <br>
+            <b>let {<br>
+            &nbsp;&nbsp;title = "Menue", // визначимо дефолтне значення<br>
+            &nbsp;&nbsp;size: {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;width<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;height<br>
+            &nbsp;&nbsp;},<br>
+            &nbsp;&nbsp;items: [<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;item1,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;item2<br>
+            &nbsp;&nbsp;],<br>
+            &nbsp;&nbsp;extra: otherParameters = true // переназвем властивість із дефолтним значенням<br>
+            } = options;</b><br>
+            <br>
+        </code>
+        // Перевірка роботи:<br>
+        console.log(title); // Menue<br>
+        console.log(height); // 200<br>
+        console.log(item2); // Donat<br>
+        console.log(otherParameters); // true<br>
+        <br>
+    </p><br><br>
+
+    <script>
+        let options = {
+            size: {width: 100, height: 200},
+            items: ['Cake', 'Donat'],
+            extra: true
+        };
+
+        let {
+            title = "Menue",
+            size: {
+                width,
+                height
+            },
+            items: [
+                item1,
+                item2
+            ],
+            extra: otherParameters = true
+        } = options;
+        
+        console.log(title);
+        console.log(height);
+        console.log(item2);
+        console.log(otherParameters);
+    </script>
+
+</body>
+
+</html>

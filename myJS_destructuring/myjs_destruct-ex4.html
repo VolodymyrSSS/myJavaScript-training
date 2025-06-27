@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Destructuring: Розумні параметри функції</title>
+    <style>
+    body {
+        background-color: tan;
+        margin: 0;
+        font-family: Verdana, sans-serif;
+    }
+
+    .title {
+        color: red;
+        text-align: center;
+        font-weight:700;
+    }
+
+    .code-ex {
+        width: 50%;
+        font-family: sans-serif;
+        background-color: #bebebe;
+        font-size: large;
+        padding-left: 15px;
+        margin: 0 auto;
+    }
+
+    .task{
+        width: 50%;
+        padding: 15px 25px;
+        color: navy;
+        background-color: #e2e2e2;
+        margin: 35px auto;
+    }
+
+    p {
+        width: 80%;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+
+    <h2 class="title">Розумні параметри функції</h2>
+
+    <h4 class="task">Існують ситуації, коли функція має багато параметрів. Це особливо<br>
+        вірно для інтерфейсів користувача. Уявіть функцію, яка створює серію картин.<br>
+        Вона може мати назву, кількість картин, ширину та висоту картин, вкладені<br> 
+        параметри та багато інших параметрів.<br>
+        У реальному житті проблема полягає у тому, як запам'ятати порядок усіх
+        аргументів. Інша проблема полягає в тому, як викликати функцію, коли більшість
+        параметрів передавати не треба, і значення за замовчуванням цілком підходять.<br>
+        Таким чином, в нас є функція яка виводить назву серії картин, їх формат, назви цих
+        картин на екран аукціону (у нас в консоль). Напишіть як функції брати необхідні
+        параметри для їх виводу.<br>
+        Допустимо, що частину параметрів функція буде брати з об'єкта paintingSeries.<br>
+    </h4>
+
+    <p class="code-ex">
+        <code>
+            <br>
+            // так дуже погано передавати параметри функції<br>
+            function showPaintingSeries(seriesName = 'Untitled', width = 95, height = 62, paintingTitles = []) {<br>
+            &nbsp;&nbsp;// ...<br>
+            }<br>
+            <br>
+            // навіть якщо так:<br>
+            // тут значення undefined визначаєм там, де потрібно значення по замовчуванню<br>
+            showPaintingSeries('Nature beauty with buildings', undefined, undefined, ["Roses over the window", "Old trees near the house", "Village on the horizon"]) {
+                &nbsp;&nbsp;// ...<br>
+            }<br>            
+            // теж погано, бо виглядає жахливо і код стає нечитаємим, особливо коли<br>
+            // маємо справу з великою кількістю параметрів<br>
+            <br>
+            // Отже, розглянемо випадок, коли частину параметрів функція буде отримувати з обєкту:<br>
+            <br>
+            <b>let paintingSeries = {<br>
+            &nbsp;&nbsp;seriesName: "Nature beauty with buildings",<br>
+            &nbsp;&nbsp;paintingTitles: ["Roses over the window", "Old trees near the house", "Village on the horizon"]<br>
+            };</b><br>
+            <br>
+        </code>
+    </p><br>
+
+    <script>
+        let paintingSeries = {
+            seriesName: "Nature beauty with buildings",
+            paintingTitles: ["Roses over the window", "Old trees near the house", "Village on the horizon"]
+        };
+    </script>
+
+    <p><b>Рішення</b>:<br><br>
+        На допомогу приходить деструктуризація! Ми можемо передати параметри як об'єкт,<br>
+        і функція негайно деструктурує його змінні: Крім того, нагадаємо, що<br>
+        - для зміни назви властивості використовуєм оператор <b>:</b> ,<br>
+        - для визначення дефолтного значення використовуєм оператор <b>=</b> .<br>
+        При чому оператори <b>:</b> та <b>=</b> можуть бути поєднані. Отже деструктуризація цьго об'єкта буде:<br>
+    </p><br>
+
+    <p class="code-ex" style="width: 50%;">
+        <code>
+            <br>
+            function showPaintingSeries(<b>{<br>
+            &nbsp;&nbsp;seriesName = "Untitled",<br>
+            &nbsp;&nbsp;width: w = 95,<br>
+            &nbsp;&nbsp;height: h = 62,<br>
+            &nbsp;&nbsp;paintingTitles: [painting1, painting2, painting3]<br>
+            &nbsp;&nbsp;}</b>) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;console.log( `${seriesName}, painting format ${w} x ${h}` ); // Nature beauty with buildings, painting format 95 x 62<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;console.log( painting1 ); // Roses over the window<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;console.log( painting2 ); // Old trees near the house<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;console.log( painting3 ); // Village on the horizon<br>
+            &nbsp;&nbsp;}<br>
+            <br>
+        </code>
+        // Перевірка роботи:<br>
+        showPaintingSeries(paintingSeries);<br>
+        <br>
+    </p><br><br>
+
+    <script>
+        function showPaintingSeries({
+            seriesName = "Untitled",
+            width: w = 95,
+            height: h = 62,
+            paintingTitles: [painting1, painting2, painting3]
+        }) {
+                console.log(`${seriesName}, painting format ${w} x ${h}`);
+                console.log( painting1 );
+                console.log( painting2 );
+                console.log( painting3 );
+            }
+
+        showPaintingSeries(paintingSeries);
+    </script>
+
+</body>
+
+</html>

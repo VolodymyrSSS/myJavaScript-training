@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>myjs-destructuring: exercise Деструктурирующее присваивание</title>
+    <title>Destructuring: Деструктуризаційне призначення</title>
     <style>
     body {
         background-color: tan;
@@ -35,15 +35,6 @@
         margin: 35px auto;
     }
 
-    .code-ex {
-        width: 50%;
-        font-family: sans-serif;
-        background-color: #bebebe;
-        font-size: large;
-        padding-left: 15px;
-        margin: 0 auto;
-    }
-
     p {
         width: 80%;
         margin: 0 auto;
@@ -52,35 +43,39 @@
 </head>
 <body>
 
-    <h2 class="title">myjs-destructuring: exercise Деструктурирующее присваивание</h2>
+    <h2 class="title">Destructuring: визначення змінних через деструктуризацію об'єкта</h2>
 
-    <h4 class="task">У нас есть объект 'user'. Напишите деструктурирующее присваивание, которое:<br>
-        свойство name присвоит в переменную name.<br>
-        свойство years присвоит в переменную age.<br>
-        свойство isAdmin присвоит в переменную isAdmin (false, если нет такого свойства)<br>
+    <h4 class="task">В нас є об'єкт 'user'. Потрібно зробити деструктуризацію, яка:<br>
+        - властивість name визначить у змінній name;<br>
+        - властивість years визначить у змінній age;<br>
+        - властивість isAdmin визначить у змінній isAdmin (у разі якщо такої властивості немає - вона має бути визначене із значенням false).<br>
     </h4>
 
     <p class="code-ex">
         <code>
+            <br>
             let user = {<br>
-                name: 'Amamadoo',<br>
-                years: 55<br>
-              };<br>
+            &nbsp;&nbsp;&nbsp;name: 'Amamadoo',<br>
+            &nbsp;&nbsp;&nbsp;years: 55<br>
+            };<br>
+            <br>
         </code>
     </p><br>
 
-    <p>Пример переменных после вашего присваивания:</p><br>
+    <p>Прклад виведення значень в консоль після визначення змінних:</p><br>
 
     <p class="code-ex">
         <code>
+            <br>
             let user = { name: 'Amamadoo', years: 55 };<br>
             <br>
-            // ваш код должен быть с левой стороны:<br>
+            // ваш код має бути з лівої сторони:<br>
             // ... = user<br>
             <br>
             console.log( name ); // Amamadoo<br>
             console.log( age ); // 55<br>
             console.log( isAdmin ); // false<br>
+            <br>
         </code>
     </p><br>
 
@@ -92,22 +87,26 @@
         ];
     </script>
 
-    <p><b>Решение</b>:<br><br>
-        Для решения задачи используем обычное деструктурирование:
+    <p><b>Рішення</b>:<br><br>
+        Для рішення завдання застосуємо деструктуризацію об'єкта при цьому<br>
+        - для зміни назви властивості використовуєм оператор <b>:</b> ,<br>
+        - для визначення дефолтного значення використовуєм оператор <b>=</b> .<br>
     </p><br>
 
-    <p class="code-ex" style="width: 75%;">
+    <p class="code-ex" style="width: 50%;">
         <code>
-            let user = { name: 'Amamadoo', years: 55 };<br>
             <br>
-            // для значения по умолчанию используем =<br>
-            <b>let {name, years: age, isAdmin = false} = user;</b>l<br>
+            let user = { name: 'Amamadoo', years: 55 }; // зробимо його диструктуризацію як:<br>
             <br>
-            console.log( name ); // Amamadoo<br>
-            console.log( age ); // 55<br>
-            console.log( isAdmin ); // false<br>
+            <b>let {name, years: age, isAdmin = false} = user;</b><br>
+            <br>
         </code>
-    </p><br>
+        // Перевірка роботи:<br>
+        console.log( name ); // Amamadoo<br>
+        console.log( age ); // 55<br>
+        console.log( isAdmin ); // false<br>
+        <br>
+    </p><br><br>
 
     <script>
         let user = { 
