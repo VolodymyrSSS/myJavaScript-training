@@ -191,3 +191,28 @@ Method entries() returns [value,value] pairs instead of
 Answer:  a,a
 Answer:  b,b
 Answer:  c,c
+===================================
+
+Task 10
+var a = 1;
+ if (true) {
+     var a = 2;
+     console.log(a);
+  if (true) {
+      let a = 3;
+      console.log(a);
+  }
+ }
+console.log(a);
+
+/* First we declare a globally-scoped variable "a" with
+the value "1". In if-block "var" is function-scoped (or
+globally-scoped if not inside a function), this re-declares
+the global "a" and assigns it the value "2". But in the second
+if-block, the "let" is a block-scoped, so this creates a new
+"a" and it is local only to this block, and log 3 in the
+console. After second if-block has finished, the "let a" is no 
+longer accessible and last console logs "2" because the global
+"var a" was previously re-assigned to "2".*/
+Answer: 2, 3, 2
+===================================
