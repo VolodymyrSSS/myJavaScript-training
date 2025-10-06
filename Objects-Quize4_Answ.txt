@@ -1,15 +1,10 @@
 Task 1
-let task = {
-      action: “Create”,
-      isDone: true,
-      estHours: 16,
-      getTask: function() {
-            return true;
-      },
-      responsible: [“Anna”, “Boris”]
-};
-console.log(task.responsible[1]);
-Answer: Boris
+var a = {}
+if (a === {}) {
+    a = 123
+}
+console.log(a);
+Answer: {}
 
 Task 2
 let task = {
@@ -98,4 +93,4 @@ let Task = function(action) {
 let task1 = new Task(“create”);
 let task2 = new Task(“delete”);
 console.log(task1 === task2);
-Answer: false // two independent instances
+Answer: false

@@ -1,0 +1,40 @@
+Task 1
+// Destructuring Objects: Extract Properties
+// Unpack properties from objects into distinct variables.
+
+const user = { name: "Charlie", age: 25, city: "NYC" };
+const userName = user.name;
+const userAge = user.age;
+console.log(userName, userAge); // Output: Charlie 25
+
+// Answer1:
+const { name, age } = user;
+console.log(name, age); // Output: Charlie 25
+// Answer2: With alias
+const { name: fullName, city } = user;
+console.log(fullName, city); // Output: Charlie NYC
+
+Task2
+// Create a shallow copy of an object1 than merge objects
+const obj1 = { a: 1, b: 2 };
+const obj2 = { c: 3, d: 4 };
+
+// Answer1:
+const copiedObj1 = Object.assign({}, obj1);
+const mergedObj = Object.assign({}, obj1, obj2);
+console.log(copiedObj1, mergedObj); // Output: { a: 1, b: 2 } { a: 1, b: 2, c: 3, d: 4 }
+// Answer2:
+const copiedObj1 = { ...obj1 };
+const mergedObj = { ...obj1, ...obj2 };
+console.log(copiedObj1, mergedObj); // Output: { a: 1, b: 2 } { a: 1, b: 2, c: 3, d: 4 }
+
+
+Task3
+// can you override a property y to y: 3 and add the new one as z: 4
+const original = { x: 1, y: 2 };
+
+Answer:
+const updated = { ...original, y: 3, z: 4 };
+console.log(updated); // Output: { x: 1, y: 3, z: 4 }
+
+

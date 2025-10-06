@@ -1,14 +1,38 @@
 Task 1
 console.log([...[...'abc']]);
+/*The spread operator (...) allows iterables (like arrays, strings, or Sets) 
+to be expanded into individual elements. For example:
+[...[1, 2, 3]]; // Results in [1, 2, 3]; 
+[...'hello'];  // it results in an array where each character 
+is an element: ['h', 'e', 'l', 'l', 'o']; The outer array wrapping this spread 
+simply combines the elements into a new array.
+So, Inner Spread Operation: [...'abc'] - 'abc' is a string. Using the spread 
+operator (...), the string 'abc' gets expanded into its individual characters: 
+['a', 'b', 'c']. Outer Spread Operation: [...[...'abc']] - the same concept 
+applies again to ['a', 'b', 'c']. This means the array ['a', 'b', 'c'] is 
+expanded into individual elements, and these elements are wrapped in the outer 
+array.
+The spread operator iterates over strings or arrays, breaking them into 
+individual elements. You can nest and chain the spread operator as much 
+as you'd like, but in this case, the final result doesn't change because 
+the inner and outer arrays are identical in structure.*/
 Answer: ['a', 'b', 'c'];
 
 Task 2
-while(true) {
-   console.log(setTimeout('Test'));
-}
+// Destructuring Arrays: Extract Values
+// Unpack first two values from arrays into distinct variables, than third one
 
-/* stack will be overloaded.*/
-Answer: Uncaught TypeError: Failed to execute 'setTimeout' on 'Window'
+const colors = ["red", "green", "blue"];
+const firstColor = colors[0];
+const secondColor = colors[1];
+console.log(firstColor, secondColor); // Output: red green
+
+// Answer1:
+const [firstColor, secondColor] = colors;
+console.log(firstColor, secondColor); // Output: red green
+// Answer2:
+const [,,thirdColor] = colors;
+console.log(thirdColor); // Output: blue
 
 Task 3
 const val = [2, 4, 8]
@@ -22,5 +46,38 @@ operand to the power of the second operand. It is
 equivalent to "Math.pow()", except it also accepts
 "BigInts" as operands */
 Answer: [4, 16, 64]
+
+Task 4
+// Unpack values from arrays into distinct variables
+
+const colors = ["red", "green", "blue"];
+
+const firstColor = colors[0];
+const secondColor = colors[1];
+console.log(firstColor, secondColor); // Output: red green
+
+//Answer1:
+const [firstColor, secondColor] = colors;
+console.log(firstColor, secondColor); // Output: red green
+
+// Answer1: Skip values
+const [,,thirdColor] = colors;
+console.log(thirdColor); // Output: blue
+
+Task 5
+// Create a shallow copy of an array1 than concatenate arrays easily
+const arr1 = [1, 2];
+const arr2 = [3, 4];
+
+Answer1
+const copiedArr1 = arr1.slice();
+const combinedArrs = arr1.concat(arr2);
+console.log(copiedArr, combinedArrs); // Output: [1, 2] [1, 2, 3, 4]
+Answer2
+const copiedArr1 = [...arr1];
+const combinedArrs = [...arr1, ...arr2];
+console.log(copiedArr, combinedArrs); // Output: [1, 2] [1, 2, 3, 4]
+
+
 
 

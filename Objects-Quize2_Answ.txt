@@ -1,112 +1,10 @@
 Task 1
-let task = {
-     action: “Create”,
-     isDone: true,
-     estHours: 16,
-     getTask: function() {
-          return true;
-     },
-     responsible: [“Anna”, “Boris”]
-};
-console.log(task.responsible[1]);
-Answer: Boris
-
-Task 2
-let task = {
-     isDone: true,
-     estHours: 16
-};
-let anotherTask = task;
-task.estHours = 8;
-console.log(anotherTask.estHours);
-Answer: 8
-
-Task 3
-let task = { };
-Object.defineProperty(task, “action”, {
-     value: “doIt”,
-     enumerable: true
-});
-for (let field in task) console.log(field);
-Answer: action
-
-Task 4
-let task = {
-     id: 1
-};
-Object.preventExtensions(task);
-task.id = 2;
-task.action = “Create”;
-console.log(task);
-Answer: {id:2}
-
-Task 5
-let hours = 8, rate = 50;   // let
-let task = {
-     hours: 16,
-     rate: 20,
-     calculateValue: () => {
-          return this.hours * this.rate;
-     }
-};
-console.log(task.calculateValue());
-Answer: NaN, // cause this = undefined in arrow func
-
-Task 6
-let field = “actual”;
-let hours = 8;
-let task = {
-     [field + “Hours”]: hours
-};
-console.log(task);
-Answer:  {actualHours: 8}
-
-Task 7
-let task = {
-     isDone: false
-};
-let anotherTask = Object.create(task);
-console.log(anotherTask.isDone);
-Answer: false
-
-Task 8
-let task1 = {
-     id: 1
-};
-let task2 = {
-     id: 2,
-     priority: 100
-};
-let target = {};
-Object.assign(target, task1, task2);
-console.log(target);
-Answer: {id: 2, priority: 100}
-
-Task 9
-const task = {
-     id: 1,
-     action: 'Create',
-     done: false
-};
-console.log(Object.entries(task));
-Answer: [['id', 1], ['action', 'Create'], ['done', false]]
-
-Task 10
-let Task = function(action) {
-     this.action = action;
-};
-let task1 = new Task(“create”);
-let task2 = new Task(“delete”);
-console.log(task1 === task2); 
-Answer:  false // two independent instances
-
-Task 11
 class Task {
 }
 console.log(typeof Task);
 Answer: function
 
-Task 12
+Task 2
 class Task {
      constructor() {
           console.log(“Constructing Task”);
@@ -121,12 +19,12 @@ task.showId();
 Answer:  Constructing Task
 Answer:  2
 
-Task 13
+Task 3
 class Task { }
 console.log(window.Task === Task);
 Answer:  false
 
-Task 14
+Task 4
 class Task {
      getTaskPriority() {
           return 1;
@@ -138,14 +36,14 @@ let task = new UrgentTask();
 console.log(task.getTaskPriority());
 Answer:  1
 
-Task 15
+Task 5
 class Task {
      static let name = “Task: unknown”;
 }
 console.log(Task.name);
 Answer:  SyntaxError: Unexpected identifier 'name' // cause let is use with static
 
-Task 16
+Task 6
 class Task {
      constructor() {
           console.log(new.target.name);
@@ -155,7 +53,7 @@ class UrgentTask extends Task { }
 let task = new UrgentTask();
 Answer:  UrgentTask
 
-Task 17
+Task 7
 let task = {
      id: 1,
      priority: “High”,
@@ -166,7 +64,7 @@ let { responsibles } = task;
 console.log(responsibles);
 Answer:  [“A”, “B”]
 
-Task 18
+Task 8
 let task1 = { action: “Create…” };
 let task2 = { action: “Delete…” };
 let project = new Map();
@@ -177,7 +75,7 @@ project
 console.log(project.size);
 Answer: 2
 
-Task 19
+Task 9
 let task1 = { action: “Create…” };
 let task2 = { action: “Delete…” };
 let arr = [
@@ -191,7 +89,7 @@ for (let [k, v] of project.entries()) {
 Answer: Create… - High Priority
 Answer: Delete… - Low Priority
 
-Task 20
+Task 10
 let task1 = { action: “Create…” };
 let task2 = { action: “Delete…” };
 let project = new WeakMap();

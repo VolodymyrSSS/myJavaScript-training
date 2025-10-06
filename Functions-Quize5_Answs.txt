@@ -1,0 +1,193 @@
+Task 1
+console.log(name);
+var name = "Alice";
+
+/* Here we can observe hoisting. Hoisting means JavaScript moves
+declarations to the top of the scope during compilation. But only
+the declarations, not the initializations. Knowing how hoisting
+works can help you understand why a variable is undefined instead
+of the expected value.
+However, let and const are also hoisted, but they live in a temporal
+dead zone — a fancy way of saying “You can’t touch this until it’s
+initialized.” Have a look to other example with let:
+console.log(age); // ReferenceError
+let age = 30;
+So in our example var declaration is hoisted.
+*/
+Answer: it becomes like
+var name; // hoisted
+console.log(name); // undefined
+name = "Alice";
+
+Task 2
+const person = {
+  name: "John",
+  regularFunc: function() {
+    console.log(this.name);
+  },
+  arrowFunc: () => {
+    console.log(this.name);
+  }
+};
+person.regularFunc(); // ?
+person.arrowFunc();   // ?
+
+/* The value of this in JavaScript depends on how a function is called.
+And no, it’s not always pointing to the current object like in other
+languages. In JavaScript, it can point to:
+1) The global object (window in browsers);
+2) The calling object;
+3) undefined in strict mode;
+4) A manually bound value via call, apply, or bind;
+And the tips are:
+- use arrow functions when you want to inherit the surrounding this — like
+in callbacks. Use regular functions when you want this to refer to the object
+it belongs to.
+So, our task: regularFunc gets this from the object calling it (person);
+arrowFunc doesn’t have its own this. It inherits from its parent scope —
+in this case, likely the global object.
+*/
+Answer: John
+Answer: undefined (or global name if it exists)
+Answer: false
+
+Task 3
+console.log("Start");
+
+setTimeout(() => {
+  console.log("Timeout");
+}, 0);
+
+Promise.resolve().then(() => {
+  console.log("Promise");
+});
+
+console.log("End");
+
+/* The event loop decides what JavaScript runs when — especially when
+dealing with asynchronous code like:
+- setTimeout, - Promises,  - Fetch requests;
+Even though setTimeout(..., 0) looks like it should run immediately, it’s
+queued in the macrotask queue. Promises are part of the microtask queue,
+which has higher priority. So, the answers are:
+ */
+Answer: Start
+Answer: End
+Answer: Promise
+Answer: Timeout
+
+Task 4
+console.log("5" + 1);
+console.log("5" - 1);
+console.log(true + true);
+console.log([] == false);
+
+/* Here we have Type Coercion - JavaScript will automatically
+convert types when comparing or doing math. Use === and !== to avoid
+surprises from type coercion. They check both value and type like
+console.log("5" === 5); // false
+But now we have: */
+Answer1: "5" + 1 becomes string concatenation: "5" + "1" = "51"
+Answer2: "5" - 1 becomes a number: 5 - 1 = 4
+Answer3: true is coerced to 1, that is why 1 + 1 = 2
+Answer4: [] is falsy in a coercion context
+
+Task 5
+function Animal(name) {
+  this.name = name;
+}
+
+Animal.prototype.speak = function() {
+  console.log(`${this.name} makes a sound`);
+};
+
+const dog = new Animal("Buddy");
+dog.speak(); // ?
+
+/*Every object in JavaScript has a hidden property called [[Prototype]] that
+points to another object. This forms a prototype chain. It’s how inheritance
+works in JavaScript. Objects can “borrow” methods and properties from their
+prototypes.
+You can extend built-in prototypes:
+Array.prototype.last = function() {
+  return this[this.length - 1];
+};
+console.log([1, 2, 3].last()); // 3
+So, even though speak() wasn’t defined inside dog, it works — because JavaScript
+looks up the prototype chain.*/
+Answer: Buddy makes a sound
+
+Task 6
+function Counter() {
+  this.count = 0;
+    setInterval(function() {
+    console.log(this.count); // ?
+  }, 1000);
+
+  setInterval(() => {
+    this.count++;
+    console.log(this.count); // ?
+  }, 1000);
+}
+new Counter();
+
+/* The this keyword in JavaScript can behave differently based on how a function is
+invoked or defined (function vs. arrow function).
+In JavaScript, this inside a regular function depends on how the function is called.
+When used inside setInterval or setTimeout, the function is not called as a method
+of the Counter object. Instead, the function is executed in the context of the global
+object (or undefined in strict mode, depending on the environment).
+In browsers, the global object is window. In Node.js, the global object is global.
+Arrow functions inherit the this value from their surrounding lexical scope.
+In this example, the enclosing scope is the Counter function. So the arrow function
+will use the this value of the Counter instance (the newly created object when
+new Counter() is called).*/
+Answer1: Error or undefined
+Answer2: Correctly increments
+
+Task 7
+while(true) {
+   console.log(setTimeout('Test'));
+}
+
+/* setTimeout() - sets up a timer to execute the specified code after a certain
+delay (default is 0ms if no delay is specified). Returns a timer ID (a positive
+integer) that uniquely identifies the timeout. This ID can later be used to clear
+the timeout with clearTimeout(id).
+Argument 'Test' is passed as a string to setTimeout. While JavaScript does support
+using a string in this context, it’s considered a bad practice because it essentially
+causes the string to be evaluated as code (similar to eval()). Nothing happens here
+because 'Test' is not a valid JavaScript code snippet. It won't throw an error — it
+just does nothing.
+console.log(setTimeout('Test')) since setTimeout() returns a timer ID, running this
+continuously logs the timer ID of the newly created timeout to the console.
+while (true) - this creates an infinite loop. The setTimeout() function will be called,
+and the returned timer ID will be logged repeatedly and indefinitely until execution
+is interrupted (e.g., by killing the process or stopping the browser).
+Since the loop runs indefinitely, new timeouts are continuously scheduled but their
+execution never takes place because setTimeout() is asynchronous and its callback
+('Test' in this case) is effectively ignored. This can lead to serious performance
+issues and crash the browser, as you're creating an infinite number of timeout objects
+in memory.
+So, as a result, the console quickly fills up with timer IDs, eventually causing the
+application to slow down or crash due to excessive memory usage (depending on the runtime
+environment).*/
+Answer: Uncaught TypeError: Failed to execute 'setTimeout' on 'Window'
+
+Task 8
+// Rest Parameters: Collect Arguments
+// Gather an indefinite number of arguments into an array and sum
+function sumAll() {
+  let total = 0;
+  for (let i = 0; i < arguments.length; i++) {
+    total += arguments[i];
+  }
+  return total;`
+}
+console.log(sumAll(1, 2, 3, 4)); // Output: 10
+
+Answer:
+function sumAll(...numbers) {
+  return numbers.reduce((total, num) => total + num, 0);
+}
+console.log(sumAll(1, 2, 3, 4, 5)); // Output: 15
